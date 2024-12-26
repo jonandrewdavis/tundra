@@ -52,10 +52,3 @@ func get_jump() -> float:
 
 func get_interact():
 	return player_input.interact_input
-
-# TODO: Not sure if this is the best way to call tick inputs...
-# TODO: Signals or direct calling?
-func sync_input():
-	if get_interact():
-		parent.ragdoll.emit()
-		

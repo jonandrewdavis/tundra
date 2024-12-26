@@ -11,6 +11,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var _player_model : Node3D
 @export var _state_machine: RewindableStateMachine
 @export var skeleton: Skeleton3D
+@export var bones: PhysicalBoneSimulator3D
 
 @onready var rollback_synchronizer = $RollbackSynchronizer
 
@@ -36,7 +37,6 @@ func _ready():
 	rollback_synchronizer.process_settings()
 	
 	ragdoll.connect(_on_ragdoll)
-	print(skeleton)
 	
 
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
@@ -71,5 +71,11 @@ func _force_update_is_on_floor():
 var is_ragdoll = false
 
 func _on_ragdoll():
-	if skeleton && is_ragdoll == false:
-		skeleton.physical_bones_start_simulation()
+	if bones.active == false:
+		_animation_player.active = false
+		bones.active = true
+		bones.physical_bones_start_simulation()
+	else:
+		_animation_player.active = true
+		bones.active = false
+		bones.physical_bones_stop_simulation()

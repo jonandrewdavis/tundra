@@ -39,3 +39,10 @@ func move_player(_delta: float, speed = WALK_SPEED):
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()
 	parent.velocity /= NetworkTime.physics_factor
+
+
+# TODO: Not sure if this is the best way to call tick inputs...
+# TODO: Signals or direct calling?
+func sync_input():
+	if get_interact():
+		parent.ragdoll.emit()

@@ -15,13 +15,14 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y8poy"]
 
-[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "skeleton")]
+[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "skeleton", "bones")]
 script = ExtResource("1_u2qrv")
 _player_input = NodePath("PlayerInput")
 _camera_input = NodePath("CameraInput")
 _player_model = NodePath("x_bot")
 _state_machine = NodePath("RewindableStateMachine")
 skeleton = NodePath("x_bot/Armature/GeneralSkeleton")
+bones = NodePath("x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D")
 
 [node name="x_bot" parent="." instance=ExtResource("2_xfltk")]
 
@@ -33,7 +34,6 @@ bones/3/rotation = Quaternion(1.11967e-20, 3.91909e-14, -6.77902e-13, 1)
 bones/4/rotation = Quaternion(-7.45058e-09, -7.91034e-16, -1.05471e-14, 1)
 bones/5/rotation = Quaternion(3.72529e-09, -4.44089e-14, -2.29039e-13, 1)
 bones/6/rotation = Quaternion(-3.17637e-22, -8.88178e-16, 1.43219e-14, 1)
-bones/8/rotation = Quaternion(0.5, -0.5, -0.5, -0.5)
 bones/9/rotation = Quaternion(-2.08616e-07, 1, -8.9407e-08, -5.0664e-07)
 bones/10/rotation = Quaternion(-4.21468e-08, 0.707107, -4.21468e-08, 0.707107)
 bones/11/rotation = Quaternion(-1.96582e-07, -0.707105, 3.65169e-07, 0.707109)
@@ -53,7 +53,6 @@ bones/26/rotation = Quaternion(0, 0, 0.000112653, 1)
 bones/28/rotation = Quaternion(-4.55976e-06, 1.49012e-08, -0.000520244, 1)
 bones/29/rotation = Quaternion(1.49012e-07, -2.98023e-08, -0.000846416, 1)
 bones/30/rotation = Quaternion(1.49012e-08, 8.9407e-08, 0.000496611, 1)
-bones/32/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
 bones/33/rotation = Quaternion(-8.79168e-07, 1, 9.98378e-07, -2.98023e-08)
 bones/34/rotation = Quaternion(-4.21468e-08, -0.707107, 8.42937e-08, 0.707107)
 bones/35/rotation = Quaternion(5.45042e-07, 0.707107, 5.45042e-07, 0.707107)
@@ -81,6 +80,111 @@ bones/61/rotation = Quaternion(-2.27273e-08, 0.000650286, 1, -7.08998e-07)
 bones/62/rotation = Quaternion(-9.88683e-10, 0.999999, -0.00129878, 1.41577e-08)
 bones/63/rotation = Quaternion(-1.10569e-08, 0.706648, -0.707565, 1.30782e-08)
 bones/64/rotation = Quaternion(1.17033e-10, 1, 0, 9.26995e-10)
+
+[node name="Physical Bone Root" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="0"]
+transform = Transform3D(-1, 4.97099e-06, 7.40968e-08, 0, 0.0149042, -0.999889, -4.97154e-06, -0.999889, -0.0149042, -3.86365e-08, 0.521374, 0.00777153)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4869e-14, 5.58794e-09, 0.521432)
+body_offset = Transform3D(-1, 4.97099e-06, 7.40968e-08, 0, 0.0149042, -0.999889, -4.97154e-06, -0.999889, -0.0149042, -3.86365e-08, 0.521374, 0.00777153)
+
+[node name="Physical Bone Hips" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="1"]
+transform = Transform3D(-1, 3.87674e-05, -1.46891e-06, 1.96957e-06, 0.0129176, -0.999917, -3.87451e-05, -0.999917, -0.0129176, 7.47873e-08, 1.09361, 0.000657595)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.84217e-14, -4.29573e-08, 0.0509122)
+body_offset = Transform3D(-1, 3.87866e-05, 5.01055e-07, -3.10151e-14, 0.0129172, -0.999917, -3.87898e-05, -0.999917, -0.0129172, -2.55081e-08, 0.050908, 0.0006576)
+
+[node name="Physical Bone Spine" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="2"]
+transform = Transform3D(1, 8.06559e-08, -4.94536e-07, -5.0102e-07, 0.147032, -0.989132, -7.06694e-09, 0.989132, 0.147032, 1.74308e-07, 1.19399, -0.00603872)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.91412e-14, 3.80445e-07, 0.0500134)
+body_offset = Transform3D(1, 6.98932e-09, 1.03892e-09, -2.55717e-15, 0.147032, -0.989132, -7.06611e-09, 0.989132, 0.147032, -5.20117e-11, 0.0494698, -0.00735395)
+
+[node name="Physical Bone Chest" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="3"]
+transform = Transform3D(1, 8.06527e-08, -4.94538e-07, -5.01021e-07, 0.147032, -0.989132, -7.06351e-09, 0.989132, 0.147032, 2.22116e-07, 1.28956, -0.020245)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.42726e-11, 9.31323e-09, 0.0466103)
+body_offset = Transform3D(1, 6.98584e-09, 1.03845e-09, -2.55593e-15, 0.147032, -0.989132, -7.0626e-09, 0.989132, 0.147032, -2.413e-11, 0.0461037, -0.00685321)
+
+[node name="Physical Bone UpperChest" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="4"]
+transform = Transform3D(1, -5.28525e-07, -5.69453e-07, -5.01022e-07, 0.121494, -0.992592, 5.93795e-07, 0.992592, 0.121494, 2.93162e-07, 1.41937, -0.0373434)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51879e-13, 1.67638e-08, 0.0843266)
+body_offset = Transform3D(1, -5.89397e-07, -7.21427e-08, -2.13571e-14, 0.121494, -0.992592, 5.93796e-07, 0.992592, 0.121494, 6.08341e-09, 0.083702, -0.0102452)
+
+[node name="Physical Bone Neck" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="5"]
+transform = Transform3D(-1, -1.85092e-07, -5.4108e-07, 5.01022e-07, 0.172567, -0.984998, 2.75688e-07, -0.984998, -0.172567, 3.67623e-07, 1.55116, -0.0391635)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4222e-11, 2.51457e-08, 0.0488217)
+body_offset = Transform3D(-1, -2.71551e-07, -4.75744e-08, -1.59832e-14, 0.172567, -0.984998, 2.75687e-07, -0.984998, -0.172567, 2.34689e-09, 0.0480893, 0.00842504)
+
+[node name="Physical Bone Head" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="6"]
+transform = Transform3D(-1, -1.08055e-07, -5.6603e-07, 5.01022e-07, 0.322225, -0.946663, 2.84681e-07, -0.946663, -0.322225, 4.59923e-07, 1.70943, 0.00676387)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51905e-11, -2.95416e-06, 0.116394)
+body_offset = Transform3D(-1, -2.69496e-07, -9.1731e-08, -1.27961e-14, 0.322225, -0.946663, 2.8468e-07, -0.946663, -0.322225, 1.07013e-08, 0.110187, 0.0375023)
+
+[node name="Physical Bone RightShoulder" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="7"]
+transform = Transform3D(4.87721e-07, -0.211564, 0.977364, 0.973454, 0.223703, 0.048423, -0.228884, 0.951419, 0.205948, -0.0986636, 1.44309, -0.0598644)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.92909e-05, 1.96099e-05, 0.0541951)
+body_offset = Transform3D(0.228884, -0.951419, -0.205948, -1.50225e-13, 0.211564, -0.977364, 0.973454, 0.223703, 0.0484236, 0.0111573, 0.0529642, -0.00272536)
+
+[node name="Physical Bone RightUpperArm" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="8"]
+transform = Transform3D(2.50163e-07, -6.83637e-07, 1, 6.66331e-07, -1, -6.83637e-07, 1, 6.66331e-07, -2.50163e-07, -0.290836, 1.44056, -0.0710217)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.35625e-06, -4.07942e-07, 0.139208)
+body_offset = Transform3D(1, -1.7053e-13, 1.6707e-07, 1.6707e-07, 3.6143e-07, -1, 0, 1, 3.6143e-07, 6.33299e-06, 0.139208, 3.57628e-07)
+
+[node name="Physical Bone RightLowerArm" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="9"]
+transform = Transform3D(-8.11387e-08, 1.08681e-06, 1, 1, 6.66283e-07, 8.1138e-08, -6.66283e-07, 1, -1.08681e-06, -0.571687, 1.44056, -0.0710279)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.12435e-07, 5.43446e-09, 0.141644)
+body_offset = Transform3D(1, -4.78622e-11, 5.22555e-07, 5.22555e-07, -6.69575e-07, -1, 4.83169e-11, 1, -6.69575e-07, 2.38419e-07, 0.141644, 8.9407e-08)
+
+[node name="Physical Bone RightHand" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="10"]
+transform = Transform3D(1.58055e-08, -0.7837, 0.621139, -0.862439, 0.314397, 0.396679, -0.506162, -0.535694, -0.675893, -0.725655, 1.43269, -0.0576152)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63028e-06, 9.2783e-07, 0.0198422)
+body_offset = Transform3D(-0.506167, -0.535692, -0.675891, 4.82459e-11, 0.783701, -0.621139, 0.862435, -0.3144, -0.396683, 0.0134125, 0.012324, 0.00786996)
+
+[node name="Physical Bone LeftShoulder" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="11"]
+transform = Transform3D(-4.87732e-07, 0.21157, -0.977363, -0.973476, 0.22361, 0.0484055, 0.22879, 0.951439, 0.205958, 0.0986667, 1.44329, -0.0598674)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.86811e-05, -2.26629e-05, 0.0541837)
+body_offset = Transform3D(0.22879, 0.951439, 0.205958, -1.5014e-13, 0.21157, -0.977363, -0.973476, 0.223611, 0.0484051, -0.0111606, 0.0529619, -0.00252163)
+
+[node name="Physical Bone LeftUpperArm" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="12"]
+transform = Transform3D(-8.13866e-07, 9.59712e-07, -1, 4.06554e-07, -1, -9.59712e-07, -1, -4.06555e-07, 8.13865e-07, 0.290836, 1.44056, -0.0710281)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.63255e-09, -4.45906e-08, 0.139208)
+body_offset = Transform3D(1, 5.68434e-13, 9.44471e-07, 9.44471e-07, -5.36023e-07, -1, 0, 1, -5.36023e-07, -1.3411e-07, 0.139208, 1.19209e-07)
+
+[node name="Physical Bone LeftLowerArm" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="13"]
+transform = Transform3D(1.09428e-07, 9.54662e-07, -1, -1, -4.06565e-07, -1.09429e-07, -4.06565e-07, 1, 9.54662e-07, 0.571688, 1.44056, -0.0710283)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.67287e-08, -2.12668e-08, 0.141644)
+body_offset = Transform3D(1, 1.08002e-11, -1.56512e-06, -1.56512e-06, -7.4407e-07, -1, -1.1994e-11, 1, -7.4407e-07, 2.38419e-07, 0.141644, 1.2666e-07)
+
+[node name="Physical Bone LeftHand" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="14"]
+transform = Transform3D(-1.36414e-06, 0.783609, -0.621254, 0.862117, 0.314796, 0.397061, 0.506709, -0.535593, -0.675563, 0.725663, 1.43268, -0.057623)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5879e-06, -1.69547e-06, 0.019846)
+body_offset = Transform3D(-0.506709, 0.535593, 0.675563, -9.62572e-11, 0.78361, -0.621253, -0.862117, -0.314795, -0.397062, -0.0134055, 0.0123307, 0.00788093)
+
+[node name="Physical Bone RightUpperLeg" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="15"]
+transform = Transform3D(1, 5.75571e-07, 5.76941e-07, -5.71656e-07, -0.00914015, 0.999958, 5.8082e-07, -0.999958, -0.00914015, -0.0820781, 0.753335, -0.013967)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00411e-09, 7.95699e-07, 0.221858)
+body_offset = Transform3D(-1, -5.81187e-07, -4.52382e-09, -7.64755e-12, 0.00779653, -0.99997, 5.81205e-07, -0.99997, -0.00779653, 0, 0.221851, 0.00173052)
+
+[node name="Physical Bone RightLowerLeg" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="16"]
+transform = Transform3D(-1, -6.34112e-08, 5.69994e-07, 5.73027e-07, -0.0696842, 0.997569, -2.35375e-08, 0.997569, 0.0696842, -0.0820784, 0.309365, -0.0274559)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.46791e-10, -2.49594e-07, 0.222664)
+body_offset = Transform3D(-1, -2.27351e-08, -1.55749e-09, -2.59306e-14, 0.0683482, -0.997662, 2.27884e-08, -0.997662, -0.0683482, 0, 0.222143, 0.0152184)
+
+[node name="Physical Bone RightFoot" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="17"]
+transform = Transform3D(-1, 6.70845e-07, 5.44528e-07, 8.64026e-07, 0.775195, 0.631722, 1.6721e-09, 0.631722, -0.775195, -0.0820849, 0.0436518, 0.0105826)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.35902e-06, -8.49366e-07, 0.0690823)
+body_offset = Transform3D(1, -1.99382e-07, -1.6248e-07, -9.4369e-14, 0.631722, -0.775195, 2.57202e-07, 0.775195, 0.631722, 6.37025e-06, 0.0535528, -0.0436402)
+
+[node name="Physical Bone LeftUpperLeg" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="18"]
+transform = Transform3D(1, 3.39388e-06, 5.78093e-07, -5.47118e-07, -0.00911966, 0.999958, 3.39901e-06, -0.999958, -0.00911966, 0.0820777, 0.753335, -0.0139715)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.54958e-09, 7.93254e-07, 0.221857)
+body_offset = Transform3D(-1, -3.39903e-06, -2.65861e-08, 6.65734e-12, 0.0078195, -0.99997, 3.39913e-06, -0.999969, -0.0078195, 7.45058e-09, 0.22185, 0.0017356)
+
+[node name="Physical Bone LeftLowerLeg" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="19"]
+transform = Transform3D(-1, -1.05382e-07, 5.43657e-07, 5.49678e-07, -0.0696678, 0.99757, -6.72505e-08, 0.99757, 0.0696678, 0.0820774, 0.309389, -0.0274607)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45672e-09, 8.81031e-07, 0.222639)
+body_offset = Transform3D(-1, -9.54642e-08, -6.54258e-09, -6.98747e-15, 0.0683736, -0.99766, 9.56882e-08, -0.99766, -0.0683736, 0, 0.222118, 0.0152235)
+
+[node name="Physical Bone LeftFoot" parent="x_bot/Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="20"]
+transform = Transform3D(-1, 7.04435e-07, 5.33658e-07, 8.83198e-07, 0.775195, 0.631722, 3.13184e-08, 0.631722, -0.775195, 0.0820836, 0.0436505, 0.0105835)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.35351e-06, -8.97795e-07, 0.0690823)
+body_offset = Transform3D(1, -2.32182e-07, -1.8921e-07, 0, 0.631722, -0.775195, 2.99514e-07, 0.775195, 0.631722, -6.34044e-06, 0.0535528, -0.0436401)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
