@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wall-mounted artillery (Attack on Titan)
+* source:	https://sketchfab.com/3d-models/wall-mounted-artillery-attack-on-titan-e778deff4f6a48e8821ead53d1b04ffa
+* author:	sergeilihandristov (https://sketchfab.com/sergeilihandristov)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wall-mounted artillery (Attack on Titan)" (https://sketchfab.com/3d-models/wall-mounted-artillery-attack-on-titan-e778deff4f6a48e8821ead53d1b04ffa) by sergeilihandristov (https://sketchfab.com/sergeilihandristov) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

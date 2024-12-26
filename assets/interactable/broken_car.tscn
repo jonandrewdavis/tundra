@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://deuj1af8av21g"]
+
+[ext_resource type="Script" uid="uid://qrp57ogxooqe" path="res://assets/interactable/broken_car.gd" id="1_anu0i"]
+[ext_resource type="PackedScene" uid="uid://bbx6oln4vrjab" path="res://assets/interactable/Debris_BrokenCar.fbx" id="1_wqli8"]
+[ext_resource type="Script" uid="uid://dmq8tqsgyk1md" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="3_i0fgp"]
+[ext_resource type="Script" uid="uid://dq6j6oqvo2r1v" path="res://addons/netfox/tick-interpolator.gd" id="4_q853g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_anu0i"]
+size = Vector3(2.5, 1.8, 5)
+
+[node name="BrokenCar" type="RigidBody3D"]
+script = ExtResource("1_anu0i")
+
+[node name="Debris_BrokenCar" parent="." instance=ExtResource("1_wqli8")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.891493, 0)
+shape = SubResource("BoxShape3D_anu0i")
+
+[node name="RollbackSynchronizer" type="Node" parent="."]
+script = ExtResource("3_i0fgp")
+metadata/_custom_type_script = ExtResource("3_i0fgp")
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("4_q853g")
+root = NodePath("..")
+metadata/_custom_type_script = ExtResource("4_q853g")

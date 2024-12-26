@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://c4p86fnus36rf"]
+
+[ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
+[ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
+[ext_resource type="Texture2D" uid="uid://c8ajco5x2eavq" path="res://asssets/environment/Rock057_2K-JPG/Rock057_2K-JPG_Color.jpg" id="2_2exhc"]
+[ext_resource type="Environment" uid="uid://yxbm04et4bmr" path="res://asssets/environment/ForestEnvironment.tres" id="4_k0juu"]
+[ext_resource type="Texture2D" uid="uid://cc3q86qnmf2pj" path="res://assets/ambient/road/Road005_2K-JPG/Road005_2K-JPG_Color.jpg" id="5_71j4m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qpwn5"]
+albedo_texture = ExtResource("2_2exhc")
+uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_krr73"]
+material = SubResource("StandardMaterial3D_qpwn5")
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lt7am"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfnet"]
+albedo_texture = ExtResource("5_71j4m")
+uv1_scale = Vector3(1, 20, 2)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i7141"]
+material = SubResource("StandardMaterial3D_qfnet")
+size = Vector2(7, 100)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_71j4m")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://dup2jh8uleo3l")
+spawn_path = NodePath("../PlayerContainer")
+
+[node name="MultiplayerManager" parent="." node_paths=PackedStringArray("_player_spawn_point") instance=ExtResource("1_dos3o")]
+_player_spawn_point = NodePath("../PlayerContainer")
+
+[node name="PlayerContainer" type="Node3D" parent="."]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="Sun" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.742321, 0.489411, -0.457642, 0.468977, 0.108316, 0.876543, 0.47856, -0.8653, -0.149117, -28.3006, 16.77, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = ExtResource("4_k0juu")
+
+[node name="DemoFloor" type="StaticBody3D" parent="Environment"]
+
+[node name="DemoMesh" type="MeshInstance3D" parent="Environment/DemoFloor"]
+mesh = SubResource("BoxMesh_krr73")
+
+[node name="DemoCol" type="CollisionShape3D" parent="Environment/DemoFloor"]
+shape = SubResource("BoxShape3D_lt7am")
+
+[node name="Road" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000952959, 0.190614, 0.0206146)
+mesh = SubResource("PlaneMesh_i7141")
+
+[node name="Road2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.9518, 0.190614, 0.0206146)
+mesh = SubResource("PlaneMesh_i7141")

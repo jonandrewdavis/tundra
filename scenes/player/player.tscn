@@ -1,0 +1,82 @@
+[gd_scene load_steps=13 format=3 uid="uid://xjygpllvas2q"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_hkxbp"]
+[ext_resource type="PackedScene" uid="uid://l1d8hwvn7hbq" path="res://scenes/player/camera_input.tscn" id="2_24wjx"]
+[ext_resource type="Script" path="res://scripts/player_input.gd" id="2_e03e3"]
+[ext_resource type="PackedScene" uid="uid://cxjk8dd2j2a0y" path="res://scenes/player/military_male.tscn" id="4_fvytd"]
+[ext_resource type="Script" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="5_sf48l"]
+[ext_resource type="Script" path="res://addons/netfox/tick-interpolator.gd" id="6_rwdl2"]
+[ext_resource type="Script" path="res://addons/netfox.extras/state-machine/rewindable-state-machine.gd" id="7_b1gbo"]
+[ext_resource type="Script" path="res://scripts/states/movement/idle_state.gd" id="8_lfiis"]
+[ext_resource type="Script" path="res://scripts/states/movement/move_state.gd" id="9_yw7u2"]
+[ext_resource type="Script" path="res://scripts/states/movement/jump_state.gd" id="10_ak1iu"]
+[ext_resource type="Script" path="res://scripts/states/movement/fall_state.gd" id="11_28r1c"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ihjgv"]
+radius = 0.35
+height = 2.8
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine")]
+script = ExtResource("1_hkxbp")
+_player_input = NodePath("PlayerInput")
+_camera_input = NodePath("CameraInput")
+_player_model = NodePath("MilitaryMale")
+_state_machine = NodePath("RewindableStateMachine")
+
+[node name="CameraInput" parent="." node_paths=PackedStringArray("rollback_synchronizer") instance=ExtResource("2_24wjx")]
+rollback_synchronizer = NodePath("../RollbackSynchronizer")
+
+[node name="MilitaryMale" parent="." instance=ExtResource("4_fvytd")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.41129, 2.08165e-12)
+shape = SubResource("CapsuleShape3D_ihjgv")
+
+[node name="PlayerInput" type="Node" parent="."]
+script = ExtResource("2_e03e3")
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("5_sf48l")
+root = NodePath("..")
+state_properties = Array[String]([":transform", ":velocity", "MilitaryMale:transform", "RewindableStateMachine:state"])
+input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis"])
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("6_rwdl2")
+root = NodePath("..")
+properties = Array[String]([":transform", "MilitaryMale:transform"])
+
+[node name="RewindableStateMachine" type="Node" parent="."]
+script = ExtResource("7_b1gbo")
+
+[node name="IdleState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_model", "player_input", "parent")]
+script = ExtResource("8_lfiis")
+animation_name = "male_animation_lib/idle"
+camera_input = NodePath("../../CameraInput")
+player_model = NodePath("../../MilitaryMale")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")
+
+[node name="MoveState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_model", "player_input", "parent")]
+script = ExtResource("9_yw7u2")
+animation_name = "male_animation_lib/walk"
+camera_input = NodePath("../../CameraInput")
+player_model = NodePath("../../MilitaryMale")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")
+
+[node name="JumpState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_model", "player_input", "parent")]
+script = ExtResource("10_ak1iu")
+animation_name = "male_animation_lib/jump"
+camera_input = NodePath("../../CameraInput")
+player_model = NodePath("../../MilitaryMale")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")
+
+[node name="FallState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_model", "player_input", "parent")]
+script = ExtResource("11_28r1c")
+animation_name = "male_animation_lib/jump"
+camera_input = NodePath("../../CameraInput")
+player_model = NodePath("../../MilitaryMale")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")

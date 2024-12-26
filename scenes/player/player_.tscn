@@ -1,0 +1,146 @@
+[gd_scene load_steps=14 format=3 uid="uid://dup2jh8uleo3l"]
+
+[ext_resource type="Script" uid="uid://dc7w7oe3lm0eu" path="res://scripts/player.gd" id="1_u2qrv"]
+[ext_resource type="Script" uid="uid://dmq8tqsgyk1md" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_ktqdq"]
+[ext_resource type="PackedScene" uid="uid://bnpcdhkiv5rja" path="res://assets/characters/x_bot/x_bot.tscn" id="2_xfltk"]
+[ext_resource type="Script" uid="uid://coli4635g7qvd" path="res://addons/netfox.extras/state-machine/rewindable-state-machine.gd" id="3_lo6j0"]
+[ext_resource type="Script" uid="uid://dq6j6oqvo2r1v" path="res://addons/netfox/tick-interpolator.gd" id="4_a47yd"]
+[ext_resource type="PackedScene" uid="uid://l1d8hwvn7hbq" path="res://scenes/player/camera_input.tscn" id="4_g37aj"]
+[ext_resource type="Script" uid="uid://bbhybl3bvg0b6" path="res://scripts/states/movement/idle_state.gd" id="5_4l86x"]
+[ext_resource type="Script" uid="uid://btj80uq43ccmt" path="res://scripts/states/movement/jump_state.gd" id="6_a47yd"]
+[ext_resource type="Script" uid="uid://8ympfbj5i4hc" path="res://scripts/states/movement/fall_state.gd" id="8_4l86x"]
+[ext_resource type="Script" uid="uid://dlfbk4aggn6u1" path="res://scripts/states/movement/move_state.gd" id="8_a47yd"]
+[ext_resource type="Script" uid="uid://5oxt7p6a1uo8" path="res://scripts/player_input.gd" id="10_kusnb"]
+[ext_resource type="PackedScene" uid="uid://btdemgg0e0b4o" path="res://scenes/player/player_ui.tscn" id="12_ua4at"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y8poy"]
+
+[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "skeleton")]
+script = ExtResource("1_u2qrv")
+_player_input = NodePath("PlayerInput")
+_camera_input = NodePath("CameraInput")
+_player_model = NodePath("x_bot")
+_state_machine = NodePath("RewindableStateMachine")
+skeleton = NodePath("x_bot/Armature/GeneralSkeleton")
+
+[node name="x_bot" parent="." instance=ExtResource("2_xfltk")]
+
+[node name="GeneralSkeleton" parent="x_bot/Armature" index="0"]
+bones/1/position = Vector3(-3.55271e-14, 1.0427, -2.32831e-08)
+bones/1/rotation = Quaternion(1.82322e-07, 2.23274e-08, -9.84778e-07, 1)
+bones/2/rotation = Quaternion(-1.39698e-09, -2.23269e-08, 7.34268e-07, 1)
+bones/3/rotation = Quaternion(1.11967e-20, 3.91909e-14, -6.77902e-13, 1)
+bones/4/rotation = Quaternion(-7.45058e-09, -7.91034e-16, -1.05471e-14, 1)
+bones/5/rotation = Quaternion(3.72529e-09, -4.44089e-14, -2.29039e-13, 1)
+bones/6/rotation = Quaternion(-3.17637e-22, -8.88178e-16, 1.43219e-14, 1)
+bones/8/rotation = Quaternion(0.5, -0.5, -0.5, -0.5)
+bones/9/rotation = Quaternion(-2.08616e-07, 1, -8.9407e-08, -5.0664e-07)
+bones/10/rotation = Quaternion(-4.21468e-08, 0.707107, -4.21468e-08, 0.707107)
+bones/11/rotation = Quaternion(-1.96582e-07, -0.707105, 3.65169e-07, 0.707109)
+bones/12/rotation = Quaternion(-0.210382, -0.677397, -0.209507, 0.673037)
+bones/13/rotation = Quaternion(-0.00857145, 0.00425966, 0.000481129, 0.999954)
+bones/14/rotation = Quaternion(-0.00636509, 0.00315905, 0.0003995, 0.999975)
+bones/15/scale = Vector3(1.00058, 1.00049, 1.00015)
+bones/16/rotation = Quaternion(8.9407e-07, 5.96046e-08, 0.000164017, 1)
+bones/17/rotation = Quaternion(-8.9407e-08, -2.98023e-08, -0.000255644, 1)
+bones/18/rotation = Quaternion(-4.47035e-08, 5.96046e-08, 8.80808e-05, 1)
+bones/20/rotation = Quaternion(9.23872e-07, 2.98023e-08, 0.000501722, 1)
+bones/21/rotation = Quaternion(-8.9407e-08, 2.98023e-08, -0.000850022, 1)
+bones/22/rotation = Quaternion(-2.98023e-08, -2.98023e-08, 0.000322014, 1)
+bones/24/rotation = Quaternion(-2.98023e-08, 2.98023e-08, -0.000156373, 1)
+bones/25/rotation = Quaternion(-2.98023e-08, 2.98023e-08, 0.000221595, 1)
+bones/26/rotation = Quaternion(0, 0, 0.000112653, 1)
+bones/28/rotation = Quaternion(-4.55976e-06, 1.49012e-08, -0.000520244, 1)
+bones/29/rotation = Quaternion(1.49012e-07, -2.98023e-08, -0.000846416, 1)
+bones/30/rotation = Quaternion(1.49012e-08, 8.9407e-08, 0.000496611, 1)
+bones/32/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
+bones/33/rotation = Quaternion(-8.79168e-07, 1, 9.98378e-07, -2.98023e-08)
+bones/34/rotation = Quaternion(-4.21468e-08, -0.707107, 8.42937e-08, 0.707107)
+bones/35/rotation = Quaternion(5.45042e-07, 0.707107, 5.45042e-07, 0.707107)
+bones/36/rotation = Quaternion(-0.210905, 0.676919, 0.210144, 0.673156)
+bones/37/rotation = Quaternion(-0.00757469, -0.00376609, -0.000403136, 0.999964)
+bones/38/rotation = Quaternion(-0.00560211, -0.00278677, -0.000284195, 0.99998)
+bones/39/scale = Vector3(1.00058, 1.00049, 1.00015)
+bones/40/rotation = Quaternion(-8.34465e-07, 1.3411e-07, 4.45694e-05, 1)
+bones/41/rotation = Quaternion(-1.04308e-07, -5.96046e-08, -0.00010477, 1)
+bones/42/rotation = Quaternion(2.98023e-08, -2.98023e-08, 6.63102e-05, 1)
+bones/44/rotation = Quaternion(0, 5.96046e-08, 3.14116e-05, 1)
+bones/45/rotation = Quaternion(-4.47035e-08, 0, -2.09659e-05, 1)
+bones/46/rotation = Quaternion(1.49012e-08, 8.9407e-08, -2.09212e-05, 1)
+bones/48/rotation = Quaternion(-8.19564e-07, 5.96046e-08, -6.12438e-06, 1)
+bones/49/rotation = Quaternion(2.98023e-08, -2.98023e-08, 2.98023e-08, 1)
+bones/50/rotation = Quaternion(0, 5.96046e-08, -1.19209e-07, 1)
+bones/52/rotation = Quaternion(5.1409e-06, 1.19209e-07, -0.00204465, 0.999998)
+bones/53/rotation = Quaternion(-7.7486e-07, -5.96046e-08, 0.000210404, 1)
+bones/54/rotation = Quaternion(8.9407e-08, 1.49012e-08, 6.69211e-05, 1)
+bones/56/rotation = Quaternion(-2.26045e-08, 0.000672017, 1, -6.98541e-07)
+bones/57/rotation = Quaternion(2.75893e-10, 0.999999, -0.00134145, -5.66826e-10)
+bones/58/rotation = Quaternion(-1.11124e-08, 0.706633, -0.70758, 1.28085e-08)
+bones/59/rotation = Quaternion(6.52983e-11, 1, 2.98023e-08, 3.71547e-12)
+bones/61/rotation = Quaternion(-2.27273e-08, 0.000650286, 1, -7.08998e-07)
+bones/62/rotation = Quaternion(-9.88683e-10, 0.999999, -0.00129878, 1.41577e-08)
+bones/63/rotation = Quaternion(-1.10569e-08, 0.706648, -0.707565, 1.30782e-08)
+bones/64/rotation = Quaternion(1.17033e-10, 1, 0, 9.26995e-10)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_y8poy")
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_ktqdq")
+root = NodePath("..")
+state_properties = Array[String](["RewindableStateMachine:state", ":transform", ":velocity", "x_bot:transform"])
+input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis"])
+metadata/_custom_type_script = ExtResource("2_ktqdq")
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("4_a47yd")
+root = NodePath("..")
+properties = Array[String]([":transform", "x_bot:transform"])
+metadata/_custom_type_script = ExtResource("4_a47yd")
+
+[node name="RewindableStateMachine" type="Node" parent="."]
+script = ExtResource("3_lo6j0")
+metadata/_custom_type_script = ExtResource("3_lo6j0")
+
+[node name="IdleState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_model", "player_input", "parent")]
+script = ExtResource("5_4l86x")
+animation_name = "rifle aiming idle"
+camera_input = NodePath("../../CameraInput")
+player_model = NodePath("../../x_bot")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")
+
+[node name="JumpState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_model", "player_input", "parent")]
+script = ExtResource("6_a47yd")
+animation_name = "strafe (2)"
+camera_input = NodePath("../../CameraInput")
+player_model = NodePath("../../x_bot")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")
+
+[node name="MoveState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_model", "player_input", "parent")]
+script = ExtResource("8_a47yd")
+animation_name = "rifle run"
+camera_input = NodePath("../../CameraInput")
+player_model = NodePath("../../x_bot")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")
+
+[node name="FallState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_model", "player_input", "parent")]
+script = ExtResource("8_4l86x")
+animation_name = "strafe"
+camera_input = NodePath("../../CameraInput")
+player_model = NodePath("../../x_bot")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")
+
+[node name="CameraInput" parent="." node_paths=PackedStringArray("rollback_synchronizer") instance=ExtResource("4_g37aj")]
+rollback_synchronizer = NodePath("../RollbackSynchronizer")
+
+[node name="PlayerInput" type="Node" parent="."]
+script = ExtResource("10_kusnb")
+
+[node name="PlayerUi" parent="." instance=ExtResource("12_ua4at")]
+
+[editable path="x_bot"]
