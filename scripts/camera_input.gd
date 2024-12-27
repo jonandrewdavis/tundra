@@ -45,10 +45,10 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_camera(event.relative * CAMERA_MOUSE_ROTATION_SPEED)
 	
-	if event.is_action_pressed("right_click"):
+	if event.is_action_pressed("aim"):
 		_set_camera(CAMERA_SETTINGS_AIM)
 
-	if event.is_action_released("right_click"):
+	if event.is_action_released("aim"):
 		_set_camera(CAMERA_SETTINGS_DEFAULT)
 
 func _set_camera(_new_settings):

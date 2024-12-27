@@ -14,8 +14,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var bones: PhysicalBoneSimulator3D
 
 @onready var rollback_synchronizer = $RollbackSynchronizer
-
-signal ragdoll 
+@onready var weapons_manager = $RightHandBoneAttachment/WeaponsManager
 
 var _animation_player
 
@@ -36,13 +35,50 @@ func _ready():
 	# https://foxssake.github.io/netfox/netfox/tutorials/responsive-player-movement/#ownership
 	rollback_synchronizer.process_settings()
 	
-	ragdoll.connect(_on_ragdoll)
-	
 
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 	_force_update_is_on_floor()
 	if not is_on_floor():
 		apply_gravity(delta)
+
+
+# TODO: Not sure if this is the best way to call tick inputs...
+# TODO: Signals or direct calling?
+func sync_input():
+	if _player_input.interact_input:
+		toggle_ragdoll()
+
+	if _player_input.fire_input:
+		weapons_manager.shoot()
+	
+	if _player_input.reload_input:
+		weapons_manager.reload()
+		
+	if _player_input.melee_input:
+		weapons_manager.melee()	
+
+	if _player_input.switch_up_input:
+		weapons_manager.weapon_down()
+	
+	if _player_input.switch_down_input:
+		weapons_manager.weapon_up()
+
+	#if event.is_action_released("shoot"):
+		#if check_valid_weapon_slot():
+			#shot_count_update()
+
+	#if event.is_action_pressed("reload"):
+		#if check_valid_weapon_slot():
+			#reload()
+
+	#if event.is_action_pressed("drop"):
+		#if check_valid_weapon_slot():
+			#drop(current_weapon_slot)
+
+	#if event.is_action_pressed("melee"):
+		#if check_valid_weapon_slot():
+			#melee()
+
 
 # TODO: use statemachine to transition in AnimationStateTre
 # TODO: every or just sync: the interpolation
@@ -70,7 +106,7 @@ func _force_update_is_on_floor():
 
 var is_ragdoll = false
 
-func _on_ragdoll():
+func toggle_ragdoll():
 	if bones.active == false:
 		_animation_player.active = false
 		bones.active = true

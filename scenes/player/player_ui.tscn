@@ -1,4 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=8 format=3 uid="uid://btdemgg0e0b4o"]
+
+[ext_resource type="Texture2D" uid="uid://bjh5ic6qy4jtl" path="res://Player_Controller/HUD ASSETS/crosshair001.png" id="2_mo8vb"]
+[ext_resource type="Texture2D" uid="uid://uidicgaojgdi" path="res://Player_Controller/HUD ASSETS/crosshair046.png" id="3_nlx67"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyawr"]
 bg_color = Color(1, 1, 1, 1)
@@ -8,30 +11,147 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 anti_aliasing = false
 
-[node name="PlayerUi" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[sub_resource type="ImageTexture" id="ImageTexture_by614"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_en3kk"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_d61dg"]
+color = Color(0, 0, 0, 0)
+grow_begin = 6.0
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_g18nd"]
+color = Color(1, 1, 1, 1)
+thickness = 10
+
+[node name="PlayerUi" type="CanvasLayer"]
 
 [node name="Control" type="Control" parent="."]
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="Control"]
 layout_mode = 0
-offset_right = 5.0
-offset_bottom = 5.0
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 2.5
+offset_bottom = 2.5
 theme_override_styles/panel = SubResource("StyleBoxFlat_tyawr")
+
+[node name="Overlay" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="debug_hud" type="VBoxContainer" parent="."]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 142.0
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="debug_hud"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="debug_hud/HBoxContainer"]
+layout_mode = 2
+text = "Current Weapon: "
+
+[node name="CurrentWeapon" type="Label" parent="debug_hud/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="debug_hud"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="debug_hud/HBoxContainer2"]
+layout_mode = 2
+text = "Ammo:"
+
+[node name="CurrentAmmo" type="Label" parent="debug_hud/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="debug_hud"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="debug_hud/HBoxContainer3"]
+layout_mode = 2
+text = "Weapon Stack:"
+
+[node name="WeaponStack" type="Label" parent="debug_hud/HBoxContainer3"]
+layout_mode = 2
+
+[node name="MainSight" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_mo8vb")
+stretch_mode = 3
+
+[node name="HitSight" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_nlx67")
+stretch_mode = 3
+
+[node name="HitSightTimer" type="Timer" parent="HitSight"]
+wait_time = 0.05
+one_shot = true
+
+[node name="SprintBar" type="HSlider" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_icons/grabber = SubResource("ImageTexture_by614")
+theme_override_icons/grabber_disabled = SubResource("ImageTexture_en3kk")
+theme_override_styles/slider = SubResource("StyleBoxLine_d61dg")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_g18nd")
+value = 100.0
+editable = false
+scrollable = false
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5451, 0)
+cull_mask = 524288
+current = true

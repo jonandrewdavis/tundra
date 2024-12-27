@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ciu0xkaw0ioef"]
+
+[ext_resource type="Script" path="res://Player_Controller/Spawnable_Objects/SprayProfiles/spray_profile.gd" id="1_60v4d"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4msk4"]
+
+[sub_resource type="Curve2D" id="Curve2D_0vouc"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, -2, 0, 0, 0, 0, 0, -11, 0, 0, 0, 0, 1, -23, 0, 0, 0, 0, 2, -35, 0, 0, 0, 0, -4, -50, 0, 0, 0, 0, -7, -62, 0, 0, 0, 0, -12, -69, 0, 0, 0, 0, -6, -76, 0, 0, 0, 0, 12, -74, 0, 0, 0, 0, 9, -86, 0, 0, 0, 0, 16, -81, 0, 0, 0, 0, 21, -76, 0, 0, 0, 0, 19, -83, 0, 0, 0, 0, 23, -84, 0, 0, 0, 0, 36, -82, 0, 0, 0, 0, 35, -79, 0, 0, 0, 0, 28, -81, 0, 0, 0, 0, 23, -81, 0, 0, 0, 0, 5, -88, 0, 0, 0, 0, 2, -90, 0, 0, 0, 0, -6, -88, 0, 0, 0, 0, -10, -91, 0, 0, 0, 0, -12, -91, 0, 0, 0, 0, -13, -89, 0, 0, 0, 0, -13, -85, 0, 0, 0, 0, -15, -85, 0, 0, 0, 0, -16, -88, 0, 0, 0, 0, -19, -90, 0, 0, 0, 0, -20, -85)
+}
+point_count = 30
+
+[node name="Spray_Profile" type="Node" node_paths=PackedStringArray("Spray_Path")]
+script = ExtResource("1_60v4d")
+Spray_Noise = SubResource("FastNoiseLite_4msk4")
+Spray_Path = NodePath("Path2D")
+Path_Spray_Multiplier = 0.58
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_0vouc")

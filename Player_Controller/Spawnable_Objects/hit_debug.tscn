@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dguqnsdowqt3w"]
+
+[ext_resource type="Texture2D" uid="uid://clfvflhvcccy1" path="res://Player_Controller/Spawnable_Objects/Projectiles_To_Load/debug_sprite.png" id="1_smdbx"]
+[ext_resource type="Script" path="res://Player_Controller/scripts/Weapon_State_Machine/hit_debug.gd" id="2_gvqnn"]
+
+[node name="Node3D" type="Sprite3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+billboard = 2
+texture = ExtResource("1_smdbx")
+script = ExtResource("2_gvqnn")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
