@@ -37,17 +37,15 @@ func _ready():
 	
 
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
+	sync_input()
 	_force_update_is_on_floor()
 	if not is_on_floor():
 		apply_gravity(delta)
 
-
-# TODO: Not sure if this is the best way to call tick inputs...
-# TODO: Signals or direct calling?
 func sync_input():
 	if _player_input.interact_input:
-		toggle_ragdoll()
-
+		toggle_interact()
+	
 	if _player_input.fire_input:
 		weapons_manager.shoot()
 	
@@ -63,26 +61,9 @@ func sync_input():
 	if _player_input.switch_down_input:
 		weapons_manager.weapon_up()
 
-	#if event.is_action_released("shoot"):
-		#if check_valid_weapon_slot():
-			#shot_count_update()
-
-	#if event.is_action_pressed("reload"):
-		#if check_valid_weapon_slot():
-			#reload()
-
-	#if event.is_action_pressed("drop"):
-		#if check_valid_weapon_slot():
-			#drop(current_weapon_slot)
-
-	#if event.is_action_pressed("melee"):
-		#if check_valid_weapon_slot():
-			#melee()
-
-
 # TODO: use statemachine to transition in AnimationStateTre
 # TODO: every or just sync: the interpolation
-func _on_display_state_changed(old_state, new_state):	
+func _on_display_state_changed(_old_state, new_state):	
 	var animation_name = new_state.animation_name
 	if _animation_player && animation_name != "":
 		if animation_name == "rifle run" && _player_input.input_dir.y == 0:
@@ -104,7 +85,8 @@ func _force_update_is_on_floor():
 	move_and_slide()
 	velocity = old_velocity
 
-var is_ragdoll = false
+func toggle_interact():
+	pass
 
 func toggle_ragdoll():
 	if bones.active == false:

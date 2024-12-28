@@ -8,9 +8,11 @@ signal Hit_Successfull
 @export var Display_Debug_Decal: bool = true
 
 @export var Projectile_Velocity: int
-@export var Expirey_Time: int = 10
+@export var Expirey_Time: int = 5
 @export var Rigid_Body_Projectile: PackedScene
 @export var pass_through: bool = false
+
+@onready var world = get_tree().get_first_node_in_group("EnvironmentContainer")
 
 @onready var Debug_Bullet = preload("res://Player_Controller/Spawnable_Objects/hit_debug.tscn")
 
@@ -20,7 +22,8 @@ var hit_objects: Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	get_tree().create_timer(Expirey_Time).timeout.connect(_on_timer_timeout)
+	pass
+
 
 func _Set_Projectile(_damage: int = 0,_spread:Vector2 = Vector2.ZERO, _Range: int = 1000, origin_point: Vector3 = Vector3.ZERO):
 	damage = _damage
@@ -98,9 +101,9 @@ func Hit_Scan_damage(Collider, Direction, Position, _damage):
 func Load_Decal(_pos,_normal):
 	if Display_Debug_Decal:
 		var rd = Debug_Bullet.instantiate()
-		var world = get_tree().get_root()
-		world.add_child(rd)
-		rd.global_translate(_pos+(_normal*.01))
+		if world:
+			world.add_child(rd)
+			rd.global_translate(_pos+(_normal*.01))
 		
 func Launch_Rigid_Body_Projectile(Collision_Data, _projectile, _origin_point):
 	var _Point = Collision_Data[1]
@@ -110,7 +113,6 @@ func Launch_Rigid_Body_Projectile(Collision_Data, _projectile, _origin_point):
 
 	_proj.position = _origin_point
 
-	var world = get_tree().get_first_node_in_group("EnvironmentContainer")
 	world.add_child(_proj)
 	
 	_proj.look_at(_Point)	
@@ -120,19 +122,25 @@ func Launch_Rigid_Body_Projectile(Collision_Data, _projectile, _origin_point):
 	
 	var _Direction = (_Point - _origin_point).normalized()
 	_proj.set_linear_velocity(_Direction*Projectile_Velocity)
-
-func _on_body_entered(body, _proj, _norm):
-	if body.is_in_group("Target") && body.has_method("Hit_Successful"):
-		body.Hit_Successful(damage)
-		Hit_Successfull.emit()
-
-	Load_Decal(_proj.get_position(),_norm)
+	
+	# NOTE: Added, because in the previous implementation timer wasn't started, so...  - AD
+	await get_tree().create_timer(Expirey_Time).timeout
 	_proj.queue_free()
-		
 	Projectiles_Spawned.erase(_proj)
 	
 	if Projectiles_Spawned.is_empty():
 		queue_free()
 
-func _on_timer_timeout():
-	queue_free()
+# TODO: Add static typing. What is _norm?  It's sometimes missing.
+# NOTE: "invalid operands 'Nil' and 'float' in operator * caused at this call site - AD
+func _on_body_entered(body, _proj, _norm):
+	if body.is_in_group("Target") && body.has_method("Hit_Successful"):
+		body.Hit_Successful(damage)
+		Hit_Successfull.emit()
+
+	if _norm:
+		Load_Decal(_proj.get_position(),_norm)
+		_proj.queue_free()
+		Projectiles_Spawned.erase(_proj)
+		if Projectiles_Spawned.is_empty():
+			queue_free()

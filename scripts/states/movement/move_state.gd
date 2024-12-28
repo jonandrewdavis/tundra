@@ -4,9 +4,6 @@ func tick(delta, _tick, _is_fresh):
 	rotate_player_model(delta)
 	move_player(delta)
 
-	# NOTE: enables all input
-	parent.sync_input()
-
 	force_update_is_on_floor()
 	if parent.is_on_floor():
 		if get_movement_input() == Vector2.ZERO:

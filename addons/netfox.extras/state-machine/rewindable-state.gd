@@ -1,4 +1,3 @@
-@tool
 @icon("res://addons/netfox.extras/icons/rewindable-state.svg")
 extends Node
 class_name RewindableState

@@ -38,6 +38,7 @@ func _ready() -> void:
 	if weapon_stack.is_empty():
 		push_error("Weapon Stack is empty, please populate with weapons")
 	else:
+		animation_player.play("RESET")
 		animation_player.animation_finished.connect(_on_animation_finished)
 		for i in weapon_stack:
 			initialize(i) #current starts on the first weapon in the stack
