@@ -6,6 +6,8 @@ const JUMP_VELOCITY = 4.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+@export_category("BAD Template Variables")
+
 @export var _player_input : PlayerInput
 @export var _camera_input : CameraInput
 @export var _player_model : Node3D
@@ -14,9 +16,10 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var bones: PhysicalBoneSimulator3D
 
 @onready var rollback_synchronizer = $RollbackSynchronizer
-@onready var weapons_manager = $RightHandBoneAttachment/WeaponsManager
-
 var _animation_player
+
+@export_category("FPS Multiplayer")
+@export var weapons_manager: Node3D
 
 func _enter_tree():
 	_player_input.set_multiplayer_authority(str(name).to_int())
@@ -26,15 +29,14 @@ func _ready():
 	# Default state
 	_state_machine.state = &"IdleState"
 	_animation_player = _player_model.get_node("AnimationPlayer")
-	
-	print(_animation_player)
+	weapons_manager.player = self
+
 	# TODO: can this be moved to movement_state
 	_state_machine.on_display_state_changed.connect(_on_display_state_changed)
 
 	# call this after setting authority
 	# https://foxssake.github.io/netfox/netfox/tutorials/responsive-player-movement/#ownership
 	rollback_synchronizer.process_settings()
-	
 
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 	sync_input()
@@ -45,6 +47,9 @@ func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 func sync_input():
 	if _player_input.interact_input:
 		toggle_interact()
+		
+	if not weapons_manager:
+		return
 	
 	if _player_input.fire_input:
 		weapons_manager.shoot()
@@ -86,6 +91,7 @@ func _force_update_is_on_floor():
 	velocity = old_velocity
 
 func toggle_interact():
+	toggle_ragdoll()
 	pass
 
 func toggle_ragdoll():

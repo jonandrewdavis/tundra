@@ -20,10 +20,13 @@ var damage: float = 0
 var Projectiles_Spawned = []
 var hit_objects: Array = []
 
+# TODO: un hardcode viewport -AD
+var _Camera: Camera3D
+var _Viewport = Vector2i(1152, 648)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-
 
 func _Set_Projectile(_damage: int = 0,_spread:Vector2 = Vector2.ZERO, _Range: int = 1000, origin_point: Vector3 = Vector3.ZERO):
 	damage = _damage
@@ -44,8 +47,7 @@ func _over_ride_collision(_camera_collision:Array, _damage: float) -> void:
 	pass
 
 func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
-	var _Camera = get_viewport().get_camera_3d()
-	var _Viewport = get_viewport().get_size()
+
 	
 	var Ray_Origin = _Camera.project_ray_origin(_Viewport/2)
 	var Ray_End = (Ray_Origin + _Camera.project_ray_normal((_Viewport/2)+Vector2i(_spread))*_range)

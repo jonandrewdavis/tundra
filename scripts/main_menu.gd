@@ -8,7 +8,7 @@ func _ready():
 		print("Calling host game...")
 		NetworkManager.host_game()
 		get_tree().call_deferred(&"change_scene_to_packed", load(GAME_SCENE))
-
+		
 func host_game():
 	print("Host game pressed")
 	NetworkManager.host_game()

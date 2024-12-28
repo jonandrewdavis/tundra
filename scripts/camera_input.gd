@@ -7,9 +7,7 @@ class_name CameraInput extends Node3D
 
 var camera_basis : Basis = Basis.IDENTITY
 
-
 @onready var camera_spring: SpringArm3D = $CameraMount/CameraRot/SpringArm3D
-
 
 const CAMERA_SETTINGS_DEFAULT = {
 	height = 1.6,
@@ -67,4 +65,4 @@ func rotate_camera(move):
 
 func get_camera_rotation_basis() -> Basis:
 	# Use camera_mount here so we don't have to worry about correcting for lean
-	return camera_mount.global_transform.basis 
+	return camera_mount.global_transform.basis
