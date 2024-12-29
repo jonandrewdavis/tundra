@@ -1,12 +1,9 @@
-[gd_scene load_steps=39 format=4 uid="uid://cf6jco7ctb45m"]
+[gd_scene load_steps=34 format=4 uid="uid://cf6jco7ctb45m"]
 
 [ext_resource type="Script" uid="uid://cwoo1b16el33m" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd" id="1_doyh4"]
 [ext_resource type="Script" uid="uid://dphmvwbbu21nt" path="res://Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd" id="2_7guwf"]
 [ext_resource type="Resource" uid="uid://c1jg0ifn7yvve" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres" id="3_mxtia"]
-[ext_resource type="Resource" uid="uid://yc1f2j7pl4vr" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterI.tres" id="4_t0o02"]
 [ext_resource type="Resource" uid="uid://bwrs8ensewkgc" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres" id="5_vvh84"]
-[ext_resource type="Resource" uid="uid://cd8msvjysh2uv" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterM.tres" id="6_7ud1n"]
-[ext_resource type="Resource" uid="uid://dgayjkjx4mckc" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterQ.tres" id="7_caocq"]
 [ext_resource type="AnimationLibrary" uid="uid://uybino34n0sj" path="res://Player_Controller/weapon_animation.res" id="8_jok0v"]
 [ext_resource type="ArrayMesh" uid="uid://msm283ivq167" path="res://assets/weapons_saved_meshes/smg_green.res" id="9_e4dbp"]
 [ext_resource type="ArrayMesh" uid="uid://coj4khqco02qe" path="res://assets/weapons_saved_meshes/rifle.res" id="9_ygyma"]
@@ -14,39 +11,18 @@
 [ext_resource type="ArrayMesh" uid="uid://bc8u3d8edjkp8" path="res://assets/weapons_saved_meshes/smg.res" id="12_138mc"]
 [ext_resource type="ArrayMesh" uid="uid://oti3spl6xbsy" path="res://assets/weapons_saved_meshes/rocket.res" id="12_nh1ok"]
 
-[sub_resource type="Resource" id="Resource_rfa1s"]
-script = ExtResource("2_7guwf")
-weapon = ExtResource("3_mxtia")
-current_ammo = 5
-reserve_ammo = 9999
-metadata/_custom_type_script = ExtResource("2_7guwf")
-
-[sub_resource type="Resource" id="Resource_lbi80"]
-script = ExtResource("2_7guwf")
-weapon = ExtResource("4_t0o02")
-current_ammo = 30
-reserve_ammo = 9999
-metadata/_custom_type_script = ExtResource("2_7guwf")
-
-[sub_resource type="Resource" id="Resource_tw7a2"]
+[sub_resource type="Resource" id="Resource_ygyma"]
 script = ExtResource("2_7guwf")
 weapon = ExtResource("5_vvh84")
-current_ammo = 30
-reserve_ammo = 9999
+current_ammo = 0
+reserve_ammo = 0
 metadata/_custom_type_script = ExtResource("2_7guwf")
 
-[sub_resource type="Resource" id="Resource_40b22"]
+[sub_resource type="Resource" id="Resource_e4dbp"]
 script = ExtResource("2_7guwf")
-weapon = ExtResource("6_7ud1n")
-current_ammo = 9
-reserve_ammo = 9999
-metadata/_custom_type_script = ExtResource("2_7guwf")
-
-[sub_resource type="Resource" id="Resource_7dsqm"]
-script = ExtResource("2_7guwf")
-weapon = ExtResource("7_caocq")
-current_ammo = 2
-reserve_ammo = 9999
+weapon = ExtResource("3_mxtia")
+current_ammo = 0
+reserve_ammo = 0
 metadata/_custom_type_script = ExtResource("2_7guwf")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ccmxt"]
@@ -71,7 +47,6 @@ metallic = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b8jdr"]
 resource_name = "_defaultMat"
-albedo_color = Color(1, 1, 1, 1)
 metallic = 1.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_7y37e"]
@@ -832,11 +807,19 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_tw7a2"]
 size = Vector3(0.645, 0.315, 0.405)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1dvfb"]
+properties/0/path = NodePath(".:weapons_owned")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:weapon_index")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="WeaponsManager" type="Node3D" node_paths=PackedStringArray("animation_player", "melee_hitbox")]
 script = ExtResource("1_doyh4")
-weapon_stack = Array[ExtResource("2_7guwf")]([SubResource("Resource_rfa1s"), SubResource("Resource_lbi80"), SubResource("Resource_tw7a2"), SubResource("Resource_40b22"), SubResource("Resource_7dsqm")])
-animation_player = NodePath("Weapons_Models/AnimationPlayer")
+animation_player = NodePath("Weapons_Models/WeaponsPlayer")
 melee_hitbox = NodePath("Melee_Hitbox")
+weapons_list = Array[ExtResource("2_7guwf")]([SubResource("Resource_ygyma"), SubResource("Resource_e4dbp")])
 
 [node name="Weapons_Models" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54919, 0)
@@ -882,15 +865,13 @@ visible = false
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models/blasterQ2"]
 mesh = ExtResource("12_nh1ok")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapons_Models"]
-unique_name_in_owner = true
+[node name="WeaponsPlayer" type="AnimationPlayer" parent="Weapons_Models"]
 libraries = {
 &"": SubResource("AnimationLibrary_ys4uk"),
 &"Global": ExtResource("8_jok0v")
 }
 
 [node name="BulletPoint" type="Marker3D" parent="."]
-unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.266143, -0.288234, -0.779217)
 gizmo_extents = 0.21
 
@@ -899,3 +880,6 @@ shape = SubResource("BoxShape3D_tw7a2")
 target_position = Vector3(0, 0, -0.7)
 collision_mask = 36
 debug_shape_custom_color = Color(0, 1, 0, 1)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_1dvfb")

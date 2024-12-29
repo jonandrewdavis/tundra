@@ -8,6 +8,10 @@ func _ready():
 		print("Calling host game...")
 		NetworkManager.host_game()
 		get_tree().call_deferred(&"change_scene_to_packed", load(GAME_SCENE))
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed('ui_cancel'):
+		get_tree().quit()
 		
 func host_game():
 	print("Host game pressed")

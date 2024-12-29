@@ -49,6 +49,3 @@ func get_run() -> bool:
 	
 func get_jump() -> float:
 	return player_input.jump_input
-
-func get_interact():
-	return player_input.interact_input

@@ -1,4 +1,5 @@
-class_name Player extends CharacterBody3D
+extends CharacterBody3D
+class_name Player
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -29,7 +30,6 @@ func _ready():
 	# Default state
 	_state_machine.state = &"IdleState"
 	_animation_player = _player_model.get_node("AnimationPlayer")
-	weapons_manager.player = self
 
 	# TODO: can this be moved to movement_state
 	_state_machine.on_display_state_changed.connect(_on_display_state_changed)
@@ -37,34 +37,42 @@ func _ready():
 	# call this after setting authority
 	# https://foxssake.github.io/netfox/netfox/tutorials/responsive-player-movement/#ownership
 	rollback_synchronizer.process_settings()
+	
+	# Allow raycast shooting from camera position
+	weapons_manager.player_camera_3D = _camera_input.camera_3D
 
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
-	sync_input()
 	_force_update_is_on_floor()
 	if not is_on_floor():
 		apply_gravity(delta)
 
-func sync_input():
-	if _player_input.interact_input:
-		toggle_interact()
-		
-	if not weapons_manager:
-		return
-	
-	if _player_input.fire_input:
-		weapons_manager.shoot()
-	
-	if _player_input.reload_input:
-		weapons_manager.reload()
-		
-	if _player_input.melee_input:
-		weapons_manager.melee()	
+# TODO: Fully document all the findings from this approach.
+# NOTE: The way this works is:
+# - Process runs in `player_input.gd` 
+# - If an input happens, it calls this RPC from the client
+# - The resulting RPC only happens on remote (server) ("call_remote" is implied here, but not needed)
+# - The `WeaponsManager` uses `MultiplayerSyncronizer` for visiblity, sound, animation_player, etc.
+# - This syncs the important properties to all clients (including the local caller [source player]).
 
-	if _player_input.switch_up_input:
-		weapons_manager.weapon_down()
-	
-	if _player_input.switch_down_input:
-		weapons_manager.weapon_up()
+# NOTE: Do not add "call_local" or the puppet's weapons_manager can do things. We should ignore those
+# in order to be deterministic / reliable. Basically, trying to run this: local authorative, but
+# in server rollback sucked. Still don't fully understand.
+
+func process_player_input(input_string: StringName):
+	return
+	#match input_string:
+		#"interact":
+			#toggle_interact.rpc()
+		#"shoot":
+			#weapons_manager.shoot.rpc()
+		#"switch_up":
+			#weapons_manager.weapon_up.rpc()
+		#"switch_down":
+			#weapons_manager.weapon_down.rpc()
+		#"reload":
+			#weapons_manager.reload.rpc()
+		#"melee":
+			#weapons_manager.melee.rpc()
 
 # TODO: use statemachine to transition in AnimationStateTre
 # TODO: every or just sync: the interpolation
@@ -77,29 +85,31 @@ func _on_display_state_changed(_old_state, new_state):
 			else:
 				_animation_player.play("strafe (2)")
 		else:
-			# print("Play animation %s" % animation_name)
 			_animation_player.play(animation_name)
 
 func apply_gravity(delta):
 	velocity.y -= gravity * delta
-				
-# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-on-floor
+
 func _force_update_is_on_floor():
 	var old_velocity = velocity
 	velocity *= 0
 	move_and_slide()
 	velocity = old_velocity
 
+@rpc("any_peer", "reliable")
 func toggle_interact():
-	toggle_ragdoll()
-	pass
+	if multiplayer.is_server():
+		toggle_ragdoll.rpc()
 
+@rpc("authority", "reliable")
 func toggle_ragdoll():
 	if bones.active == false:
 		_animation_player.active = false
+		$CollisionShape3D.disabled = true	
 		bones.active = true
 		bones.physical_bones_start_simulation()
 	else:
 		_animation_player.active = true
+		$CollisionShape3D.disabled = false	
 		bones.active = false
 		bones.physical_bones_stop_simulation()

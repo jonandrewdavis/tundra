@@ -46,9 +46,7 @@ func Fire_Projectile(_spread: Vector2 ,_range: int, _proj:PackedScene, origin_po
 func _over_ride_collision(_camera_collision:Array, _damage: float) -> void:
 	pass
 
-func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
-
-	
+func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):	
 	var Ray_Origin = _Camera.project_ray_origin(_Viewport/2)
 	var Ray_End = (Ray_Origin + _Camera.project_ray_normal((_Viewport/2)+Vector2i(_spread))*_range)
 	var New_Intersection:PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
