@@ -14,15 +14,15 @@
 [sub_resource type="Resource" id="Resource_ygyma"]
 script = ExtResource("2_7guwf")
 weapon = ExtResource("5_vvh84")
-current_ammo = 0
-reserve_ammo = 0
+current_ammo = 30
+reserve_ammo = 9999
 metadata/_custom_type_script = ExtResource("2_7guwf")
 
 [sub_resource type="Resource" id="Resource_e4dbp"]
 script = ExtResource("2_7guwf")
 weapon = ExtResource("3_mxtia")
-current_ammo = 0
-reserve_ammo = 0
+current_ammo = 5
+reserve_ammo = 9999
 metadata/_custom_type_script = ExtResource("2_7guwf")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ccmxt"]

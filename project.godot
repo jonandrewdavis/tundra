@@ -35,6 +35,8 @@ enabled=PackedStringArray("res://addons/netfox.extras/plugin.cfg", "res://addons
 [global_group]
 
 EnvironmentContainer="Used to spawn objects like bullets, etc."
+targets="Can be damaged"
+players="humans lol"
 
 [input]
 

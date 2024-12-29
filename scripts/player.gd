@@ -45,7 +45,8 @@ func _ready():
 	
 	# Allow raycast shooting from camera position
 	weapons_manager.player_camera_3D = _camera_input.camera_3D
-
+	weapons_manager.player_input = _player_input
+	
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 	_force_update_is_on_floor()
 	if not is_on_floor():

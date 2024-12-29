@@ -4,20 +4,7 @@ class_name PlayerInput
 var input_dir : Vector2 = Vector2.ZERO
 var jump_input = false
 var run_input = false
-
-var interact_input = false
-var fire_input = false
-var switch_up_input = false
-var switch_down_input = false
-var reload_input = false
-var melee_input = false
-#
-#var _interact_input = false
-#var _fire_input = false
-#var _switch_up_input = false
-#var _switch_down_input = false
-#var _reload_input = false
-#var _melee_input = false
+var shoot_input = false
 
 func _ready():
 	if is_multiplayer_authority():
@@ -25,7 +12,6 @@ func _ready():
 	else: 
 		set_process(false)
 
-# TODO: Emit signals instead of calling directly?
 func _process(_delta):
 	if Input.is_action_just_pressed("interact"): 
 		get_parent().process_player_input.rpc("interact")
@@ -51,3 +37,4 @@ func _gather():
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
 	jump_input = Input.is_action_pressed("jump")
 	run_input = Input.is_action_pressed("run")
+	shoot_input = Input.is_action_pressed("shoot")
