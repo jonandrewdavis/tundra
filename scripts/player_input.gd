@@ -28,22 +28,22 @@ func _ready():
 # TODO: Emit signals instead of calling directly?
 func _process(_delta):
 	if Input.is_action_just_pressed("interact"): 
-		get_parent().process_player_input("interact")
+		get_parent().process_player_input.rpc("interact")
 
 	if Input.is_action_just_pressed("shoot"): 
-		get_parent().process_player_input("shoot")
+		get_parent().process_player_input.rpc("shoot")
 
 	if Input.is_action_just_pressed("weapon_up"):
-		get_parent().process_player_input("weapon_up")
+		get_parent().process_player_input.rpc("weapon_up")
 
 	if Input.is_action_just_pressed("weapon_down"):
-		get_parent().process_player_input("weapon_down")
+		get_parent().process_player_input.rpc("weapon_down")
 
 	if  Input.is_action_just_pressed("reload"):
-		get_parent().process_player_input("reload")
+		get_parent().process_player_input.rpc("reload")
 
 	if Input.is_action_just_pressed("melee"):
-		get_parent().process_player_input("melee")
+		get_parent().process_player_input.rpc("melee")
 
 
 # NOTE: Do not forget to add new inputs to the RollbackSyncronizer!! (IF... you want them to rollback)

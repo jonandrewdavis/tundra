@@ -20,7 +20,12 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var _animation_player
 
 @export_category("FPS Multiplayer")
-@export var weapons_manager: Node3D
+@export var weapons_manager: WeaponsManager
+
+# TODO: remove once debug done
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed('ui_cancel'):
+		get_tree().quit()
 
 func _enter_tree():
 	_player_input.set_multiplayer_authority(str(name).to_int())
@@ -58,11 +63,19 @@ func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 # in order to be deterministic / reliable. Basically, trying to run this: local authorative, but
 # in server rollback sucked. Still don't fully understand.
 
+@rpc("any_peer", "call_local", "reliable")
 func process_player_input(input_string: StringName):
-	return
+	match input_string:
+		"weapon_up":
+			weapons_manager.change_weapon(weapons_manager.CHANGE_DIR.UP)
+		"weapon_down":
+			weapons_manager.change_weapon(weapons_manager.CHANGE_DIR.DOWN)
+		"shoot":
+			weapons_manager.shoot()
+		"interact":
+			toggle_interact()
+
 	#match input_string:
-		#"interact":
-			#toggle_interact.rpc()
 		#"shoot":
 			#weapons_manager.shoot.rpc()
 		#"switch_up":
@@ -96,20 +109,20 @@ func _force_update_is_on_floor():
 	move_and_slide()
 	velocity = old_velocity
 
-@rpc("any_peer", "reliable")
 func toggle_interact():
-	if multiplayer.is_server():
-		toggle_ragdoll.rpc()
+	toggle_ragdoll()
 
-@rpc("authority", "reliable")
+# TODO: Adjust influence. Move to state, change input allowed, etc.
 func toggle_ragdoll():
 	if bones.active == false:
 		_animation_player.active = false
-		$CollisionShape3D.disabled = true	
+		if not multiplayer.is_server():
+			$CollisionShape3D.disabled = true	
 		bones.active = true
 		bones.physical_bones_start_simulation()
 	else:
 		_animation_player.active = true
-		$CollisionShape3D.disabled = false	
+		if not multiplayer.is_server():
+			$CollisionShape3D.disabled = false	
 		bones.active = false
 		bones.physical_bones_stop_simulation()
