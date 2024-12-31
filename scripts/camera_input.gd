@@ -6,6 +6,7 @@ class_name CameraInput extends Node3D
 @export var rollback_synchronizer : RollbackSynchronizer
 
 var camera_basis : Basis = Basis.IDENTITY
+var camera_look : float = 0.0
 
 @onready var camera_spring: SpringArm3D = $CameraMount/CameraRot/SpringArm3D
 
@@ -38,6 +39,8 @@ func _ready():
 
 func _gather():
 	camera_basis = get_camera_rotation_basis()
+	camera_look = get_camera_vertical_look()
+	
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -63,6 +66,11 @@ func rotate_camera(move):
 	# Vertical camera movement
 	camera_rot.rotation.x = clamp(camera_rot.rotation.x + (CAMERA_UP_DOWN_MOVEMENT * move.y), CAMERA_X_ROT_MIN, CAMERA_X_ROT_MAX)
 
+
 func get_camera_rotation_basis() -> Basis:
 	# Use camera_mount here so we don't have to worry about correcting for lean
 	return camera_mount.global_transform.basis
+
+func get_camera_vertical_look() -> float:
+	return camera_rot.rotation.x
+	

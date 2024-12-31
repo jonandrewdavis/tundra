@@ -823,6 +823,7 @@ weapons_list = Array[ExtResource("2_7guwf")]([SubResource("Resource_ygyma"), Sub
 
 [node name="Weapons_Models" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54919, 0)
+visible = false
 
 [node name="blasterN" type="Node3D" parent="Weapons_Models"]
 transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0.193, 1.255, -0.643)

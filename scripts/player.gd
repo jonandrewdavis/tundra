@@ -21,6 +21,7 @@ var _animation_player
 
 @export_category("FPS Multiplayer")
 @export var weapons_manager: WeaponsManager
+@export var WeaponPivot: Marker3D
 
 # TODO: remove once debug done
 func _input(event: InputEvent) -> void:
@@ -49,6 +50,7 @@ func _ready():
 	
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 	_force_update_is_on_floor()
+	
 	if not is_on_floor():
 		apply_gravity(delta)
 
@@ -73,22 +75,14 @@ func process_player_input(input_string: StringName):
 			weapons_manager.change_weapon(weapons_manager.CHANGE_DIR.DOWN)
 		"shoot":
 			weapons_manager.shoot()
+		"reload":
+			weapons_manager.reload()
+		"melee":
+			weapons_manager.melee()
 		"interact":
 			toggle_interact()
 
-	#match input_string:
-		#"shoot":
-			#weapons_manager.shoot.rpc()
-		#"switch_up":
-			#weapons_manager.weapon_up.rpc()
-		#"switch_down":
-			#weapons_manager.weapon_down.rpc()
-		#"reload":
-			#weapons_manager.reload.rpc()
-		#"melee":
-			#weapons_manager.melee.rpc()
-
-# TODO: use statemachine to transition in AnimationStateTre
+# TODO: Use statemachine to transition in AnimationStateTre
 # TODO: every or just sync: the interpolation
 func _on_display_state_changed(_old_state, new_state):	
 	var animation_name = new_state.animation_name

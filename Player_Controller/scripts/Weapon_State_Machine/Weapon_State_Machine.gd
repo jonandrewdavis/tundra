@@ -115,6 +115,7 @@ func load_projectile(spread):
 	var bullet_point_origin = bullet_point.global_position
 	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point_origin)
 
+
 func shoot():
 	if can_fire() == false:
 		return
@@ -153,7 +154,6 @@ func _on_animation_finished(animation_finished_name):
 func _auto_fire_shoot():
 	if get_weapon(weapon_index).auto_fire && player_input.shoot_input:
 		shoot()
-
 
 func reload() -> void:
 	# Added

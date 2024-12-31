@@ -30,23 +30,23 @@ func _ready() -> void:
 
 func _Set_Projectile(_damage: int = 0,_spread:Vector2 = Vector2.ZERO, _Range: int = 1000, origin_point: Vector3 = Vector3.ZERO):
 	damage = _damage
-	Fire_Projectile(_spread,_Range,Rigid_Body_Projectile, origin_point)
+	Fire_Projectile(_spread, _Range, Rigid_Body_Projectile, origin_point)
 
 func Fire_Projectile(_spread: Vector2 ,_range: int, _proj:PackedScene, origin_point: Vector3):
 	var Camera_Collision = Camera_Ray_Cast(_spread,_range)
 	
 	match Projectile_Type:
 		"Hitscan":
-			Hit_Scan_Collision(Camera_Collision, damage,origin_point)
+			Hit_Scan_Collision(Camera_Collision, damage, origin_point)
 		"Rigidbody_Projectile":
-			Launch_Rigid_Body_Projectile(Camera_Collision, Rigid_Body_Projectile,origin_point)
+			Launch_Rigid_Body_Projectile(Camera_Collision, Rigid_Body_Projectile, origin_point)
 		"over_ride":
 			_over_ride_collision(Camera_Collision, damage)
 
 func _over_ride_collision(_camera_collision:Array, _damage: float) -> void:
 	pass
 
-func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):	
+func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
 	var Ray_Origin = _Camera.project_ray_origin(_Viewport/2)
 	var Ray_End = (Ray_Origin + _Camera.project_ray_normal((_Viewport/2)+Vector2i(_spread))*_range)
 	var New_Intersection:PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
@@ -66,7 +66,7 @@ func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
 	if Collision[0]:
 		Load_Decal(Point, Collision[2])
 		
-		if Collision[0].is_in_group("Target"):
+		if Collision[0].is_in_group("targets"):
 			var Bullet = get_world_3d().direct_space_state
 
 			var Bullet_Direction = (Point - origin_point).normalized()
@@ -93,10 +93,9 @@ func check_pass_through(collider: Node3D, rid: RID)-> bool:
 	return valid_pass_though
 
 func Hit_Scan_damage(Collider, Direction, Position, _damage):
-	if Collider.is_in_group("Target") and Collider.has_method("Hit_Successful"):
+	if Collider.is_in_group("targets") and Collider.has_method("Hit_Successful"):
 		Hit_Successfull.emit()
 		Collider.Hit_Successful(_damage, Direction, Position)
-
 
 func Load_Decal(_pos,_normal):
 	if Display_Debug_Decal:
@@ -105,23 +104,23 @@ func Load_Decal(_pos,_normal):
 			world.add_child(rd)
 			rd.global_translate(_pos+(_normal*.01))
 		
-func Launch_Rigid_Body_Projectile(Collision_Data, _projectile, _origin_point):
-	var _Point = Collision_Data[1]
-	var _Norm = Collision_Data[2]
+func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
+	var point = collision_data[1]
+	var  norm = collision_data[2]
 
-	var _proj = _projectile.instantiate()
+	var _proj = projectile.instantiate()
 
-	_proj.position = _origin_point
+	_proj.position = origin_point
 
 	world.add_child(_proj)
 	
-	_proj.look_at(_Point)	
+	_proj.look_at(point)	
 	Projectiles_Spawned.push_back(_proj)
 
-	_proj.body_entered.connect(_on_body_entered.bind(_proj,_Norm))
+	_proj.body_entered.connect(_on_body_entered.bind(_proj, norm))
 	
-	var _Direction = (_Point - _origin_point).normalized()
-	_proj.set_linear_velocity(_Direction*Projectile_Velocity)
+	var _direction = (point - origin_point).normalized()
+	_proj.set_linear_velocity( _direction* Projectile_Velocity)
 	
 	# NOTE: Added, because in the previous implementation timer wasn't started, so...  - AD
 	await get_tree().create_timer(Expirey_Time).timeout
@@ -134,7 +133,7 @@ func Launch_Rigid_Body_Projectile(Collision_Data, _projectile, _origin_point):
 # TODO: Add static typing. What is _norm?  It's sometimes missing.
 # NOTE: "invalid operands 'Nil' and 'float' in operator * caused at this call site - AD
 func _on_body_entered(body, _proj, _norm):
-	if body.is_in_group("Target") && body.has_method("Hit_Successful"):
+	if body.is_in_group("targets") && body.has_method("Hit_Successful"):
 		body.Hit_Successful(damage)
 		Hit_Successfull.emit()
 

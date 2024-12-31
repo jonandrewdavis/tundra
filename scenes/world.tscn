@@ -76,3 +76,7 @@ spawn_path = NodePath("../PlayerContainer")
 
 [node name="EnvironmentSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../EnvironmentContainer")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.162393, 0.445573, -0.880394, -0.0673107, 0.885156, 0.460399, 0.984428, 0.134025, -0.113751, -16.9112, 4.77424, -5.52117)
+current = true
