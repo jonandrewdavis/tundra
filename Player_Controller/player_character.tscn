@@ -1,9 +1,9 @@
 [gd_scene load_steps=42 format=3 uid="uid://oc13h3au02ro"]
 
 [ext_resource type="Script" uid="uid://d1vg56twsu1ur" path="res://Player_Controller/scripts/Player_Character/player_character.gd" id="1_h0t42"]
-[ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://Player_Controller/scripts/Player_Character/HUD.gd" id="2_tvwwj"]
-[ext_resource type="Texture2D" uid="uid://bjh5ic6qy4jtl" path="res://Player_Controller/HUD ASSETS/crosshair001.png" id="3_7f0mw"]
-[ext_resource type="Texture2D" uid="uid://uidicgaojgdi" path="res://Player_Controller/HUD ASSETS/crosshair046.png" id="4_l32wb"]
+[ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/HUD.gd" id="2_tvwwj"]
+[ext_resource type="Texture2D" uid="uid://bjh5ic6qy4jtl" path="res://assets/HUD ASSETS/crosshair001.png" id="3_7f0mw"]
+[ext_resource type="Texture2D" uid="uid://uidicgaojgdi" path="res://assets/HUD ASSETS/crosshair046.png" id="4_l32wb"]
 [ext_resource type="Script" uid="uid://cfgvniwyo5waf" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="9_edul2"]
 [ext_resource type="Script" uid="uid://cgycqse80cops" path="res://addons/netfox/tick-interpolator.gd" id="10_5l080"]
 [ext_resource type="Script" uid="uid://5oxt7p6a1uo8" path="res://scripts/player_input.gd" id="11_saypb"]
@@ -390,17 +390,10 @@ albedo_color = Color(1, 0.203922, 1, 1)
 [sub_resource type="PrismMesh" id="PrismMesh_usrbt"]
 size = Vector3(0.4, 0.4, 0.4)
 
-[node name="Player_Character" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "animation_tree", "crouch_collision", "sprint_timer", "coyote_timer")]
+[node name="Player_Character" type="CharacterBody3D"]
 collision_layer = 2
 floor_max_angle = 0.872665
 script = ExtResource("1_h0t42")
-_player_input = NodePath("Input")
-animation_tree = NodePath("AnimationTree")
-crouch_toggle = true
-crouch_collision = NodePath("CrouchCollider")
-sprint_timer = NodePath("SprintTimer")
-acceleration = 20.0
-coyote_timer = NodePath("CoyoteTimer")
 metadata/_edit_group_ = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

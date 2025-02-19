@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b4u1aps21ij72"]
-
-[ext_resource type="ArrayMesh" uid="uid://cplawv7lnil5a" path="res://assets/interactable/crusher.obj" id="1_e1mke"]
-
-[node name="Crusher" type="Node3D"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.002, 0, 0, 0, 0.002, 0, 0, 0, 0.002, 0, 0, 0)
-mesh = ExtResource("1_e1mke")

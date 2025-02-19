@@ -1,15 +1,7 @@
-[gd_scene load_steps=59 format=4 uid="uid://76qjebprfqxa"]
+[gd_scene load_steps=56 format=4 uid="uid://76qjebprfqxa"]
 
 [ext_resource type="Script" uid="uid://cwoo1b16el33m" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd" id="1_xv60b"]
-[ext_resource type="Script" uid="uid://dphmvwbbu21nt" path="res://Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd" id="2_7bere"]
-[ext_resource type="Resource" uid="uid://bwrs8ensewkgc" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres" id="3_kr5e0"]
 [ext_resource type="AnimationLibrary" uid="uid://uybino34n0sj" path="res://Player_Controller/weapon_animation.res" id="4_sej0x"]
-
-[sub_resource type="Resource" id="Resource_4pcyg"]
-script = ExtResource("2_7bere")
-weapon = ExtResource("3_kr5e0")
-current_ammo = 30
-reserve_ammo = 60
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0fswt"]
 resource_name = "dark"
@@ -1427,7 +1419,6 @@ current = true
 script = ExtResource("1_xv60b")
 animation_player = NodePath("Weapons_Models/AnimationPlayer")
 melee_hitbox = NodePath("Melee_Hitbox")
-weapon_stack = Array[ExtResource("2_7bere")]([SubResource("Resource_4pcyg")])
 
 [node name="Weapons_Models" type="Node3D" parent="LeanPivot/MainCamera/Weapons_Manager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54919, 0)

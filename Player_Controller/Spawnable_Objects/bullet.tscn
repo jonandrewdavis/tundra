@@ -7,10 +7,10 @@ height = 0.419677
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x0fj0"]
 resource_name = "yellow"
 vertex_color_use_as_albedo = true
-albedo_color = Color(0.0627451, 0.639216, 0.576471, 1)
+albedo_color = Color(0.807843, 0.737255, 0, 1)
 metallic = 1.0
 emission_enabled = true
-emission = Color(0, 0.960784, 0.960784, 1)
+emission = Color(0.876515, 0.87064, 0.399843, 1)
 emission_energy_multiplier = 1.78
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ly6dy"]
@@ -55,6 +55,7 @@ max_contacts_reported = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+visible = false
 shape = SubResource("CapsuleShape3D_bix2d")
 
 [node name="foamBulletA2" type="MeshInstance3D" parent="."]

@@ -28,6 +28,11 @@ const CAMERA_X_ROT_MAX := deg_to_rad(70)
 const CAMERA_UP_DOWN_MOVEMENT = -1
 
 func _ready():
+	#TODO: Document cases where this helps prevent jitter.
+	#TODO: Disabling physics on the client helps the server & client not fight over positioning 
+	if multiplayer.is_server() == false:
+		set_physics_process(false)
+		
 	_set_camera(CAMERA_SETTINGS_DEFAULT)
 	NetworkTime.before_tick_loop.connect(_gather)
 	

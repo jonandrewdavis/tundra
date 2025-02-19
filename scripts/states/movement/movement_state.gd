@@ -3,8 +3,8 @@ extends RewindableState
 
 # A base movement state for common functions, extend when making new movement state.
 
-const WALK_SPEED := 5.0
-const RUN_MODIFIER := 2.5
+const WALK_SPEED := 4.0
+const SPRINT_SPEED_MODIFIER := 1.8
 const ROTATION_INTERPOLATE_SPEED := 10
 const JUMP_VELOCITY := 6.5
 const JUMP_MOVE_SPEED := 3.0
@@ -17,9 +17,11 @@ const JUMP_MOVE_SPEED := 3.0
 
 # Default movement, override as needed
 func move_player(_delta: float, _speed: float = WALK_SPEED):
+	parent.translate(Vector3(0.0,0.0,0.042))
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()
 	parent.velocity /= NetworkTime.physics_factor
+
 
 func rotate_player_model(delta: float):
 	var camera_basis : Basis = camera_input.camera_basis
@@ -53,6 +55,9 @@ func look_player_model(delta: float):
 
 # https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-on-floor
 func force_update_is_on_floor():
+	if parent.bones.active == true:
+		state_machine.transition(&"Ragdoll")
+
 	var old_velocity = parent.velocity
 	parent.velocity *= 0
 	parent.move_and_slide()

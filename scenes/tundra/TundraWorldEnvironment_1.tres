@@ -1,0 +1,22 @@
+[gd_resource type="Environment" load_steps=2 format=3 uid="uid://d2vhvx143fvtc"]
+
+[ext_resource type="Sky" uid="uid://c22oth7yqv1a5" path="res://scenes/tundra/TundraSky_1.tres" id="1_vl65s"]
+
+[resource]
+background_mode = 2
+background_energy_multiplier = 0.8
+sky = ExtResource("1_vl65s")
+ambient_light_source = 3
+reflected_light_source = 1
+tonemap_mode = 3
+tonemap_exposure = 1.2
+tonemap_white = 6.0
+ssao_enabled = true
+ssil_enabled = true
+glow_enabled = true
+glow_intensity = 0.65
+glow_bloom = 0.04
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.12
+volumetric_fog_albedo = Color(0.625435, 0.850838, 1, 1)
+volumetric_fog_ambient_inject = 0.5

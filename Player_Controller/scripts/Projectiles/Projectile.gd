@@ -1,7 +1,7 @@
 extends Node3D
 class_name Projectile
 
-signal Hit_Successfull
+signal hit_signal
 
 ## Can Be Either A Hit Scan or Rigid Body Projectile. If Rigid body is select a Rigid body must be provided.
 @export_enum ("Hitscan","Rigidbody_Projectile","over_ride") var Projectile_Type: String = "Hitscan"
@@ -21,6 +21,7 @@ var Projectiles_Spawned = []
 var hit_objects: Array = []
 
 # TODO: un hardcode viewport -AD
+# TODO: Needs to be set by the player, since all players  could have different viewports
 var _Camera: Camera3D
 var _Viewport = Vector2i(1152, 648)
 
@@ -92,10 +93,10 @@ func check_pass_through(collider: Node3D, rid: RID)-> bool:
 		valid_pass_though = true
 	return valid_pass_though
 
-func Hit_Scan_damage(Collider, Direction, Position, _damage):
-	if Collider.is_in_group("targets") and Collider.has_method("Hit_Successful"):
-		Hit_Successfull.emit()
-		Collider.Hit_Successful(_damage, Direction, Position)
+func Hit_Scan_damage(collision, Direction, Position, _damage):
+	if collision.is_in_group("targets") and collision.has_method("hit"):
+		hit_signal.emit()
+		collision.hit(_damage)
 
 func Load_Decal(_pos,_normal):
 	if Display_Debug_Decal:
@@ -106,7 +107,7 @@ func Load_Decal(_pos,_normal):
 		
 func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 	var point = collision_data[1]
-	var  norm = collision_data[2]
+	var norm = collision_data[2]
 
 	var _proj = projectile.instantiate()
 
@@ -133,9 +134,9 @@ func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 # TODO: Add static typing. What is _norm?  It's sometimes missing.
 # NOTE: "invalid operands 'Nil' and 'float' in operator * caused at this call site - AD
 func _on_body_entered(body, _proj, _norm):
-	if body.is_in_group("targets") && body.has_method("Hit_Successful"):
-		body.Hit_Successful(damage)
-		Hit_Successfull.emit()
+	if body.is_in_group("targets") && body.has_method("hit"):
+		body.hit(damage)
+		hit_signal.emit()
 
 	if _norm:
 		Load_Decal(_proj.get_position(),_norm)

@@ -20,8 +20,8 @@ func move_player(_delta: float, speed = WALK_SPEED):
 	var position_target = direction * speed
 	
 	# Here I'm allowing "run speed" to be applied to jump
-	if get_run():
-		position_target *= RUN_MODIFIER
+	#if get_run():
+		#position_target *= SPRINT_SPEED_MODIFIER
 		
 	var horizontal_velocity = parent.velocity
 	horizontal_velocity = position_target

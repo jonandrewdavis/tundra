@@ -8,13 +8,16 @@ class_name WeaponsManager
 @export var animation_player: AnimationPlayer
 @export var melee_hitbox: ShapeCast3D
 @export var max_weapons: int
+@export var player_hud: CanvasLayer
 
 @onready var bullet_point = $BulletPoint
 @onready var debug_bullet = preload("res://Player_Controller/Spawnable_Objects/hit_debug.tscn")
 
 signal weapon_changed
-signal hit_successful
 signal update_ammo
+signal update_weapon_stack
+signal hit_signal
+signal add_signal_to_hud
 
 enum WEAPONS {blasterL, blasterN}
 enum CHANGE_DIR { UP, DOWN}
@@ -38,6 +41,8 @@ var player_camera_3D: Camera3D
 var busy = false
 
 func _ready() -> void:
+	if !player_hud:
+		push_warning("No player HUD")
 	# This listens for the end of shooting to continue shooting Auto Fire
 	# Also handles updating ammo after a reload.
 	animation_player.animation_finished.connect(_on_animation_finished)
@@ -81,11 +86,11 @@ func change_weapon(dir: CHANGE_DIR) -> void:
 
 func change_weapon_enter(weapon_index: int):
 	animation_player.play(get_weapon(weapon_index).pick_up_animation)
-	await get_tree().create_timer(animation_player.current_animation_length + .05).timeout
+	await get_tree().create_timer(animation_player.current_animation_length + .1).timeout
 
 func change_weapon_leave(weapon_index: int):
 	animation_player.play(get_weapon(weapon_index).change_animation)
-	await get_tree().create_timer(animation_player.current_animation_length + .05).timeout
+	await get_tree().create_timer(animation_player.current_animation_length + .1).timeout
 
 # TODO: networked weapon from netfox, ammo checks, more things
 func can_fire():
@@ -109,12 +114,17 @@ func load_projectile(spread):
 	_projectile._Camera = player_camera_3D
 	_projectile.position = bullet_point.global_position
 	_projectile.rotation = owner.rotation
+	############
+	# TODO: Document how I connected the signals in code.
+	############
+	_projectile.hit_signal.connect(hit_signal_stub)
 	
 	bullet_point.add_child(_projectile)
-	#add_signal_to_hud.emit(_projectile)
 	var bullet_point_origin = bullet_point.global_position
 	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point_origin)
 
+func hit_signal_stub():
+	hit_signal.emit()
 
 func shoot():
 	if can_fire() == false:
@@ -206,7 +216,7 @@ func melee() -> void:
 			for col in colliders:
 				var target = melee_hitbox.get_collider(col)
 				if target.is_in_group("targets") and target.has_method("hit"):
-					hit_successful.emit()
+					hit_signal.emit()
 					var dir = (target.global_transform.origin - owner.global_transform.origin).normalized()
 					var pos =  melee_hitbox.get_collision_point(col)
 					target.hit(current_weapon.melee_damage, dir, pos)

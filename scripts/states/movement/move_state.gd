@@ -13,17 +13,22 @@ func tick(delta, _tick, _is_fresh):
 	else:
 		state_machine.transition(&"FallState")
 
+
 func move_player(_delta: float, speed = WALK_SPEED):
 	var input_dir : Vector2 = get_movement_input()
 	
 	# Based on https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/platformer/player/player.gd#L65
 	var direction = (camera_input.camera_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
 	var position_target = direction * speed
 	
 	# Here I'm allowing "run speed" to be applied to jump
-	if get_run():
-		position_target *= RUN_MODIFIER
-	
+	#if get_run():
+		#position_target *= SPRINT_SPEED_MODIFIER
+		
+	if parent.speed_modifier != 0.0:
+		position_target *= parent.speed_modifier
+
 	var horizontal_velocity = parent.velocity
 	horizontal_velocity = position_target
 	
@@ -33,6 +38,9 @@ func move_player(_delta: float, speed = WALK_SPEED):
 	else:
 		parent.velocity.x = move_toward(parent.velocity.x, 0, speed)
 		parent.velocity.z = move_toward(parent.velocity.z, 0, speed)
+
+	parent.translate(Vector3(0.0, 0.0, 0.05))
+
 
 	# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-velocity
 	parent.velocity *= NetworkTime.physics_factor

@@ -1,0 +1,6 @@
+[gd_resource type="Sky" load_steps=2 format=3 uid="uid://c22oth7yqv1a5"]
+
+[ext_resource type="Material" uid="uid://5nhbp0n3qde8" path="res://scenes/tundra/TundraSkyMaterial_1.tres" id="1_rfb1t"]
+
+[resource]
+sky_material = ExtResource("1_rfb1t")

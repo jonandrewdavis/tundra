@@ -1,74 +1,67 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=13 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
-[ext_resource type="Texture2D" uid="uid://c8ajco5x2eavq" path="res://asssets/environment/Rock057_2K-JPG/Rock057_2K-JPG_Color.jpg" id="2_2exhc"]
-[ext_resource type="Environment" uid="uid://yxbm04et4bmr" path="res://asssets/environment/ForestEnvironment.tres" id="4_k0juu"]
-[ext_resource type="Texture2D" uid="uid://cc3q86qnmf2pj" path="res://assets/ambient/road/Road005_2K-JPG/Road005_2K-JPG_Color.jpg" id="5_71j4m"]
-[ext_resource type="PackedScene" uid="uid://deuj1af8av21g" path="res://assets/interactable/broken_car.tscn" id="5_qfnet"]
+[ext_resource type="Environment" uid="uid://d2vhvx143fvtc" path="res://scenes/tundra/TundraWorldEnvironment_1.tres" id="2_qfnet"]
+[ext_resource type="Shader" uid="uid://k1t5yooesun6" path="res://scenes/player/snow.gdshader" id="5_71j4m"]
+[ext_resource type="Script" uid="uid://bx548uoeam2y8" path="res://scenes/light_house.gd" id="6_i7141"]
+[ext_resource type="PackedScene" uid="uid://6gge01f2haes" path="res://scenes/snow.tscn" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://cq044ua8lmrc3" path="res://scenes/Boundary.tscn" id="7_i7141"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qpwn5"]
-albedo_texture = ExtResource("2_2exhc")
-uv1_scale = Vector3(0.1, 0.1, 0.1)
-uv1_triplanar = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_71j4m"]
+shader = ExtResource("5_71j4m")
+shader_parameter/spread = 0.5
+shader_parameter/size = 0.5
+shader_parameter/snow_color = Color(0.489412, 0.647688, 1, 0.482353)
+shader_parameter/snow_transparency = 0.6
+shader_parameter/speed = 2.0
+shader_parameter/wind = 0.6
+shader_parameter/num_of_layers = 40
 
-[sub_resource type="BoxMesh" id="BoxMesh_krr73"]
-material = SubResource("StandardMaterial3D_qpwn5")
-size = Vector3(100, 0.1, 100)
+[sub_resource type="BoxShape3D" id="BoxShape3D_71j4m"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_lt7am"]
-size = Vector3(100, 0.1, 100)
+[sub_resource type="CylinderMesh" id="CylinderMesh_qfnet"]
+top_radius = 0.2
+height = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfnet"]
-albedo_texture = ExtResource("5_71j4m")
-uv1_scale = Vector3(1, 20, 2)
+transparency = 1
+albedo_color = Color(1, 0.541176, 0.101961, 0.0901961)
+emission_enabled = true
+emission = Color(0.772549, 0.380392, 0, 1)
+emission_energy_multiplier = 5.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_i7141"]
+[sub_resource type="SphereMesh" id="SphereMesh_i7141"]
 material = SubResource("StandardMaterial3D_qfnet")
-size = Vector2(7, 100)
+radius = 25.0
+height = 25.0
+is_hemisphere = true
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_71j4m")
+fog = true
 
-[node name="WorldEnvironment" type="Node3D" parent="."]
+[node name="Env" type="Node3D" parent="."]
 
-[node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(0.742321, 0.489411, -0.457642, 0.468977, 0.108316, 0.876543, 0.47856, -0.8653, -0.149117, -28.3006, 16.77, 0)
+[node name="TestCamera" type="Camera3D" parent="Env"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.01609, 7.62841)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="WorldEnvironment"]
-environment = ExtResource("4_k0juu")
+[node name="Sun" type="DirectionalLight3D" parent="Env"]
+transform = Transform3D(0.409696, 0.0698432, 0.909545, -0.776614, -0.496364, 0.387934, 0.47856, -0.8653, -0.149117, -28.3006, 16.77, 0)
+light_bake_mode = 1
+shadow_enabled = true
 
-[node name="DemoFloor" type="StaticBody3D" parent="WorldEnvironment"]
-
-[node name="DemoMesh" type="MeshInstance3D" parent="WorldEnvironment/DemoFloor"]
-mesh = SubResource("BoxMesh_krr73")
-
-[node name="DemoCol" type="CollisionShape3D" parent="WorldEnvironment/DemoFloor"]
-shape = SubResource("BoxShape3D_lt7am")
-
-[node name="BrokenCar" parent="WorldEnvironment" instance=ExtResource("5_qfnet")]
-transform = Transform3D(0.625597, 0, 0.780147, 0, 1, 0, -0.780147, 0, 0.625597, 0, 0, 0)
-
-[node name="BrokenCar3" parent="WorldEnvironment" instance=ExtResource("5_qfnet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.664, 0, -10.0966)
-
-[node name="BrokenCar2" parent="WorldEnvironment" instance=ExtResource("5_qfnet")]
-transform = Transform3D(0.662855, 0, 0.748748, 0, 1, 0, -0.748748, 0, 0.662855, 3.80211, 0, -13.3304)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
+environment = ExtResource("2_qfnet")
 
 [node name="MultiplayerManager" parent="." node_paths=PackedStringArray("_player_spawn_point") instance=ExtResource("1_dos3o")]
 _player_spawn_point = NodePath("../PlayerContainer")
 
-[node name="Road" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000952959, 0.190614, 0.0206146)
-mesh = SubResource("PlaneMesh_i7141")
-
-[node name="Road2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.9518, 0.190614, 0.0206146)
-mesh = SubResource("PlaneMesh_i7141")
-
 [node name="PlayerContainer" type="Node3D" parent="."]
 
 [node name="EnvironmentContainer" type="Node3D" parent="." groups=["EnvironmentContainer"]]
+
+[node name="EnemiesContainer" type="Node3D" parent="."]
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dup2jh8uleo3l")
@@ -77,6 +70,59 @@ spawn_path = NodePath("../PlayerContainer")
 [node name="EnvironmentSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../EnvironmentContainer")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.162393, 0.445573, -0.880394, -0.0673107, 0.885156, 0.460399, 0.984428, 0.134025, -0.113751, -16.9112, 4.77424, -5.52117)
-current = true
+[node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../EnemiesContainer")
+
+[node name="Snow" parent="." instance=ExtResource("6_qfnet")]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SnowShader" type="ColorRect" parent="Control"]
+material = SubResource("ShaderMaterial_71j4m")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LightHouse" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.523534, 0, 0.852005, 0, 1, 0, -0.852005, 0, -0.523534, 0, 5.17487, 0)
+script = ExtResource("6_i7141")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="LightHouse"]
+light_color = Color(1, 0.6, 0.380392, 1)
+light_energy = 18.0
+light_indirect_energy = 5.0
+light_volumetric_fog_energy = 5.0
+spot_range = 80.0
+spot_angle = 10.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LightHouse"]
+shape = SubResource("BoxShape3D_71j4m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LightHouse"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_qfnet")
+
+[node name="FlameShield" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_i7141")
+
+[node name="Boundary" parent="." instance=ExtResource("7_i7141")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 0, 0)
+
+[node name="Boundary2" parent="." instance=ExtResource("7_i7141")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 0, 0)
+
+[node name="Boundary3" parent="." instance=ExtResource("7_i7141")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -90)
+
+[node name="Boundary4" parent="." instance=ExtResource("7_i7141")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 90)

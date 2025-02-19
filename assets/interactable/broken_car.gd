@@ -11,12 +11,8 @@ extends RigidBody3D
 
 ## Called when the node enters the scene tree for the first time.
 func _ready():
-	if not multiplayer.is_server():
-		set_process(false)
-		set_physics_process(false)
-	else:
-		contact_monitor = true
-		max_contacts_reported = 5
+	contact_monitor = true
+	max_contacts_reported = 5
 
 func _integrate_forces(state):
 		if is_multiplayer_authority():
@@ -34,8 +30,5 @@ func _physics_process(_delta):
 	for col in get_colliding_bodies():
 		if col is CharacterBody3D:
 			var normal_dir = col.global_position.direction_to(self.global_position).normalized()
-			apply_central_impulse(normal_dir * col.velocity)
+			#apply_central_impulse(normal_dir * col.velocity)
 			apply_impulse(normal_dir * 0.5, get_position())
-
-			#col.velocity = col.velocity + linear_velocity
-			#print(col.velocity)

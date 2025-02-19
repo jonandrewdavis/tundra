@@ -1,8 +1,9 @@
-[gd_scene load_steps=34 format=4 uid="uid://cf6jco7ctb45m"]
+[gd_scene load_steps=35 format=4 uid="uid://cf6jco7ctb45m"]
 
 [ext_resource type="Script" uid="uid://cwoo1b16el33m" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_State_Machine.gd" id="1_doyh4"]
 [ext_resource type="Script" uid="uid://dphmvwbbu21nt" path="res://Player_Controller/scripts/Weapon_State_Machine/WeaponSlot.gd" id="2_7guwf"]
 [ext_resource type="Resource" uid="uid://c1jg0ifn7yvve" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres" id="3_mxtia"]
+[ext_resource type="PackedScene" uid="uid://7i2x4ihbqkke" path="res://assets/awp.glb" id="5_e4dbp"]
 [ext_resource type="Resource" uid="uid://bwrs8ensewkgc" path="res://Player_Controller/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres" id="5_vvh84"]
 [ext_resource type="AnimationLibrary" uid="uid://uybino34n0sj" path="res://Player_Controller/weapon_animation.res" id="8_jok0v"]
 [ext_resource type="ArrayMesh" uid="uid://msm283ivq167" path="res://assets/weapons_saved_meshes/smg_green.res" id="9_e4dbp"]
@@ -823,6 +824,9 @@ weapons_list = Array[ExtResource("2_7guwf")]([SubResource("Resource_ygyma"), Sub
 
 [node name="Weapons_Models" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54919, 0)
+
+[node name="sniper" type="Node3D" parent="Weapons_Models"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14059, -0.536887)
 visible = false
 
 [node name="blasterN" type="Node3D" parent="Weapons_Models"]
@@ -830,13 +834,18 @@ transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0.193,
 visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models/blasterN"]
+visible = false
 mesh = SubResource("ArrayMesh_2ccy7")
+
+[node name="awp2" parent="Weapons_Models/blasterN" instance=ExtResource("5_e4dbp")]
+transform = Transform3D(-5.24537e-08, 0, -1.2, 0, 1.2, 0, 1.2, 0, -5.24537e-08, 0.0747704, 0.118698, -0.120616)
 
 [node name="blasterI" type="Node3D" parent="Weapons_Models"]
 transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, -0.148, 1.379, -0.398)
 visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models/blasterI"]
+visible = false
 mesh = ExtResource("12_138mc")
 
 [node name="blasterL" type="Node3D" parent="Weapons_Models"]

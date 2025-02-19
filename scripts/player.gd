@@ -6,6 +6,9 @@ const JUMP_VELOCITY = 4.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var interactable
+
+var speed_modifier: float = 0.0
 
 @export_category("BAD Template Variables")
 
@@ -15,6 +18,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var _state_machine: RewindableStateMachine
 @export var skeleton: Skeleton3D
 @export var bones: PhysicalBoneSimulator3D
+@export var chest: PhysicalBone3D
 
 @onready var rollback_synchronizer = $RollbackSynchronizer
 var _animation_player
@@ -29,6 +33,7 @@ func _input(event: InputEvent) -> void:
 		get_tree().quit()
 
 func _enter_tree():
+	set_multiplayer_authority(1)
 	_player_input.set_multiplayer_authority(str(name).to_int())
 	_camera_input.set_multiplayer_authority(str(name).to_int())
 
@@ -47,7 +52,13 @@ func _ready():
 	# Allow raycast shooting from camera position
 	weapons_manager.player_camera_3D = _camera_input.camera_3D
 	weapons_manager.player_input = _player_input
-	
+#
+	#TODO: Document cases where this helps prevent jitter.
+	#TODO: Disabling physics on the client helps the server & client not fight over positioning
+	if multiplayer.is_server() == false:
+		set_physics_process(false)
+		
+
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 	_force_update_is_on_floor()
 	
@@ -80,7 +91,7 @@ func process_player_input(input_string: StringName):
 		"melee":
 			weapons_manager.melee()
 		"interact":
-			toggle_interact()
+			interact()
 
 # TODO: Use statemachine to transition in AnimationStateTre
 # TODO: every or just sync: the interpolation
@@ -104,20 +115,38 @@ func _force_update_is_on_floor():
 	move_and_slide()
 	velocity = old_velocity
 
-func toggle_interact():
+func interact():
 	toggle_ragdoll()
+	pass
 
+# TODO: Document that Ragdoll bones are on Layer 3 collision.
 # TODO: Adjust influence. Move to state, change input allowed, etc.
 func toggle_ragdoll():
 	if bones.active == false:
 		_animation_player.active = false
-		if not multiplayer.is_server():
-			$CollisionShape3D.disabled = true	
 		bones.active = true
+		# ['RightShoulder', 'LeftShoulder', 'RightUpperLeg', 'LeftUpperLeg']
 		bones.physical_bones_start_simulation()
+		apply_chest_force()
+		set_collision_layer_value(1, true)
 	else:
 		_animation_player.active = true
-		if not multiplayer.is_server():
-			$CollisionShape3D.disabled = false	
 		bones.active = false
 		bones.physical_bones_stop_simulation()
+		set_collision_layer_value(1, false)
+		
+
+# Apply force away from current facing: -_player_model.basis.z
+func apply_chest_force():
+	for bone in bones.get_children():
+		if bone.bone_name == 'Chest':
+			bone.apply_central_impulse(-_player_model.basis.z * -1.0 * 250.0)
+
+func death():
+	speed_modifier = -100.0
+	await get_tree().create_timer(2.0).timeout
+	respawn()
+
+func respawn():
+	global_position = Vector3(2.0, 2.0, 2.0)
+	speed_modifier = 0.0

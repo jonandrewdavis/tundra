@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=3 uid="uid://clg3pfb82wk72"]
+
+[ext_resource type="Script" uid="uid://br18k5refg22j" path="res://scenes/enemies/seraphim.gd" id="1_jbyid"]
+[ext_resource type="PackedScene" uid="uid://df4etfmnxy1w0" path="res://assets/angel/seraphim/source/seraphim_block.gltf" id="1_tn1bx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tn1bx"]
+
+[node name="Seraphim" type="CharacterBody3D"]
+script = ExtResource("1_jbyid")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.352279, 0)
+shape = SubResource("SphereShape3D_tn1bx")
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_tn1bx")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="Seraphim" parent="blockbench_export/Node" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.31192, 0.686753)
+
+[node name="Eye" parent="blockbench_export/Node/Seraphim" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.999911, -0.0132942, 0, 0.0132942, 0.999911, 0.03125, -0.219042, -0.75)
+
+[node name="Eyes" parent="blockbench_export/Node/Seraphim/Eye" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.999912, 0.0132942, 0, -0.0132942, 0.999912, 0, 0.304659, -1.0625)
+
+[node name="Wing" parent="blockbench_export/Node/Seraphim" index="1"]
+transform = Transform3D(0.89788, 0.369195, -0.239806, -0.217015, 0.845114, 0.488557, 0.383036, -0.386624, 0.838932, 0.3125, 0.646641, -0.75)
+
+[node name="bone" parent="blockbench_export/Node/Seraphim/Wing" index="1"]
+transform = Transform3D(0.874289, 0, -0.485405, 0, 1, 0, 0.485405, 0, 0.874289, 4, 0.4375, 0)
+
+[node name="bone2" parent="blockbench_export/Node/Seraphim/Wing/bone" index="1"]
+transform = Transform3D(0.663948, 0, -0.747779, 0, 1, 0, 0.747779, 0, 0.663948, 4, 0, 0)
+
+[node name="Wing2" parent="blockbench_export/Node/Seraphim" index="2"]
+transform = Transform3D(0.89788, -0.369195, 0.239806, 0.217015, 0.845114, 0.488557, -0.383036, -0.386624, 0.838932, -0.3125, 0.646641, -0.75)
+
+[node name="bone3" parent="blockbench_export/Node/Seraphim/Wing2" index="1"]
+transform = Transform3D(0.874289, 0, 0.485405, 0, 1, 0, -0.485405, 0, 0.874289, -4, 0.4375, 0)
+
+[node name="bone4" parent="blockbench_export/Node/Seraphim/Wing2/bone3" index="1"]
+transform = Transform3D(0.663948, 0, 0.747779, 0, 1, 0, -0.747779, 0, 0.663948, -4, 0, 0)
+
+[node name="Wing3" parent="blockbench_export/Node/Seraphim" index="3"]
+transform = Transform3D(0.337089, -0.928744, 0.15429, 0.926128, 0.356579, 0.123035, -0.169284, 0.101419, 0.980335, 0.3125, 0.5, -0.5625)
+
+[node name="bone5" parent="blockbench_export/Node/Seraphim/Wing3" index="1"]
+transform = Transform3D(0.972003, 0, 0.23497, 0, 1, 0, -0.23497, 0, 0.972003, 4, 0.4375, 0)
+
+[node name="bone6" parent="blockbench_export/Node/Seraphim/Wing3/bone5" index="1"]
+transform = Transform3D(0.972003, 0, 0.23497, 0, 1, 0, -0.23497, 0, 0.972003, 4, 0, 0)
+
+[node name="Wing4" parent="blockbench_export/Node/Seraphim" index="4"]
+transform = Transform3D(0.337089, 0.928744, -0.15429, -0.926128, 0.356579, 0.123035, 0.169284, 0.101419, 0.980335, -0.3125, 0.5, -0.5625)
+
+[node name="bone7" parent="blockbench_export/Node/Seraphim/Wing4" index="1"]
+transform = Transform3D(0.972003, 0, -0.23497, 0, 1, 0, 0.23497, 0, 0.972003, -4, 0.4375, 0)
+
+[node name="bone8" parent="blockbench_export/Node/Seraphim/Wing4/bone7" index="1"]
+transform = Transform3D(0.972003, 0, -0.23497, 0, 1, 0, 0.23497, 0, 0.972003, -4, 0, 0)
+
+[node name="Wing5" parent="blockbench_export/Node/Seraphim" index="5"]
+transform = Transform3D(0.416513, 0.908861, -0.0221097, -0.893221, 0.404573, -0.196156, -0.169334, 0.10145, 0.980323, 0.6875, -0.1875, -0.5625)
+
+[node name="bone9" parent="blockbench_export/Node/Seraphim/Wing5" index="1"]
+transform = Transform3D(0.972003, 0, 0.23497, 0, 1, 0, -0.23497, 0, 0.972002, 4, 0.4375, 0)
+
+[node name="bone10" parent="blockbench_export/Node/Seraphim/Wing5/bone9" index="1"]
+transform = Transform3D(0.972003, 0, 0.23497, 0, 1, 0, -0.23497, 0, 0.972002, 4, 0, 0)
+
+[node name="Wing6" parent="blockbench_export/Node/Seraphim" index="6"]
+transform = Transform3D(0.416513, -0.908861, 0.0221097, 0.893221, 0.404573, -0.196156, 0.169334, 0.10145, 0.980323, -0.6875, -0.1875, -0.5625)
+
+[node name="bone11" parent="blockbench_export/Node/Seraphim/Wing6" index="1"]
+transform = Transform3D(0.972003, 0, -0.23497, 0, 1, 0, 0.23497, 0, 0.972002, -4, 0.4375, 0)
+
+[node name="bone12" parent="blockbench_export/Node/Seraphim/Wing6/bone11" index="1"]
+transform = Transform3D(0.972003, 0, -0.23497, 0, 1, 0, 0.23497, 0, 0.972002, -4, 0, 0)
+
+[editable path="blockbench_export"]
