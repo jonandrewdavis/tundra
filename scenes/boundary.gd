@@ -12,6 +12,5 @@ func _on_boundary_entered(body):
 	return
 	
 func _on_death_entered(body):
-	print('BODY', body)
 	if body.has_method('death'):
 		body.death()

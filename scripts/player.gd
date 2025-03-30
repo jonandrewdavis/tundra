@@ -1,14 +1,12 @@
 extends CharacterBody3D
 class_name Player
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var interactable
 
 var speed_modifier: float = 0.0
+var has_constant_force = true
 
 @export_category("BAD Template Variables")
 
@@ -55,8 +53,8 @@ func _ready():
 #
 	#TODO: Document cases where this helps prevent jitter.
 	#TODO: Disabling physics on the client helps the server & client not fight over positioning
-	if multiplayer.is_server() == false:
-		set_physics_process(false)
+	#if multiplayer.is_server() == false:
+		#set_physics_process(false)
 		
 
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
@@ -92,6 +90,9 @@ func process_player_input(input_string: StringName):
 			weapons_manager.melee()
 		"interact":
 			interact()
+		"special":
+			toggle_ragdoll()
+
 
 # TODO: Use statemachine to transition in AnimationStateTre
 # TODO: every or just sync: the interpolation
@@ -116,8 +117,9 @@ func _force_update_is_on_floor():
 	velocity = old_velocity
 
 func interact():
-	toggle_ragdoll()
+	debug_toggle_castle_speed()
 	pass
+
 
 # TODO: Document that Ragdoll bones are on Layer 3 collision.
 # TODO: Adjust influence. Move to state, change input allowed, etc.
@@ -142,11 +144,18 @@ func apply_chest_force():
 		if bone.bone_name == 'Chest':
 			bone.apply_central_impulse(-_player_model.basis.z * -1.0 * 250.0)
 
+# TODO: Death should be a state
 func death():
-	speed_modifier = -100.0
-	await get_tree().create_timer(2.0).timeout
-	respawn()
+	global_position = Vector3(10.0, 10.0, 10.0)
+	$TickInterpolator.teleport()
 
-func respawn():
-	global_position = Vector3(2.0, 2.0, 2.0)
-	speed_modifier = 0.0
+
+func toggle_constant_force(new_value):
+	has_constant_force = new_value
+
+func debug_toggle_castle_speed():
+	#print("What's the speed before we RPC on client: ", multiplayer.get_remote_sender_id(), ' speed: ', Hub.world.castle_speed)
+	if Hub.world.castle_speed == 0.0:
+		Hub.world.change_castle_speed.rpc(2.0)
+	else:
+		Hub.world.change_castle_speed.rpc(0.0)

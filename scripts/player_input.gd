@@ -5,6 +5,7 @@ var input_dir : Vector2 = Vector2.ZERO
 var jump_input = false
 var run_input = false
 var shoot_input = false
+var special = false
 
 func _ready():
 	if is_multiplayer_authority():
@@ -31,6 +32,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("melee"):
 		get_parent().process_player_input.rpc("melee")
 
+	if Input.is_action_just_pressed("special"):
+		get_parent().process_player_input.rpc("special")
 
 # NOTE: Do not forget to add new inputs to the RollbackSyncronizer!! (IF... you want them to rollback)
 func _gather():
@@ -38,3 +41,4 @@ func _gather():
 	jump_input = Input.is_action_pressed("jump")
 	run_input = Input.is_action_pressed("run")
 	shoot_input = Input.is_action_pressed("shoot")
+	special = Input.is_action_just_pressed("special")

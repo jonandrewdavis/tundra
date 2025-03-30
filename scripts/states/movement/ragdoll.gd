@@ -1,12 +1,10 @@
 # Ragdoll
 extends MovementState
 
-var count = 1
-
 func tick(delta, _tick, _is_fresh):
-	# rotate_player_model(delta)
 	move_towards_ragdoll(delta)
 	move_player(delta)
+
 	if parent.bones.active == false:
 		force_update_is_on_floor()
 		if parent.is_on_floor():	

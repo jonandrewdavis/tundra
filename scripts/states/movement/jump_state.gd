@@ -13,6 +13,10 @@ func tick(delta, _tick, _is_fresh):
 	# If issues arise around jump, add additional state transitions here
 
 func move_player(_delta: float, speed = WALK_SPEED):
+	# NOTE: This state implements it's own "move_player"
+	# Any state with controls needs this constant force! 
+	apply_constant_force()
+	
 	var input_dir : Vector2 = get_movement_input()
 	
 	# Based on https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/platformer/player/player.gd#L65

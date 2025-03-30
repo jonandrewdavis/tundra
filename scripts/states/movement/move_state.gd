@@ -15,6 +15,11 @@ func tick(delta, _tick, _is_fresh):
 
 
 func move_player(_delta: float, speed = WALK_SPEED):
+	# NOTE: This state implements it's own "move_player"
+	# Any state with controls needs this constant force! 
+	apply_constant_force()
+
+
 	var input_dir : Vector2 = get_movement_input()
 	
 	# Based on https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/platformer/player/player.gd#L65
@@ -38,10 +43,7 @@ func move_player(_delta: float, speed = WALK_SPEED):
 	else:
 		parent.velocity.x = move_toward(parent.velocity.x, 0, speed)
 		parent.velocity.z = move_toward(parent.velocity.z, 0, speed)
-
-	parent.translate(Vector3(0.0, 0.0, 0.05))
-
-
+	
 	# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-velocity
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()

@@ -26,9 +26,11 @@ NetworkPerformance="*res://addons/netfox/network-performance.gd"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 Noray="*res://addons/netfox.noray/noray.gd"
 PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
+Hub="*res://scripts/hub.gd"
 
 [display]
 
+window/size/mode=3
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
 
@@ -137,3 +139,19 @@ DEBUG_SLASH={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":76,"key_label":0,"unicode":108,"location":0,"echo":false,"script":null)
 ]
 }
+special={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":102,"location":0,"echo":false,"script":null)
+]
+}
+
+[netfox]
+
+logging/netfox_extras_log_level=5
+logging/log_level=5
+logging/netfox_noray_log_level=5
+logging/netfox_log_level=5
+
+[physics]
+
+3d/physics_engine="Jolt Physics"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=16 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bx548uoeam2y8" path="res://scenes/light_house.gd" id="6_i7141"]
 [ext_resource type="PackedScene" uid="uid://6gge01f2haes" path="res://scenes/snow.tscn" id="6_qfnet"]
 [ext_resource type="PackedScene" uid="uid://cq044ua8lmrc3" path="res://scenes/Boundary.tscn" id="7_i7141"]
+[ext_resource type="Script" uid="uid://bgwwvdmbyex56" path="res://scenes/castle_area.gd" id="8_4mrxx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_71j4m"]
 shader = ExtResource("5_71j4m")
@@ -36,6 +37,14 @@ material = SubResource("StandardMaterial3D_qfnet")
 radius = 25.0
 height = 25.0
 is_hemisphere = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i7141"]
+size = Vector3(10, 10, 20)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4mrxx"]
+properties/0/path = NodePath(".:castle_speed")
+properties/0/spawn = true
+properties/0/replication_mode = 2
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_71j4m")
@@ -75,7 +84,7 @@ spawn_path = NodePath("../EnemiesContainer")
 
 [node name="Snow" parent="." instance=ExtResource("6_qfnet")]
 
-[node name="Control" type="Control" parent="."]
+[node name="Shaders" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -83,7 +92,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SnowShader" type="ColorRect" parent="Control"]
+[node name="SnowShader" type="ColorRect" parent="Shaders"]
 material = SubResource("ShaderMaterial_71j4m")
 layout_mode = 1
 anchors_preset = 15
@@ -92,15 +101,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="FrostShader" type="ColorRect" parent="Shaders"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="LightHouse" type="StaticBody3D" parent="."]
-transform = Transform3D(-0.523534, 0, 0.852005, 0, 1, 0, -0.852005, 0, -0.523534, 0, 5.17487, 0)
+transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 13.1663, 0)
 script = ExtResource("6_i7141")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="LightHouse"]
 light_color = Color(1, 0.6, 0.380392, 1)
-light_energy = 18.0
+light_energy = 16.0
 light_indirect_energy = 5.0
-light_volumetric_fog_energy = 5.0
+light_volumetric_fog_energy = 12.0
 spot_range = 80.0
 spot_angle = 10.0
 
@@ -126,3 +144,15 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 
 
 [node name="Boundary4" parent="." instance=ExtResource("7_i7141")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 90)
+
+[node name="CastleArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03046, 0)
+script = ExtResource("8_4mrxx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CastleArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.39294, 0)
+shape = SubResource("BoxShape3D_i7141")
+debug_color = Color(0.886275, 0, 0.811765, 0.94902)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_4mrxx")

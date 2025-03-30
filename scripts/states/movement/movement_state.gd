@@ -3,7 +3,7 @@ extends RewindableState
 
 # A base movement state for common functions, extend when making new movement state.
 
-const WALK_SPEED := 4.0
+const WALK_SPEED := 4.0 * 2.0
 const SPRINT_SPEED_MODIFIER := 1.8
 const ROTATION_INTERPOLATE_SPEED := 10
 const JUMP_VELOCITY := 6.5
@@ -17,11 +17,14 @@ const JUMP_MOVE_SPEED := 3.0
 
 # Default movement, override as needed
 func move_player(_delta: float, _speed: float = WALK_SPEED):
-	parent.translate(Vector3(0.0,0.0,0.042))
+	apply_constant_force()
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()
 	parent.velocity /= NetworkTime.physics_factor
 
+func apply_constant_force():
+	if parent.has_constant_force && Hub.world.castle_speed != 0.0:
+		parent.translate(Vector3(0.0,0.0,0.042))
 
 func rotate_player_model(delta: float):
 	var camera_basis : Basis = camera_input.camera_basis
@@ -44,11 +47,10 @@ func look_player_model(delta: float):
 	# CAMERA SYNC FOR AIM
 	parent._camera_input.camera_rot.rotation.x = camera_look
 
-
-	# GUN LOOK:
+	## GUN LOOK:
 	#var q_from = parent.WeaponPivot.global_transform.basis.get_rotation_quaternion()
 	#var q_to = Transform3D().looking_at(camera_look).basis.get_rotation_quaternion()
-	
+	#
 	#var set_model_rotation = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
 	#parent.WeaponPivot.global_transform.basis = set_model_rotation
 

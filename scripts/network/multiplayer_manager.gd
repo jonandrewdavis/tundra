@@ -40,7 +40,7 @@ func _remove_player_from_game(network_id: int):
 			_players_in_game.erase(network_id)
 
 func _ready_player(player: Player):
-	player.position = Vector3(randi_range(-2, 2), 1, randi_range(-2, 2))
+	player.position = Vector3(randi_range(-2, 2), 1, randi_range(-2, 2)) * 10
 
 # Connection lifecycle
 func _client_connected(network_id: int):

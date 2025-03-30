@@ -17,6 +17,10 @@ func _ready():
 	ray_starting_position = step_target.get_parent().global_position - Vector3(0, 0, 1.5)
 
 func _process(delta):
+	if Hub.world.castle_speed == 0.0:
+		return	
+
+	
 	if reverse == false && !is_stepping && !adjacent_target.is_stepping:
 		# Forward
 		step_target.get_parent().translate(Vector3(0, 0, -1.0) * 100 * delta)
@@ -32,8 +36,6 @@ func _process(delta):
 				is_tracking = false
 				return
 				#step_target.get_parent().global_position = step_target.get_parent().global_position + Vector3(0.0, 0.0, 3.0)
-				
-
 
 	if !is_stepping && !adjacent_target.is_stepping && abs(global_position.distance_to(step_target.global_position)) > step_distance:
 		step()

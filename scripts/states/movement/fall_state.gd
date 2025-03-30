@@ -3,7 +3,7 @@ extends MovementState
 func tick(delta, _tick, _is_fresh):
 	rotate_player_model(delta)
 	move_player(delta)
-	
+
 	force_update_is_on_floor()
 	if parent.is_on_floor():
 		if get_movement_input() == Vector2.ZERO:
@@ -14,6 +14,10 @@ func tick(delta, _tick, _is_fresh):
 			state_machine.transition(&"JumpState")
 	
 func move_player(_delta: float, speed = WALK_SPEED):
+	# NOTE: This state implements it's own "move_player"
+	# Any state with controls needs this constant force! 
+	apply_constant_force()
+
 	var input_dir : Vector2 = get_movement_input()
 	
 	# Based on https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/platformer/player/player.gd#L65
@@ -21,8 +25,8 @@ func move_player(_delta: float, speed = WALK_SPEED):
 	var position_target = direction * speed
 	
 	# Here I'm allowing "run speed" to be applied to jump
-	if get_run():
-		position_target *= SPRINT_SPEED_MODIFIER
+	#if get_run():
+		#position_target *= SPRINT_SPEED_MODIFIER
 		
 	var horizontal_velocity = parent.velocity
 	horizontal_velocity = position_target
