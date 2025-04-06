@@ -1,16 +1,15 @@
 extends Node3D
 
-@onready var ground = $Ground
-@onready var ground_mesh: StandardMaterial3D = $Ground/GroundMesh.mesh.surface_get_material(0)
+@onready var ground = $NavigationRegion3D/Ground
+@onready var ground_mesh: StandardMaterial3D = $NavigationRegion3D/Ground/GroundMesh.mesh.surface_get_material(0)
 
 @onready var scatter = $ProtonScatter
 
 # 2.0
 # ground_mesh.uv1_offset.y += 0.31 * delta
 func _ready():
-	print('DEBUG: get multiplayer on snow', get_multiplayer_authority())
-
-
+	pass
+	#print('DEBUG: get multiplayer on snow', get_multiplayer_authority())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

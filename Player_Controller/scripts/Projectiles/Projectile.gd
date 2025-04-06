@@ -31,7 +31,7 @@ func _ready() -> void:
 
 func _Set_Projectile(_damage: int = 0,_spread:Vector2 = Vector2.ZERO, _Range: int = 1000, origin_point: Vector3 = Vector3.ZERO):
 	damage = _damage
-	Fire_Projectile(_spread, _Range, Rigid_Body_Projectile, origin_point)
+	Fire_Projectile(_spread, _Range, Rigid_Body_Projectile, origin_point, )
 
 func Fire_Projectile(_spread: Vector2 ,_range: int, _proj:PackedScene, origin_point: Vector3):
 	var Camera_Collision = Camera_Ray_Cast(_spread,_range)
@@ -45,6 +45,7 @@ func Fire_Projectile(_spread: Vector2 ,_range: int, _proj:PackedScene, origin_po
 			_over_ride_collision(Camera_Collision, damage)
 
 func _over_ride_collision(_camera_collision:Array, _damage: float) -> void:
+	
 	pass
 
 func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
@@ -104,8 +105,8 @@ func Load_Decal(_pos,_normal):
 		if world:
 			world.add_child(rd)
 			rd.global_translate(_pos+(_normal*.01))
-		
-func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
+
+func Launch_Rigid_Body_Projectile( collision_data, projectile, origin_point):
 	var point = collision_data[1]
 	var norm = collision_data[2]
 
@@ -135,6 +136,10 @@ func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 # NOTE: "invalid operands 'Nil' and 'float' in operator * caused at this call site - AD
 func _on_body_entered(body, _proj, _norm):
 	if body.is_in_group("targets") && body.has_method("hit"):
+		body.hit(damage)
+		hit_signal.emit()
+		
+	if body.is_in_group("players") && body.has_method("hit"):
 		body.hit(damage)
 		hit_signal.emit()
 

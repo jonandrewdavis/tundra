@@ -9,6 +9,7 @@ class_name WeaponsManager
 @export var melee_hitbox: ShapeCast3D
 @export var max_weapons: int
 @export var player_hud: CanvasLayer
+@export var player: CharacterBody3D
 
 @onready var bullet_point = $BulletPoint
 @onready var debug_bullet = preload("res://Player_Controller/Spawnable_Objects/hit_debug.tscn")
@@ -147,7 +148,7 @@ func shoot():
 		if current_weapon.weapon_spray:
 			count = count + 1
 			Spread = spray_profiles[current_weapon.weapon_name].Get_Spray(count, current_weapon.magazine)
-			
+
 		load_projectile(Spread)
 
 func _on_animation_finished(animation_finished_name):

@@ -37,23 +37,6 @@ func rotate_player_model(delta: float):
 
 	var set_model_rotation = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
 	player_model.global_transform.basis = set_model_rotation
-	
-	look_player_model(delta)
-	
-
-func look_player_model(delta: float):
-	var camera_look = camera_input.camera_look
-	
-	# CAMERA SYNC FOR AIM
-	parent._camera_input.camera_rot.rotation.x = camera_look
-
-	## GUN LOOK:
-	#var q_from = parent.WeaponPivot.global_transform.basis.get_rotation_quaternion()
-	#var q_to = Transform3D().looking_at(camera_look).basis.get_rotation_quaternion()
-	#
-	#var set_model_rotation = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
-	#parent.WeaponPivot.global_transform.basis = set_model_rotation
-
 
 # https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-on-floor
 func force_update_is_on_floor():

@@ -4,6 +4,7 @@ class_name Player
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var interactable
+var ROTATION_INTERPOLATE_SPEED = 10.0
 
 var speed_modifier: float = 0.0
 var has_constant_force = true
@@ -39,6 +40,7 @@ func _ready():
 	# Default state
 	_state_machine.state = &"IdleState"
 	_animation_player = _player_model.get_node("AnimationPlayer")
+	add_to_group('players')
 
 	# TODO: can this be moved to movement_state
 	_state_machine.on_display_state_changed.connect(_on_display_state_changed)
@@ -56,6 +58,25 @@ func _ready():
 	#if multiplayer.is_server() == false:
 		#set_physics_process(false)
 		
+#func _physics_process(delta: float) -> void:
+	#look_player_model(delta)
+	#
+#
+#func look_player_model(delta: float):
+	##var camera_vertical_look = _camera_input.get_camera_vertical_look()
+	##
+	### CAMERA SYNC FOR AIM
+	###parent._camera_input.camera_rot.rotation.x = camera_look
+##
+	##print('LOOK?', camera_vertical_look)
+##
+	#### GUN LOOK:
+	##var q_from = WeaponPivot.global_transform.basis.get_rotation_quaternion()
+	##var q_to = WeaponPivot.looking_at(camera_vertical_look).basis.get_rotation_quaternion()
+	##
+	##var set_model_rotation = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
+	##WeaponPivot.global_transform.basis = set_model_rotation
+	#WeaponPivot.rotation.z = _camera_input.get_camera_vertical_look() * -1.0
 
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 	_force_update_is_on_floor()

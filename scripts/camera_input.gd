@@ -71,7 +71,6 @@ func rotate_camera(move):
 	# Vertical camera movement
 	camera_rot.rotation.x = clamp(camera_rot.rotation.x + (CAMERA_UP_DOWN_MOVEMENT * move.y), CAMERA_X_ROT_MIN, CAMERA_X_ROT_MAX)
 
-
 func get_camera_rotation_basis() -> Basis:
 	# Use camera_mount here so we don't have to worry about correcting for lean
 	return camera_mount.global_transform.basis

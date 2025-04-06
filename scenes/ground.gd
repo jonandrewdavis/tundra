@@ -6,7 +6,7 @@ class_name MovingPlatform
 
 
 func _ready():
-	NetworkRollback.on_prepare_tick.connect(_apply_tick)
+	pass
 
 func _apply_tick(tick: int):
 	pass

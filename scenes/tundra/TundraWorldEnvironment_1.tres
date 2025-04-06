@@ -16,7 +16,6 @@ ssil_enabled = true
 glow_enabled = true
 glow_intensity = 0.65
 glow_bloom = 0.04
-volumetric_fog_enabled = true
 volumetric_fog_density = 0.12
 volumetric_fog_albedo = Color(0.625435, 0.850838, 1, 1)
 volumetric_fog_ambient_inject = 0.5
