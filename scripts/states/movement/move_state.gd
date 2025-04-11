@@ -8,8 +8,8 @@ func tick(delta, _tick, _is_fresh):
 	if parent.is_on_floor():
 		if get_movement_input() == Vector2.ZERO:
 			state_machine.transition(&"IdleState")
-		elif get_jump():
-			state_machine.transition(&"JumpState")
+		#elif get_jump():
+			#state_machine.transition(&"JumpState")
 	else:
 		state_machine.transition(&"FallState")
 

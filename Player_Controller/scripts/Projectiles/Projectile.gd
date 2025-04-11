@@ -114,7 +114,7 @@ func Launch_Rigid_Body_Projectile( collision_data, projectile, origin_point):
 
 	_proj.position = origin_point
 
-	world.add_child(_proj)
+	world.add_child(_proj, true)
 	
 	_proj.look_at(point)	
 	Projectiles_Spawned.push_back(_proj)

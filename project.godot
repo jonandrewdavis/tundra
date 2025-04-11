@@ -30,6 +30,7 @@ Hub="*res://scripts/hub.gd"
 
 [display]
 
+window/size/mode=3
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
 

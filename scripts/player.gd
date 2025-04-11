@@ -58,16 +58,20 @@ func _ready():
 	#if multiplayer.is_server() == false:
 		#set_physics_process(false)
 		
-#func _physics_process(delta: float) -> void:
-	#look_player_model(delta)
+func _physics_process(delta: float) -> void:
+	look_player_model(delta)
+
+func look_player_model(delta):
+	_camera_input.camera_3D.rotation.x = _camera_input.camera_look
+
 	#
 #
 #func look_player_model(delta: float):
 	##var camera_vertical_look = _camera_input.get_camera_vertical_look()
 	##
 	### CAMERA SYNC FOR AIM
-	###parent._camera_input.camera_rot.rotation.x = camera_look
-##
+	#parent._camera_input.camera_rot.rotation.x = camera_look
+
 	##print('LOOK?', camera_vertical_look)
 ##
 	#### GUN LOOK:
@@ -92,11 +96,9 @@ func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 # - The `WeaponsManager` uses `MultiplayerSyncronizer` for visiblity, sound, animation_player, etc.
 # - This syncs the important properties to all clients (including the local caller [source player]).
 
-# NOTE: Do not add "call_local" or the puppet's weapons_manager can do things. We should ignore those
-# in order to be deterministic / reliable. Basically, trying to run this: local authorative, but
-# in server rollback sucked. Still don't fully understand.
 
-@rpc("any_peer", "call_local", "reliable")
+# NOTE: Do not add "call_local" or the puppet's weapons_manager can do things.
+@rpc("any_peer")
 func process_player_input(input_string: StringName):
 	match input_string:
 		"weapon_up":

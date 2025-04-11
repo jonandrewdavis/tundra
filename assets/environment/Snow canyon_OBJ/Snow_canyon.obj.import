@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cg3hlghftt4l4"
+path="res://.godot/imported/Snow_canyon.obj-bbe4ffeeb02d14ea86c432f14fde0e20.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Snow_canyon.obj-bbe4ffeeb02d14ea86c432f14fde0e20.mesh"]
+
+source_file="res://assets/environment/Snow canyon_OBJ/Snow_canyon.obj"
+dest_files=["res://.godot/imported/Snow_canyon.obj-bbe4ffeeb02d14ea86c432f14fde0e20.mesh", "res://.godot/imported/Snow_canyon.obj-bbe4ffeeb02d14ea86c432f14fde0e20.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

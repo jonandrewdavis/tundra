@@ -1,13 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=8 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
 [ext_resource type="Environment" uid="uid://d2vhvx143fvtc" path="res://scenes/tundra/TundraWorldEnvironment_1.tres" id="2_qfnet"]
 [ext_resource type="Shader" path="res://scenes/player/snow.gdshader" id="5_71j4m"]
-[ext_resource type="Script" path="res://scenes/light_house.gd" id="6_i7141"]
-[ext_resource type="PackedScene" uid="uid://6gge01f2haes" path="res://scenes/snow.tscn" id="6_qfnet"]
-[ext_resource type="PackedScene" uid="uid://cq044ua8lmrc3" path="res://scenes/Boundary.tscn" id="7_i7141"]
-[ext_resource type="Script" path="res://scenes/castle_area.gd" id="8_4mrxx"]
+[ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="5_qfnet"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_71j4m"]
 shader = ExtResource("5_71j4m")
@@ -18,28 +15,6 @@ shader_parameter/snow_transparency = 0.6
 shader_parameter/speed = 2.0
 shader_parameter/wind = 0.6
 shader_parameter/num_of_layers = 40
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_71j4m"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_qfnet"]
-top_radius = 0.2
-height = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfnet"]
-transparency = 1
-albedo_color = Color(1, 0.541176, 0.101961, 0.0901961)
-emission_enabled = true
-emission = Color(0.772549, 0.380392, 0, 1)
-emission_energy_multiplier = 5.0
-
-[sub_resource type="SphereMesh" id="SphereMesh_i7141"]
-material = SubResource("StandardMaterial3D_qfnet")
-radius = 25.0
-height = 25.0
-is_hemisphere = true
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_i7141"]
-size = Vector3(10, 10, 20)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4mrxx"]
 properties/0/path = NodePath(".:castle_speed")
@@ -63,29 +38,6 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
 environment = ExtResource("2_qfnet")
 
-[node name="MultiplayerManager" parent="." node_paths=PackedStringArray("_player_spawn_point") instance=ExtResource("1_dos3o")]
-_player_spawn_point = NodePath("../PlayerContainer")
-
-[node name="PlayerContainer" type="Node3D" parent="."]
-
-[node name="EnvironmentContainer" type="Node3D" parent="." groups=["EnvironmentContainer"]]
-
-[node name="EnemiesContainer" type="Node3D" parent="."]
-
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://dup2jh8uleo3l")
-spawn_path = NodePath("../PlayerContainer")
-
-[node name="EnvironmentSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://gk0m2leyfs75")
-spawn_path = NodePath("../EnvironmentContainer")
-
-[node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://bgpb1jrk0htrx")
-spawn_path = NodePath("../EnemiesContainer")
-
-[node name="Snow" parent="." instance=ExtResource("6_qfnet")]
-
 [node name="Shaders" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -103,58 +55,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="FrostShader" type="ColorRect" parent="Shaders"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MultiplayerManager" parent="." node_paths=PackedStringArray("_player_spawn_point") instance=ExtResource("1_dos3o")]
+_player_spawn_point = NodePath("../PlayerContainer")
 
-[node name="LightHouse" type="StaticBody3D" parent="."]
-transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 13.1663, 0)
-script = ExtResource("6_i7141")
+[node name="PlayerContainer" type="Node3D" parent="."]
 
-[node name="SpotLight3D" type="SpotLight3D" parent="LightHouse"]
-light_color = Color(1, 0.6, 0.380392, 1)
-light_energy = 16.0
-light_indirect_energy = 5.0
-light_volumetric_fog_energy = 12.0
-spot_range = 80.0
-spot_angle = 10.0
+[node name="EnvironmentContainer" type="Node3D" parent="." groups=["EnvironmentContainer"]]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LightHouse"]
-shape = SubResource("BoxShape3D_71j4m")
+[node name="EnemiesContainer" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LightHouse"]
-transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0, 0)
-mesh = SubResource("CylinderMesh_qfnet")
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://dup2jh8uleo3l")
+spawn_path = NodePath("../PlayerContainer")
 
-[node name="FlameShield" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("SphereMesh_i7141")
+[node name="EnvironmentSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://gk0m2leyfs75", "uid://c8i2l7usul6u2")
+spawn_path = NodePath("../EnvironmentContainer")
 
-[node name="Boundary" parent="." instance=ExtResource("7_i7141")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 0, 0)
-
-[node name="Boundary2" parent="." instance=ExtResource("7_i7141")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 0, 0)
-
-[node name="Boundary3" parent="." instance=ExtResource("7_i7141")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -90)
-
-[node name="Boundary4" parent="." instance=ExtResource("7_i7141")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 90)
-
-[node name="CastleArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03046, 0)
-script = ExtResource("8_4mrxx")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CastleArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.39294, 0)
-shape = SubResource("BoxShape3D_i7141")
-debug_color = Color(0.886275, 0, 0.811765, 0.94902)
+[node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://bgpb1jrk0htrx")
+spawn_path = NodePath("../EnemiesContainer")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_4mrxx")
+
+[node name="WalkingTerrainManager" parent="." instance=ExtResource("5_qfnet")]
