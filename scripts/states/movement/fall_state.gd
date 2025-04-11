@@ -10,8 +10,8 @@ func tick(delta, _tick, _is_fresh):
 			state_machine.transition(&"IdleState")
 		elif get_movement_input() != Vector2.ZERO:
 			state_machine.transition(&"MoveState")
-		elif get_jump():
-			state_machine.transition(&"JumpState")
+		#elif get_jump():
+			#state_machine.transition(&"JumpState")
 	
 func move_player(_delta: float, speed = WALK_SPEED):
 	# NOTE: This state implements it's own "move_player"

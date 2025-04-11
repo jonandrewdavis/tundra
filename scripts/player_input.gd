@@ -2,10 +2,8 @@ extends BaseNetInput
 class_name PlayerInput
 
 var input_dir : Vector2 = Vector2.ZERO
-var jump_input = false
 var run_input = false
 var shoot_input = false
-var special = false
 
 func _ready():
 	if is_multiplayer_authority():
@@ -36,9 +34,8 @@ func _process(_delta):
 		get_parent().process_player_input.rpc("special")
 
 # NOTE: Do not forget to add new inputs to the RollbackSyncronizer!! (IF... you want them to rollback)
+# Use this for inputs that are constant or held
 func _gather():
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
-	jump_input = Input.is_action_pressed("jump")
 	run_input = Input.is_action_pressed("run")
-	shoot_input = Input.is_action_pressed("shoot")
-	special = Input.is_action_just_pressed("special")
+	shoot_input = Input.is_action_pressed('shoot')

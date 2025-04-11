@@ -55,5 +55,5 @@ func get_movement_input() -> Vector2:
 func get_run() -> bool:
 	return player_input.run_input
 	
-func get_jump() -> float:
-	return player_input.jump_input
+#func get_jump() -> float:
+	#return player_input.jump_input

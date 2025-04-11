@@ -91,11 +91,11 @@ func move_and_look(delta):
 	if target:
 		new_look_at = target.transform.origin
 	else:
-		new_look_at = next_path_pos 
+		new_look_at = next_path_pos
 
-	var old = transform.basis
+	var old = transform.basis.orthonormalized()
 	look_at(new_look_at)
-	var new = transform.basis
+	var new = transform.basis.orthonormalized()
 	transform.basis = lerp(old, new, ROTATION_SPEED * delta).orthonormalized()
 
 func pick_patrol_destination():
@@ -190,7 +190,6 @@ func hit(damage):
 
 
 func fire():
-	print('fire')
 	var _proj = rigid_body_projectile.instantiate()
 	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
 	var _origin_point = GunOrigin.global_position
@@ -204,8 +203,7 @@ func fire():
 	await get_tree().create_timer(5.0).timeout
 	_proj.queue_free()
 
-# TODO: Hit more than jsut players, damage to buildings, etc.
+# TODO: Hit more than just players, damage to buildings, etc.
 func _on_player_hit(body, projectile):
 	if body.is_in_group('players'):
-		print('body', body)
-		
+		pass

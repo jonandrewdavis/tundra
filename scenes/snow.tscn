@@ -65,7 +65,8 @@ size = Vector3(200, 0.2, 200)
 [node name="Snow" type="Node3D"]
 script = ExtResource("1_t73fm")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="FakeMesh" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("PlaneMesh_2brot")
 
 [node name="SpiderBot" parent="." instance=ExtResource("4_t73fm")]
