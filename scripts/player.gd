@@ -9,20 +9,21 @@ var ROTATION_INTERPOLATE_SPEED = 40.0
 var speed_modifier: float = 0.0
 var has_constant_force = true
 
-@export_category("BAD Template Variables")
+@export_category("BAD Template Nodes")
 
 @export var _player_input : PlayerInput
 @export var _camera_input : CameraInput
 @export var _player_model : Node3D
 @export var _state_machine: RewindableStateMachine
+@onready var rollback_synchronizer = $RollbackSynchronizer
+var _animation_player
+
+@export_category("Custom Character Nodes")
 @export var skeleton: Skeleton3D
 @export var bones: PhysicalBoneSimulator3D
 @export var chest: PhysicalBone3D
 
-@onready var rollback_synchronizer = $RollbackSynchronizer
-var _animation_player
-
-@export_category("FPS Multiplayer")
+@export_category("FPS Multiplayer Nodes")
 @export var weapons_manager: WeaponsManager
 @export var WeaponPivot: Marker3D
 
@@ -84,7 +85,6 @@ func look_player_model(delta):
 
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 	_force_update_is_on_floor()
-	
 	if not is_on_floor():
 		apply_gravity(delta)
 
@@ -95,8 +95,6 @@ func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 # - The resulting RPC only happens on remote (server) ("call_remote" is implied here, but not needed)
 # - The `WeaponsManager` uses `MultiplayerSyncronizer` for visiblity, sound, animation_player, etc.
 # - This syncs the important properties to all clients (including the local caller [source player]).
-
-
 # NOTE: Do not add "call_local" or the puppet's weapons_manager can do things.
 @rpc("any_peer")
 func process_player_input(input_string: StringName):
@@ -116,19 +114,22 @@ func process_player_input(input_string: StringName):
 		"special":
 			toggle_ragdoll()
 
+# TODO: Animations will need to be overhauled completely eventually...
+# using a server driven AnimationStateTree (how will that work with rollback, if at all)
+# or using sync'd interpolation values (top half / bottom half ).
+# For now, try not to over-do it in the prototype phase. Ignore unncessary polish.
+const ANIMATION_PREFIX = 'master_x_bot_animations/'
 
-# TODO: Use statemachine to transition in AnimationStateTre
-# TODO: every or just sync: the interpolation
 func _on_display_state_changed(_old_state, new_state):	
 	var animation_name = new_state.animation_name
 	if _animation_player && animation_name != "":
 		if animation_name == "rifle run" && _player_input.input_dir.y == 0:
 			if _player_input.input_dir.x > 0:
-				_animation_player.play("strafe")
+				_animation_player.play(ANIMATION_PREFIX + "strafe")
 			else:
-				_animation_player.play("strafe (2)")
+				_animation_player.play(ANIMATION_PREFIX + "strafe (2)")
 		else:
-			_animation_player.play(animation_name)
+			_animation_player.play(ANIMATION_PREFIX + animation_name)
 
 func apply_gravity(delta):
 	velocity.y -= gravity * delta

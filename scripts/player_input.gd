@@ -4,6 +4,7 @@ class_name PlayerInput
 var input_dir : Vector2 = Vector2.ZERO
 var run_input = false
 var shoot_input = false
+var jump_input = false
 
 func _ready():
 	if is_multiplayer_authority():
@@ -38,4 +39,5 @@ func _process(_delta):
 func _gather():
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
 	run_input = Input.is_action_pressed("run")
-	shoot_input = Input.is_action_pressed('shoot')
+	shoot_input = Input.is_action_pressed("shoot")
+	jump_input = Input.is_action_pressed("jump")

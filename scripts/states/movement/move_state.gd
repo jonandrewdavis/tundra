@@ -8,8 +8,8 @@ func tick(delta, _tick, _is_fresh):
 	if parent.is_on_floor():
 		if get_movement_input() == Vector2.ZERO:
 			state_machine.transition(&"IdleState")
-		#elif get_jump():
-			#state_machine.transition(&"JumpState")
+		elif get_jump():
+			state_machine.transition(&"JumpState")
 	else:
 		state_machine.transition(&"FallState")
 
@@ -18,7 +18,6 @@ func move_player(_delta: float, speed = WALK_SPEED):
 	# NOTE: This state implements it's own "move_player"
 	# Any state with controls needs this constant force! 
 	apply_constant_force()
-
 
 	var input_dir : Vector2 = get_movement_input()
 	

@@ -12,7 +12,6 @@ const JUMP_MOVE_SPEED := 3.0
 
 @export var animation_name: String
 @export var camera_input : CameraInput
-@export var player_model : Node3D
 @export var player_input: PlayerInput
 @export var parent: Player
 
@@ -33,11 +32,11 @@ func rotate_player_model(delta: float):
 	# NOTE: Model direction issues can be resolved by adding a negative to camera_z, depending on setup.
 	#var player_lookat_target = -camera_basis.z
 	
-	var q_from = player_model.global_transform.basis.get_rotation_quaternion()
+	var q_from = parent._player_model.global_transform.basis.get_rotation_quaternion()
 	var q_to = Transform3D().looking_at(camera_basis.z, Vector3.UP).basis.get_rotation_quaternion()
 
 	var set_model_rotation = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
-	player_model.global_transform.basis = set_model_rotation
+	parent._player_model.global_transform.basis = set_model_rotation
 
 # https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-on-floor
 func force_update_is_on_floor():
@@ -56,5 +55,5 @@ func get_movement_input() -> Vector2:
 func get_run() -> bool:
 	return player_input.run_input
 	
-#func get_jump() -> float:
-	#return player_input.jump_input
+func get_jump() -> float:
+	return player_input.jump_input
