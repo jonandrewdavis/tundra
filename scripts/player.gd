@@ -56,13 +56,13 @@ func _ready():
 #
 	#TODO: Document cases where this helps prevent jitter.
 	#TODO: Disabling physics on the client helps the server & client not fight over positioning
-	#if multiplayer.is_server() == false:
-		#set_physics_process(false)
+	if multiplayer.is_server() == false:
+		set_physics_process(false)
 		
 func _physics_process(delta: float) -> void:
 	look_player_model(delta)
 
-func look_player_model(delta):
+func look_player_model(_delta):
 	_camera_input.camera_3D.rotation.x = _camera_input.camera_look
 
 	#

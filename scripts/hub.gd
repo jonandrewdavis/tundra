@@ -11,7 +11,7 @@ signal player_added
 # who joins gets the latest value. We could also do an RPC
 # on joining, but this might work.
 func _ready() -> void:
-	print('WORLD PLS', world)
+	player_added.connect(on_player_added_hub)
 	pass	
 
 func get_player(network_id: int):
@@ -20,3 +20,7 @@ func get_player(network_id: int):
 	for player in players:
 		if player.is_in_group('players') && str(player.name) == str(network_id):
 			return player
+
+
+func on_player_added_hub():
+	pass

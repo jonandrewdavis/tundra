@@ -10,8 +10,8 @@ platforms_container = NodePath("PlatformsContainer")
 [node name="PlatformsContainer" type="Node3D" parent="."]
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -443.988)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.94971)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://bsen6gy2hvor1", "uid://bsen6gy2hvor1", "uid://bsen6gy2hvor1")
+_spawnable_scenes = PackedStringArray("uid://bsen6gy2hvor1", "uid://bsen6gy2hvor1", "uid://bsen6gy2hvor1", "uid://bsen6gy2hvor1", "uid://bsen6gy2hvor1", "uid://bsen6gy2hvor1")
 spawn_path = NodePath("../PlatformsContainer")

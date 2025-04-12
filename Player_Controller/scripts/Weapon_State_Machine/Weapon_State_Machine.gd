@@ -85,12 +85,12 @@ func change_weapon(dir: CHANGE_DIR) -> void:
 		weapon_changed.emit()
 		busy = false	
 
-func change_weapon_enter(weapon_index: int):
-	animation_player.play(get_weapon(weapon_index).pick_up_animation)
+func change_weapon_enter(given_weapon_index: int):
+	animation_player.play(get_weapon(given_weapon_index).pick_up_animation)
 	await get_tree().create_timer(animation_player.current_animation_length + .1).timeout
 
-func change_weapon_leave(weapon_index: int):
-	animation_player.play(get_weapon(weapon_index).change_animation)
+func change_weapon_leave(given_weapon_index: int):
+	animation_player.play(get_weapon(given_weapon_index).change_animation)
 	await get_tree().create_timer(animation_player.current_animation_length + .1).timeout
 
 # TODO: networked weapon from netfox, ammo checks, more things
