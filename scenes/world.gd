@@ -15,11 +15,6 @@ const gun_drone = preload("res://assets/characters/bot_drone_winter/GunDrone.tsc
 
 func _ready():
 	Hub.world = self
-	
-	# TODO: Enemy spawn button (debug)
-	#if multiplayer.is_server():
-		#get_tree().create_timer(2.0).timeout
-		#spawn_enemy.rpc()
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("DEBUG_L"):

@@ -104,7 +104,7 @@ func pick_patrol_destination():
 	var random_point = NavigationServer3D.map_get_random_point(map, 1, false)
 	nav_agent.set_target_position(random_point)
 
-func set_state(new_state: int) -> void:
+func set_state(new_state: States) -> void:
 	var previous_state := state
 	state = new_state
 
@@ -162,7 +162,7 @@ func on_animation_finished(animation_name):
 
 # TODO: Should the entity receving damage handle it? It might make "critical hits" easier
 # or, a hitbox can have a hit() function the bullet calls
-func on_hitbox_area_entered(area):
+func on_hitbox_area_entered(_area):
 	pass
 	
 func on_search_box_body_entered(body: CharacterBody3D):
@@ -204,6 +204,6 @@ func fire():
 	_proj.queue_free()
 
 # TODO: Hit more than just players, damage to buildings, etc.
-func _on_player_hit(body, projectile):
+func _on_player_hit(body, _projectile):
 	if body.is_in_group('players'):
 		pass

@@ -2,39 +2,48 @@
 @tool
 extends Node3D
 
+# Required nodes
+@export var multiplayer_spawner: MultiplayerSpawner 
+@export var platforms_container: Node3D 
+var walking_scene_tracker
+var walking_scene_timer = Timer.new()
 
 var walking_scene = preload("res://scenes/walking_terrain/walking_snow.tscn")
 var walking_scene_length = 200.0
-
-var platforms_container: Node3D
+var walking_scene_center = 0.0
 
 # We track current_platforms in an array because adding & removing nodes can change order.
 var current_platforms = []
 
-# TODO: label these groups, export tracker, so parent can set it, otherwise Marker3D here
-var walking_scene_timer = Timer.new()
-@onready var walking_scene_tracker: Node3D = $Marker3D
-# TODO: connect signals for platforms to remove themselves, (connect them as added)
-# connect signals for baking
-
-var walking_scene_center = 0.0
+enum DIR { 
+	BEHIND,
+	INFRONT,
+}
 
 func _ready() -> void:
-	platforms_container = $PlatformsContainer
+	multiplayer_spawner.add_spawnable_scene(walking_scene.resource_path)	
+	
+	# To be server authoratative, return early if not server
+	if not multiplayer.is_server():
+		return
+
 	if !platforms_container:
 		push_warning('No platform container')
 		return
 	if !walking_scene:
-		push_warning('No walking scene')
+		push_warning('No walking scene')	
+	
 	
 	add_child(walking_scene_timer)
 	walking_scene_timer.wait_time = 1.0
 	walking_scene_timer.timeout.connect(on_check_walking_timer)
 	walking_scene_timer.start()
-	#
-	#if Hub.has_signal('player_added'):
-		#Hub.player_added.connect(on_player_added)
 	
+	if Engine.is_editor_hint():
+		walking_scene_tracker = $Marker3D
+	else:	
+		Hub.player_added.connect(on_player_added)
+
 	# Similar to [0, 1, 2] but does not allocate an array.
 	# 0 = "most behind"
 	# 1 = "center"
@@ -60,47 +69,39 @@ func on_check_walking_timer():
 	if current_platforms.size() != 3 || platforms_container.get_child_count() != 3:
 		push_warning('Incorrect number of platforms')
 		return
+		
+		
+	#print('DEBUG: walking_scene_tracker Z: ', walking_scene_tracker.global_position.z)
 
-	# TODO: Function this.
 	if walking_scene_tracker.global_position.z > walking_scene_center + walking_scene_length:
 		remove_platform(DIR.BEHIND)
 		add_platform(DIR.INFRONT)
 		walking_scene_center = walking_scene_center + walking_scene_length
 
 	if walking_scene_tracker.global_position.z < walking_scene_center - walking_scene_length:
-		var new_platform = walking_scene.instantiate()
-		platforms_container.add_child(new_platform)
-		var new_offset = (walking_scene_length * 2)
-		new_platform.global_position.z = walking_scene_center - new_offset
-		current_platforms.prepend(new_platform)
-		# Backwards progress has been made, set the new center.
-		walking_scene_center = walking_scene_center + walking_scene_length
+		remove_platform(DIR.INFRONT)
+		add_platform(DIR.BEHIND)
+		walking_scene_center = walking_scene_center - walking_scene_length
 
-enum DIR { 
-	BEHIND,
-	INFRONT,
-}
 
 func remove_platform(dir: DIR):
-
 	if dir == DIR.BEHIND:
 		current_platforms[0].queue_free()
+		current_platforms.pop_at(0)
 	else:
-		current_platforms[2].get_children()[2].queue_free()
+		current_platforms[2].queue_free()
+		current_platforms.pop_at(2)
 
 func add_platform(dir: DIR):
 	if dir == DIR.INFRONT:
 		var new_platform = walking_scene.instantiate()
-		current_platforms.append(new_platform)
-		platforms_container.add_child(new_platform)
+		current_platforms.push_back(new_platform)
+		platforms_container.add_child(new_platform, true)
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
 		new_platform.global_position.z = walking_scene_center + new_offset
 	else:
-		platforms_container.get_children()[2].queue_free()
-	
-
-# TODO: backwards? eh. maybe.
-	# us absolute dist?
-	# could measure to location of (transform.origin) to find the center of the current thingy
-	# that way you could support variable "length" scene in the future
-	# you'd have to measure each incoming scene to figure how where / how to place them.
+		var new_platform = walking_scene.instantiate()
+		current_platforms.push_front(new_platform)
+		platforms_container.add_child(new_platform, true)
+		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
+		new_platform.global_position.z = walking_scene_center - new_offset	

@@ -94,7 +94,7 @@ func check_pass_through(collider: Node3D, rid: RID)-> bool:
 		valid_pass_though = true
 	return valid_pass_though
 
-func Hit_Scan_damage(collision, Direction, Position, _damage):
+func Hit_Scan_damage(collision, _direction, _position, _damage):
 	if collision.is_in_group("targets") and collision.has_method("hit"):
 		hit_signal.emit()
 		collision.hit(_damage)
