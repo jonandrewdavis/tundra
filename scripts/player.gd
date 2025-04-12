@@ -4,7 +4,7 @@ class_name Player
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var interactable
-var ROTATION_INTERPOLATE_SPEED = 10.0
+var ROTATION_INTERPOLATE_SPEED = 40.0
 
 var speed_modifier: float = 0.0
 var has_constant_force = true

@@ -1,11 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7ls3kmqoga4e"]
+[gd_scene load_steps=2 format=3 uid="uid://b7ls3kmqoga4e"]
 
 [ext_resource type="Script" uid="uid://byaelq3yxr4j1" path="res://scenes/walking_terrain/walking_terrain_manager.gd" id="1_11p0o"]
-[ext_resource type="PackedScene" uid="uid://bsen6gy2hvor1" path="res://scenes/walking_terrain/walking_snow.tscn" id="2_1cuhg"]
 
 [node name="WalkingTerrainManager" type="Node3D"]
 script = ExtResource("1_11p0o")
 
-[node name="WalkingSnow" parent="." instance=ExtResource("2_1cuhg")]
-
-[node name="Platforms" type="Node3D" parent="."]
+[node name="PlatformsContainer" type="Node3D" parent="."]

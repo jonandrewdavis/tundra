@@ -30,6 +30,7 @@ func _add_player_to_game(network_id: int):
 	
 	_players_in_game[network_id] = player_to_add
 	_player_spawn_point.add_child(player_to_add)
+	Hub.player_added.emit(network_id)
 	
 func _remove_player_from_game(network_id: int):
 	print("Removing player from game: %s" % network_id)

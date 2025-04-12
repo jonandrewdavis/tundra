@@ -73,7 +73,6 @@ mesh = SubResource("PlaneMesh_2brot")
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.970388, 0)
 
 [node name="ProtonScatter" type="Node3D" parent="."]
-visible = false
 script = ExtResource("5_qp6ho")
 modifier_stack = SubResource("Resource_qp6ho")
 Performance/use_chunks = true
