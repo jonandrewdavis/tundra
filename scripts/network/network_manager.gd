@@ -1,6 +1,6 @@
 extends Node
 
-var _loading_scene = preload("res://scenes/loading.tscn")
+var _loading_scene = preload("res://scenes/menu/loading.tscn")
 var _active_loading_scene
 
 var _enet_network = preload("res://scenes/network/enet_network.tscn")

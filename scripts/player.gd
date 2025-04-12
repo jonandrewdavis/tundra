@@ -13,7 +13,7 @@ var has_constant_force = true
 
 @export var _player_input : PlayerInput
 @export var _camera_input : CameraInput
-@export var _player_model : Node3D
+@export var _player_model : Node3D # NOTE: When updating _player_model, also update RollbackSync & TickInterpolater.
 @export var _state_machine: RewindableStateMachine
 @onready var rollback_synchronizer = $RollbackSynchronizer
 var _animation_player

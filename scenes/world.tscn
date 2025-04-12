@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
 [ext_resource type="Environment" uid="uid://d2vhvx143fvtc" path="res://scenes/tundra/TundraWorldEnvironment_1.tres" id="2_qfnet"]
-[ext_resource type="Shader" path="res://scenes/player/snow.gdshader" id="5_71j4m"]
+[ext_resource type="Shader" uid="uid://k1t5yooesun6" path="res://scripts/shaders/snow.gdshader" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="5_qfnet"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_71j4m"]

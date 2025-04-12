@@ -11,12 +11,11 @@ config_version=5
 [application]
 
 config/name="tundra-prototype"
-run/main_scene="res://scenes/main_menu.tscn"
+run/main_scene="res://scenes/menu/main_menu.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
 [autoload]
 
-NetworkManager="*res://scripts/network/network_manager.gd"
 WindowTiler="*res://addons/netfox.extras/window-tiler.gd"
 NetworkTime="*res://addons/netfox/network-time.gd"
 NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
@@ -27,6 +26,7 @@ DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 Noray="*res://addons/netfox.noray/noray.gd"
 PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
 Hub="*res://scripts/hub.gd"
+NetworkManager="*res://scripts/network/network_manager.gd"
 
 [display]
 

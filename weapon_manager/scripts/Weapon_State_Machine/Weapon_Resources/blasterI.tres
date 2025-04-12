@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=5 format=3 uid="uid://yc1f2j7pl4vr"]
+
+[ext_resource type="Script" uid="uid://v2x8jrcvd86" path="res://weapon_manager/scripts/Weapon_State_Machine/weapon_resource.gd" id="1_jgxyc"]
+[ext_resource type="PackedScene" uid="uid://dc48o4niy1mok" path="res://weapon_manager/Spawnable_Objects/Projectiles_To_Load/basic_hitscan_projectile.tscn" id="1_l4j8x"]
+[ext_resource type="PackedScene" uid="uid://cvbk5bxenpxey" path="res://weapon_manager/Spawnable_Objects/Weapons/blaster_I.tscn" id="3_y2nwe"]
+[ext_resource type="PackedScene" uid="uid://ciu0xkaw0ioef" path="res://weapon_manager/Spawnable_Objects/SprayProfiles/spray_profile_1.tscn" id="4_xc0or"]
+
+[resource]
+script = ExtResource("1_jgxyc")
+weapon_name = "blasterI"
+pick_up_animation = "Global/blasterI Active"
+shoot_animation = "Global/blasterI Shoot"
+reload_animation = "Global/blasterI Reload"
+change_animation = "Global/blasterI De-Activate"
+drop_animation = "Global/blasterI Drop"
+out_of_ammo_animation = "Global/blasterI OOA"
+melee_animation = "Global/blasterI Melee"
+has_ammo = true
+magazine = 30
+max_ammo = 60
+damage = 10
+melee_damage = 1.0
+auto_fire = true
+fire_range = 100
+can_be_dropped = true
+weapon_drop = ExtResource("3_y2nwe")
+weapon_spray = ExtResource("4_xc0or")
+projectile_to_load = ExtResource("1_l4j8x")
+incremental_reload = false

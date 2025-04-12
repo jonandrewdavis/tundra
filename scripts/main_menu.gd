@@ -13,8 +13,6 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed('ui_cancel'):
 		get_tree().quit()
 		
-		
-		
 func host_game():
 	print("Host game pressed")
 	NetworkManager.host_game()
