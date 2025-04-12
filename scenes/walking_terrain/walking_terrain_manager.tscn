@@ -6,3 +6,5 @@
 script = ExtResource("1_11p0o")
 
 [node name="PlatformsContainer" type="Node3D" parent="."]
+
+[node name="Marker3D" type="Marker3D" parent="."]

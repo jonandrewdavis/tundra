@@ -4,7 +4,8 @@ extends RewindableState
 # A base movement state for common functions, extend when making new movement state.
 
 const WALK_SPEED := 4.0 * 2.0
-const SPRINT_SPEED_MODIFIER := 1.8
+# 1.8
+const SPRINT_SPEED_MODIFIER := 10.0
 const ROTATION_INTERPOLATE_SPEED := 10
 const JUMP_VELOCITY := 6.5
 const JUMP_MOVE_SPEED := 3.0
