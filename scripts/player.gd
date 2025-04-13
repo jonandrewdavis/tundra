@@ -147,8 +147,6 @@ func _force_update_is_on_floor():
 
 func interact():
 	debug_toggle_castle_speed()
-	pass
-
 
 # TODO: Document that Ragdoll bones are on Layer 3 collision.
 # TODO: Adjust influence. Move to state, change input allowed, etc.
@@ -184,7 +182,8 @@ func toggle_constant_force(new_value):
 
 func debug_toggle_castle_speed():
 	#print("What's the speed before we RPC on client: ", multiplayer.get_remote_sender_id(), ' speed: ', Hub.world.castle_speed)
-	if Hub.world.castle_speed == 0.0:
-		Hub.world.change_castle_speed.rpc(2.0)
+	print(Hub.castle_speed)
+	if Hub.castle_speed == 0.0:
+		Hub.change_castle_speed.emit(2.0)
 	else:
-		Hub.world.change_castle_speed.rpc(0.0)
+		Hub.change_castle_speed.emit(0.0)

@@ -3,10 +3,15 @@ extends Node
 var world
 var player_container
 
-signal player_added
+# NOTE: Signals do not allow typed params. Even the docs say "you're on your own"...
+signal player_added #network_id	
+signal change_castle_speed #speed
+
+var castle_speed = 0.0
 
 func _ready() -> void:
 	player_added.connect(on_player_added_hub)
+	change_castle_speed.connect(on_change_castle_speed)
 	pass	
 
 func get_player(network_id: int):
@@ -18,3 +23,6 @@ func get_player(network_id: int):
 # TODO: Scoreboard
 func on_player_added_hub(_network_id):
 	pass
+
+func on_change_castle_speed(new_speed):
+	castle_speed = new_speed

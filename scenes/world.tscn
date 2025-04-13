@@ -24,7 +24,6 @@ properties/0/replication_mode = 2
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_71j4m")
-fog = true
 
 [node name="Env" type="Node3D" parent="."]
 

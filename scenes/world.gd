@@ -5,7 +5,7 @@ extends Node3D
 const gun_drone = preload("res://assets/characters/bot_drone_winter/GunDrone.tscn")
 
 @onready var world_env: WorldEnvironment = $Env/WorldEnvironment
-@export var fog: bool = false:
+@export var fog: bool = true:
 	set(val):
 		if world_env:
 			world_env.environment.volumetric_fog_enabled = val
