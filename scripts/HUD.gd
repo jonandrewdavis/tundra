@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+@export var weapons_manager: WeaponsManager
 
 @onready var current_weapon_label = $debug_hud/HBoxContainer/CurrentWeapon
 @onready var current_ammo_label = $debug_hud/HBoxContainer2/CurrentAmmo
@@ -7,9 +8,12 @@ extends CanvasLayer
 @onready var hit_sight = $HitSight
 @onready var hit_sight_timer = $HitSight/HitSightTimer
 @onready var overlay = $Overlay
-@onready var weapons_manager = 	$"../RightHandBoneAttachment/WeaponPivot/WeaponsManager"
 
 func _ready():
+	if !weapons_manager:
+		push_warning("Hud has no weapon manager")
+		return
+
 	hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 	weapons_manager.hit_signal.connect(_on_weapons_manager_hit_signal)
 	DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED

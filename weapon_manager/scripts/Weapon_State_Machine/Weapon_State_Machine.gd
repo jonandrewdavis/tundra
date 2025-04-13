@@ -7,7 +7,7 @@ class_name WeaponsManager
 
 @export var animation_player: AnimationPlayer
 @export var melee_hitbox: ShapeCast3D
-@export var max_weapons: int
+@export var max_weapons: int # not used
 @export var player_hud: CanvasLayer
 @export var player: CharacterBody3D
 
@@ -41,9 +41,21 @@ var player_input: PlayerInput
 var player_camera_3D: Camera3D
 var busy = false
 
+func _enter_tree():
+	set_multiplayer_authority(1)
+
 func _ready() -> void:
+	if !player:
+		push_error("No player for weapons_manager")
+		return
 	if !player_hud:
-		push_warning("No player HUD")
+		push_warning("No player HUD in weapons_manager")
+	
+	# Prevent clients from doing anything with their 
+	# This should never happen, but just in case
+	if not multiplayer.is_server():
+		return
+	
 	# This listens for the end of shooting to continue shooting Auto Fire
 	# Also handles updating ammo after a reload.
 	animation_player.animation_finished.connect(_on_animation_finished)
@@ -53,11 +65,9 @@ func _ready() -> void:
 
 	weapons_owned = [WEAPONS.blasterL, WEAPONS.blasterN]
 	
-	# Wait a frame so that the multiplayer sync sees weapon_index on ready.	
-	busy = true
+	# Await for the multiplayer syncronizer to come online before changing to our first weapon	
 	await get_tree().create_timer(0.1).timeout
-	await change_weapon_enter(weapon_index)
-	busy = false
+	animation_player.play(get_weapon(weapons_owned[0]).pick_up_animation)
 
 func get_weapon(index: int) -> WeaponResource:
 	return weapons_list[weapons_owned[index]].weapon
@@ -68,6 +78,10 @@ func get_slot(index: int) -> WeaponSlot:
 # TODO: Could use signals here to update multiple things, like HUD, etc.
 # TODO: Decide if we want to emit the current "WeaponSlot" (might be helpful for HUD)
 func change_weapon(dir: CHANGE_DIR) -> void:
+	if busy: 
+		return
+
+	print('CHANGE WEAPON', dir)
 	var next_weapon_index
 	if dir == CHANGE_DIR.UP:
 		next_weapon_index = weapon_index - 1
@@ -82,16 +96,18 @@ func change_weapon(dir: CHANGE_DIR) -> void:
 		await change_weapon_leave(weapon_index)
 		await change_weapon_enter(next_weapon_index)
 		weapon_index = next_weapon_index
-		weapon_changed.emit()
+		weapon_changed.emit() # TODO: HUD update
 		busy = false	
+		
+	print('NEW WEAPON IS', get_weapon(weapon_index).pick_up_animation)
 
 func change_weapon_enter(given_weapon_index: int):
 	animation_player.play(get_weapon(given_weapon_index).pick_up_animation)
-	await get_tree().create_timer(animation_player.current_animation_length + .1).timeout
+	await get_tree().create_timer(animation_player.current_animation_length + .2).timeout
 
 func change_weapon_leave(given_weapon_index: int):
 	animation_player.play(get_weapon(given_weapon_index).change_animation)
-	await get_tree().create_timer(animation_player.current_animation_length + .1).timeout
+	await get_tree().create_timer(animation_player.current_animation_length + .2).timeout
 
 # TODO: networked weapon from netfox, ammo checks, more things
 func can_fire():
@@ -122,7 +138,7 @@ func load_projectile(spread):
 	
 	bullet_point.add_child(_projectile)
 	var bullet_point_origin = bullet_point.global_position
-	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point_origin)
+	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point.global_position)
 
 func hit_signal_stub():
 	hit_signal.emit()

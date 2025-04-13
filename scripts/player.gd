@@ -38,6 +38,11 @@ func _enter_tree():
 	_camera_input.set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	if !weapons_manager:
+		push_error("No Weapons Manager")
+		return
+
+
 	# Default state
 	_state_machine.state = &"IdleState"
 	_animation_player = _player_model.get_node("AnimationPlayer")

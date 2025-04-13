@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_oxrhl")
-weapon_name = "blaster_n"
+weapon_name = "Sniper"
 pick_up_animation = "Global/blasterN Active"
 shoot_animation = "Global/blasterN Shoot"
 reload_animation = "Global/blasterN Reload"

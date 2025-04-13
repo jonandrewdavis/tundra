@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://cwoo1b16el33m" path="res://weapon_manager/scripts/Weapon_State_Machine/Weapon_State_Machine.gd" id="1_doyh4"]
 [ext_resource type="Script" uid="uid://dphmvwbbu21nt" path="res://weapon_manager/scripts/Weapon_State_Machine/WeaponSlot.gd" id="2_dh77r"]
 [ext_resource type="Resource" uid="uid://bwrs8ensewkgc" path="res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres" id="3_e4dbp"]
-[ext_resource type="Resource" uid="uid://c1jg0ifn7yvve" path="res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres" id="4_hpq73"]
 [ext_resource type="PackedScene" uid="uid://7i2x4ihbqkke" path="res://assets/awp/awp.glb" id="5_e4dbp"]
+[ext_resource type="ArrayMesh" uid="uid://ba32nqx1sd8w5" path="res://assets/poly_weapons_saved/sci_fi_smg.res" id="5_hpq73"]
 [ext_resource type="AnimationLibrary" uid="uid://uybino34n0sj" path="res://weapon_manager/weapon_animation.res" id="8_jok0v"]
 [ext_resource type="ArrayMesh" uid="uid://msm283ivq167" path="res://assets/weapons_saved_meshes/smg_green.res" id="9_e4dbp"]
 [ext_resource type="ArrayMesh" uid="uid://coj4khqco02qe" path="res://assets/weapons_saved_meshes/rifle.res" id="9_ygyma"]
@@ -21,7 +21,7 @@ metadata/_custom_type_script = ExtResource("2_dh77r")
 
 [sub_resource type="Resource" id="Resource_138mc"]
 script = ExtResource("2_dh77r")
-weapon = ExtResource("4_hpq73")
+weapon = ExtResource("3_e4dbp")
 current_ammo = 30
 reserve_ammo = 9999
 metadata/_custom_type_script = ExtResource("2_dh77r")
@@ -175,7 +175,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterI:position")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterI:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -235,7 +235,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("blasterM:position")
+tracks/5/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -247,7 +247,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("blasterM:rotation")
+tracks/6/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:rotation")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -259,7 +259,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("blasterM:visible")
+tracks/7/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -271,7 +271,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("blasterP2:visible")
+tracks/8/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -283,7 +283,7 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("blasterP2:position")
+tracks/9/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:position")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -295,7 +295,7 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("blasterP2:rotation")
+tracks/10/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:rotation")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
@@ -319,7 +319,7 @@ tracks/11/keys = {
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("blasterQ2:position")
+tracks/12/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterQ2:position")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
@@ -331,7 +331,7 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("blasterQ2:visible")
+tracks/13/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterQ2:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
@@ -343,7 +343,7 @@ tracks/13/keys = {
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("blasterQ2:rotation")
+tracks/14/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterQ2:rotation")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
@@ -379,7 +379,7 @@ tracks/16/keys = {
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("blasterI:visible")
+tracks/17/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterI:visible")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -396,7 +396,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterM:position")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -408,7 +408,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterM:rotation")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -420,7 +420,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("blasterM:visible")
+tracks/2/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -437,7 +437,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterM:position")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -449,7 +449,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterM:rotation")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -461,7 +461,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("blasterM:visible")
+tracks/2/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -478,7 +478,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterM:rotation")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -490,7 +490,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterM:position")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -507,7 +507,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterM:position")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -519,7 +519,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterM:rotation")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -535,7 +535,7 @@ length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterM:position")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -547,7 +547,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterM:rotation")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -604,7 +604,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterM:position")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -616,7 +616,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterM:rotation")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -633,7 +633,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterM:position")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -645,7 +645,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterM:rotation")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -657,7 +657,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("blasterM:visible")
+tracks/2/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterM:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -686,7 +686,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterP2:visible")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -698,7 +698,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterP2:position")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -710,7 +710,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("blasterP2:rotation")
+tracks/2/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -727,7 +727,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterP2:visible")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -739,7 +739,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterP2:position")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -751,7 +751,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("blasterP2:rotation")
+tracks/2/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -768,7 +768,7 @@ step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blasterP2:position")
+tracks/0/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -780,7 +780,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blasterP2:rotation")
+tracks/1/path = NodePath("../HIDDEN_WEAPONS_MODELS/blasterP2:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -818,6 +818,27 @@ properties/1/replication_mode = 2
 properties/2/path = NodePath("Weapons_Models/WeaponsPlayer:current_animation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("BulletPoint:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Weapons_Models/blasterL:position")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Weapons_Models/blasterL:rotation")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Weapons_Models/blasterL:visible")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("Weapons_Models/blasterN:position")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Weapons_Models/blasterN:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Weapons_Models/blasterN:visible")
+properties/9/spawn = true
+properties/9/replication_mode = 1
 
 [node name="WeaponsManager" type="Node3D" node_paths=PackedStringArray("animation_player", "melee_hitbox")]
 script = ExtResource("1_doyh4")
@@ -829,9 +850,17 @@ weapons_owned = Array[int]([0, 1])
 [node name="Weapons_Models" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54919, 0)
 
-[node name="sniper" type="Node3D" parent="Weapons_Models"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14059, -0.536887)
+[node name="blasterL" type="Node3D" parent="Weapons_Models"]
+transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, 0.117, 1.16, -0.512)
 visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models/blasterL"]
+visible = false
+mesh = ExtResource("9_ygyma")
+
+[node name="smg" type="MeshInstance3D" parent="Weapons_Models/blasterL"]
+transform = Transform3D(-1.79217e-06, 41, 1.79217e-06, 0, -1.79217e-06, 41, 41, 1.79217e-06, 7.83381e-14, 1.04308e-07, -0.0828908, -0.0425421)
+mesh = ExtResource("5_hpq73")
 
 [node name="blasterN" type="Node3D" parent="Weapons_Models"]
 transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0.193, 1.255, -0.643)
@@ -842,42 +871,7 @@ visible = false
 mesh = SubResource("ArrayMesh_2ccy7")
 
 [node name="awp2" parent="Weapons_Models/blasterN" instance=ExtResource("5_e4dbp")]
-transform = Transform3D(-5.24537e-08, 0, -1.2, 0, 1.2, 0, 1.2, 0, -5.24537e-08, 0.0747704, 0.118698, -0.120616)
-
-[node name="blasterI" type="Node3D" parent="Weapons_Models"]
-transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, -0.148, 1.379, -0.398)
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models/blasterI"]
-visible = false
-mesh = ExtResource("12_138mc")
-
-[node name="blasterL" type="Node3D" parent="Weapons_Models"]
-transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, 0.117, 1.16, -0.512)
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models/blasterL"]
-mesh = ExtResource("9_ygyma")
-
-[node name="blasterM" type="Node3D" parent="Weapons_Models"]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models/blasterM"]
-mesh = ExtResource("10_e4dbp")
-
-[node name="blasterP2" type="Node3D" parent="Weapons_Models"]
-transform = Transform3D(-0.97237, -0.233408, -0.00407487, 0, 0.0174555, -0.999848, 0.233443, -0.972222, -0.0169732, 0.32, 1.014, -0.35)
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models/blasterP2"]
-mesh = ExtResource("9_e4dbp")
-
-[node name="blasterQ2" type="Node3D" parent="Weapons_Models"]
-transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0, 0, 0)
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models/blasterQ2"]
-mesh = ExtResource("12_nh1ok")
+transform = Transform3D(-7.43094e-08, 0, -1.7, 0, 1.7, 0, 1.7, 0, -7.43094e-08, 0.0747704, -0.123464, -0.120616)
 
 [node name="WeaponsPlayer" type="AnimationPlayer" parent="Weapons_Models"]
 libraries = {
@@ -897,3 +891,34 @@ debug_shape_custom_color = Color(0, 1, 0, 1)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_1dvfb")
+
+[node name="HIDDEN_WEAPONS_MODELS" type="Node3D" parent="."]
+visible = false
+
+[node name="blasterI" type="Node3D" parent="HIDDEN_WEAPONS_MODELS"]
+transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, -0.148, 1.379, -0.398)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HIDDEN_WEAPONS_MODELS/blasterI"]
+visible = false
+mesh = ExtResource("12_138mc")
+
+[node name="blasterM" type="Node3D" parent="HIDDEN_WEAPONS_MODELS"]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HIDDEN_WEAPONS_MODELS/blasterM"]
+mesh = ExtResource("10_e4dbp")
+
+[node name="blasterP2" type="Node3D" parent="HIDDEN_WEAPONS_MODELS"]
+transform = Transform3D(-0.97237, -0.233408, -0.00407487, 0, 0.0174555, -0.999848, 0.233443, -0.972222, -0.0169732, 0.32, 1.014, -0.35)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HIDDEN_WEAPONS_MODELS/blasterP2"]
+mesh = ExtResource("9_e4dbp")
+
+[node name="blasterQ2" type="Node3D" parent="HIDDEN_WEAPONS_MODELS"]
+transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0, 0, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HIDDEN_WEAPONS_MODELS/blasterQ2"]
+mesh = ExtResource("12_nh1ok")

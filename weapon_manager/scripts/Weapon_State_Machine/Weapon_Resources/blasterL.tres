@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("2_gpxoe")
-weapon_name = "blasterN"
+weapon_name = "SMG"
 pick_up_animation = "Global/blasterL Activate"
 shoot_animation = "Global/blasterL Shoot"
 reload_animation = "Global/blasterL Reload"

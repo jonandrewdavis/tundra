@@ -1,3 +1,5 @@
+# TODO: This entire part of the code-base needs a complete refactor.
+
 extends Node3D
 class_name Projectile
 
@@ -25,7 +27,6 @@ var hit_objects: Array = []
 var _Camera: Camera3D
 var _Viewport = Vector2i(1152, 648)
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
 
