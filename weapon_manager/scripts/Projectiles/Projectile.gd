@@ -104,7 +104,7 @@ func Load_Decal(_pos,_normal):
 	if Display_Debug_Decal:
 		var rd = Debug_Bullet.instantiate()
 		if world:
-			world.add_child(rd)
+			world.add_child(rd, true)
 			rd.global_translate(_pos+(_normal*.01))
 
 func Launch_Rigid_Body_Projectile( collision_data, projectile, origin_point):

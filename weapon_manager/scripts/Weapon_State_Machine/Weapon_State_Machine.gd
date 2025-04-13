@@ -41,9 +41,6 @@ var player_input: PlayerInput
 var player_camera_3D: Camera3D
 var busy = false
 
-func _enter_tree():
-	set_multiplayer_authority(1)
-
 func _ready() -> void:
 	if !player:
 		push_error("No player for weapons_manager")
@@ -53,8 +50,9 @@ func _ready() -> void:
 	
 	# Prevent clients from doing anything with their 
 	# This should never happen, but just in case
-	if not multiplayer.is_server():
-		return
+	# TODO: This line prevents preparing weapon spray
+	#if not multiplayer.is_server():
+		#return
 	
 	# This listens for the end of shooting to continue shooting Auto Fire
 	# Also handles updating ammo after a reload.
@@ -120,6 +118,7 @@ func can_fire():
 # NOTE: Below here are functions adapated from the template
 ##############################################################
 
+# TODO: Make preparing and retrieving sprays not stored by name?
 func prepare_spray_patterns(weapon_to_prepare: WeaponResource):
 	if weapon_to_prepare.weapon_spray:
 		spray_profiles[weapon_to_prepare.weapon_name] = weapon_to_prepare.weapon_spray.instantiate()
@@ -136,14 +135,19 @@ func load_projectile(spread):
 	############
 	_projectile.hit_signal.connect(hit_signal_stub)
 	
-	bullet_point.add_child(_projectile)
+	# NOTE: added true
+	bullet_point.add_child(_projectile, true)
 	var bullet_point_origin = bullet_point.global_position
-	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point.global_position)
+	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point_origin)
 
 func hit_signal_stub():
 	hit_signal.emit()
 
 func shoot():
+	# TODO: Necessary? No shooting on clients.
+	if not multiplayer.is_server():
+		return
+	
 	if can_fire() == false:
 		return
 
@@ -161,6 +165,8 @@ func shoot():
 		
 		var Spread = Vector2.ZERO
 		
+		# TODO: weapon_name is required for spray... remove this
+		# to allow us to rename weapons from "blasterL', eww...
 		if current_weapon.weapon_spray:
 			count = count + 1
 			Spread = spray_profiles[current_weapon.weapon_name].Get_Spray(count, current_weapon.magazine)

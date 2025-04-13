@@ -1,3 +1,26 @@
-[gd_scene format=3 uid="uid://bm50fehviyuy7"]
+[gd_scene load_steps=5 format=3 uid="uid://bm50fehviyuy7"]
+
+[ext_resource type="Script" uid="uid://dqoup8e05txs1" path="res://scenes/castle/castle.gd" id="1_6letw"]
+[ext_resource type="PackedScene" uid="uid://cfxhvco4ghnve" path="res://assets/gridmap_castle.tscn" id="1_kks2f"]
+[ext_resource type="PackedScene" uid="uid://cabgrr2bvykhs" path="res://scenes/castle/spider_bot/spider_bot.tscn" id="2_sjjxt"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6letw"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="Castle" type="Node3D"]
+script = ExtResource("1_6letw")
+
+[node name="GridmapPivot" type="Marker3D" parent="."]
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 0.122025, 0.12496, 11.0884)
+
+[node name="GridmapCastle" parent="GridmapPivot" instance=ExtResource("1_kks2f")]
+
+[node name="SpiderBotPivot" type="Marker3D" parent="."]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 2.53076, 0)
+
+[node name="SpiderBot" parent="SpiderBotPivot" instance=ExtResource("2_sjjxt")]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_6letw")
