@@ -17,7 +17,7 @@ func tick(delta, _tick, _is_fresh):
 func move_player(_delta: float, speed = WALK_SPEED):
 	# NOTE: This state implements it's own "move_player"
 	# Any state with controls needs this constant force! 
-	apply_constant_force()
+	#apply_constant_force()
 
 	var input_dir : Vector2 = get_movement_input()
 	
@@ -39,10 +39,11 @@ func move_player(_delta: float, speed = WALK_SPEED):
 	if horizontal_velocity:
 		parent.velocity.x = horizontal_velocity.x
 		parent.velocity.z = horizontal_velocity.z
-	else:
-		parent.velocity.x = move_toward(parent.velocity.x, 0, speed)
-		parent.velocity.z = move_toward(parent.velocity.z, 0, speed)
-	
+	# NOTE: Removed from template to add friction in IdleState
+	#else:
+		#parent.velocity.x = move_toward(parent.velocity.x, 0, speed)
+		#parent.velocity.z = move_toward(parent.velocity.z, 0, speed)
+
 	# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-velocity
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()

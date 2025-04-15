@@ -10,13 +10,14 @@ extends CanvasLayer
 @onready var overlay = $Overlay
 
 func _ready():
+	DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
+
 	if !weapons_manager:
-		push_warning("Hud has no weapon manager")
+		#push_warning("Hud has no weapon manager")
 		return
 
 	hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 	weapons_manager.hit_signal.connect(_on_weapons_manager_hit_signal)
-	DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
 
 func _on_weapons_manager_update_weapon_stack(WeaponStack):
 	current_weapon_stack.text = ""

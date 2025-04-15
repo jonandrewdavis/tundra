@@ -1,22 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://bm50fehviyuy7"]
+[gd_scene load_steps=7 format=3 uid="uid://bm50fehviyuy7"]
 
 [ext_resource type="Script" uid="uid://dqoup8e05txs1" path="res://scenes/castle/castle.gd" id="1_6letw"]
 [ext_resource type="PackedScene" uid="uid://cfxhvco4ghnve" path="res://assets/gridmap_castle.tscn" id="1_kks2f"]
 [ext_resource type="PackedScene" uid="uid://cabgrr2bvykhs" path="res://scenes/castle/spider_bot/spider_bot.tscn" id="2_sjjxt"]
+[ext_resource type="PackedScene" uid="uid://jqyjx5vv1fpy" path="res://scenes/castle/heat_dome/HeatDome.tscn" id="4_vutgn"]
+[ext_resource type="PackedScene" uid="uid://ck7oc7brookcs" path="res://scenes/lighthouse/light_house.tscn" id="5_qfbvt"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6letw"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-
-[sub_resource type="FogMaterial" id="FogMaterial_6letw"]
-density = -1.0
-
-[sub_resource type="FogMaterial" id="FogMaterial_vutgn"]
-density = -0.2
-
-[sub_resource type="FogMaterial" id="FogMaterial_qfbvt"]
-density = 0.2
 
 [node name="Castle" type="Node3D"]
 script = ExtResource("1_6letw")
@@ -34,18 +27,8 @@ transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 2.53076, 0)
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_6letw")
 
-[node name="FogVolume" type="FogVolume" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.28531)
-size = Vector3(30, 40, 30)
-shape = 2
-material = SubResource("FogMaterial_6letw")
+[node name="HeatDome" parent="." instance=ExtResource("4_vutgn")]
+heat_dome_radius = 40
 
-[node name="FogVolume2" type="FogVolume" parent="."]
-size = Vector3(80, 50, 80)
-shape = 2
-material = SubResource("FogMaterial_vutgn")
-
-[node name="FogVolume3" type="FogVolume" parent="."]
-size = Vector3(200, 50, 200)
-shape = 2
-material = SubResource("FogMaterial_qfbvt")
+[node name="LightHouse" parent="." instance=ExtResource("5_qfbvt")]
+transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 19.21, 0)

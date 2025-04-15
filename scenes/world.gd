@@ -1,5 +1,4 @@
 extends Node3D
-
 @export var castle_speed: float = 0.0
 
 const gun_drone = preload("res://assets/characters/bot_drone_winter/GunDrone.tscn")

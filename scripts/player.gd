@@ -5,6 +5,7 @@ class_name Player
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var interactable
 var ROTATION_INTERPOLATE_SPEED = 40.0
+const FRICTION = 75
 
 var speed_modifier: float = 0.0
 var has_constant_force = true
@@ -16,7 +17,7 @@ var has_constant_force = true
 @export var _player_model : Node3D # NOTE: When updating _player_model, also update RollbackSync & TickInterpolater.
 @export var _state_machine: RewindableStateMachine
 @onready var rollback_synchronizer = $RollbackSynchronizer
-var _animation_player
+var _animation_player: AnimationPlayer
 
 @export_category("Custom Character Nodes")
 @export var skeleton: Skeleton3D
@@ -26,6 +27,9 @@ var _animation_player
 @export_category("FPS Multiplayer Nodes")
 @export var weapons_manager: WeaponsManager
 @export var WeaponPivot: Marker3D
+
+var animation_check_timer = Timer.new()
+
 
 # TODO: remove once debug done
 func _input(event: InputEvent) -> void:
@@ -38,15 +42,19 @@ func _enter_tree():
 	_camera_input.set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	add_to_group('players')
+
 	if !weapons_manager:
 		push_error("No Weapons Manager")
 		return
-
-
+	
+	# TODO: To be fully server authoratitve, this line should be uncommented
+	#if not multiplayer.is_server():
+		#return
+		
 	# Default state
 	_state_machine.state = &"IdleState"
 	_animation_player = _player_model.get_node("AnimationPlayer")
-	add_to_group('players')
 
 	# TODO: can this be moved to movement_state
 	_state_machine.on_display_state_changed.connect(_on_display_state_changed)
@@ -59,9 +67,14 @@ func _ready():
 	weapons_manager.player_camera_3D = _camera_input.camera_3D
 	weapons_manager.player_input = _player_input
 #
+	# TIMERS
+	add_child(animation_check_timer)
+	animation_check_timer.wait_time = 0.1
+	animation_check_timer.start()
+	animation_check_timer.timeout.connect(on_animation_check)
 	#TODO: Document cases where this helps prevent jitter.
 	#TODO: Disabling physics on the client helps the server & client not fight over positioning
-	if multiplayer.is_server() == false:
+	if not multiplayer.is_server():
 		set_physics_process(false)
 		
 func _physics_process(delta: float) -> void:
@@ -117,7 +130,7 @@ func process_player_input(input_string: StringName):
 		"interact":
 			interact()
 		"special":
-			toggle_ragdoll()
+			debug_toggle_castle_speed()
 
 # TODO: Animations will need to be overhauled completely eventually...
 # using a server driven AnimationStateTree (how will that work with rollback, if at all)
@@ -125,7 +138,7 @@ func process_player_input(input_string: StringName):
 # For now, try not to over-do it in the prototype phase. Ignore unncessary polish.
 const ANIMATION_PREFIX = 'master_x_bot_animations/'
 
-func _on_display_state_changed(_old_state, new_state):	
+func _on_display_state_changed(_old_state: RewindableState, new_state: RewindableState):	
 	var animation_name = new_state.animation_name
 	if _animation_player && animation_name != "":
 		if animation_name == "rifle run" && _player_input.input_dir.y == 0:
@@ -146,7 +159,8 @@ func _force_update_is_on_floor():
 	velocity = old_velocity
 
 func interact():
-	debug_toggle_castle_speed()
+	debug_increase_heat_dome_radius()
+	#debug_toggle_castle_speed()
 
 # TODO: Document that Ragdoll bones are on Layer 3 collision.
 # TODO: Adjust influence. Move to state, change input allowed, etc.
@@ -180,6 +194,9 @@ func death():
 func toggle_constant_force(new_value):
 	has_constant_force = new_value
 
+func debug_increase_heat_dome_radius():
+	Hub.heat_dome_value.emit(1)
+
 func debug_toggle_castle_speed():
 	#print("What's the speed before we RPC on client: ", multiplayer.get_remote_sender_id(), ' speed: ', Hub.world.castle_speed)
 	print(Hub.castle_speed)
@@ -187,3 +204,13 @@ func debug_toggle_castle_speed():
 		Hub.change_castle_speed.emit(2.0)
 	else:
 		Hub.change_castle_speed.emit(0.0)
+
+const animations_to_check = [ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"]	
+
+# TODO: refactor animations
+func on_animation_check():
+	if _animation_player.current_animation in animations_to_check && _player_input.input_dir.y == 0:
+		if _player_input.input_dir.x > 0:
+			_animation_player.play(ANIMATION_PREFIX + "strafe")
+		else:
+			_animation_player.play(ANIMATION_PREFIX + "strafe (2)")

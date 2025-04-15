@@ -18,14 +18,9 @@ const JUMP_MOVE_SPEED := 3.0
 
 # Default movement, override as needed
 func move_player(_delta: float, _speed: float = WALK_SPEED):
-	apply_constant_force()
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()
 	parent.velocity /= NetworkTime.physics_factor
-
-func apply_constant_force():
-	if parent.has_constant_force && Hub.world.castle_speed != 0.0:
-		parent.translate(Vector3(0.0,0.0,0.042))
 
 func rotate_player_model(delta: float):
 	var camera_basis : Basis = camera_input.camera_basis

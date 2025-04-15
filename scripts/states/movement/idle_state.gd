@@ -1,9 +1,9 @@
 # IdleState
 extends MovementState
 
-var count = 1
-
 func tick(delta, _tick, _is_fresh):
+	parent.velocity = parent.velocity.move_toward(Vector3.ZERO, parent.FRICTION * delta)
+
 	rotate_player_model(delta)
 	move_player(delta)
 	force_update_is_on_floor()		
