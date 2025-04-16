@@ -3,7 +3,7 @@ extends MovementState
 
 func tick(delta, _tick, _is_fresh):
 	move_towards_ragdoll(delta)
-	move_player(delta)
+	#move_player(delta)
 
 	if parent.bones.active == false:
 		force_update_is_on_floor()

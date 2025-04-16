@@ -11,13 +11,14 @@ func _ready():
 	await get_tree().process_frame
 	
 	if NetworkManager.is_hosting_game:
-		print("Network lifecicle setup")
+		print("Network lifecycle setup")
 		multiplayer.peer_connected.connect(_client_connected)
 		multiplayer.peer_disconnected.connect(_client_disconnected)
 		
-		# NOTE: can comment this out if you want to test locally as a dedicated server (no client)
-		#if not OS.has_feature("dedicated_server"):
-			#_add_player_to_game(1)
+		# TODO: Revisit hosting flags
+		# NOTE: can remove this if you want to test locally as a dedicated server (no player)
+		if not OS.has_feature("dedicated-server"):
+			_add_player_to_game(1)
 	
 	NetworkManager.hide_loading()
 

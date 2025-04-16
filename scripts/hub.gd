@@ -1,7 +1,8 @@
 extends Node
 
-var world
-var player_container
+var world: Node3D
+var player_container: Node3D
+var heat_dome: Node3D
 
 # NOTE: Signals do not allow typed params. Even the docs say "you're on your own"...
 signal player_added #network_id: int

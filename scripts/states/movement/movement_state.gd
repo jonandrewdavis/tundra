@@ -36,6 +36,10 @@ func rotate_player_model(delta: float):
 
 # https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-on-floor
 func force_update_is_on_floor():
+	if not parent.bones:
+		push_warning("No bones")
+		return
+	
 	if parent.bones.active == true:
 		state_machine.transition(&"Ragdoll")
 

@@ -20,6 +20,8 @@ const spread = 100
 # TODO: New areas. If hte player is in it, out of it/ hurt. etc. cold
 # TODO: Set visiblity range fade mode & fix the shader to be compatbile.
 func _ready() -> void:
+	Hub.heat_dome = self
+
 	exterior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 	interior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 	sync_all_properties()

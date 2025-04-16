@@ -14,7 +14,7 @@ func tick(delta, _tick, _is_fresh):
 		state_machine.transition(&"FallState")
 
 
-func move_player(_delta: float, speed = WALK_SPEED):
+func move_player(delta: float, speed = WALK_SPEED):
 	# NOTE: This state implements it's own "move_player"
 	# Any state with controls needs this constant force! 
 	#apply_constant_force()
@@ -26,19 +26,26 @@ func move_player(_delta: float, speed = WALK_SPEED):
 
 	var position_target = direction * speed
 	
-	# Run speed is not applied to jump
+	# Run speed is not applied to jump (see get_run)
 	if get_run():
 		position_target *= SPRINT_SPEED_MODIFIER
-		
-	if parent.speed_modifier != 0.0:
-		position_target *= parent.speed_modifier
 
-	var horizontal_velocity = parent.velocity
-	horizontal_velocity = position_target
-	
-	if horizontal_velocity:
-		parent.velocity.x = horizontal_velocity.x
-		parent.velocity.z = horizontal_velocity.z
+	if position_target:
+		parent.velocity = parent.velocity.move_toward(position_target, 100.0 * delta)
+
+	#if mov_direction != Vector2.ZERO:
+		#velocity = velocity.move_toward(mov_direction * max_speed, acceleration * delta)
+	#else:
+		#velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
+
+	#else:
+		#parent.velocity.x = move_toward(parent.velocity.x, 0, speed)
+		#parent.velocity.z = move_toward(parent.velocity.z, 0, speed)
+	#if horizontal_velocity:
+		#parent.velocity.x = move_toward(horizontal_velocity.x, parent.ACCELERATION * delta) 
+		#parent.velocity.z = move_toward(horizontal_velocity.z, parent.ACCELERATION * delta) 
+#
+		#parent.velocity.z = horizontal_velocity.z
 	# NOTE: Removed from template to add friction in IdleState
 	#else:
 		#parent.velocity.x = move_toward(parent.velocity.x, 0, speed)

@@ -6,6 +6,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var interactable
 var ROTATION_INTERPOLATE_SPEED = 40.0
 const FRICTION = 75
+const ACCELERATION = 1000.0
 
 var speed_modifier: float = 0.0
 var has_constant_force = true
@@ -23,13 +24,13 @@ var _animation_player: AnimationPlayer
 @export var skeleton: Skeleton3D
 @export var bones: PhysicalBoneSimulator3D
 @export var chest: PhysicalBone3D
+@export var snow_shader: ColorRect
 
 @export_category("FPS Multiplayer Nodes")
 @export var weapons_manager: WeaponsManager
 @export var WeaponPivot: Marker3D
 
 var animation_check_timer = Timer.new()
-
 
 # TODO: remove once debug done
 func _input(event: InputEvent) -> void:
@@ -41,9 +42,11 @@ func _enter_tree():
 	_player_input.set_multiplayer_authority(str(name).to_int())
 	_camera_input.set_multiplayer_authority(str(name).to_int())
 
+
+# TODO: Add all properties via code for MultiplayerSyncronizer
 func _ready():
 	add_to_group('players')
-
+	
 	if !weapons_manager:
 		push_error("No Weapons Manager")
 		return
@@ -76,15 +79,23 @@ func _ready():
 	#TODO: Disabling physics on the client helps the server & client not fight over positioning
 	if not multiplayer.is_server():
 		set_physics_process(false)
-		
+
+var is_in_heat_dome = false
+
+func _process(_delta: float) -> void:
+	if global_position.distance_to(Hub.heat_dome.global_position) <= Hub.heat_dome.heat_dome_radius:
+		is_in_heat_dome = false
+		show_snow_shader(false)
+	else:
+		is_in_heat_dome = true
+		show_snow_shader(true)
+
 func _physics_process(delta: float) -> void:
 	look_player_model(delta)
 
 func look_player_model(_delta):
 	_camera_input.camera_3D.rotation.x = _camera_input.camera_look
 
-	#
-#
 #func look_player_model(delta: float):
 	##var camera_vertical_look = _camera_input.get_camera_vertical_look()
 	##
@@ -130,7 +141,8 @@ func process_player_input(input_string: StringName):
 		"interact":
 			interact()
 		"special":
-			debug_toggle_castle_speed()
+			# SPECIAL CASE: To enable bone simulation, we should call 
+			toggle_ragdoll.rpc()
 
 # TODO: Animations will need to be overhauled completely eventually...
 # using a server driven AnimationStateTree (how will that work with rollback, if at all)
@@ -164,6 +176,8 @@ func interact():
 
 # TODO: Document that Ragdoll bones are on Layer 3 collision.
 # TODO: Adjust influence. Move to state, change input allowed, etc.
+# SPECIAL CASE: ONLY THING ALLOWED TO BE CALL LOCAL.
+@rpc("any_peer", 'call_local')
 func toggle_ragdoll():
 	if bones.active == false:
 		_animation_player.active = false
@@ -171,13 +185,12 @@ func toggle_ragdoll():
 		# ['RightShoulder', 'LeftShoulder', 'RightUpperLeg', 'LeftUpperLeg']
 		bones.physical_bones_start_simulation()
 		apply_chest_force()
-		set_collision_layer_value(1, true)
 	else:
 		_animation_player.active = true
 		bones.active = false
-		bones.physical_bones_stop_simulation()
-		set_collision_layer_value(1, false)
-		
+		bones.physical_bones_stop_simulation()	
+
+
 
 # Apply force away from current facing: -_player_model.basis.z
 func apply_chest_force():
@@ -189,7 +202,6 @@ func apply_chest_force():
 func death():
 	global_position = Vector3(10.0, 10.0, 10.0)
 	$TickInterpolator.teleport()
-
 
 func toggle_constant_force(new_value):
 	has_constant_force = new_value
@@ -214,3 +226,6 @@ func on_animation_check():
 			_animation_player.play(ANIMATION_PREFIX + "strafe")
 		else:
 			_animation_player.play(ANIMATION_PREFIX + "strafe (2)")
+
+func show_snow_shader(value: bool):
+	snow_shader.visible = value
