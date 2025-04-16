@@ -7,10 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://ddwcquq3qs1ad" path="res://assets/ambient/Ice003_1K-JPG/Ice003_1K-JPG_Color.jpg" id="4_xujgp"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_px6c0"]
-density = -0.5
+density = -0.12
+emission = Color(1, 0.631373, 0.372549, 1)
 
 [sub_resource type="FogMaterial" id="FogMaterial_w4mjc"]
-density = -0.3
+density = -0.2
 
 [sub_resource type="SphereMesh" id="SphereMesh_l7s2y"]
 material = ExtResource("2_l7s2y")

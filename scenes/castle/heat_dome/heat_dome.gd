@@ -22,8 +22,9 @@ const spread = 100
 func _ready() -> void:
 	Hub.heat_dome = self
 
-	fog_volume_1.material.density = -0.5
-	fog_volume_2.material.density = -0.3
+	# NOTE: World fog is 0.3 (dense)
+	fog_volume_1.material.density = -0.12
+	fog_volume_2.material.density = -0.2
 
 	exterior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 	interior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
@@ -80,9 +81,9 @@ func on_change_heat_dome_value(value: int = 0):
 	exterior_mesh.height = heat_dome_radius
 	
 	interior.visibility_range_end = heat_dome_radius
-	interior.visibility_range_end_margin = heat_dome_radius + spread - 50 # fade sooner
+	interior.visibility_range_end_margin = heat_dome_radius + spread - 35 # fade sooner higher number
 	exterior.visibility_range_end = heat_dome_radius
-	exterior.visibility_range_end_margin = heat_dome_radius + spread - 50 # fade sooner
+	exterior.visibility_range_end_margin = heat_dome_radius + spread - 35 # fade sooner
 
 	fog_volume_1.size.x = heat_dome_radius * 2
 	fog_volume_1.size.z = heat_dome_radius * 2

@@ -137,7 +137,9 @@ func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 
 # TODO: Add static typing. What is _norm?  It's sometimes missing.
 # NOTE: "invalid operands 'Nil' and 'float' in operator * caused at this call site - AD
-func _on_body_entered(body, _proj, _norm):
+func _on_body_entered(body, proj, norm):
+	print('BODY:', body, '_proj: ', proj, 'norm: ', norm)
+	
 	if body.is_in_group("targets") && body.has_method("hit"):
 		body.hit(damage)
 		hit_signal.emit()
@@ -146,9 +148,9 @@ func _on_body_entered(body, _proj, _norm):
 		body.hit(damage)
 		hit_signal.emit()
 
-	if _norm:
-		Load_Decal(_proj.get_position(),_norm)
-		_proj.queue_free()
-		Projectiles_Spawned.erase(_proj)
+	if norm:
+		Load_Decal(proj.get_position(),norm)
+		proj.queue_free()
+		Projectiles_Spawned.erase(proj)
 		if Projectiles_Spawned.is_empty():
 			queue_free()
