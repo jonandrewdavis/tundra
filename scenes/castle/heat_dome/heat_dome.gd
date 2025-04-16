@@ -22,6 +22,9 @@ const spread = 100
 func _ready() -> void:
 	Hub.heat_dome = self
 
+	fog_volume_1.material.density = -0.5
+	fog_volume_2.material.density = -0.3
+
 	exterior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 	interior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 	sync_all_properties()

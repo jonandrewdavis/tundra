@@ -116,10 +116,6 @@ mouse_filter = 2
 texture = ExtResource("3_nlx67")
 stretch_mode = 3
 
-[node name="HitSightTimer" type="Timer" parent="HitSight"]
-wait_time = 0.05
-one_shot = true
-
 [node name="SprintBar" type="HSlider" parent="."]
 anchors_preset = 7
 anchor_left = 0.5

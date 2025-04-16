@@ -129,6 +129,8 @@ func process_player_input(input_string: StringName):
 		"DEBUG_B":
 			# NOTE: Skeletons are a local RPC
 			toggle_ragdoll.rpc()
+		"DEBUG_0":
+			Hub.debug_create_enemy()
 
 # TODO: Animations will need to be overhauled completely eventually...
 # using a server driven AnimationStateTree (how will that work with rollback, if at all)

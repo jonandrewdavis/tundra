@@ -17,14 +17,12 @@ func _ready():
 		push_warning("Player's HUD has no weapon manager.")
 		return
 
-	
 	# Hit Signal
 	weapons_manager.hit_signal.connect(_on_weapons_manager_hit_signal)
-
 	
 	# Hit Sight
 	add_child(hit_sight_timer)
-	hit_sight_timer.wait_time = 0.1 
+	hit_sight_timer.wait_time = 0.05
 	hit_sight_timer.one_shot = true
 	hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 

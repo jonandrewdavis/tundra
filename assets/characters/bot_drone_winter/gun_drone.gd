@@ -80,7 +80,7 @@ func _physics_process(delta: float) -> void:
 
 func move_and_look(delta):
 	var new_look_at
-	var next_path_pos = nav_agent.get_next_path_position()
+	var next_path_pos: Vector3 = nav_agent.get_next_path_position()
 
 	if nav_agent.is_navigation_finished() == false:
 		velocity = (next_path_pos - global_transform.origin).normalized() * speed
@@ -91,7 +91,9 @@ func move_and_look(delta):
 	if target:
 		new_look_at = target.transform.origin
 	else:
-		new_look_at = next_path_pos
+		# If "Target and up vectors are colinear" use "* Vector3.UP"
+		# https://github.com/godotengine/godot/issues/53793 do * Vector3.UP
+		new_look_at = next_path_pos * Vector3.UP
 
 	var old = transform.basis.orthonormalized()
 	look_at(new_look_at)

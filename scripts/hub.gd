@@ -1,5 +1,7 @@
 extends Node
 
+const gun_drone = preload("res://assets/characters/bot_drone_winter/GunDrone.tscn")
+
 var world: Node3D
 var player_container: Node3D
 var heat_dome: Node3D
@@ -33,3 +35,9 @@ func on_change_castle_speed(new_speed: int):
 
 func on_change_heat_dome_value(_value: int):
 	pass
+	
+func debug_create_enemy():
+	var container = world.get_node('EnemiesContainer')
+	var new_drone = gun_drone.instantiate()
+	container.add_child(new_drone, true)
+	new_drone.global_position = Vector3(10.0, 15.0, 10.0)
