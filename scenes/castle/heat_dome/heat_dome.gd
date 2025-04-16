@@ -49,12 +49,12 @@ func sync_path(node: Node3D, properties: Array[String]):
 	sync.add_property(str(node.get_path()) + ':' + ":".join(properties)
 )
 
-# TODO: Better
+# TODO: Better abstration so we can call it once.
 func sync_all_properties():
 	sync_path(fog_volume_1, ['size'])
 	sync_path(fog_volume_2, ['size'])
 
-	sync_path(interior, ['mesh', 'radius'])
+	sync_path(interior, ['mesh', 'radius']) #: Syntax should be: node, str, str, str
 	sync_path(exterior, ['mesh', 'radius'])
 	sync_path(interior, ['mesh', 'height'])
 	sync_path(exterior, ['mesh', 'height'])

@@ -14,7 +14,7 @@ func tick(delta, _tick, _is_fresh):
 		state_machine.transition(&"FallState")
 
 
-func move_player(delta: float, speed = WALK_SPEED):
+func move_player(delta: float, speed = parent.WALK_SPEED):
 	# NOTE: This state implements it's own "move_player"
 	# Any state with controls needs this constant force! 
 	#apply_constant_force()
@@ -29,9 +29,13 @@ func move_player(delta: float, speed = WALK_SPEED):
 	# Run speed is not applied to jump (see get_run)
 	if get_run():
 		position_target *= SPRINT_SPEED_MODIFIER
+	
+	if !direction:
+		parent.velocity = parent.velocity.move_toward(Vector3.ZERO, parent.FRICTION * delta)
+		return
 
 	if position_target:
-		parent.velocity = parent.velocity.move_toward(position_target, 100.0 * delta)
+		parent.velocity = parent.velocity.move_toward(position_target, parent.ACCELERATION * delta)
 
 	#if mov_direction != Vector2.ZERO:
 		#velocity = velocity.move_toward(mov_direction * max_speed, acceleration * delta)

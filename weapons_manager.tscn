@@ -16,7 +16,7 @@
 [sub_resource type="Resource" id="Resource_nh1ok"]
 script = ExtResource("2_dh77r")
 weapon = ExtResource("3_e4dbp")
-current_ammo = 30
+current_ammo = 24
 reserve_ammo = 99999
 metadata/_custom_type_script = ExtResource("2_dh77r")
 

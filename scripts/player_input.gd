@@ -34,6 +34,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("special"):
 		get_parent().process_player_input.rpc("special")
 
+	if Input.is_action_just_pressed("DEBUG_B"):
+		get_parent().process_player_input.rpc("DEBUG_B")
+
 # NOTE: Do not forget to add new inputs to the RollbackSyncronizer!! (IF... you want them to rollback)
 # Use this for inputs that are constant or held
 func _gather():

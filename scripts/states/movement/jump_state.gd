@@ -12,7 +12,7 @@ func tick(delta, _tick, _is_fresh):
 		state_machine.transition(&"FallState")
 	# If issues arise around jump, add additional state transitions here
 
-func move_player(_delta: float, speed = WALK_SPEED):
+func move_player(_delta: float, speed = parent.WALK_SPEED):
 	# NOTE: This state implements it's own "move_player"
 	var input_dir : Vector2 = get_movement_input()
 	

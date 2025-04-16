@@ -13,7 +13,7 @@ func tick(delta, _tick, _is_fresh):
 		elif get_jump():
 			state_machine.transition(&"JumpState")
 	
-func move_player(_delta: float, speed = WALK_SPEED):
+func move_player(_delta: float, speed = parent.WALK_SPEED):
 	# NOTE: This state implements it's own "move_player"
 	# Any state with controls needs this constant force! 
 	#apply_constant_force()

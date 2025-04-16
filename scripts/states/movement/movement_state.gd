@@ -4,9 +4,7 @@ extends RewindableState
 # A base movement state for common functions, extend when making new movement state.
 
 # TODO: Move these into _player
-const WALK_SPEED := 4.0 * 2.0
-# 1.8
-const SPRINT_SPEED_MODIFIER := 1.8
+const SPRINT_SPEED_MODIFIER := 1.6
 const ROTATION_INTERPOLATE_SPEED := 10
 const JUMP_VELOCITY := 6.5
 const JUMP_MOVE_SPEED := 3.0
@@ -17,7 +15,7 @@ const JUMP_MOVE_SPEED := 3.0
 @export var parent: Player
 
 # Default movement, override as needed
-func move_player(_delta: float, _speed: float = WALK_SPEED):
+func move_player(_delta: float, _speed: float = parent.WALK_SPEED):
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()
 	parent.velocity /= NetworkTime.physics_factor
