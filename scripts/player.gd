@@ -45,19 +45,25 @@ func _enter_tree():
 
 # TODO: Add all properties via code for MultiplayerSyncronizer
 func _ready():
-	add_to_group('players')
-	
 	if !weapons_manager:
 		push_error("No Weapons Manager")
 		return
 	
-	# TODO: To be fully server authoratitve, this line should be uncommented
-	#if not multiplayer.is_server():
-		#return
-		
-	# Default state
+	#### CLIENT & SERVER ####
+	add_to_group('players')
 	_state_machine.state = &"IdleState"
 	_animation_player = _player_model.get_node("AnimationPlayer")
+	
+	#TODO: Document cases where this helps prevent jitter.
+	#TODO: Disabling physics on the client helps the server & client not fight over positioning
+	#NOTE: We might need _physics_process to run on the client, depedning on what we're doing.. camera tilt, etc.
+	#if not multiplayer.is_server():
+		#set_physics_process(false)
+	
+	#### SERVER ONLY ####
+	# TODO: To be fully server authoratitve, this line should be uncommented
+	if not multiplayer.is_server():
+		return
 
 	# TODO: can this be moved to movement_state
 	_state_machine.on_display_state_changed.connect(_on_display_state_changed)
@@ -76,11 +82,7 @@ func _ready():
 	animation_check_timer.start()
 	animation_check_timer.timeout.connect(on_animation_check)
 
-	#TODO: Document cases where this helps prevent jitter.
-	#TODO: Disabling physics on the client helps the server & client not fight over positioning
-	#NOTE: We might need _physics_process to run on the client, depedning on what we're doing.. camera tilt, etc.
-	#if not multiplayer.is_server():
-		#set_physics_process(false)
+
 
 var is_in_heat_dome = false
 

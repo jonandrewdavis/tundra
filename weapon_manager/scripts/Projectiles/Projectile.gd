@@ -46,7 +46,6 @@ func Fire_Projectile(_spread: Vector2 ,_range: int, _proj:PackedScene, origin_po
 			_over_ride_collision(Camera_Collision, damage)
 
 func _over_ride_collision(_camera_collision:Array, _damage: float) -> void:
-	
 	pass
 
 func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):

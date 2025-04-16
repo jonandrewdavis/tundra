@@ -111,6 +111,61 @@ height = 0.2
 
 [node name="master" instance=ExtResource("1_kyomj")]
 
+[node name="GeneralSkeleton" parent="Armature" index="0"]
+bones/1/position = Vector3(0, 1.06126, -2.32831e-08)
+bones/1/rotation = Quaternion(1.82322e-07, 2.23274e-08, -9.84778e-07, 1)
+bones/2/rotation = Quaternion(-1.39698e-09, -2.23269e-08, 7.34268e-07, 1)
+bones/3/rotation = Quaternion(1.11967e-20, 3.91909e-14, -6.77902e-13, 1)
+bones/4/rotation = Quaternion(-7.45058e-09, -7.91034e-16, -1.05471e-14, 1)
+bones/5/rotation = Quaternion(3.72529e-09, -4.44089e-14, -2.29039e-13, 1)
+bones/6/rotation = Quaternion(-3.17637e-22, -8.88178e-16, 1.43219e-14, 1)
+bones/8/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
+bones/9/rotation = Quaternion(-8.79168e-07, 1, 9.98378e-07, -2.98023e-08)
+bones/10/rotation = Quaternion(-4.21468e-08, -0.707107, 8.42937e-08, 0.707107)
+bones/11/rotation = Quaternion(5.45042e-07, 0.707107, 5.45042e-07, 0.707107)
+bones/12/rotation = Quaternion(-0.210905, 0.676919, 0.210144, 0.673156)
+bones/13/rotation = Quaternion(-0.00757469, -0.00376609, -0.000403136, 0.999964)
+bones/14/rotation = Quaternion(-0.00560211, -0.00278677, -0.000284195, 0.99998)
+bones/16/rotation = Quaternion(-8.34465e-07, 1.3411e-07, 4.45694e-05, 1)
+bones/17/rotation = Quaternion(-1.04308e-07, -5.96046e-08, -0.00010477, 1)
+bones/18/rotation = Quaternion(2.98023e-08, -2.98023e-08, 6.63102e-05, 1)
+bones/20/rotation = Quaternion(0, 5.96046e-08, 3.14116e-05, 1)
+bones/21/rotation = Quaternion(-4.47035e-08, 0, -2.09659e-05, 1)
+bones/22/rotation = Quaternion(1.49012e-08, 8.9407e-08, -2.09212e-05, 1)
+bones/24/rotation = Quaternion(-8.19564e-07, 5.96046e-08, -6.12438e-06, 1)
+bones/25/rotation = Quaternion(2.98023e-08, -2.98023e-08, 2.98023e-08, 1)
+bones/26/rotation = Quaternion(0, 5.96046e-08, -1.19209e-07, 1)
+bones/28/rotation = Quaternion(5.1409e-06, 1.19209e-07, -0.00204465, 0.999998)
+bones/29/rotation = Quaternion(-7.7486e-07, -5.96046e-08, 0.000210404, 1)
+bones/30/rotation = Quaternion(8.9407e-08, 1.49012e-08, 6.69211e-05, 1)
+bones/32/rotation = Quaternion(0.5, -0.5, -0.5, -0.5)
+bones/33/rotation = Quaternion(-2.08616e-07, 1, -8.9407e-08, -5.0664e-07)
+bones/34/rotation = Quaternion(-4.21468e-08, 0.707107, -4.21468e-08, 0.707107)
+bones/35/rotation = Quaternion(-1.96582e-07, -0.707105, 3.65169e-07, 0.707109)
+bones/36/rotation = Quaternion(-0.210382, -0.677397, -0.209507, 0.673037)
+bones/37/rotation = Quaternion(-0.00857145, 0.00425966, 0.000481129, 0.999954)
+bones/38/rotation = Quaternion(-0.00636509, 0.00315905, 0.0003995, 0.999975)
+bones/40/rotation = Quaternion(8.9407e-07, 5.96046e-08, 0.000164017, 1)
+bones/41/rotation = Quaternion(-8.9407e-08, -2.98023e-08, -0.000255644, 1)
+bones/42/rotation = Quaternion(-4.47035e-08, 5.96046e-08, 8.80808e-05, 1)
+bones/44/rotation = Quaternion(9.23872e-07, 2.98023e-08, 0.000501722, 1)
+bones/45/rotation = Quaternion(-8.9407e-08, 2.98023e-08, -0.000850022, 1)
+bones/46/rotation = Quaternion(-2.98023e-08, -2.98023e-08, 0.000322014, 1)
+bones/48/rotation = Quaternion(-2.98023e-08, 2.98023e-08, -0.000156373, 1)
+bones/49/rotation = Quaternion(-2.98023e-08, 2.98023e-08, 0.000221595, 1)
+bones/50/rotation = Quaternion(0, 0, 0.000112653, 1)
+bones/52/rotation = Quaternion(-4.55976e-06, 1.49012e-08, -0.000520244, 1)
+bones/53/rotation = Quaternion(1.49012e-07, -2.98023e-08, -0.000846416, 1)
+bones/54/rotation = Quaternion(1.49012e-08, 8.9407e-08, 0.000496611, 1)
+bones/56/rotation = Quaternion(-2.26045e-08, 0.000672017, 1, -6.98541e-07)
+bones/57/rotation = Quaternion(2.75893e-10, 0.999999, -0.00134145, -5.66826e-10)
+bones/58/rotation = Quaternion(-1.11124e-08, 0.706633, -0.70758, 1.28085e-08)
+bones/59/rotation = Quaternion(6.52983e-11, 1, 2.98023e-08, 3.71547e-12)
+bones/61/rotation = Quaternion(-2.27273e-08, 0.000650286, 1, -7.08998e-07)
+bones/62/rotation = Quaternion(-9.88683e-10, 0.999999, -0.00129878, 1.41577e-08)
+bones/63/rotation = Quaternion(-1.10569e-08, 0.706648, -0.707565, 1.30782e-08)
+bones/64/rotation = Quaternion(1.17033e-10, 1, 0, 9.26995e-10)
+
 [node name="vanguard_Mesh" parent="Armature/GeneralSkeleton" index="0"]
 mesh = SubResource("ArrayMesh_m4h5v")
 
@@ -121,8 +176,8 @@ script = ExtResource("2_2kf8t")
 [node name="Physical Bone Hips" type="PhysicalBone3D" parent="Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="0"]
 transform = Transform3D(0.999625, 0.0270844, 0.00397425, 3.72529e-08, 0.14518, -0.989405, -0.0273744, 0.989035, 0.145126, 0.00142199, 1.10875, 0.00415713)
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.94594e-07, -7.31088e-08, 0.0479584)
-body_offset = Transform3D(0.999625, 0.0270844, 0.00397425, 3.72529e-08, 0.14518, -0.989405, -0.0273744, 0.989035, 0.145126, -0.000191491, 0.0474503, -0.00695989)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.94594e-07, -7.21775e-08, 0.0479584)
+body_offset = Transform3D(0.999625, 0.0270844, 0.00397425, 3.72529e-08, 0.14518, -0.989405, -0.0273744, 0.989035, 0.145125, -0.000191491, 0.0474503, -0.00695989)
 bone_name = "Hips"
 joint_constraints/x/linear_limit_enabled = true
 joint_constraints/x/linear_limit_upper = 0.0
@@ -195,7 +250,7 @@ shape = SubResource("SphereShape3D_rwaq7")
 [node name="Physical Bone Spine" type="PhysicalBone3D" parent="Armature/GeneralSkeleton/PhysicalBoneSimulator3D" index="1"]
 transform = Transform3D(0.999629, 0.0269359, 0.00395241, -1.49012e-08, 0.14518, -0.989405, -0.0272243, 0.989039, 0.145126, 0.00101113, 1.21157, -0.010924)
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.14907e-09, -2.70084e-08, 0.0559542)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.14907e-09, -2.6077e-08, 0.0559542)
 body_offset = Transform3D(0.999629, 0.0269359, 0.00395241, -1.49012e-08, 0.14518, -0.989405, -0.0272243, 0.989039, 0.145126, -0.000221145, 0.0553614, -0.00812039)
 bone_name = "Spine"
 joint_constraints/x/linear_limit_enabled = true
