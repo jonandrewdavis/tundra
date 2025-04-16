@@ -9,7 +9,7 @@ signal hit_signal
 @export_enum ("Hitscan","Rigidbody_Projectile","over_ride") var Projectile_Type: String = "Hitscan"
 @export var Display_Debug_Decal: bool = true
 
-@export var Projectile_Velocity: int
+@export var Projectile_Velocity: int = 20
 @export var Expirey_Time: int = 5
 @export var Rigid_Body_Projectile: PackedScene
 @export var pass_through: bool = false
@@ -51,18 +51,21 @@ func _over_ride_collision(_camera_collision:Array, _damage: float) -> void:
 
 func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
 	var Ray_Origin = _Camera.project_ray_origin(_Viewport/2)
-	var Ray_End = (Ray_Origin + _Camera.project_ray_normal((_Viewport/2)+Vector2i(_spread))*_range)
+	var Ray_End = (Ray_Origin + _Camera.project_ray_normal((_Viewport/2)+Vector2i(_spread)) * _range)
 	var New_Intersection:PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
 	New_Intersection.set_collision_mask(0b11101111) # 15? 
 	New_Intersection.set_hit_from_inside(false) # In Jolt this is set to true by defualt
 	
 	var Intersection = get_world_3d().direct_space_state.intersect_ray(New_Intersection)
 	
-	if not Intersection.is_empty():
-		var Collision = [Intersection.collider,Intersection.position,Intersection.normal]
-		return Collision
-	else:
-		return [null,Ray_End,null]
+	if Intersection.is_empty():
+		return [null, Ray_End, null]	
+	
+	if Intersection.position.distance_to(Ray_Origin) < 4.0:
+		return [null, Ray_End, null]
+	
+	return [Intersection.collider,Intersection.position,Intersection.normal]
+
 
 func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
 	var Point = Collision[1]
@@ -107,7 +110,7 @@ func Load_Decal(_pos,_normal):
 			world.add_child(rd, true)
 			rd.global_translate(_pos+(_normal*.01))
 
-func Launch_Rigid_Body_Projectile( collision_data, projectile, origin_point):
+func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 	var point = collision_data[1]
 	var norm = collision_data[2]
 
@@ -123,7 +126,7 @@ func Launch_Rigid_Body_Projectile( collision_data, projectile, origin_point):
 	_proj.body_entered.connect(_on_body_entered.bind(_proj, norm))
 	
 	var _direction = (point - origin_point).normalized()
-	_proj.set_linear_velocity( _direction* Projectile_Velocity)
+	_proj.set_linear_velocity( _direction * Projectile_Velocity)
 	
 	# NOTE: Added, because in the previous implementation timer wasn't started, so...  - AD
 	await get_tree().create_timer(Expirey_Time).timeout

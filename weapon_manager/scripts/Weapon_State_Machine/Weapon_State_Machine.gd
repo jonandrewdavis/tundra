@@ -45,23 +45,25 @@ func _ready() -> void:
 	if !player:
 		push_error("No player for weapons_manager")
 		return
+		
 	if !player_hud:
 		push_warning("No player HUD in weapons_manager")
-	
-	# Prevent clients from doing anything with their 
-	# This should never happen, but just in case
-	# TODO: This line prevents preparing weapon spray
-	#if not multiplayer.is_server():
-		#return
-	
-	# This listens for the end of shooting to continue shooting Auto Fire
-	# Also handles updating ammo after a reload.
-	animation_player.animation_finished.connect(_on_animation_finished)
-	
+		
 	for weapon_slot in weapons_list:
 		prepare_spray_patterns(weapon_slot.weapon)
 
 	weapons_owned = [WEAPONS.blasterL, WEAPONS.blasterN]
+	
+	# Prevent clients from doing anything with their 
+	# This should never happen, but just in case
+	# TODO: This line prevents preparing weapon spray
+	if not multiplayer.is_server():
+		return
+
+	##### SERVER ONLY ######
+	# This listens for the end of shooting to continue shooting Auto Fire
+	# Also handles updating ammo after a reload. Must not be connected on clients.
+	animation_player.animation_finished.connect(_on_animation_finished)
 	
 	# Await for the multiplayer syncronizer to come online before changing to our first weapon	
 	await get_tree().create_timer(0.1).timeout
@@ -144,8 +146,9 @@ func hit_signal_stub():
 	hit_signal.emit()
 
 func shoot():
-	# TODO: Necessary? No shooting on clients.
+	# Note: Usually not possible with our RPC rules, but warn about the client using this.
 	if not multiplayer.is_server():
+		push_warning("A client tried to call locally to shoot")
 		return
 	
 	if can_fire() == false:

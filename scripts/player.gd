@@ -28,7 +28,7 @@ var _animation_player: AnimationPlayer
 
 @export_category("FPS Multiplayer Nodes")
 @export var weapons_manager: WeaponsManager
-@export var WeaponPivot: Marker3D
+@export var weapon_pivot: Marker3D
 
 var animation_check_timer = Timer.new()
 
@@ -75,14 +75,17 @@ func _ready():
 	animation_check_timer.wait_time = 0.1
 	animation_check_timer.start()
 	animation_check_timer.timeout.connect(on_animation_check)
+
 	#TODO: Document cases where this helps prevent jitter.
 	#TODO: Disabling physics on the client helps the server & client not fight over positioning
-	if not multiplayer.is_server():
-		set_physics_process(false)
+	#NOTE: We might need _physics_process to run on the client, depedning on what we're doing.. camera tilt, etc.
+	#if not multiplayer.is_server():
+		#set_physics_process(false)
 
 var is_in_heat_dome = false
 
 func _process(_delta: float) -> void:
+	# Runs on the client.
 	if global_position.distance_to(Hub.heat_dome.global_position) <= Hub.heat_dome.heat_dome_radius:
 		is_in_heat_dome = false
 		show_snow_shader(false)
@@ -90,27 +93,8 @@ func _process(_delta: float) -> void:
 		is_in_heat_dome = true
 		show_snow_shader(true)
 
-func _physics_process(delta: float) -> void:
-	look_player_model(delta)
-
-func look_player_model(_delta):
-	_camera_input.camera_3D.rotation.x = _camera_input.camera_look
-
-#func look_player_model(delta: float):
-	##var camera_vertical_look = _camera_input.get_camera_vertical_look()
-	##
-	### CAMERA SYNC FOR AIM
-	#parent._camera_input.camera_rot.rotation.x = camera_look
-
-	##print('LOOK?', camera_vertical_look)
-##
-	#### GUN LOOK:
-	##var q_from = WeaponPivot.global_transform.basis.get_rotation_quaternion()
-	##var q_to = WeaponPivot.looking_at(camera_vertical_look).basis.get_rotation_quaternion()
-	##
-	##var set_model_rotation = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
-	##WeaponPivot.global_transform.basis = set_model_rotation
-	#WeaponPivot.rotation.z = _camera_input.get_camera_vertical_look() * -1.0
+func _physics_process(_delta: float) -> void:
+	weapon_vertical_tilt()
 
 func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 	_force_update_is_on_floor()
@@ -227,3 +211,15 @@ func on_animation_check():
 
 func show_snow_shader(value: bool):
 	snow_shader.visible = value
+
+############### SERVER - camera_vertical_tilt #################
+# NOTE: This mostly works, but it's better to just use a regular multiplayer syncronizer
+# TODO: If netowrk traffic is too high, look into fixing the bugs with this in physics:
+	#if multiplayer.is_server():
+		#camera_vertical_tilt()
+#func camera_vertical_tilt():
+	#_camera_input.camera_3D.rotation.x = _camera_input.camera_look
+	#pass
+
+func weapon_vertical_tilt():
+	weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.5, 0.5)

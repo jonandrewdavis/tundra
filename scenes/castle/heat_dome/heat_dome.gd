@@ -77,9 +77,9 @@ func on_change_heat_dome_value(value: int = 0):
 	exterior_mesh.height = heat_dome_radius
 	
 	interior.visibility_range_end = heat_dome_radius
-	interior.visibility_range_end_margin = heat_dome_radius + spread / 2 # fade sooner
+	interior.visibility_range_end_margin = heat_dome_radius + spread - 50 # fade sooner
 	exterior.visibility_range_end = heat_dome_radius
-	exterior.visibility_range_end_margin = heat_dome_radius + spread / 2 # fade sooner
+	exterior.visibility_range_end_margin = heat_dome_radius + spread - 50 # fade sooner
 
 	fog_volume_1.size.x = heat_dome_radius * 2
 	fog_volume_1.size.z = heat_dome_radius * 2

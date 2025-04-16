@@ -6,18 +6,28 @@ extends CanvasLayer
 @onready var current_ammo_label = $debug_hud/HBoxContainer2/CurrentAmmo
 @onready var current_weapon_stack = $debug_hud/HBoxContainer3/WeaponStack
 @onready var hit_sight = $HitSight
-@onready var hit_sight_timer = $HitSight/HitSightTimer
 @onready var overlay = $Overlay
+
+var hit_sight_timer = Timer.new()
 
 func _ready():
 	DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
 
 	if !weapons_manager:
-		#push_warning("Hud has no weapon manager")
+		push_warning("Player's HUD has no weapon manager.")
 		return
 
-	hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
+	
+	# Hit Signal
 	weapons_manager.hit_signal.connect(_on_weapons_manager_hit_signal)
+
+	
+	# Hit Sight
+	add_child(hit_sight_timer)
+	hit_sight_timer.wait_time = 0.1 
+	hit_sight_timer.one_shot = true
+	hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
+
 
 func _on_weapons_manager_update_weapon_stack(WeaponStack):
 	current_weapon_stack.text = ""
@@ -31,7 +41,6 @@ func _on_weapons_manager_weapon_changed(WeaponName):
 	current_weapon_label.set_text(WeaponName)
 
 func _on_weapons_manager_hit_signal():
-	$"../Hitmarker".play()
 	hit_sight.set_visible(true)
 	hit_sight_timer.start()
 

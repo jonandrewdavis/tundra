@@ -28,11 +28,6 @@ const CAMERA_X_ROT_MAX := deg_to_rad(70)
 const CAMERA_UP_DOWN_MOVEMENT = -1
 
 func _ready():
-	#TODO: Document cases where this helps prevent jitter.
-	#TODO: Disabling physics on the client helps the server & client not fight over positioning 
-	if multiplayer.is_server() == false:
-		set_physics_process(false)
-		
 	_set_camera(CAMERA_SETTINGS_DEFAULT)
 	NetworkTime.before_tick_loop.connect(_gather)
 	
@@ -45,7 +40,6 @@ func _ready():
 func _gather():
 	camera_basis = get_camera_rotation_basis()
 	camera_look = get_camera_vertical_look()
-	
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -70,6 +64,7 @@ func rotate_camera(move):
 	
 	# Vertical camera movement
 	camera_rot.rotation.x = clamp(camera_rot.rotation.x + (CAMERA_UP_DOWN_MOVEMENT * move.y), CAMERA_X_ROT_MIN, CAMERA_X_ROT_MAX)
+	#print('ON CLIENT', camera_rot.rotation.x)
 
 func get_camera_rotation_basis() -> Basis:
 	# Use camera_mount here so we don't have to worry about correcting for lean
@@ -77,4 +72,3 @@ func get_camera_rotation_basis() -> Basis:
 
 func get_camera_vertical_look() -> float:
 	return camera_rot.rotation.x
-	

@@ -51,11 +51,11 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
-properties/1/replication_mode = 2
+properties/1/replication_mode = 1
 
 [node name="bullet" type="RigidBody3D"]
-collision_layer = 16
-collision_mask = 37
+collision_layer = 0
+collision_mask = 0
 gravity_scale = 0.0
 continuous_cd = true
 contact_monitor = true

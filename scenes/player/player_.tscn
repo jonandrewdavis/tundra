@@ -20,7 +20,7 @@
 [ext_resource type="Shader" uid="uid://k1t5yooesun6" path="res://scripts/shaders/snow.gdshader" id="22_db8q1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y8poy"]
-radius = 0.4
+radius = 0.3
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_nrabn"]
 properties/0/path = NodePath("master/AnimationPlayer:active")
@@ -40,7 +40,7 @@ shader_parameter/speed = 2.0
 shader_parameter/wind = 0.6
 shader_parameter/num_of_layers = 40
 
-[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "skeleton", "bones", "chest", "snow_shader", "weapons_manager", "WeaponPivot")]
+[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "skeleton", "bones", "chest", "snow_shader", "weapons_manager", "weapon_pivot")]
 script = ExtResource("1_u2qrv")
 _player_input = NodePath("PlayerInput")
 _camera_input = NodePath("CameraInput")
@@ -51,7 +51,7 @@ bones = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D")
 chest = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone Chest")
 snow_shader = NodePath("Shaders/SnowShader")
 weapons_manager = NodePath("RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager")
-WeaponPivot = NodePath("RightHandBoneAttachment/WeaponPivot")
+weapon_pivot = NodePath("RightHandBoneAttachment/WeaponPivot")
 
 [node name="master" parent="." instance=ExtResource("2_v7wsi")]
 
@@ -121,7 +121,8 @@ rollback_synchronizer = NodePath("../RollbackSynchronizer")
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("10_kusnb")
 
-[node name="PlayerUi" parent="." instance=ExtResource("12_ua4at")]
+[node name="PlayerUi" parent="." node_paths=PackedStringArray("weapons_manager") instance=ExtResource("12_ua4at")]
+weapons_manager = NodePath("../RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager")
 
 [node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="."]
 transform = Transform3D(0, -1, 0, 0, 0, -1, 1, 0, 0, -0.680265, 1.47923, -0.0575971)

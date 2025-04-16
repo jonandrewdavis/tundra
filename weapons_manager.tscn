@@ -885,6 +885,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.266143, -0.288234, -0.77921
 gizmo_extents = 0.21
 
 [node name="Melee_Hitbox" type="ShapeCast3D" parent="."]
+enabled = false
 shape = SubResource("BoxShape3D_tw7a2")
 target_position = Vector3(0, 0, -0.7)
 collision_mask = 36
