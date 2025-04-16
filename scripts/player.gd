@@ -190,13 +190,11 @@ func toggle_ragdoll():
 		bones.active = false
 		bones.physical_bones_stop_simulation()	
 
-
-
 # Apply force away from current facing: -_player_model.basis.z
 func apply_chest_force():
 	for bone in bones.get_children():
-		if bone.bone_name == 'Chest':
-			bone.apply_central_impulse(-_player_model.basis.z * -1.0 * 250.0)
+		if bone.bone_name == 'Hips':
+			bone.apply_central_impulse(-_player_model.basis.z * -1.0 * 1200.0)
 
 # TODO: Death should be a state
 func death():

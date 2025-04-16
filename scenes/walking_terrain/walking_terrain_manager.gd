@@ -23,16 +23,12 @@ enum DIR {
 func _ready() -> void:
 	multiplayer_spawner.add_spawnable_scene(walking_scene.resource_path)	
 	
-	# To be server authoratative, return early if not server
-	if not multiplayer.is_server():
-		return
-
 	if !platforms_container:
 		push_warning('No platform container')
 		return
 	if !walking_scene:
 		push_warning('No walking scene')	
-	
+
 	
 	add_child(walking_scene_timer)
 	walking_scene_timer.wait_time = 1.0
@@ -42,7 +38,13 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		walking_scene_tracker = $Marker3D
 	else:	
+		walking_scene_tracker = Hub.heat_dome
 		Hub.player_added.connect(on_player_added)
+
+
+	# To be server authoratative, return early if not server
+	if not multiplayer.is_server():
+		return
 
 	# Similar to [0, 1, 2] but does not allocate an array.
 	# 0 = "most behind"
@@ -57,9 +59,9 @@ func _ready() -> void:
 	current_platforms[0].global_position.z = -walking_scene_length
 	current_platforms[2].global_position.z = walking_scene_length
 
-func on_player_added(player: int):
-	walking_scene_tracker = Hub.get_player(player)
-
+# TODO: Do we need this?
+func on_player_added(_player: int):
+	pass
 
 func on_check_walking_timer():
 	if !walking_scene_tracker:
