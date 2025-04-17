@@ -142,7 +142,6 @@ func set_state(new_state: States) -> void:
 	if state == States.ATTACKING:
 		fire()
 
-
 	if state == States.DYING:
 		animation_player.play('dying')
 
@@ -202,10 +201,11 @@ func fire():
 	_proj.look_at(_target_point)	
 	_proj.body_entered.connect(_on_player_hit.bind(_proj))
 
-	await get_tree().create_timer(5.0).timeout
-	_proj.queue_free()
-
 # TODO: Hit more than just players, damage to buildings, etc.
 func _on_player_hit(body, _projectile):
 	if body.is_in_group('players'):
+		queue_free()
 		pass
+
+	queue_free()
+	

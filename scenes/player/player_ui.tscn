@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=10 format=3 uid="uid://btdemgg0e0b4o"]
 
 [ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/HUD.gd" id="1_fatww"]
 [ext_resource type="Texture2D" uid="uid://bjh5ic6qy4jtl" path="res://assets/HUD ASSETS/crosshair001.png" id="2_mo8vb"]
@@ -24,6 +24,11 @@ thickness = 6
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_g18nd"]
 color = Color(1, 1, 1, 1)
 thickness = 10
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fatww"]
+properties/0/path = NodePath("HitSight:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 2
 
 [node name="PlayerUi" type="CanvasLayer"]
 script = ExtResource("1_fatww")
@@ -152,3 +157,6 @@ render_target_update_mode = 4
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5451, 0)
 cull_mask = 524288
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_fatww")

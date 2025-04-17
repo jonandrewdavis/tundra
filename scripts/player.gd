@@ -28,6 +28,7 @@ var _animation_player: AnimationPlayer
 @export_category("FPS Multiplayer Nodes")
 @export var weapons_manager: WeaponsManager
 @export var weapon_pivot: Marker3D
+@export var player_ui: CanvasLayer
 
 var animation_check_timer = Timer.new()
 
@@ -43,14 +44,14 @@ func _enter_tree():
 
 
 # TODO: Warn if any of our required nodes are missing.
+# TODO: abstract this so we can just like, give some nodes
 func _ready():
-	if !weapons_manager:
-		push_error("No Weapons Manager")
-		return
-	
-	#### CLIENT & SERVER ####
+	Lodash.error(weapons_manager, 'weapons_manager')
+	Lodash.warn(player_ui, 'player_ui')
 
+	#### CLIENT & SERVER ####
 	add_to_group('players')
+
 	# TODO: This is here due to ragdoll's call local
 	_animation_player = _player_model.get_node("AnimationPlayer")
 	# call this after setting authority
@@ -68,6 +69,7 @@ func _ready():
 	# TODO: To be fully server authoratitve, this line should be uncommented
 	if not multiplayer.is_server():
 		return
+
 	_state_machine.state = &"IdleState"
 	_state_machine.on_display_state_changed.connect(_on_display_state_changed)
 
@@ -92,6 +94,7 @@ func _process(_delta: float) -> void:
 	else:
 		is_in_heat_dome = true
 		show_snow_shader(true)
+
 
 func _physics_process(_delta: float) -> void:
 	weapon_vertical_tilt()
@@ -127,8 +130,7 @@ func process_player_input(input_string: StringName):
 		"special":
 			debug_toggle_castle_speed()
 		"DEBUG_B":
-			# NOTE: Skeletons are a local RPC
-			toggle_ragdoll.rpc()
+			toggle_ragdoll()
 		"DEBUG_0":
 			Hub.debug_create_enemy()
 
@@ -165,7 +167,6 @@ func interact():
 # TODO: Document that Ragdoll bones are on Layer 3 collision.
 # TODO: Adjust influence. Move to state, change input allowed, etc.
 # SPECIAL CASE: ONLY THING ALLOWED TO BE CALL LOCAL.
-@rpc("any_peer", 'call_local')
 func toggle_ragdoll():
 	if bones.active == false:
 		_animation_player.active = false
@@ -177,6 +178,7 @@ func toggle_ragdoll():
 		_animation_player.active = true
 		bones.active = false
 		bones.physical_bones_stop_simulation()	
+
 
 # Apply force away from current facing: -_player_model.basis.z
 func apply_chest_force():
@@ -230,12 +232,8 @@ func show_snow_shader(value: bool):
 func weapon_vertical_tilt():
 	weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.5, 0.5)
 
-func sync_path(node, properties: Array[String]):
-	sync.replication_config.add_property(str(node.get_path()) + ':' + ":".join(properties))
-
 func sync_all_properties():
-	sync_path(_animation_player, ['active'])
-	sync_path(_animation_player, ['current_animation'])
-	sync_path(bones, ['active'])
-	for property_path in sync.replication_config.get_properties():
-		sync.replication_config.property_set_replication_mode(property_path, SceneReplicationConfig.REPLICATION_MODE_ON_CHANGE)	
+	Lodash.warn(_animation_player, '_animation_player')
+	Lodash.sync_property(sync, _animation_player, ['active'], true)
+	Lodash.sync_property(sync, _animation_player, ['current_animation'], true)
+	Lodash.sync_property(sync, bones, ['active'], true)

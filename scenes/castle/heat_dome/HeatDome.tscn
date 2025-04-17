@@ -8,10 +8,13 @@
 
 [sub_resource type="FogMaterial" id="FogMaterial_px6c0"]
 density = -0.12
-emission = Color(1, 0.631373, 0.372549, 1)
+albedo = Color(0.977664, 0.815678, 3.85046e-07, 1)
+emission = Color(0.976471, 0.815686, 0, 1)
 
 [sub_resource type="FogMaterial" id="FogMaterial_w4mjc"]
 density = -0.2
+albedo = Color(0.623529, 0.85098, 1, 1)
+emission = Color(0.623529, 0.85098, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_l7s2y"]
 material = ExtResource("2_l7s2y")
@@ -66,7 +69,7 @@ shape = 2
 material = SubResource("FogMaterial_px6c0")
 
 [node name="FogVolume2" type="FogVolume" parent="FogVolumes"]
-size = Vector3(92, 50, 92)
+size = Vector3(70, 50, 70)
 shape = 2
 material = SubResource("FogMaterial_w4mjc")
 

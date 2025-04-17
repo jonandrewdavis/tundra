@@ -1,33 +1,8 @@
-[gd_scene load_steps=6 format=4 uid="uid://gk0m2leyfs75"]
+[gd_resource type="ArrayMesh" load_steps=2 format=4 uid="uid://c4uxw6ab0ge37"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bix2d"]
-radius = 0.099605
-height = 0.419677
+[ext_resource type="Material" uid="uid://dwmedoe14jqjo" path="res://weapon_manager/Spawnable_Objects/Projectiles_To_Load/bullet_yellow_material.tres" id="1_bylk1"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x0fj0"]
-resource_name = "yellow"
-vertex_color_use_as_albedo = true
-albedo_color = Color(1, 0.192157, 0, 1)
-metallic = 1.0
-emission_enabled = true
-emission = Color(0.980475, 0.235733, 1, 1)
-emission_energy_multiplier = 1.78
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_ly6dy"]
-_surfaces = [{
-"aabb": AABB(-0.01, -0.025, -0.01, 0.02, 0.05, 0.02),
-"format": 34359742465,
-"index_count": 276,
-"index_data": PackedByteArray("AgAAAAEAAQADAAIAAQAEAAMABAAFAAMABAAGAAUABgAHAAUABgAIAAcACAAJAAcACAAKAAkACgALAAkACgAMAAsADAANAAsADAAOAA0ADgAPAA0ADwAQAA0ADwARABAADwASABEAEgATABEAEgAUABMAFAAVABMAFAAWABUAFgAXABUAGQAYAAYABgAEABkAFgAUABoAGgAbABYAHAASAA8ADwAdABwAHgAFAAcABwAfAB4AIAAOAAwADAAhACAAEQATACIAIgAjABEAIQAMAAoACgAkACEAJwAlACYAJgAZACcAJgAoABkAKAAYABkAKAAeABgAHgApABgAHgAfACkAHwAkACkAHwAqACQAKgAhACQAKgArACEAKwAgACEAKwAsACAALAAdACAALAAtAB0ALQAcAB0ALQAjABwAIwAaABwAIwAiABoAIgAbABoAIgAuABsALgAvABsAKwALAA0ADQAsACsALAANABAAEAAtACwAHgAoAAMAAwAFAB4AJgAlAAAAAAACACYAJAAKAAgACAApACQAHwAHAAkACQAqAB8AJQAnAAEAAQAAACUALQAQABEAEQAjAC0AFAASABwAHAAaABQAFwAWABsAGwAvABcAEwAVAC4ALgAiABMAHQAPAA4ADgAgAB0AFQAXAC8ALwAuABUAJwAZAAQABAABACcAKQAIAAYABgAYACkAKAAmAAIAAgADACgAKgAJAAsACwArACoA"),
-"name": "yellow",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 48,
-"vertex_data": PackedByteArray("CtcjvM3MzLwAAACA3kEevM3MzLyhnik73kEevM3MzLyhnim7vOMNvM3MzLwK16O7vOMNvM3MzLwK16M7a7Tnu83MzLxrtOe7a7Tnu83MzLxrtOc7Cteju83MzLy84w28Cteju83MzLy84w08oZ4pu83MzLzeQR68oZ4pu83MzLzeQR48AAAAAM3MzLwK1yO8AAAAAM3MzLwK1yM8oZ4pO83MzLzeQR68oZ4pO83MzLzeQR48CtejO83MzLy84w08CtejO83MzLy84w28a7TnO83MzLxrtOe7a7TnO83MzLxrtOc7vOMNPM3MzLwK16O7vOMNPM3MzLwK16M73kEePM3MzLyhnim73kEePM3MzLyhnik7CtcjPM3MzLwAAACAa7Tnu83MzDxrtOc7vOMNvM3MzDwK16M7vOMNPM3MzDwK16M73kEePM3MzDyhnik7a7TnO83MzDxrtOc7CtejO83MzDy84w08a7Tnu83MzDxrtOe7Cteju83MzDy84w28oZ4pO83MzDzeQR48AAAAAM3MzDwK1yM8vOMNPM3MzDwK16O7a7TnO83MzDxrtOe7oZ4pu83MzDzeQR48CtcjvM3MzDwAAACA3kEevM3MzDyhnim73kEevM3MzDyhnik7vOMNvM3MzDwK16O7Cteju83MzDy84w08oZ4pu83MzDzeQR68AAAAAM3MzDwK1yO8oZ4pO83MzDzeQR68CtejO83MzDy84w283kEePM3MzDyhnim7CtcjPM3MzDwAAACA")
-}]
-blend_shape_mode = 0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_sqgwv"]
+[resource]
 resource_name = "foamBulletA_Mesh foamBulletA"
 _surfaces = [{
 "aabb": AABB(-0.01, -0.025, -0.01, 0.02, 0.05, 0.02),
@@ -35,7 +10,7 @@ _surfaces = [{
 "format": 34359742487,
 "index_count": 276,
 "index_data": PackedByteArray("AgAAAAEAAQADAAIAAQAEAAMABAAFAAMABAAGAAUABgAHAAUABgAIAAcACAAJAAcACAAKAAkACgALAAkACgAMAAsADAANAAsADAAOAA0ADgAPAA0ADwAQAA0ADwARABAADwASABEAEgATABEAEgAUABMAFAAVABMAFAAWABUAFgAXABUAGgAYABkAGQAbABoAHgAcAB0AHQAfAB4AIgAgACEAIQAjACIAJgAkACUAJQAnACYAKgAoACkAKQArACoALgAsAC0ALQAvAC4AMgAwADEAMQAzADIANgA0ADUANQA3ADYANQA4ADcAOAA5ADcAOAA6ADkAOgA7ADkAOgA8ADsAPAA9ADsAPAA+AD0APgA/AD0APgBAAD8AQABBAD8AQABCAEEAQgBDAEEAQgBEAEMARABFAEMARABGAEUARgBHAEUARgBIAEcASABJAEcASABKAEkASgBLAEkATgBMAE0ATQBPAE4AUgBQAFEAUQBTAFIAVgBUAFUAVQBXAFYAWgBYAFkAWQBbAFoAXgBcAF0AXQBfAF4AYgBgAGEAYQBjAGIAZgBkAGUAZQBnAGYAagBoAGkAaQBrAGoAbgBsAG0AbQBvAG4AcgBwAHEAcQBzAHIAdgB0AHUAdQB3AHYAegB4AHkAeQB7AHoAfgB8AH0AfQB/AH4AggCAAIEAgQCDAIIAhgCEAIUAhQCHAIYAigCIAIkAiQCLAIoAjgCMAI0AjQCPAI4A"),
-"material": SubResource("StandardMaterial3D_x0fj0"),
+"material": ExtResource("1_bylk1"),
 "name": "yellow",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -43,33 +18,3 @@ _surfaces = [{
 "vertex_data": PackedByteArray("CtcjvM3MzLwAAACA3kEevM3MzLyhnik73kEevM3MzLyhnim7vOMNvM3MzLwK16O7vOMNvM3MzLwK16M7a7Tnu83MzLxrtOe7a7Tnu83MzLxrtOc7Cteju83MzLy84w28Cteju83MzLy84w08oZ4pu83MzLzeQR68oZ4pu83MzLzeQR48AAAAAM3MzLwK1yO8AAAAAM3MzLwK1yM8oZ4pO83MzLzeQR68oZ4pO83MzLzeQR48CtejO83MzLy84w08CtejO83MzLy84w28a7TnO83MzLxrtOe7a7TnO83MzLxrtOc7vOMNPM3MzLwK16O7vOMNPM3MzLwK16M73kEePM3MzLyhnim73kEePM3MzLyhnik7CtcjPM3MzLwAAACAa7Tnu83MzDxrtOc7a7Tnu83MzLxrtOc7vOMNvM3MzDwK16M7vOMNvM3MzLwK16M7vOMNPM3MzLwK16M7vOMNPM3MzDwK16M73kEePM3MzLyhnik73kEePM3MzDyhnik7a7TnO83MzLxrtOc7CtejO83MzLy84w08a7TnO83MzDxrtOc7CtejO83MzDy84w08a7Tnu83MzLxrtOe7Cteju83MzLy84w28a7Tnu83MzDxrtOe7Cteju83MzDy84w28oZ4pO83MzLzeQR48AAAAAM3MzLwK1yM8oZ4pO83MzDzeQR48AAAAAM3MzDwK1yM8vOMNPM3MzLwK16O7vOMNPM3MzDwK16O7a7TnO83MzLxrtOe7a7TnO83MzDxrtOe7AAAAAM3MzLwK1yM8oZ4pu83MzLzeQR48AAAAAM3MzDwK1yM8oZ4pu83MzDzeQR48CtcjvM3MzDwAAACA3kEevM3MzDyhnim73kEevM3MzDyhnik7vOMNvM3MzDwK16M7vOMNvM3MzDwK16O7a7Tnu83MzDxrtOc7a7Tnu83MzDxrtOe7Cteju83MzDy84w08Cteju83MzDy84w28oZ4pu83MzDzeQR48oZ4pu83MzDzeQR68AAAAAM3MzDwK1yM8AAAAAM3MzDwK1yO8oZ4pO83MzDzeQR48oZ4pO83MzDzeQR68CtejO83MzDy84w08CtejO83MzDy84w28a7TnO83MzDxrtOc7a7TnO83MzDxrtOe7vOMNPM3MzDwK16M7vOMNPM3MzDwK16O73kEePM3MzDyhnik73kEePM3MzDyhnim7CtcjPM3MzDwAAACAAAAAAM3MzLwK1yO8oZ4pO83MzLzeQR68AAAAAM3MzDwK1yO8oZ4pO83MzDzeQR68oZ4pO83MzLzeQR68CtejO83MzLy84w28oZ4pO83MzDzeQR68CtejO83MzDy84w28vOMNvM3MzDwK16O7vOMNvM3MzLwK16O7a7Tnu83MzDxrtOe7a7Tnu83MzLxrtOe7CtcjvM3MzDwAAACACtcjvM3MzLwAAACA3kEevM3MzDyhnim73kEevM3MzLyhnim7oZ4pu83MzLzeQR48Cteju83MzLy84w08oZ4pu83MzDzeQR48Cteju83MzDy84w08Cteju83MzLy84w28oZ4pu83MzLzeQR68Cteju83MzDy84w28oZ4pu83MzDzeQR683kEevM3MzDyhnik73kEevM3MzLyhnik7CtcjvM3MzDwAAACACtcjvM3MzLwAAACACtejO83MzLy84w28a7TnO83MzLxrtOe7CtejO83MzDy84w28a7TnO83MzDxrtOe7a7TnO83MzLxrtOc7a7TnO83MzDxrtOc7vOMNPM3MzLwK16M7vOMNPM3MzDwK16M73kEePM3MzLyhnik73kEePM3MzDyhnik7CtcjPM3MzLwAAACACtcjPM3MzDwAAACA3kEePM3MzLyhnim73kEePM3MzDyhnim7vOMNPM3MzLwK16O7vOMNPM3MzDwK16O7CtejO83MzLy84w08oZ4pO83MzLzeQR48CtejO83MzDy84w08oZ4pO83MzDzeQR48CtcjPM3MzLwAAACACtcjPM3MzDwAAACA3kEePM3MzLyhnim73kEePM3MzDyhnim7vOMNvM3MzDwK16M7vOMNvM3MzLwK16M73kEevM3MzDyhnik73kEevM3MzLyhnik7Cteju83MzLy84w08a7Tnu83MzLxrtOc7Cteju83MzDy84w08a7Tnu83MzDxrtOc73kEevM3MzDyhnim73kEevM3MzLyhnim7vOMNvM3MzDwK16O7vOMNvM3MzLwK16O7oZ4pu83MzLzeQR68AAAAAM3MzLwK1yO8oZ4pu83MzDzeQR68AAAAAM3MzDwK1yO8/38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//z//f/+//7//P/9//7//v9ku/3/Zrv+/2S7/f9mu/78l0f9///+S6CXR/3///5Lo8uT/f///ePLy5P9///948v+//3/////f2a7/f///bNf/v/9/////39mu/3///2zXAAD/v/8//78AACXR2S7/vwAA/7//P/+/AAAl0dku/78Mm/9///+Fzf9//3////+/DJv/f///hc3/f/9/////v///2a4AAJLo///ZrgAAkuj///+/AAD/3////78AAP/f/3//f////7/yZP9/8uT/v/9//3////+/8mT/f/Lk/7//f///////v/9////+//+//3///////7//f///////v/9///////+//3///////7//f////v//v/9////+//+//3///////7//f///////v/9///////+//3///////7//f///////v/9////+//+//3////7//7//f///////v/9////+//+//3////7//7//f///////v/9///////+//3////7//7//f////v//v/9///////+//3///////7//////AAD/v///8uQAAIXN/////wAA/7////LkAACFzf//8uQAAIXN//8l0QAAbNf///LkAACFzf//JdEAAGzXAADZriVR/78AANmuJVH/vwAA/7//P/+/AAD/v/8//78AAP9//3//vwAA/3//f/+/AAAMm/Jk/78AAAyb8mT/v/Jk/3/y5P+/JVH/fyXR/7/yZP9/8uT/vyVR/38l0f+/AAAl0dku/78AAPLkDBv/vwAAJdHZLv+/AADy5Awb/78MG/9/DJv/vwwb/38Mm/+/AAD/f/9//78AAP9//3//v///JdEAAGzX////vwAA/9///yXRAABs1////78AAP/f/7//f////9//v/9/////3yXR/3///5LoJdH/f///kujy5P9///948vLk/3///3jy////f/////////9/////////DJsAAHjy//8MmwAAePL//9muAACS6P//2a4AAJLo2a7/f///bNcMm/9///+Fzdmu/3///2zXDJv/f///hc3///9//////////3////////8MmwAAePL//wybAAB48tku/3/Zrv+/2S7/f9mu/78MG/9/DJv/vwwb/38Mm/+/JVH/fyXR/7//P/9//7//vyVR/38l0f+//z//f/+//78AAAyb8mT/vwAADJvyZP+/AADZriVR/78AANmuJVH/vwAA8uQMG/+//////wAA/78AAPLkDBv/v/////8AAP+/")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_ly6dy")
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1tqu1"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-
-[node name="bullet" type="RigidBody3D"]
-collision_layer = 16
-collision_mask = 37
-gravity_scale = 0.0
-continuous_cd = true
-contact_monitor = true
-max_contacts_reported = 5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-visible = false
-shape = SubResource("CapsuleShape3D_bix2d")
-
-[node name="foamBulletA2" type="MeshInstance3D" parent="."]
-transform = Transform3D(5, 0, 0, 0, -2.18557e-07, -5, 0, 5, -2.18557e-07, 0, 0, 0)
-mesh = SubResource("ArrayMesh_sqgwv")
-skeleton = NodePath("")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_1tqu1")

@@ -1,4 +1,5 @@
 extends Sprite3D
 
 func _on_timer_timeout():
-	queue_free()
+	if multiplayer.is_server():
+		queue_free()

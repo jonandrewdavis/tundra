@@ -8,6 +8,15 @@ extends CanvasLayer
 @onready var hit_sight = $HitSight
 @onready var overlay = $Overlay
 
+@onready var sync = $MultiplayerSynchronizer
+
+# TODO: Is this the best place for these?
+#signal weapon_changed
+#signal update_ammo
+#signal update_weapon_stack
+#signal hit_signal
+#signal add_signal_to_hud
+
 var hit_sight_timer = Timer.new()
 
 func _ready():
@@ -16,9 +25,6 @@ func _ready():
 	if !weapons_manager:
 		push_warning("Player's HUD has no weapon manager.")
 		return
-
-	# Hit Signal
-	weapons_manager.hit_signal.connect(_on_weapons_manager_hit_signal)
 	
 	# Hit Sight
 	add_child(hit_sight_timer)
@@ -26,14 +32,15 @@ func _ready():
 	hit_sight_timer.one_shot = true
 	hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 
+	Lodash.sync_property(sync, current_ammo_label, ['text'], true)
 
 func _on_weapons_manager_update_weapon_stack(WeaponStack):
 	current_weapon_stack.text = ""
 	for i in WeaponStack:
 		current_weapon_stack.text += "\n"+i.weapon.weapon_name
 
-func _on_weapons_manager_update_ammo(Ammo):
-	current_ammo_label.set_text(str(Ammo[0])+" / "+str(Ammo[1]))
+func update_ammo(ammo):
+	current_ammo_label.set_text(str(ammo[0])+" / "+str(ammo[1]))
 
 func _on_weapons_manager_weapon_changed(WeaponName):
 	current_weapon_label.set_text(WeaponName)

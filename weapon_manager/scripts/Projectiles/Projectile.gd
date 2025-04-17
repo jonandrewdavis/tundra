@@ -7,7 +7,9 @@ signal hit_signal
 
 ## Can Be Either A Hit Scan or Rigid Body Projectile. If Rigid body is select a Rigid body must be provided.
 @export_enum ("Hitscan","Rigidbody_Projectile","over_ride") var Projectile_Type: String = "Hitscan"
-@export var Display_Debug_Decal: bool = true
+
+# TODO: Better decals (flat).
+@export var Display_Debug_Decal: bool = false
 
 @export var Projectile_Velocity: int = 20
 @export var Expirey_Time: int = 5
@@ -15,8 +17,7 @@ signal hit_signal
 @export var pass_through: bool = false
 
 @onready var world = get_tree().get_first_node_in_group("EnvironmentContainer")
-
-@onready var Debug_Bullet = preload("res://weapon_manager/Spawnable_Objects/hit_debug.tscn")
+var debug_bullet
 
 var damage: float = 0
 var Projectiles_Spawned = []
@@ -102,12 +103,14 @@ func Hit_Scan_damage(collision, _direction, _position, _damage):
 		hit_signal.emit()
 		collision.hit(_damage)
 
-func Load_Decal(_pos,_normal):
+# This can create an error sometimes in headless mode (mmesh_get_surface_count).
+# Upgrade to 4.4 to fix.
+func Load_Decal(pos, normal):
 	if Display_Debug_Decal:
-		var rd = Debug_Bullet.instantiate()
+		var rd = debug_bullet.instantiate()
 		if world:
 			world.add_child(rd, true)
-			rd.global_translate(_pos+(_normal*.01))
+			rd.global_translate(pos+(normal*.01))
 
 func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 	var point = collision_data[1]
@@ -138,7 +141,7 @@ func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 # TODO: Add static typing. What is _norm?  It's sometimes missing.
 # NOTE: "invalid operands 'Nil' and 'float' in operator * caused at this call site - AD
 func _on_body_entered(body, proj, norm):
-	print('BODY:', body, '_proj: ', proj, 'norm: ', norm)
+	#print('DEBUG: BODY:', body, '_proj: ', proj, 'norm: ', norm)
 	
 	if body.is_in_group("targets") && body.has_method("hit"):
 		body.hit(damage)

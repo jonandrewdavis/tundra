@@ -27,10 +27,11 @@ Noray="*res://addons/netfox.noray/noray.gd"
 PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
 Hub="*res://scripts/hub.gd"
 NetworkManager="*res://scripts/network/network_manager.gd"
+Lodash="*res://scripts/lodash.gd"
 
 [display]
 
-window/size/mode=2
+window/size/mode=4
 window/size/initial_position=Vector2i(-50, 0)
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"

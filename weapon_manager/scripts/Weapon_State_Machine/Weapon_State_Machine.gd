@@ -14,12 +14,6 @@ class_name WeaponsManager
 @onready var bullet_point = $BulletPoint
 @onready var debug_bullet = preload("res://weapon_manager/Spawnable_Objects/hit_debug.tscn")
 
-signal weapon_changed
-signal update_ammo
-#signal update_weapon_stack
-signal hit_signal
-#signal add_signal_to_hud
-
 var blasterL: WeaponResource = preload("res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres")
 var blasterN: WeaponResource = preload("res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres")
 
@@ -42,17 +36,11 @@ var player_camera_3D: Camera3D
 var busy = false
 
 func _ready() -> void:
-	if !player:
-		push_error("No player for weapons_manager")
-		return
-		
-	if !player_hud:
-		push_warning("No player HUD in weapons_manager")
-		
+	Lodash.error(player, 'player')
+	Lodash.error(player_hud, 'player_hud')
+
 	for weapon_slot in weapons_list:
 		prepare_spray_patterns(weapon_slot.weapon)
-
-	weapons_owned = [WEAPONS.blasterL, WEAPONS.blasterN]
 	
 	# Prevent clients from doing anything with their 
 	# This should never happen, but just in case
@@ -61,6 +49,8 @@ func _ready() -> void:
 		return
 
 	##### SERVER ONLY ######
+	weapons_owned = [WEAPONS.blasterL, WEAPONS.blasterN]
+
 	# This listens for the end of shooting to continue shooting Auto Fire
 	# Also handles updating ammo after a reload. Must not be connected on clients.
 	animation_player.animation_finished.connect(_on_animation_finished)
@@ -78,6 +68,10 @@ func get_slot(index: int) -> WeaponSlot:
 # TODO: Could use signals here to update multiple things, like HUD, etc.
 # TODO: Decide if we want to emit the current "WeaponSlot" (might be helpful for HUD)
 func change_weapon(dir: CHANGE_DIR) -> void:
+	if not multiplayer.is_server():
+		push_error('Tried to change weapons on the client')
+		return
+		
 	if busy: 
 		return
 
@@ -96,10 +90,13 @@ func change_weapon(dir: CHANGE_DIR) -> void:
 		await change_weapon_leave(weapon_index)
 		await change_weapon_enter(next_weapon_index)
 		weapon_index = next_weapon_index
-		weapon_changed.emit() # TODO: HUD update
+		player_hud.weapon_changed.emit() # TODO: HUD update
+		var get_latest_slot = get_slot(weapon_index)
+		player_hud.update_ammo.emit([get_latest_slot.current_ammo, get_latest_slot.reserve_ammo])
 		busy = false	
 		
 	print('NEW WEAPON IS', get_weapon(weapon_index).pick_up_animation)
+
 
 func change_weapon_enter(given_weapon_index: int):
 	animation_player.play(get_weapon(given_weapon_index).pick_up_animation)
@@ -110,6 +107,7 @@ func change_weapon_leave(given_weapon_index: int):
 	await get_tree().create_timer(animation_player.current_animation_length + .2).timeout
 
 # TODO: networked weapon from netfox, ammo checks, more things
+# TODO: This runs for everyone. A client can reload another client's gun.
 func can_fire():
 	if get_slot(weapon_index) == null or get_weapon(weapon_index) == null:
 		return false
@@ -140,12 +138,16 @@ func load_projectile(spread):
 	# NOTE: added true
 	bullet_point.add_child(_projectile, true)
 	var bullet_point_origin = bullet_point.global_position
+	_projectile.debug_bullet = debug_bullet
 	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point_origin)
 
+# Calls directly to the parent HUD.	
+# When using signals, tended to emit on other players
 func hit_signal_stub():
-	hit_signal.emit()
+	player_hud._on_weapons_manager_hit_signal()
 
 func shoot():
+	# TODO: Use the rollback syncronizer and "is_fresh".
 	# Note: Usually not possible with our RPC rules, but warn about the client using this.
 	if not multiplayer.is_server():
 		push_warning("A client tried to call locally to shoot")
@@ -223,7 +225,7 @@ func calculate_reload() -> void:
 	current_weapon_slot.current_ammo = current_weapon_slot.current_ammo + reload_amount
 	current_weapon_slot.reserve_ammo = current_weapon_slot.reserve_ammo - reload_amount
 	
-	update_ammo.emit([current_weapon_slot.current_ammo, current_weapon_slot.reserve_ammo])
+	player_hud.update_ammo([current_weapon_slot.current_ammo, current_weapon_slot.reserve_ammo])
 
 	# Note: Not 100% sure about this, but it's for resetting spray patterns, I believe:
 	count = 0
@@ -242,7 +244,7 @@ func melee() -> void:
 			for col in colliders:
 				var target = melee_hitbox.get_collider(col)
 				if target.is_in_group("targets") and target.has_method("hit"):
-					hit_signal.emit()
+					player_hud.hit_signal.emit()
 					var dir = (target.global_transform.origin - owner.global_transform.origin).normalized()
 					var pos =  melee_hitbox.get_collision_point(col)
 					target.hit(current_weapon.melee_damage, dir, pos)

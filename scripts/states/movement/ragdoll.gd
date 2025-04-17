@@ -14,6 +14,12 @@ func tick(delta, _tick, _is_fresh):
 				state_machine.transition(&"JumpState")
 		else:
 			state_machine.transition(&"FallState")
+	
+	if parent.bones.active && parent.bones.is_simulating_physics() == false:
+		parent.bones.physical_bones_start_simulation()
+
+	if parent.bones.active == false && parent.bones.is_simulating_physics() == true:
+		parent.bones.physical_bones_stop_simulation()
 
 func move_towards_ragdoll(_delta):
 	pass
