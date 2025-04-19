@@ -31,7 +31,6 @@ Lodash="*res://scripts/lodash.gd"
 
 [display]
 
-window/size/mode=4
 window/size/initial_position=Vector2i(-50, 0)
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
@@ -151,6 +150,10 @@ DEBUG_0={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":48,"key_label":0,"unicode":48,"location":0,"echo":false,"script":null)
 ]
 }
+
+[navigation]
+
+3d/default_edge_connection_margin=1.5
 
 [netfox]
 

@@ -73,9 +73,7 @@ func on_check_walking_timer():
 		push_warning('Incorrect number of platforms')
 		return
 		
-		
 	#print('DEBUG: walking_scene_tracker Z: ', walking_scene_tracker.global_position.z)
-
 	if walking_scene_tracker.global_position.z > walking_scene_center + walking_scene_length:
 		remove_platform(DIR.BEHIND)
 		add_platform(DIR.INFRONT)

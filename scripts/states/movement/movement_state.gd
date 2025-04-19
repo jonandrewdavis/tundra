@@ -14,11 +14,27 @@ const JUMP_MOVE_SPEED := 3.0
 @export var player_input: PlayerInput
 @export var parent: Player
 
-# Default movement, override as needed
-func move_player(_delta: float, _speed: float = parent.WALK_SPEED):
+var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
+
+func move_player(delta: float, _speed: float = parent.WALK_SPEED):
+	force_update_is_on_floor()
+	if not parent.is_on_floor():
+		parent.velocity.y -= gravity * delta
+
+	var platform_velocity := Vector3.ZERO
+	var collision_result := KinematicCollision3D.new()
+	if parent.test_move(parent.global_transform, Vector3.DOWN * delta, collision_result):
+		var collider := collision_result.get_collider()
+		if collider is MovingCastle:
+			var platform := collider as MovingCastle
+			platform_velocity = platform.get_velocity()
+
+	parent.velocity += platform_velocity
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()
 	parent.velocity /= NetworkTime.physics_factor
+	parent.velocity -= platform_velocity
+
 
 func rotate_player_model(delta: float):
 	var camera_basis : Basis = camera_input.camera_basis
@@ -34,17 +50,27 @@ func rotate_player_model(delta: float):
 
 # https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-on-floor
 func force_update_is_on_floor():
-	if not parent.bones:
-		push_warning("No bones")
-		return
-	
-	if parent.bones.active == true:
-		state_machine.transition(&"Ragdoll")
-
+	#if not parent.bones:
+		#push_warning("No bones")
+		#return
+	#
+	#if parent.bones.active == true:
+		#state_machine.transition(&"Ragdoll")
 	var old_velocity = parent.velocity
 	parent.velocity *= 0
 	parent.move_and_slide()
-	parent.velocity = old_velocity
+	parent.velocity = old_velocity#
+#
+#func get_moving_platform_velocity(delta):
+	#var platform_velocity := Vector3.ZERO	
+	#var collision_result := KinematicCollision3D.new()
+	#if parent.test_move(parent.global_transform, Vector3.DOWN * delta, collision_result):
+		#var collider := collision_result.get_collider()
+		#if collider is MovingCastle:
+			#var platform := collider as MovingCastle
+			#platform_velocity = platform.get_velocity()
+#
+	#return platform_velocity
 
 # Are these "get" functions necessary?
 func get_movement_input() -> Vector2:

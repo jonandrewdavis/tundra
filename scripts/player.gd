@@ -1,7 +1,6 @@
 extends CharacterBody3D
 class_name Player
 
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var interactable
 var ROTATION_INTERPOLATE_SPEED = 40.0
 
@@ -42,28 +41,33 @@ func _enter_tree():
 	_player_input.set_multiplayer_authority(str(name).to_int())
 	_camera_input.set_multiplayer_authority(str(name).to_int())
 
-
 # TODO: Warn if any of our required nodes are missing.
 # TODO: abstract this so we can just like, give some nodes
 func _ready():
-	Lodash.error(weapons_manager, 'weapons_manager')
-	Lodash.warn(player_ui, 'player_ui')
-
-	#### CLIENT & SERVER ####
 	add_to_group('players')
 
+	Lodash.error_missing(weapons_manager, 'weapons_manager')
+	Lodash.warn_missing(player_ui, 'player_ui')
+	
+	# Enable input broadcast toggles whether input properties 
+	# are broadcast to all peers, or only to the server.
+	# The default is true to support legacy behaviour. 
+	# It is recommended to turn this off. 
+	$RollbackSynchronizer.enable_input_broadcast
+
+	#### CLIENT & SERVER ####
 	# TODO: This is here due to ragdoll's call local
-	_animation_player = _player_model.get_node("AnimationPlayer")
 	# call this after setting authority
 	# https://foxssake.github.io/netfox/netfox/tutorials/responsive-player-movement/#ownership
+	_animation_player = _player_model.get_node("AnimationPlayer")
 	rollback_synchronizer.process_settings()
 	sync_all_properties()
 
 	#TODO: Document cases where this helps prevent jitter.
 	#TODO: Disabling physics on the client helps the server & client not fight over positioning
 	#NOTE: We might need _physics_process to run on the client, depedning on what we're doing.. camera tilt, etc.
-	#if not multiplayer.is_server():
-		#set_physics_process(false)
+	if not multiplayer.is_server():
+		set_physics_process(false)
 	
 	#### SERVER ONLY ####
 	# TODO: To be fully server authoratitve, this line should be uncommented
@@ -87,22 +91,15 @@ func _ready():
 var is_in_heat_dome = false
 
 func _process(_delta: float) -> void:
-	# Runs on the client.
-	if global_position.distance_to(Hub.heat_dome.global_position) <= Hub.heat_dome.heat_dome_radius:
-		is_in_heat_dome = false
-		show_snow_shader(false)
-	else:
-		is_in_heat_dome = true
-		show_snow_shader(true)
-
-
-func _physics_process(_delta: float) -> void:
 	weapon_vertical_tilt()
-
-func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
-	_force_update_is_on_floor()
-	if not is_on_floor():
-		apply_gravity(delta)
+	# Runs on the client.
+	if Hub.heat_dome:
+		if global_position.distance_to(Hub.heat_dome.global_position) <= Hub.heat_dome.heat_dome_radius:
+			is_in_heat_dome = false
+			show_snow_shader(false)
+		else:
+			is_in_heat_dome = true
+			show_snow_shader(true)
 
 # TODO: Fully document all the findings from this approach.
 # NOTE: The way this works is:
@@ -112,8 +109,14 @@ func _rollback_tick(delta: float, _tick: int, _is_fresh: bool) -> void:
 # - The `WeaponsManager` uses `MultiplayerSyncronizer` for visiblity, sound, animation_player, etc.
 # - This syncs the important properties to all clients (including the local caller [source player]).
 # NOTE: Do not add "call_local" or the puppet's weapons_manager can do things.
+
+# TODO: We should be able to use "is_fresh" from netfox to do "1 time"
+# That way we can remove this "is_server" check. Without it, clients were calling to other clients!!
 @rpc("any_peer")
 func process_player_input(input_string: StringName):
+	if not multiplayer.is_server():
+		return
+
 	match input_string:
 		"weapon_up":
 			weapons_manager.change_weapon(weapons_manager.CHANGE_DIR.UP)
@@ -151,15 +154,6 @@ func _on_display_state_changed(_old_state: RewindableState, new_state: Rewindabl
 		else:
 			_animation_player.play(ANIMATION_PREFIX + animation_name)
 
-func apply_gravity(delta):
-	velocity.y -= gravity * delta
-
-func _force_update_is_on_floor():
-	var old_velocity = velocity
-	velocity *= 0
-	move_and_slide()
-	velocity = old_velocity
-
 func interact():
 	#debug_increase_heat_dome_radius()
 	debug_toggle_castle_speed()
@@ -195,7 +189,7 @@ func debug_increase_heat_dome_radius():
 	Hub.heat_dome_value.emit(1)
 
 func debug_toggle_castle_speed():
-	#print("What's the speed before we RPC on client: ", multiplayer.get_remote_sender_id(), ' speed: ', Hub.world.castle_speed)
+	print("What's the speed before we RPC on client: ", multiplayer.get_remote_sender_id(), ' speed: ', Hub.world.castle_speed)
 	if Hub.castle_speed == 0.0:
 		Hub.change_castle_speed.emit(2.0)
 	else:
@@ -233,7 +227,7 @@ func weapon_vertical_tilt():
 	weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.5, 0.5)
 
 func sync_all_properties():
-	Lodash.warn(_animation_player, '_animation_player')
-	Lodash.sync_property(sync, _animation_player, ['active'], true)
-	Lodash.sync_property(sync, _animation_player, ['current_animation'], true)
-	Lodash.sync_property(sync, bones, ['active'], true)
+	Lodash.warn_missing(_animation_player, '_animation_player')
+	Lodash.sync_property(sync, _animation_player, ['active'])
+	Lodash.sync_property(sync, _animation_player, ['current_animation'])
+	Lodash.sync_property(sync, bones, ['active'])

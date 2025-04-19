@@ -1,9 +1,6 @@
-[gd_scene load_steps=36 format=4 uid="uid://cf6jco7ctb45m"]
+[gd_scene load_steps=31 format=4 uid="uid://cf6jco7ctb45m"]
 
 [ext_resource type="Script" uid="uid://cwoo1b16el33m" path="res://weapon_manager/scripts/Weapon_State_Machine/Weapon_State_Machine.gd" id="1_doyh4"]
-[ext_resource type="Script" uid="uid://dphmvwbbu21nt" path="res://weapon_manager/scripts/Weapon_State_Machine/WeaponSlot.gd" id="2_dh77r"]
-[ext_resource type="Resource" uid="uid://bwrs8ensewkgc" path="res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres" id="3_e4dbp"]
-[ext_resource type="Resource" uid="uid://c1jg0ifn7yvve" path="res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres" id="4_hpq73"]
 [ext_resource type="PackedScene" uid="uid://7i2x4ihbqkke" path="res://assets/awp/awp.glb" id="5_e4dbp"]
 [ext_resource type="ArrayMesh" uid="uid://ba32nqx1sd8w5" path="res://assets/poly_weapons_saved/sci_fi_smg.res" id="5_hpq73"]
 [ext_resource type="AnimationLibrary" uid="uid://uybino34n0sj" path="res://weapon_manager/weapon_animation.res" id="8_jok0v"]
@@ -12,20 +9,6 @@
 [ext_resource type="ArrayMesh" uid="uid://cpunjc0iguaex" path="res://assets/weapons_saved_meshes/pistol_yellow.res" id="10_e4dbp"]
 [ext_resource type="ArrayMesh" uid="uid://bc8u3d8edjkp8" path="res://assets/weapons_saved_meshes/smg.res" id="12_138mc"]
 [ext_resource type="ArrayMesh" uid="uid://oti3spl6xbsy" path="res://assets/weapons_saved_meshes/rocket.res" id="12_nh1ok"]
-
-[sub_resource type="Resource" id="Resource_nh1ok"]
-script = ExtResource("2_dh77r")
-weapon = ExtResource("3_e4dbp")
-current_ammo = 24
-reserve_ammo = 99999
-metadata/_custom_type_script = ExtResource("2_dh77r")
-
-[sub_resource type="Resource" id="Resource_138mc"]
-script = ExtResource("2_dh77r")
-weapon = ExtResource("4_hpq73")
-current_ammo = 5
-reserve_ammo = 9999
-metadata/_custom_type_script = ExtResource("2_dh77r")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ccmxt"]
 resource_name = "dark"
@@ -810,43 +793,35 @@ _data = {
 size = Vector3(0.645, 0.315, 0.405)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1dvfb"]
-properties/0/path = NodePath(".:weapons_owned")
+properties/0/path = NodePath("Weapons_Models/WeaponsPlayer:current_animation")
 properties/0/spawn = true
-properties/0/replication_mode = 2
-properties/1/path = NodePath(".:weapon_index")
+properties/0/replication_mode = 1
+properties/1/path = NodePath("BulletPoint:position")
 properties/1/spawn = true
-properties/1/replication_mode = 2
-properties/2/path = NodePath("Weapons_Models/WeaponsPlayer:current_animation")
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Weapons_Models/blasterL:position")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("BulletPoint:position")
+properties/3/path = NodePath("Weapons_Models/blasterL:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath("Weapons_Models/blasterL:position")
+properties/4/path = NodePath("Weapons_Models/blasterL:visible")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath("Weapons_Models/blasterL:rotation")
+properties/5/path = NodePath("Weapons_Models/blasterN:position")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-properties/6/path = NodePath("Weapons_Models/blasterL:visible")
+properties/6/path = NodePath("Weapons_Models/blasterN:rotation")
 properties/6/spawn = true
 properties/6/replication_mode = 1
-properties/7/path = NodePath("Weapons_Models/blasterN:position")
+properties/7/path = NodePath("Weapons_Models/blasterN:visible")
 properties/7/spawn = true
 properties/7/replication_mode = 1
-properties/8/path = NodePath("Weapons_Models/blasterN:rotation")
-properties/8/spawn = true
-properties/8/replication_mode = 1
-properties/9/path = NodePath("Weapons_Models/blasterN:visible")
-properties/9/spawn = true
-properties/9/replication_mode = 1
 
 [node name="WeaponsManager" type="Node3D" node_paths=PackedStringArray("animation_player", "melee_hitbox")]
 script = ExtResource("1_doyh4")
 animation_player = NodePath("Weapons_Models/WeaponsPlayer")
 melee_hitbox = NodePath("Melee_Hitbox")
-weapons_list = Array[ExtResource("2_dh77r")]([SubResource("Resource_nh1ok"), SubResource("Resource_138mc")])
-weapons_owned = Array[int]([0, 0])
 
 [node name="Weapons_Models" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54919, 0)

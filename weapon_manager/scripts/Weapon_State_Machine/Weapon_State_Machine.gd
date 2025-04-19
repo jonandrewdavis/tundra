@@ -8,7 +8,7 @@ class_name WeaponsManager
 @export var animation_player: AnimationPlayer
 @export var melee_hitbox: ShapeCast3D
 @export var max_weapons: int # not used
-@export var player_hud: CanvasLayer
+@export var player_hud: PlayerHUD
 @export var player: CharacterBody3D
 
 @onready var bullet_point = $BulletPoint
@@ -36,12 +36,9 @@ var player_camera_3D: Camera3D
 var busy = false
 
 func _ready() -> void:
-	Lodash.error(player, 'player')
-	Lodash.error(player_hud, 'player_hud')
+	Lodash.error_missing(player, 'player')
+	Lodash.error_missing(player_hud, 'player_hud')
 
-	for weapon_slot in weapons_list:
-		prepare_spray_patterns(weapon_slot.weapon)
-	
 	# Prevent clients from doing anything with their 
 	# This should never happen, but just in case
 	# TODO: This line prevents preparing weapon spray
@@ -49,7 +46,16 @@ func _ready() -> void:
 		return
 
 	##### SERVER ONLY ######
-	weapons_owned = [WEAPONS.blasterL, WEAPONS.blasterN]
+	var slot1 = WeaponSlot.new()
+	slot1.current_ammo = blasterL.magazine
+	slot1.reserve_ammo = blasterL.max_ammo
+	slot1.weapon = blasterL
+	weapons_list.append(slot1)
+ 
+	weapons_owned = [WEAPONS.blasterL]
+	for weapon_slot in weapons_list:
+		# NOTE: This allows each weapo_slot to track individual ammo. 
+		prepare_spray_patterns(weapon_slot.weapon)
 
 	# This listens for the end of shooting to continue shooting Auto Fire
 	# Also handles updating ammo after a reload. Must not be connected on clients.
@@ -58,6 +64,7 @@ func _ready() -> void:
 	# Await for the multiplayer syncronizer to come online before changing to our first weapon	
 	await get_tree().create_timer(0.1).timeout
 	animation_player.play(get_weapon(weapons_owned[0]).pick_up_animation)
+	
 
 func get_weapon(index: int) -> WeaponResource:
 	return weapons_list[weapons_owned[index]].weapon
@@ -90,13 +97,12 @@ func change_weapon(dir: CHANGE_DIR) -> void:
 		await change_weapon_leave(weapon_index)
 		await change_weapon_enter(next_weapon_index)
 		weapon_index = next_weapon_index
-		player_hud.weapon_changed.emit() # TODO: HUD update
-		var get_latest_slot = get_slot(weapon_index)
-		player_hud.update_ammo.emit([get_latest_slot.current_ammo, get_latest_slot.reserve_ammo])
+		update_ammo()
+		update_weapon()
 		busy = false	
 		
 	print('NEW WEAPON IS', get_weapon(weapon_index).pick_up_animation)
-
+	
 
 func change_weapon_enter(given_weapon_index: int):
 	animation_player.play(get_weapon(given_weapon_index).pick_up_animation)
@@ -150,7 +156,7 @@ func shoot():
 	# TODO: Use the rollback syncronizer and "is_fresh".
 	# Note: Usually not possible with our RPC rules, but warn about the client using this.
 	if not multiplayer.is_server():
-		push_warning("A client tried to call locally to shoot")
+		push_warning("A client tried to call locally to shoot: ", multiplayer.get_unique_id())
 		return
 	
 	if can_fire() == false:
@@ -167,6 +173,7 @@ func shoot():
 		animation_player.play(current_weapon.shoot_animation)
 		if current_weapon.has_ammo:
 			current_slot.current_ammo -= 1
+			update_ammo()
 		
 		var Spread = Vector2.ZERO
 		
@@ -194,6 +201,10 @@ func _auto_fire_shoot():
 		shoot()
 
 func reload() -> void:
+	if not multiplayer.is_server():
+		push_warning('Tried to reload on the client: ', multiplayer.get_unique_id())
+		return
+
 	# Added
 	var current_weapon_slot = get_slot(weapon_index)
 	
@@ -206,7 +217,7 @@ func reload() -> void:
 			animation_player.queue(current_weapon_slot.weapon.reload_animation)
 		else:
 			animation_player.queue(current_weapon_slot.weapon.out_of_ammo_animation)
-	
+
 func calculate_reload() -> void:
 	var current_weapon_slot = get_slot(weapon_index)
 
@@ -224,8 +235,7 @@ func calculate_reload() -> void:
 
 	current_weapon_slot.current_ammo = current_weapon_slot.current_ammo + reload_amount
 	current_weapon_slot.reserve_ammo = current_weapon_slot.reserve_ammo - reload_amount
-	
-	player_hud.update_ammo([current_weapon_slot.current_ammo, current_weapon_slot.reserve_ammo])
+	update_ammo()
 
 	# Note: Not 100% sure about this, but it's for resetting spray patterns, I believe:
 	count = 0
@@ -248,3 +258,15 @@ func melee() -> void:
 					var dir = (target.global_transform.origin - owner.global_transform.origin).normalized()
 					var pos =  melee_hitbox.get_collision_point(col)
 					target.hit(current_weapon.melee_damage, dir, pos)
+
+######## HUD Helpers ########
+######## HUD Helpers ########
+######## HUD Helpers ########
+# TODO: Direct calls to HUD. Should we use signals? 
+# NOTE: Nice that we can type these functions.
+func update_ammo():
+	var weapon = get_slot(weapon_index)
+	player_hud.update_ammo([weapon.current_ammo, weapon.reserve_ammo])
+
+func update_weapon():
+	player_hud.update_weapon(get_slot(weapon_index).weapon.weapon_name)

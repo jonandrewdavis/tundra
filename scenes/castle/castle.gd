@@ -1,25 +1,30 @@
-extends Node3D
+extends AnimatableBody3D
+class_name MovingCastle
 
-@export var move_speed: float = 0.0
-@export var turn_speed: float = 1.0
+#extends AnimatableBody3D
+#class_name MovingPlatform
 
-#TODO: this would function better as Animatable Platform 3D or whatever
-# this means we'd have to bake our collison mesh and add it
+@export var speed: float = 2.
+@onready var _origin: Vector3 = global_position
+@onready var _target: Vector3 = Vector3(0.0, 1.0, 100.0)
+@onready var _distance: float = _origin.distance_to(_target)
+var _velocity: Vector3 = Vector3.ZERO
 
-func _ready() -> void:
-	if not multiplayer.is_server():
-		set_process(false)
-		return
+func get_velocity() -> Vector3:
+	return _velocity
 
-	Hub.change_castle_speed.connect(on_change_castle_speed)
+func _ready():
+	NetworkRollback.on_prepare_tick.connect(_apply_tick)
 
-func _process(delta: float) -> void:
-	_handle_movement(delta)
+func _apply_tick(tick: int):
+	var previous_position = _get_position_for_tick(tick - 1)
+	global_position = _get_position_for_tick(tick)
+	
+	_velocity = (global_position - previous_position) / NetworkTime.ticktime
 
-func _handle_movement(delta):
-	#var dir = Input.get_axis('ui_down', 'ui_up')
-	# Constantly moves "forward" (-1.0)
-	translate(Vector3(0, 0, -1.0) * move_speed * delta)
-
-func on_change_castle_speed(new_speed):
-	move_speed = new_speed
+func _get_position_for_tick(tick: int):
+	var distance_moved = NetworkTime.ticks_to_seconds(tick) * speed
+	var progress = distance_moved / _distance
+	progress = pingpong(progress, 1)
+	
+	return _origin.lerp(_target, progress)

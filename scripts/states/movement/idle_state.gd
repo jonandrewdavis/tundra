@@ -2,11 +2,11 @@
 extends MovementState
 
 func tick(delta, _tick, _is_fresh):
-	parent.velocity = parent.velocity.move_toward(Vector3.ZERO, parent.FRICTION * delta)
-
-	rotate_player_model(delta)
+	# SLOW DOWN via Friction (disabled while troubleshooting platforms)
+	#parent.velocity = parent.velocity.move_toward(Vector3.ZERO, 10000 * delta)
 	move_player(delta)
-	force_update_is_on_floor()		
+	rotate_player_model(delta)
+
 
 	if parent.is_on_floor():
 		if get_movement_input() != Vector2.ZERO:

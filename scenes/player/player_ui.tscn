@@ -26,9 +26,6 @@ color = Color(1, 1, 1, 1)
 thickness = 10
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fatww"]
-properties/0/path = NodePath("HitSight:visible")
-properties/0/spawn = true
-properties/0/replication_mode = 2
 
 [node name="PlayerUi" type="CanvasLayer"]
 script = ExtResource("1_fatww")

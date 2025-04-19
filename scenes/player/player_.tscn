@@ -34,7 +34,8 @@ shader_parameter/speed = 2.0
 shader_parameter/wind = 0.6
 shader_parameter/num_of_layers = 40
 
-[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "sync", "skeleton", "bones", "chest", "snow_shader", "weapons_manager", "weapon_pivot")]
+[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "sync", "skeleton", "bones", "chest", "snow_shader", "weapons_manager", "weapon_pivot", "player_ui")]
+platform_on_leave = 2
 script = ExtResource("1_u2qrv")
 _player_input = NodePath("PlayerInput")
 _camera_input = NodePath("CameraInput")
@@ -47,6 +48,7 @@ chest = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physic
 snow_shader = NodePath("Shaders/SnowShader")
 weapons_manager = NodePath("RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager")
 weapon_pivot = NodePath("RightHandBoneAttachment/WeaponPivot")
+player_ui = NodePath("PlayerUi")
 
 [node name="master" parent="." instance=ExtResource("2_v7wsi")]
 
@@ -60,6 +62,7 @@ root = NodePath("..")
 enable_prediction = true
 state_properties = Array[String](["RewindableStateMachine:state", ":transform", ":velocity", "master:transform"])
 input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "PlayerInput:shoot_input", "CameraInput:camera_look"])
+enable_input_broadcast = false
 metadata/_custom_type_script = ExtResource("2_ktqdq")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

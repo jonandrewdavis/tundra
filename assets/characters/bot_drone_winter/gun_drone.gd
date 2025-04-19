@@ -204,8 +204,7 @@ func fire():
 # TODO: Hit more than just players, damage to buildings, etc.
 func _on_player_hit(body, _projectile):
 	if body.is_in_group('players'):
-		queue_free()
+		#print('DRONE HIT PLAYER')
 		pass
 
-	queue_free()
-	
+	_projectile.queue_free()

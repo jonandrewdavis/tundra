@@ -18,7 +18,7 @@ func _ready() -> void:
 	player_added.connect(on_player_added_hub)
 	change_castle_speed.connect(on_change_castle_speed)
 	heat_dome_value.connect(on_change_heat_dome_value)
-	pass	
+	pass
 
 func get_player(network_id: int):
 	var players = world.get_node('PlayerContainer').get_children()
@@ -31,6 +31,7 @@ func on_player_added_hub(_network_id):
 	pass
 
 func on_change_castle_speed(new_speed: int):
+	push_warning('Called castle speed on hub', castle_speed)
 	castle_speed = new_speed
 
 func on_change_heat_dome_value(_value: int):
@@ -40,4 +41,5 @@ func debug_create_enemy():
 	var container = world.get_node('EnemiesContainer')
 	var new_drone = gun_drone.instantiate()
 	container.add_child(new_drone, true)
-	new_drone.global_position = Vector3(10.0, 15.0, 10.0)
+	var rand = randi_range(0, 3)
+	new_drone.global_position = Vector3(0.0 + rand, 8.0, -35.0 + rand)
