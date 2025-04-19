@@ -1,8 +1,8 @@
 @tool
 extends EditorPlugin
 
-const ROOT = "res://addons/netfox"
-var SETTINGS = [
+const ROOT := "res://addons/netfox"
+var SETTINGS: Array[Dictionary] = [
 	{
 		# Setting this to false will make Netfox keep its settings even when
 		# disabling the plugin. Useful for developing the plugin.
@@ -26,6 +26,11 @@ var SETTINGS = [
 	{
 		"name": "netfox/time/recalibrate_threshold",
 		"value": 8.0,
+		"type": TYPE_FLOAT
+	},
+	{
+		"name": "netfox/time/stall_threshold",
+		"value": 1.0,
 		"type": TYPE_FLOAT
 	},
 	{
@@ -65,6 +70,18 @@ var SETTINGS = [
 		"hint": PROPERTY_HINT_RANGE,
 		"hint_string": "1,2,0.05,or_greater"
 	},
+	{
+		"name": "netfox/time/tickrate_mismatch_action",
+		"value": NetworkTickrateHandshake.WARN,
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_ENUM,
+		"hint_string": "Warn,Disconnect,Adjust,Signal"
+	},
+	{
+		"name": "netfox/time/suppress_offline_peer_warning",
+		"value": false,
+		"type": TYPE_BOOL
+	},
 	# Rollback settings
 	{
 		"name": "netfox/rollback/enabled",
@@ -84,7 +101,16 @@ var SETTINGS = [
 	{
 		"name": "netfox/rollback/display_offset",
 		"value": 0,
-		"type": TYPE_INT
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "0,4,or_greater"
+	},
+	{
+		"name": "netfox/rollback/input_delay",
+		"value": 0,
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "0,4,or_greater"
 	},
 	{
 		"name": "netfox/rollback/enable_diff_states",
@@ -99,7 +125,7 @@ var SETTINGS = [
 	}
 ]
 
-const AUTOLOADS = [
+const AUTOLOADS: Array[Dictionary] = [
 	{
 		"name": "NetworkTime",
 		"path": ROOT + "/network-time.gd"
@@ -122,7 +148,7 @@ const AUTOLOADS = [
 	}
 ]
 
-const TYPES = [
+const TYPES: Array[Dictionary] = [
 	{
 		"name": "RollbackSynchronizer",
 		"base": "Node",
@@ -141,6 +167,12 @@ const TYPES = [
 		"script": ROOT + "/tick-interpolator.gd",
 		"icon": ROOT + "/icons/tick-interpolator.svg"
 	},
+	{
+		"name": "RewindableAction",
+		"base": "Node",
+		"script": ROOT + "/rewindable-action.gd",
+		"icon": ROOT + "/icons/rewindable-action.svg"
+	},
 ]
 
 func _enter_tree():
@@ -153,8 +185,8 @@ func _enter_tree():
 	for type in TYPES:
 		add_custom_type(type.name, type.base, load(type.script), load(type.icon))
 
-func _exit_tree():
-	if ProjectSettings.get_setting("netfox/general/clear_settings", false):
+func _exit_tree() -> void:
+	if ProjectSettings.get_setting(&"netfox/general/clear_settings", false):
 		for setting in SETTINGS:
 			remove_setting(setting)
 	
@@ -164,7 +196,7 @@ func _exit_tree():
 	for type in TYPES:
 		remove_custom_type(type.name)
 
-func add_setting(setting: Dictionary):
+func add_setting(setting: Dictionary) -> void:
 	if ProjectSettings.has_setting(setting.name):
 		return
 
@@ -177,7 +209,7 @@ func add_setting(setting: Dictionary):
 		"hint_string": setting.get("hint_string", "")
 	})
 
-func remove_setting(setting: Dictionary):
+func remove_setting(setting: Dictionary) -> void:
 	if not ProjectSettings.has_setting(setting.name):
 		return
 	

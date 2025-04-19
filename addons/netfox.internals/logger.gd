@@ -50,7 +50,7 @@ static func make_setting(name: String) -> Dictionary:
 		"hint_string": "All,Trace,Debug,Info,Warning,Error,None"
 	}
 
-static func register_tag(tag: Callable, priority: int = 0):
+static func register_tag(tag: Callable, priority: int = 0) -> void:
 	# Save tag
 	if not _tags.has(priority):
 		_tags[priority] = [tag]
@@ -66,6 +66,17 @@ static func register_tag(tag: Callable, priority: int = 0):
 	for prio_group in prio_groups:
 		var tag_group = _tags[prio_group]
 		_ordered_tags.append_array(tag_group)
+
+static func free_tag(tag: Callable) -> void:
+	for priority in _tags.keys():
+		var priority_group := _tags[priority] as Array
+		priority_group.erase(tag)
+
+		# NOTE: Arrays are passed as reference, no need to re-assign after modifying
+		if priority_group.is_empty():
+			_tags.erase(priority)
+
+	_ordered_tags.erase(tag)
 
 static func _static_init():
 	log_level = ProjectSettings.get_setting("netfox/logging/log_level", DEFAULT_LOG_LEVEL)

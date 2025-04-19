@@ -1,10 +1,10 @@
 [gd_scene load_steps=22 format=3 uid="uid://dup2jh8uleo3l"]
 
 [ext_resource type="Script" uid="uid://dc7w7oe3lm0eu" path="res://scripts/player.gd" id="1_u2qrv"]
-[ext_resource type="Script" uid="uid://cfgvniwyo5waf" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_ktqdq"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_ktqdq"]
 [ext_resource type="PackedScene" uid="uid://0by3fcnl3a5n" path="res://assets/characters/master/master_scene.tscn" id="2_v7wsi"]
-[ext_resource type="Script" uid="uid://btck2pi5uy6xp" path="res://addons/netfox.extras/state-machine/rewindable-state-machine.gd" id="3_lo6j0"]
-[ext_resource type="Script" uid="uid://cgycqse80cops" path="res://addons/netfox/tick-interpolator.gd" id="4_a47yd"]
+[ext_resource type="Script" uid="uid://byrgwv2o7hstx" path="res://addons/netfox.extras/state-machine/rewindable-state-machine.gd" id="3_lo6j0"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="4_a47yd"]
 [ext_resource type="PackedScene" uid="uid://l1d8hwvn7hbq" path="res://scenes/player/camera_input.tscn" id="4_g37aj"]
 [ext_resource type="Script" uid="uid://bbhybl3bvg0b6" path="res://scripts/states/movement/idle_state.gd" id="5_4l86x"]
 [ext_resource type="Script" uid="uid://btj80uq43ccmt" path="res://scripts/states/movement/jump_state.gd" id="6_a47yd"]
@@ -36,6 +36,7 @@ shader_parameter/num_of_layers = 40
 
 [node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "sync", "skeleton", "bones", "chest", "snow_shader", "weapons_manager", "weapon_pivot", "player_ui")]
 platform_on_leave = 2
+platform_floor_layers = 4278190080
 script = ExtResource("1_u2qrv")
 _player_input = NodePath("PlayerInput")
 _camera_input = NodePath("CameraInput")

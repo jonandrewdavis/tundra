@@ -1,9 +1,6 @@
 extends AnimatableBody3D
 class_name MovingCastle
 
-#extends AnimatableBody3D
-#class_name MovingPlatform
-
 @export var speed: float = 2.
 @onready var _origin: Vector3 = global_position
 @onready var _target: Vector3 = Vector3(0.0, 1.0, 100.0)
@@ -15,6 +12,7 @@ func get_velocity() -> Vector3:
 
 func _ready():
 	NetworkRollback.on_prepare_tick.connect(_apply_tick)
+	sync_to_physics = false
 
 func _apply_tick(tick: int):
 	var previous_position = _get_position_for_tick(tick - 1)

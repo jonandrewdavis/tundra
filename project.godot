@@ -16,18 +16,18 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 
 [autoload]
 
+DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
+Hub="*res://scripts/hub.gd"
+NetworkManager="*res://scripts/network/network_manager.gd"
+Lodash="*res://scripts/lodash.gd"
 WindowTiler="*res://addons/netfox.extras/window-tiler.gd"
+Noray="*res://addons/netfox.noray/noray.gd"
+PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
 NetworkTime="*res://addons/netfox/network-time.gd"
 NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
 NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
 NetworkEvents="*res://addons/netfox/network-events.gd"
 NetworkPerformance="*res://addons/netfox/network-performance.gd"
-DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
-Noray="*res://addons/netfox.noray/noray.gd"
-PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
-Hub="*res://scripts/hub.gd"
-NetworkManager="*res://scripts/network/network_manager.gd"
-Lodash="*res://scripts/lodash.gd"
 
 [display]
 
@@ -154,13 +154,6 @@ DEBUG_0={
 [navigation]
 
 3d/default_edge_connection_margin=1.5
-
-[netfox]
-
-logging/netfox_extras_log_level=5
-logging/log_level=5
-logging/netfox_noray_log_level=5
-logging/netfox_log_level=5
 
 [physics]
 

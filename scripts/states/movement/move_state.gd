@@ -29,13 +29,9 @@ func move_player(delta: float, speed = parent.WALK_SPEED):
 	# Run speed is not applied to jump (see get_run)
 	if get_run():
 		position_target *= SPRINT_SPEED_MODIFIER
-	
-	#if !direction:
-		#parent.velocity = parent.velocity.move_toward(Vector3.ZERO, parent.FRICTION * delta)
-		#return
-#
-	#if position_target:
-		#parent.velocity = parent.velocity.move_toward(position_target, parent.ACCELERATION * delta)
+	#
+	if position_target:
+		parent.velocity = parent.velocity.move_toward(position_target, parent.ACCELERATION * delta)
 
 
 	force_update_is_on_floor()
@@ -50,14 +46,13 @@ func move_player(delta: float, speed = parent.WALK_SPEED):
 			var platform := collider as MovingCastle
 			platform_velocity = platform.get_velocity()
 
-
 	#var direction = Vector3(input.movement.x, 0, input.movement.z).normalized()
-	if direction:
-		parent.velocity.x = direction.x * speed
-		parent.velocity.z = direction.z * speed
-	else:
-		parent.velocity.x = move_toward(parent.velocity.x, 0, speed)
-		parent.velocity.z = move_toward(parent.velocity.z, 0, speed)
+	#if direction:
+		#parent.velocity.x = direction.x * speed
+		#parent.velocity.z = direction.z * speed
+	#else:
+		#parent.velocity.x = move_toward(parent.velocity.x, 0, speed)
+		#parent.velocity.z = move_toward(parent.velocity.z, 0, speed)
 
 
 	# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-velocity

@@ -50,14 +50,14 @@ var enabled: bool:
 
 var _is_server: bool = false
 var _multiplayer: MultiplayerAPI
-var _enabled = false
+var _enabled: bool = false
 
 ## Check if we're running as server.
 func is_server() -> bool:
 	if multiplayer == null:
 		return false
 	
-	var peer = multiplayer.multiplayer_peer
+	var peer := multiplayer.multiplayer_peer
 	if peer == null:
 		return false
 	
@@ -72,11 +72,10 @@ func is_server() -> bool:
 	
 	return true
 
-static func _static_init():
-	_NetfoxLogger.register_tag(func(): return "#%d" % NetworkEvents.multiplayer.get_unique_id(), -99)
+func _ready() -> void:
+	_NetfoxLogger.register_tag(_get_peer_id_tag, -99)
 
-func _ready():
-	enabled = ProjectSettings.get_setting("netfox/events/enabled", true)
+	enabled = ProjectSettings.get_setting(&"netfox/events/enabled", true)
 
 	# Automatically start ticking when entering multiplayer and stop when 
 	# leaving multiplayer
@@ -85,7 +84,13 @@ func _ready():
 	on_client_start.connect(func(id): NetworkTime.start())
 	on_client_stop.connect(NetworkTime.stop)
 
-func _process(_delta):
+func _exit_tree() -> void:
+	_NetfoxLogger.free_tag(_get_peer_id_tag)
+
+func _get_peer_id_tag() -> String:
+	return "#%d" % multiplayer.get_unique_id()
+
+func _process(_delta: float) -> void:
 	if multiplayer != _multiplayer:
 		_disconnect_handlers(_multiplayer)
 		_connect_handlers(multiplayer)
@@ -101,7 +106,7 @@ func _process(_delta):
 		_is_server = false
 		on_server_stop.emit()
 
-func _connect_handlers(mp: MultiplayerAPI):
+func _connect_handlers(mp: MultiplayerAPI) -> void:
 	if mp == null:
 		return
 
@@ -110,7 +115,7 @@ func _connect_handlers(mp: MultiplayerAPI):
 	mp.peer_connected.connect(_handle_peer_connected)
 	mp.peer_disconnected.connect(_handle_peer_disconnected)
 
-func _disconnect_handlers(mp: MultiplayerAPI):
+func _disconnect_handlers(mp: MultiplayerAPI) -> void:
 	if mp == null:
 		return
 
@@ -119,19 +124,19 @@ func _disconnect_handlers(mp: MultiplayerAPI):
 	mp.peer_connected.disconnect(_handle_peer_connected)
 	mp.peer_disconnected.disconnect(_handle_peer_disconnected)
 
-func _handle_connected_to_server():
+func _handle_connected_to_server() -> void:
 	on_client_start.emit(multiplayer.get_unique_id())
 
-func _handle_server_disconnected():
+func _handle_server_disconnected() -> void:
 	on_client_stop.emit()
 
-func _handle_peer_connected(id: int):
+func _handle_peer_connected(id: int) -> void:
 	on_peer_join.emit(id)
 
-func _handle_peer_disconnected(id: int):
+func _handle_peer_disconnected(id: int) -> void:
 	on_peer_leave.emit(id)
 
-func _set_enabled(enable: bool):
+func _set_enabled(enable: bool) -> void:
 	if _enabled and not enable:
 		_disconnect_handlers(_multiplayer)
 		_multiplayer = null

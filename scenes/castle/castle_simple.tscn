@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dqoup8e05txs1" path="res://scenes/castle/castle.gd" id="1_2hve7"]
 [ext_resource type="Material" uid="uid://cfahq750phpw0" path="res://scenes/castle/castle_concrete_mat.tres" id="1_6p3t0"]
-[ext_resource type="PackedScene" uid="uid://jqyjx5vv1fpy" path="res://scenes/castle/heat_dome/HeatDome.tscn" id="3_0ju54"]
-[ext_resource type="Script" uid="uid://cgycqse80cops" path="res://addons/netfox/tick-interpolator.gd" id="4_g8b6n"]
+[ext_resource type="PackedScene" uid="uid://jqyjx5vv1fpy" path="res://scenes/castle/heat_dome/HeatDome.tscn" id="4_8nt25"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="4_g8b6n"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2hve7"]
 size = Vector3(6, 0.3, 15)
@@ -22,11 +22,10 @@ shape = SubResource("BoxShape3D_2hve7")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_0ju54")
 
-[node name="HeatDome" parent="." instance=ExtResource("3_0ju54")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.274586, 0)
-
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("4_g8b6n")
 root = NodePath("..")
 properties = Array[String]([":transform"])
 metadata/_custom_type_script = ExtResource("4_g8b6n")
+
+[node name="HeatDome" parent="." instance=ExtResource("4_8nt25")]

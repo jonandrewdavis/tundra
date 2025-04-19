@@ -53,7 +53,7 @@ func _ready():
 	# are broadcast to all peers, or only to the server.
 	# The default is true to support legacy behaviour. 
 	# It is recommended to turn this off. 
-	$RollbackSynchronizer.enable_input_broadcast
+	$RollbackSynchronizer.enable_input_broadcast = false
 
 	#### CLIENT & SERVER ####
 	# TODO: This is here due to ragdoll's call local
