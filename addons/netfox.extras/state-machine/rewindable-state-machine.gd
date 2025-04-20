@@ -92,7 +92,8 @@ func _notification(what: int):
 			_available_states[child.name] = child
 
 		# Compare states after tick loop
-		NetworkTime.after_tick_loop.connect(_after_tick_loop)
+		if not Engine.is_editor_hint(): 
+			NetworkTime.after_tick_loop.connect(_after_tick_loop)
 
 func _get_configuration_warnings():
 	const MISSING_SYNCHRONIZER_ERROR := \

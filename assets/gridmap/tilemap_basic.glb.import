@@ -36,30 +36,37 @@ _subresources={
 "materials": {
 "ceiling_01": {
 "use_external/enabled": true,
+"use_external/fallback_path": "",
 "use_external/path": "res://gridmap/gridmap_materials/TinyTile01.tres"
 },
 "floor01": {
 "use_external/enabled": true,
+"use_external/fallback_path": "",
 "use_external/path": "res://gridmap/gridmap_materials/TinyRock01.tres"
 },
 "metal_01": {
 "use_external/enabled": true,
+"use_external/fallback_path": "",
 "use_external/path": "res://gridmap/gridmap_materials/TinyMetal01.tres"
 },
 "trim_01": {
 "use_external/enabled": true,
+"use_external/fallback_path": "",
 "use_external/path": "res://gridmap/gridmap_materials/TinyBrick03.tres"
 },
 "wall_ext": {
 "use_external/enabled": true,
+"use_external/fallback_path": "",
 "use_external/path": "res://gridmap/gridmap_materials/TinyBrick02.tres"
 },
 "wall_int": {
 "use_external/enabled": true,
+"use_external/fallback_path": "",
 "use_external/path": "res://gridmap/gridmap_materials/TinyBrick01.tres"
 },
 "wood_01": {
 "use_external/enabled": true,
+"use_external/fallback_path": "",
 "use_external/path": "res://gridmap/gridmap_materials/TinyWood01.tres"
 }
 }

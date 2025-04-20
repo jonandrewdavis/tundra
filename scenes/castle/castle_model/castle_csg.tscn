@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://j24qgg2wlfs0"]
+
+[ext_resource type="Texture2D" uid="uid://p2v0hr7g5gkk" path="res://assets/ambient/Concrete008_2K-JPG/Concrete008_2K-JPG_Color.jpg" id="1_ud8ak"]
+[ext_resource type="Texture2D" uid="uid://b1chtn81b1ts8" path="res://assets/ambient/Concrete008_2K-JPG/Concrete008_2K-JPG_NormalGL.jpg" id="2_4wvyf"]
+[ext_resource type="Texture2D" uid="uid://w8oaieen7hi3" path="res://assets/ambient/Concrete008_2K-JPG/Concrete008_2K-JPG_Roughness.jpg" id="3_2tnhf"]
+[ext_resource type="Shape3D" uid="uid://ckwxmoxwdn23j" path="res://scenes/castle/castle_model/castle_csg_mesh1.tres" id="4_2tnhf"]
+[ext_resource type="ArrayMesh" uid="uid://cild4qsq8d8t8" path="res://scenes/castle/castle_model/castle_csg_col1.tres" id="5_g5r05"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g5r05"]
+albedo_texture = ExtResource("1_ud8ak")
+metallic_specular = 0.0
+roughness_texture = ExtResource("3_2tnhf")
+normal_enabled = true
+normal_texture = ExtResource("2_4wvyf")
+uv1_scale = Vector3(1, 2, 1)
+
+[node name="CastleCsg" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(2, 0.2, 1.2)
+material = SubResource("StandardMaterial3D_g5r05")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.882948, -0.469472, 0, 0.469472, 0.882948, 0, 0.4, -1.3)
+size = Vector3(1, 0.2, 2)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, -5.65)
+size = Vector3(4, 0.2, 7)
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="."]
+shape = ExtResource("4_2tnhf")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("5_g5r05")

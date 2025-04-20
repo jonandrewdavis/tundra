@@ -32,3 +32,5 @@ heat_dome_radius = 40
 
 [node name="LightHouse" parent="." instance=ExtResource("5_qfbvt")]
 transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 19.21, 0)
+
+[editable path="GridmapPivot/GridmapCastle"]

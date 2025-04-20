@@ -12,7 +12,8 @@ config_version=5
 
 config/name="tundra-prototype"
 run/main_scene="res://scenes/menu/main_menu.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
+config/icon="uid://sv16ctski5qf"
 
 [autoload]
 
@@ -154,6 +155,13 @@ DEBUG_0={
 [navigation]
 
 3d/default_edge_connection_margin=1.5
+
+[netfox]
+
+logging/log_level=4
+logging/netfox_noray_log_level=4
+logging/netfox_log_level=4
+logging/netfox_extras_log_level=4
 
 [physics]
 

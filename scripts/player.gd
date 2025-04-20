@@ -41,6 +41,9 @@ func _enter_tree():
 	_player_input.set_multiplayer_authority(str(name).to_int())
 	_camera_input.set_multiplayer_authority(str(name).to_int())
 
+# TODO: Programmatically set the Moving Platform properties (For Netfox controller matching)
+# TODO: Programmatically set the slope properties
+
 # TODO: Warn if any of our required nodes are missing.
 # TODO: abstract this so we can just like, give some nodes
 func _ready():
