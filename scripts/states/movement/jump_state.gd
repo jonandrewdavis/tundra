@@ -1,3 +1,4 @@
+@tool
 extends MovementState
 
 func enter(_previous_state: RewindableState, _tick: int) -> void:
@@ -6,14 +7,16 @@ func enter(_previous_state: RewindableState, _tick: int) -> void:
 func tick(delta, _tick, _is_fresh):
 	rotate_player_model(delta)
 	move_player(delta)	
-	
+	check_for_ragdoll()
+
 	force_update_is_on_floor()
 	if not parent.is_on_floor():
 		state_machine.transition(&"FallState")
-	# If issues arise around jump, add additional state transitions here
+		# If issues arise around jump, add additional state transitions here
 
+# TODO: Tweak & possibly unify with move_state
 func move_player(_delta: float, speed = parent.WALK_SPEED):
-	# NOTE: This state implements it's own "move_player"
+
 	var input_dir : Vector2 = get_movement_input()
 	
 	# Based on https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/platformer/player/player.gd#L65

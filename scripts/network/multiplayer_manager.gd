@@ -38,7 +38,7 @@ func _remove_player_from_game(network_id: int):
 	if _players_in_game.has(network_id):
 		var player_to_remove = _players_in_game[network_id]
 		if player_to_remove:
-			player_to_remove.queue_free()		
+			player_to_remove.queue_free()
 			_players_in_game.erase(network_id)
 
 func _ready_player(player: Player):

@@ -1,7 +1,6 @@
 extends CharacterBody3D
 class_name Player
 
-var interactable
 var ROTATION_INTERPOLATE_SPEED = 40.0
 
 const FRICTION = 100
@@ -28,6 +27,12 @@ var _animation_player: AnimationPlayer
 @export var weapons_manager: WeaponsManager
 @export var weapon_pivot: Marker3D
 @export var player_ui: CanvasLayer
+
+# TODO: Heat should be a stat like health, and signals can change it
+# TODO: Heat should be a component, like in Forest Bath
+
+# TODO: Port Health system?
+# TODO: Port Interaction system?
 
 var animation_check_timer = Timer.new()
 
@@ -63,14 +68,14 @@ func _ready():
 	# call this after setting authority
 	# https://foxssake.github.io/netfox/netfox/tutorials/responsive-player-movement/#ownership
 	_animation_player = _player_model.get_node("AnimationPlayer")
-	rollback_synchronizer.process_settings()
 	sync_all_properties()
+	rollback_synchronizer.process_settings()
 
 	#TODO: Document cases where this helps prevent jitter.
 	#TODO: Disabling physics on the client helps the server & client not fight over positioning
 	#NOTE: We might need _physics_process to run on the client, depedning on what we're doing.. camera tilt, etc.
-	if not multiplayer.is_server():
-		set_physics_process(false)
+	#if not multiplayer.is_server():
+		#set_physics_process(false)
 	
 	#### SERVER ONLY ####
 	# TODO: To be fully server authoratitve, this line should be uncommented
@@ -90,19 +95,13 @@ func _ready():
 	weapons_manager.player_camera_3D = _camera_input.camera_3D
 	weapons_manager.player_input = _player_input
 
-
-var is_in_heat_dome = false
+func _exit_tree() -> void:
+	for property: NodePath in sync.replication_config.get_properties():
+		sync.replication_config.remove_property(property)
 
 func _process(_delta: float) -> void:
 	weapon_vertical_tilt()
 	# Runs on the client.
-	if Hub.heat_dome:
-		if global_position.distance_to(Hub.heat_dome.global_position) <= Hub.heat_dome.heat_dome_radius:
-			is_in_heat_dome = false
-			show_snow_shader(false)
-		else:
-			is_in_heat_dome = true
-			show_snow_shader(true)
 
 # TODO: Fully document all the findings from this approach.
 # NOTE: The way this works is:
@@ -161,14 +160,14 @@ func interact():
 	#debug_increase_heat_dome_radius()
 	debug_toggle_castle_speed()
 
-# TODO: Document that Ragdoll bones are on Layer 3 collision.
-# TODO: Adjust influence. Move to state, change input allowed, etc.
-# SPECIAL CASE: ONLY THING ALLOWED TO BE CALL LOCAL.
+# NOTE: See: movement_state.gd and "check_for_ragdoll()"
+# TODO: Document that Ragdoll bones are on Layer 3 collision. Adjust weights & pse
 func toggle_ragdoll():
+	print("RAGDOLL TIME: ", bones.active)
 	if bones.active == false:
 		_animation_player.active = false
 		bones.active = true
-		# ['RightShoulder', 'LeftShoulder', 'RightUpperLeg', 'LeftUpperLeg']
+		# TODO: ['RightShoulder', 'LeftShoulder', 'RightUpperLeg', 'LeftUpperLeg']
 		bones.physical_bones_start_simulation()
 		apply_chest_force()
 	else:
@@ -180,7 +179,7 @@ func toggle_ragdoll():
 # Apply force away from current facing: -_player_model.basis.z
 func apply_chest_force():
 	for bone in bones.get_children():
-		if bone.bone_name == 'Hips':
+		if bone.bone_name == 'Chest':
 			bone.apply_central_impulse(-_player_model.basis.z * -1.0 * 1200.0)
 
 # TODO: Death should be a state

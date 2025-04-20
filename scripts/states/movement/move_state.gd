@@ -1,8 +1,10 @@
+@tool
 extends MovementState
 
 func tick(delta, _tick, _is_fresh):
 	rotate_player_model(delta)
 	move_player(delta)
+	check_for_ragdoll()
 
 	force_update_is_on_floor()
 	if parent.is_on_floor():
@@ -16,8 +18,6 @@ func tick(delta, _tick, _is_fresh):
 
 func move_player(delta: float, speed = parent.WALK_SPEED):
 	# NOTE: This state implements it's own "move_player"
-	# Any state with controls needs this constant force! 
-	#apply_constant_force()
 
 	var input_dir : Vector2 = get_movement_input()
 	
@@ -29,22 +29,17 @@ func move_player(delta: float, speed = parent.WALK_SPEED):
 	# Run speed is not applied to jump (see get_run)
 	if get_run():
 		position_target *= SPRINT_SPEED_MODIFIER
-	#
+	
 	if position_target:
 		parent.velocity = parent.velocity.move_toward(position_target, parent.ACCELERATION * delta)
-
 
 	force_update_is_on_floor()
 	if not parent.is_on_floor():
 		parent.velocity.y -= gravity * delta
 
 	var platform_velocity := Vector3.ZERO
-	var collision_result := KinematicCollision3D.new()
-	if parent.test_move(parent.global_transform, Vector3.DOWN * delta, collision_result):
-		var collider := collision_result.get_collider()
-		if collider is MovingCastle:
-			var platform := collider as MovingCastle
-			platform_velocity = platform.get_velocity()
+	platform_velocity = get_moving_platform_velocity(delta)
+	
 
 	#var direction = Vector3(input.movement.x, 0, input.movement.z).normalized()
 	#if direction:

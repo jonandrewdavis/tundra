@@ -1,25 +1,12 @@
+@tool
 # Ragdoll
 extends MovementState
 
 func tick(delta, _tick, _is_fresh):
-	move_towards_ragdoll(delta)
-	#move_player(delta)
+	stop_player(delta)
+	move_player(delta)
+	check_for_ragdoll()
 
-	if parent.bones.active == false:
-		force_update_is_on_floor()
-		if parent.is_on_floor():	
-			if get_movement_input() != Vector2.ZERO:
-				state_machine.transition(&"MoveState")
-			elif get_jump():
-				state_machine.transition(&"JumpState")
-		else:
-			state_machine.transition(&"FallState")
-	
-	if parent.bones.active && parent.bones.is_simulating_physics() == false:
-		parent.bones.physical_bones_start_simulation()
-
-	if parent.bones.active == false && parent.bones.is_simulating_physics() == true:
-		parent.bones.physical_bones_stop_simulation()
 
 func move_towards_ragdoll(_delta):
 	pass

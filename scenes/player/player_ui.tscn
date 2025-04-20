@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=12 format=3 uid="uid://btdemgg0e0b4o"]
 
 [ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/HUD.gd" id="1_fatww"]
 [ext_resource type="Texture2D" uid="uid://bjh5ic6qy4jtl" path="res://assets/HUD ASSETS/crosshair001.png" id="2_mo8vb"]
 [ext_resource type="Texture2D" uid="uid://uidicgaojgdi" path="res://assets/HUD ASSETS/crosshair046.png" id="3_nlx67"]
+[ext_resource type="Shader" uid="uid://k1t5yooesun6" path="res://scripts/shaders/snow.gdshader" id="4_mo8vb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyawr"]
 bg_color = Color(1, 1, 1, 1)
@@ -26,6 +27,16 @@ color = Color(1, 1, 1, 1)
 thickness = 10
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fatww"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nlx67"]
+shader = ExtResource("4_mo8vb")
+shader_parameter/spread = 0.5
+shader_parameter/size = 0.5
+shader_parameter/snow_color = Color(0.489412, 0.647688, 1, 0.482353)
+shader_parameter/snow_transparency = 0.6
+shader_parameter/speed = 2.0
+shader_parameter/wind = 0.6
+shader_parameter/num_of_layers = 40
 
 [node name="PlayerUi" type="CanvasLayer"]
 script = ExtResource("1_fatww")
@@ -157,3 +168,20 @@ cull_mask = 524288
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_fatww")
+
+[node name="Shaders" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SnowShader" type="ColorRect" parent="Shaders"]
+material = SubResource("ShaderMaterial_nlx67")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

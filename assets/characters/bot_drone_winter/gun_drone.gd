@@ -40,6 +40,9 @@ enum States { IDLE, SEARCHING, CHASING, ATTACKING, HURTING, DODGING, DYING, EXPL
 var state: States = States.IDLE
 
 func _ready(): 
+	# TODO: enemies group as well.
+	add_to_group("targets")
+
 	# This enemy only runs on the server.
 	# Only visuals and some rpcs are sync'd out.
 	if not multiplayer.is_server():
@@ -47,7 +50,6 @@ func _ready():
 		set_process(false)
 		return # Early return, no other code runs
 
-	add_to_group("targets")
 
 	# Connect & create
 	#hit_box.area_entered.connect(on_hitbox_area_entered)	
@@ -153,7 +155,7 @@ func explode():
 	# TODO: Explode.
 	animation_player.stop(true)
 	await get_tree().create_timer(3.0).timeout
-	queue_free()		
+	queue_free()
 
 # TODO: Would be nice to have an enum of animation names somehow
 func on_animation_finished(animation_name):

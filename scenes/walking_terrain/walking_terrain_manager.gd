@@ -1,4 +1,4 @@
-# TODO: Tool? or does it cause issues.
+# TODO: Tool? Or does it cause issues? It's not necessary.
 @tool
 extends Node3D
 
@@ -63,7 +63,8 @@ func on_player_added(_player: int):
 
 func on_check_walking_timer():
 	if !walking_scene_tracker:
-		push_warning('No walking_scene_tracker to check')
+		#push_warning('No walking_scene_tracker to check')
+
 		# Try heat dome if there's none
 		if Hub.heat_dome:
 			walking_scene_tracker = Hub.heat_dome

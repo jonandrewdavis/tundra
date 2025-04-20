@@ -28,10 +28,11 @@ const CAMERA_X_ROT_MAX := deg_to_rad(70)
 const CAMERA_UP_DOWN_MOVEMENT = -1
 
 func _ready():
-	_set_camera(CAMERA_SETTINGS_DEFAULT)
 	NetworkTime.before_tick_loop.connect(_gather)
+
 	
 	if multiplayer.get_unique_id() == str(get_parent().name).to_int():
+		_set_camera(CAMERA_SETTINGS_DEFAULT)
 		camera_3D.current = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
@@ -68,7 +69,10 @@ func rotate_camera(move):
 
 func get_camera_rotation_basis() -> Basis:
 	# Use camera_mount here so we don't have to worry about correcting for lean
+	# TODO: E 0:00:14:842   camera_input.gd:71 @ get_camera_rotation_basis(): Condition "!is_inside_tree()" is true. Returning: Transform3D()
+	
 	return camera_mount.global_transform.basis
+
 
 func get_camera_vertical_look() -> float:
 	return camera_rot.rotation.x

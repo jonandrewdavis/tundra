@@ -3,7 +3,7 @@ class_name MovingCastle
 
 @export var speed: float = 2.
 @onready var _origin: Vector3 = global_position
-@onready var _target: Vector3 = Vector3(0.0, 1.0, 100.0)
+@onready var _target: Vector3 = Vector3(0.0, 1.0, 1000.0)
 @onready var _distance: float = _origin.distance_to(_target)
 var _velocity: Vector3 = Vector3.ZERO
 

@@ -8,6 +8,8 @@ class_name PlayerHUD
 @onready var current_weapon_stack = $debug_hud/HBoxContainer3/WeaponStack
 @onready var hit_sight = $HitSight
 @onready var overlay = $Overlay
+@onready var snow_shader = $Shaders/SnowShader
+
 
 @onready var sync = $MultiplayerSynchronizer
 
@@ -23,7 +25,6 @@ var hit_sight_timer = Timer.new()
 func _ready():
 	DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
 
-
 	if !weapons_manager:
 		push_warning("Player's HUD has no weapon manager.")
 		return
@@ -34,9 +35,9 @@ func _ready():
 			hide()
 			set_process(false)
 	
-	Lodash.sync_property(sync, current_ammo_label, ['text'])
-	Lodash.sync_property(sync, hit_sight, ['visible'])
-	Lodash.sync_property(sync, current_weapon_label, ['text'])
+	#Lodash.sync_property(sync, current_ammo_label, ['text'])
+	#Lodash.sync_property(sync, hit_sight, ['visible'])
+	#Lodash.sync_property(sync, current_weapon_label, ['text'])
 
 	# Hit Sight
 	add_child(hit_sight_timer)
@@ -44,6 +45,8 @@ func _ready():
 	hit_sight_timer.one_shot = true
 	hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 
+func _process(_delta: float) -> void:
+	_show_snow_shader()
 
 func _on_weapons_manager_update_weapon_stack(WeaponStack):
 	current_weapon_stack.text = ""
@@ -72,3 +75,11 @@ func load_over_lay_texture(Active:bool, txtr: Texture2D = null):
 
 func _on_weapons_manager_connect_weapon_to_hud(_weapon_resouce: WeaponResource):
 	_weapon_resouce.update_overlay.connect(load_over_lay_texture)
+
+# TODO: Emit a singal when inside heat dome if other systems need to know
+func _show_snow_shader():
+	if Hub.heat_dome:
+		if get_parent().global_position.distance_to(Hub.heat_dome.global_position) <= Hub.heat_dome.heat_dome_radius:
+			if snow_shader.visible == true: snow_shader.visible = false
+		else:
+			if snow_shader.visible == false: snow_shader.visible = true

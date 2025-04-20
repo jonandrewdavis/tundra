@@ -33,6 +33,8 @@ NetworkPerformance="*res://addons/netfox/network-performance.gd"
 [display]
 
 window/size/initial_position=Vector2i(-50, 0)
+window/size/resizable=false
+window/size/always_on_top=true
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
 
@@ -162,6 +164,7 @@ logging/log_level=4
 logging/netfox_noray_log_level=4
 logging/netfox_log_level=4
 logging/netfox_extras_log_level=4
+logging/clear_settings=true
 
 [physics]
 

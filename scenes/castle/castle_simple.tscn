@@ -1,19 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://dy85183h2d31p"]
+[gd_scene load_steps=7 format=3 uid="uid://dy85183h2d31p"]
 
 [ext_resource type="Script" uid="uid://dqoup8e05txs1" path="res://scenes/castle/castle.gd" id="1_2hve7"]
 [ext_resource type="Shape3D" uid="uid://ckwxmoxwdn23j" path="res://scenes/castle/castle_model/castle_csg_mesh1.tres" id="2_8nt25"]
 [ext_resource type="ArrayMesh" uid="uid://cild4qsq8d8t8" path="res://scenes/castle/castle_model/castle_csg_col1.tres" id="3_cyhqv"]
 [ext_resource type="PackedScene" uid="uid://jqyjx5vv1fpy" path="res://scenes/castle/heat_dome/HeatDome.tscn" id="4_8nt25"]
 [ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="4_g8b6n"]
+[ext_resource type="PackedScene" uid="uid://cabgrr2bvykhs" path="res://scenes/castle/spider_bot/spider_bot.tscn" id="6_cyhqv"]
 
 [node name="CastleSimple" type="AnimatableBody3D"]
 sync_to_physics = false
 script = ExtResource("1_2hve7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-3, 0, -2.62268e-07, 0, 3, 0, 2.62268e-07, 0, -3, 0, 0, -13.066)
 shape = ExtResource("2_8nt25")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3, 0, -2.62268e-07, 0, 3, 0, 2.62268e-07, 0, -3, 0, 0, -13.066)
 mesh = ExtResource("3_cyhqv")
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
@@ -23,3 +26,10 @@ properties = Array[String]([":transform"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
 
 [node name="HeatDome" parent="." instance=ExtResource("4_8nt25")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.44642, 0)
+
+[node name="SpiderBot" parent="Marker3D" node_paths=PackedStringArray("castle") instance=ExtResource("6_cyhqv")]
+castle = NodePath("../..")

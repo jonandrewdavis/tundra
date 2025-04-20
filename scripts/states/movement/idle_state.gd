@@ -1,9 +1,11 @@
+@tool
 # IdleState
 extends MovementState
 
 func tick(delta, _tick, _is_fresh):
 	rotate_player_model(delta)
 	move_player(delta)
+	check_for_ragdoll()
 
 	parent.velocity = parent.velocity.move_toward(Vector3.ZERO, parent.FRICTION * delta)
 

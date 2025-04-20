@@ -1,5 +1,7 @@
 extends Node3D
 
+@export var castle: MovingCastle
+
 @export var move_speed: float = 1.0
 @export var turn_speed: float = 1.0
 @export var ground_offset: float = 1.5
@@ -9,6 +11,8 @@ extends Node3D
 
 @onready var bl_leg = $BackLeftIKTarget
 @onready var br_leg = $BackRightIKTarget
+
+
 
 #func _process(delta):
 	#var plane1 = Plane(bl_leg.global_position, fl_leg.global_position, fr_leg.global_position)

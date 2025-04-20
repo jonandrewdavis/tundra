@@ -2,7 +2,6 @@
 class_name MovementState 
 extends RewindableState
 
-# A base movement state for common functions, extend when making new movement state.
 
 # TODO: Move these into _player
 const SPRINT_SPEED_MODIFIER := 1.6
@@ -17,24 +16,55 @@ const JUMP_MOVE_SPEED := 3.0
 
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 
+# A base movement state for common functions, extend when making new movement state.
+# NOTE: This class, MovementState, does not have tick, but contains common functions 
+# that each other state should call in tick.
+
 func move_player(delta: float, _speed: float = parent.WALK_SPEED):
 	force_update_is_on_floor()
 	if not parent.is_on_floor():
 		parent.velocity.y -= gravity * delta
 
 	var platform_velocity := Vector3.ZERO
-	var collision_result := KinematicCollision3D.new()
-	if parent.test_move(parent.global_transform, Vector3.DOWN * delta, collision_result):
-		var collider := collision_result.get_collider()
-		if collider is MovingCastle:
-			var platform := collider as MovingCastle
-			platform_velocity = platform.get_velocity()
+	platform_velocity = get_moving_platform_velocity(delta)
 
 	parent.velocity += platform_velocity
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()
 	parent.velocity /= NetworkTime.physics_factor
 	parent.velocity -= platform_velocity
+
+func stop_player(delta: float):
+	parent.velocity = parent.velocity.move_toward(Vector3.ZERO, parent.FRICTION * delta)
+
+
+func check_for_ragdoll():
+	if not parent.bones:
+		push_warning("No bones for ragdoll")
+		return
+	
+	if parent.bones.active == true:
+		state_machine.transition(&"Ragdoll")
+	
+	# NOTE: Calling this physical_bones_start_simulation 
+	if parent.bones.active && parent.bones.is_simulating_physics() == false:
+		parent.bones.physical_bones_start_simulation()
+
+
+	if parent.bones.active == false && parent.bones.is_simulating_physics() == true:
+		parent.bones.physical_bones_stop_simulation()
+		
+	
+	# Return to regular state flow
+	if parent.bones.active == false:
+		force_update_is_on_floor()
+		if parent.is_on_floor():	
+			if get_movement_input() != Vector2.ZERO:
+				state_machine.transition(&"MoveState")
+			elif get_jump():
+				state_machine.transition(&"JumpState")
+		else:
+			state_machine.transition(&"FallState")		
 
 
 func rotate_player_model(delta: float):
@@ -51,27 +81,22 @@ func rotate_player_model(delta: float):
 
 # https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-on-floor
 func force_update_is_on_floor():
-	#if not parent.bones:
-		#push_warning("No bones")
-		#return
-	#
-	#if parent.bones.active == true:
-		#state_machine.transition(&"Ragdoll")
 	var old_velocity = parent.velocity
 	parent.velocity *= 0
 	parent.move_and_slide()
-	parent.velocity = old_velocity#
-#
-#func get_moving_platform_velocity(delta):
-	#var platform_velocity := Vector3.ZERO	
-	#var collision_result := KinematicCollision3D.new()
-	#if parent.test_move(parent.global_transform, Vector3.DOWN * delta, collision_result):
-		#var collider := collision_result.get_collider()
-		#if collider is MovingCastle:
-			#var platform := collider as MovingCastle
-			#platform_velocity = platform.get_velocity()
-#
-	#return platform_velocity
+	parent.velocity = old_velocity
+
+
+func get_moving_platform_velocity(delta: float) -> Vector3:
+	var _platform_velocity := Vector3.ZERO
+	var collision_result := KinematicCollision3D.new()
+	if parent.test_move(parent.global_transform, Vector3.DOWN * delta, collision_result):
+		var collider := collision_result.get_collider()
+		if collider is MovingCastle:
+			var platform := collider as MovingCastle
+			_platform_velocity = platform.get_velocity()
+			
+	return _platform_velocity
 
 # Are these "get" functions necessary?
 func get_movement_input() -> Vector2:
