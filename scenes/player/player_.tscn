@@ -53,14 +53,14 @@ input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_inp
 enable_input_broadcast = false
 metadata/_custom_type_script = "uid://d350u8evihs1u"
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_nrabn")
-
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("4_a47yd")
 root = NodePath("..")
-properties = Array[String]([":transform", "master:transform"])
+properties = Array[String]([":transform", "master:rotation"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_nrabn")
 
 [node name="RewindableStateMachine" type="Node" parent="."]
 script = ExtResource("3_lo6j0")

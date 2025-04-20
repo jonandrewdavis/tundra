@@ -9,10 +9,10 @@ func tick(delta, _tick, _is_fresh):
 	move_player(delta)	
 	check_for_ragdoll()
 
+	# If issues arise around jump, add additional state transitions here
 	force_update_is_on_floor()
 	if not parent.is_on_floor():
 		state_machine.transition(&"FallState")
-		# If issues arise around jump, add additional state transitions here
 
 # TODO: Tweak & possibly unify with move_state
 func move_player(_delta: float, speed = parent.WALK_SPEED):
@@ -23,10 +23,10 @@ func move_player(_delta: float, speed = parent.WALK_SPEED):
 	var direction = (camera_input.camera_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var position_target = direction * speed
 	
-	# Here I'm allowing "run speed" to be applied to jump
+	# Here I'm NOT allowing "run speed" to be applied to jump by commenting this out:
 	#if get_run():
 		#position_target *= SPRINT_SPEED_MODIFIER
-		
+
 	var horizontal_velocity = parent.velocity
 	horizontal_velocity = position_target
 	

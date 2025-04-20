@@ -15,9 +15,8 @@ func tick(delta, _tick, _is_fresh):
 	else:
 		state_machine.transition(&"FallState")
 
-
+# NOTE: This state implements it's own "move_player"
 func move_player(delta: float, speed = parent.WALK_SPEED):
-	# NOTE: This state implements it's own "move_player"
 
 	var input_dir : Vector2 = get_movement_input()
 	
@@ -26,7 +25,6 @@ func move_player(delta: float, speed = parent.WALK_SPEED):
 
 	var position_target = direction * speed
 	
-	# Run speed is not applied to jump (see get_run)
 	if get_run():
 		position_target *= SPRINT_SPEED_MODIFIER
 	

@@ -20,7 +20,6 @@ config/icon="uid://sv16ctski5qf"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 Hub="*res://scripts/hub.gd"
 NetworkManager="*res://scripts/network/network_manager.gd"
-Lodash="*res://scripts/lodash.gd"
 WindowTiler="*res://addons/netfox.extras/window-tiler.gd"
 Noray="*res://addons/netfox.noray/noray.gd"
 PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
@@ -29,6 +28,7 @@ NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
 NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
 NetworkEvents="*res://addons/netfox/network-events.gd"
 NetworkPerformance="*res://addons/netfox/network-performance.gd"
+Nodash="*res://scripts/nodash.gd"
 
 [display]
 

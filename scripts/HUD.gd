@@ -35,9 +35,10 @@ func _ready():
 			hide()
 			set_process(false)
 	
-	#Lodash.sync_property(sync, current_ammo_label, ['text'])
-	#Lodash.sync_property(sync, hit_sight, ['visible'])
-	#Lodash.sync_property(sync, current_weapon_label, ['text'])
+	sync.replication_config.resource_local_to_scene = true
+	Nodash.sync_property(sync, current_ammo_label, ['text'])
+	Nodash.sync_property(sync, hit_sight, ['visible'])
+	Nodash.sync_property(sync, current_weapon_label, ['text'])
 
 	# Hit Sight
 	add_child(hit_sight_timer)

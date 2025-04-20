@@ -54,8 +54,8 @@ func _enter_tree():
 func _ready():
 	add_to_group('players')
 
-	Lodash.error_missing(weapons_manager, 'weapons_manager')
-	Lodash.warn_missing(player_ui, 'player_ui')
+	Nodash.error_missing(weapons_manager, 'weapons_manager')
+	Nodash.warn_missing(player_ui, 'player_ui')
 	
 	# Enable input broadcast toggles whether input properties 
 	# are broadcast to all peers, or only to the server.
@@ -64,19 +64,16 @@ func _ready():
 	$RollbackSynchronizer.enable_input_broadcast = false
 
 	#### CLIENT & SERVER ####
-	# TODO: This is here due to ragdoll's call local
-	# call this after setting authority
 	# https://foxssake.github.io/netfox/netfox/tutorials/responsive-player-movement/#ownership
 	_animation_player = _player_model.get_node("AnimationPlayer")
 	sync_all_properties()
 	rollback_synchronizer.process_settings()
 
-	#TODO: Document cases where this helps prevent jitter.
-	#TODO: Disabling physics on the client helps the server & client not fight over positioning
-	#NOTE: We might need _physics_process to run on the client, depedning on what we're doing.. camera tilt, etc.
+	#TODO: Document cases where this helps prevent jitter. Might not be necessary if fully server authoratitve
+	#TODO: Disabling physics on the client might help the server & client not fight over positioning
 	#if not multiplayer.is_server():
 		#set_physics_process(false)
-	
+	#
 	#### SERVER ONLY ####
 	# TODO: To be fully server authoratitve, this line should be uncommented
 	if not multiplayer.is_server():
@@ -96,14 +93,13 @@ func _ready():
 	weapons_manager.player_input = _player_input
 
 func _exit_tree() -> void:
-	for property: NodePath in sync.replication_config.get_properties():
-		sync.replication_config.remove_property(property)
+	if not multiplayer.is_server():
+		Nodash.sync_remove_all(sync)
 
 func _process(_delta: float) -> void:
+	# NOTE: Runs on the client.
 	weapon_vertical_tilt()
-	# Runs on the client.
 
-# TODO: Fully document all the findings from this approach.
 # NOTE: The way this works is:
 # - Process runs in `player_input.gd` 
 # - If an input happens, it calls this RPC from the client
@@ -111,6 +107,7 @@ func _process(_delta: float) -> void:
 # - The `WeaponsManager` uses `MultiplayerSyncronizer` for visiblity, sound, animation_player, etc.
 # - This syncs the important properties to all clients (including the local caller [source player]).
 # NOTE: Do not add "call_local" or the puppet's weapons_manager can do things.
+# TODO: Fully document all the findings from this approach.
 
 # TODO: We should be able to use "is_fresh" from netfox to do "1 time"
 # That way we can remove this "is_server" check. Without it, clients were calling to other clients!!
@@ -139,6 +136,14 @@ func process_player_input(input_string: StringName):
 		"DEBUG_0":
 			Hub.debug_create_enemy()
 
+# TODO: Document "Nodash.sync_property"
+# TODO: Also sync the Netfox properties. Right now these are just for On Change in MultiplayerSyncronizer 
+func sync_all_properties():
+	Nodash.warn_missing(_animation_player, '_animation_player')
+	Nodash.sync_property(sync, _animation_player, ['active'])
+	Nodash.sync_property(sync, _animation_player, ['current_animation'])
+	Nodash.sync_property(sync, bones, ['active'])
+
 # TODO: Animations will need to be overhauled completely eventually...
 # using a server driven AnimationStateTree (how will that work with rollback, if at all)
 # or using sync'd interpolation values (top half / bottom half ).
@@ -157,13 +162,14 @@ func _on_display_state_changed(_old_state: RewindableState, new_state: Rewindabl
 			_animation_player.play(ANIMATION_PREFIX + animation_name)
 
 func interact():
+	pass
 	#debug_increase_heat_dome_radius()
-	debug_toggle_castle_speed()
+	#debug_toggle_castle_speed()
 
+# NOTE: Ragdoll state is entered with a bones.active check.
 # NOTE: See: movement_state.gd and "check_for_ragdoll()"
-# TODO: Document that Ragdoll bones are on Layer 3 collision. Adjust weights & pse
+# TODO: Document that Ragdoll bones are on Layer 3 collision. Adjust weights & poses.
 func toggle_ragdoll():
-	print("RAGDOLL TIME: ", bones.active)
 	if bones.active == false:
 		_animation_player.active = false
 		bones.active = true
@@ -175,7 +181,6 @@ func toggle_ragdoll():
 		bones.active = false
 		bones.physical_bones_stop_simulation()	
 
-
 # Apply force away from current facing: -_player_model.basis.z
 func apply_chest_force():
 	for bone in bones.get_children():
@@ -184,22 +189,12 @@ func apply_chest_force():
 
 # TODO: Death should be a state
 func death():
-	global_position = Vector3(10.0, 10.0, 10.0)
-	$TickInterpolator.teleport()
-
-func debug_increase_heat_dome_radius():
-	Hub.heat_dome_value.emit(1)
-
-func debug_toggle_castle_speed():
-	print("What's the speed before we RPC on client: ", multiplayer.get_remote_sender_id(), ' speed: ', Hub.world.castle_speed)
-	if Hub.castle_speed == 0.0:
-		Hub.change_castle_speed.emit(2.0)
-	else:
-		Hub.change_castle_speed.emit(0.0)
+	print("TODO: PLAYER DIED TEMP MESSAGE")
+	toggle_ragdoll()
 
 const animations_to_check = [ANIMATION_PREFIX + "rifle run", ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"]	
 
-# TODO: refactor animations
+# TODO: refactor animations completely
 func on_animation_check():
 	if not _animation_player.current_animation in animations_to_check:
 		return
@@ -213,23 +208,16 @@ func on_animation_check():
 	if _player_input.input_dir.y != 0:
 		_animation_player.play(ANIMATION_PREFIX + "rifle run")
 
-func show_snow_shader(value: bool):
-	snow_shader.visible = value
-
-############### SERVER - camera_vertical_tilt #################
-# NOTE: This mostly works, but it's better to just use a regular multiplayer syncronizer
-# TODO: If netowrk traffic is too high, look into fixing the bugs with this in physics:
-	#if multiplayer.is_server():
-		#camera_vertical_tilt()
-#func camera_vertical_tilt():
-	#_camera_input.camera_3D.rotation.x = _camera_input.camera_look
-	#pass
-
+# NOTE: -1.0 makes it move the right way and 0.5 dampens it slightly
 func weapon_vertical_tilt():
 	weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.5, 0.5)
 
-func sync_all_properties():
-	Lodash.warn_missing(_animation_player, '_animation_player')
-	Lodash.sync_property(sync, _animation_player, ['active'])
-	Lodash.sync_property(sync, _animation_player, ['current_animation'])
-	Lodash.sync_property(sync, bones, ['active'])
+func debug_increase_heat_dome_radius():
+	Hub.heat_dome_value.emit(1)
+
+func debug_toggle_castle_speed():
+	print("What's the speed before we RPC on client: ", multiplayer.get_remote_sender_id(), ' speed: ', Hub.world.castle_speed)
+	if Hub.castle_speed == 0.0:
+		Hub.change_castle_speed.emit(2.0)
+	else:
+		Hub.change_castle_speed.emit(0.0)

@@ -36,8 +36,8 @@ var player_camera_3D: Camera3D
 var busy = false
 
 func _ready() -> void:
-	Lodash.error_missing(player, 'player')
-	Lodash.error_missing(player_hud, 'player_hud')
+	Nodash.error_missing(player, 'player')
+	Nodash.error_missing(player_hud, 'player_hud')
 
 	# Prevent clients from doing anything with their 
 	# This should never happen, but just in case

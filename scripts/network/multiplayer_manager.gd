@@ -36,8 +36,11 @@ func _add_player_to_game(network_id: int):
 func _remove_player_from_game(network_id: int):
 	print("Removing player from game: %s" % network_id)
 	if _players_in_game.has(network_id):
-		var player_to_remove = _players_in_game[network_id]
+		var player_to_remove: CharacterBody3D = _players_in_game[network_id]
 		if player_to_remove:
+			# NOTE: Setting process to false can help prevent errors.
+			# E _watch_changes: Node '/CurrentWeapon:text' not found.
+			player_to_remove.set_process(false)
 			player_to_remove.queue_free()
 			_players_in_game.erase(network_id)
 
