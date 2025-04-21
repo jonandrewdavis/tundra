@@ -63,13 +63,12 @@ func rotate_camera(move):
 	camera_mount.orthonormalize()
 	# Vertical camera movement
 	camera_rot.rotation.x = clamp(camera_rot.rotation.x + (CAMERA_UP_DOWN_MOVEMENT * move.y), CAMERA_X_ROT_MIN, CAMERA_X_ROT_MAX)
-	#print('ON CLIENT', camera_rot.rotation.x)
 
 func get_camera_rotation_basis() -> Basis:
 	# Use camera_mount here so we don't have to worry about correcting for lean
 	# TODO: E 0:00:14:842   camera_input.gd:71 @ get_camera_rotation_basis(): Condition "!is_inside_tree()" is true. Returning: Transform3D()
-	if !is_inside_tree() == true:
-		return Basis.IDENTITY
+	#if !is_inside_tree() == true:
+		#return Basis.IDENTITY
 	return camera_mount.global_transform.basis
 
 func get_camera_vertical_look() -> float:

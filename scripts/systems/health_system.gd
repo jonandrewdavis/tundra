@@ -13,40 +13,58 @@ class_name HealthSystem
 # TODO: Shield system? Halo / Apex, etc?
 # NOTE: Halo 1's shield regen is about 5 seconds
 @export var regen_delay : int = 5 # Halo 1
-@export var regen_increment: int = 1
+@export var regen_speed: float = 0.1
+@export var regen_increment: int = 2
 
 @onready var sync = $MultiplayerSynchronizer #Note - could be overriden by parent??
 @onready var regen_timer: Timer = Timer.new()
 @onready var regen_tick_timer: Timer = Timer.new()
 
-
 signal health_updated
-signal died
+signal death
+# TODO:
+#signal revive
 
 func _ready() -> void:
 	Nodash.sync_property(sync, self, ['max_health'])
 	Nodash.sync_property(sync, self, ['health'])
-
-	health_updated.connect(on_update_health)
-	died.connect(on_death)
+	
 	if multiplayer.is_server():
+		health_updated.connect(on_update_health)
+		death.connect(on_death)
 		prepare_regen_timer()
 
 func _exit_tree() -> void:
 	if not multiplayer.is_server():
 		Nodash.sync_remove_all(sync)
 
-func damage():
+func damage(value: int):
+	# Don't allow negative values when damaging
+	var next_health = health - abs(value)
+
 	# Do not allow overkill
+	if next_health <= 0:
+		regen_timer.stop()
+		health_updated.emit(0)
+		death.emit()
+		return
+	
+	# Valid damage, not dead
+	health = next_health
+	health_updated.emit(next_health)
 	if regen_delay != 0:
 		regen_timer.start()
-	pass
+		
 
-func heal():
+func heal(value):
+	var next_health = health + abs(value)
+	
 	# Do not allow overheal
-	var updated_health = 0
-	health_updated.emit(updated_health)
-	pass	
+	if next_health > max_health:
+		next_health = max_health
+	
+	health = next_health
+	health_updated.emit(next_health)
 
 func on_update_health(updated_health):
 	print('Listening to on_update_health: ', updated_health)
@@ -54,6 +72,7 @@ func on_update_health(updated_health):
 # TODO: killed, killer
 # TODO: Report the stats to Hub
 func on_death():
+	print("PLAYER DIED fOR REAL")
 	pass
 
 # TODO: Could abstract this to handle regen of any property, like HEAT.
@@ -66,9 +85,8 @@ func prepare_regen_timer():
 		regen_timer.timeout.connect(start_regen_health)
 		
 		add_child(regen_tick_timer)
-		regen_tick_timer.wait_time = regen_increment
-		regen_timer.timeout.connect(regen_health_tick)
-		
+		regen_tick_timer.wait_time = regen_speed # regen_speed?
+		regen_tick_timer.timeout.connect(regen_health_tick)
 
 func start_regen_health():
 	if regen_timer.is_stopped() && health < max_health:
@@ -76,6 +94,7 @@ func start_regen_health():
 		
 func regen_health_tick():
 	if regen_timer.is_stopped() && health < max_health:
+		heal(regen_increment)
 		regen_tick_timer.start()
 	else:
 		regen_tick_timer.stop()

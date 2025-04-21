@@ -9,6 +9,9 @@ func _ready():
 		NetworkManager.host_game()
 		get_tree().call_deferred(&"change_scene_to_packed", load(GAME_SCENE))
 
+	if OS.has_feature("join"):
+		join_game()
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed('ui_cancel'):
 		get_tree().quit()

@@ -25,6 +25,7 @@ const PROJECTILE_VELOCITY = 50.0
 @export var health = max_health
 @export var max_speed = 5.0
 @export var speed = max_speed
+@export var attack_value: int = 5
 
 @onready var environment_container = get_tree().get_first_node_in_group("EnvironmentContainer")
 
@@ -47,6 +48,9 @@ func _ready():
 	# Only visuals and some rpcs are sync'd out.
 	if not multiplayer.is_server():
 		set_physics_process(false)
+		# WARNING: Sometimes MultiplayerSyncronizer can fail to start up if we don't wait a frame 
+		await get_tree().process_frame
+		set_process(false)
 		return # Early return, no other code runs
 
 	# Connect & create
@@ -219,7 +223,6 @@ func fire():
 # TODO: Hit more than just players, damage to buildings, etc.
 func _on_player_hit(body, _projectile):
 	if body.is_in_group('players'):
-		#print('DRONE HIT PLAYER')
-		pass
+		body.health_system.damage(attack_value)
 
 	_projectile.queue_free()

@@ -32,6 +32,7 @@ var _animation_player: AnimationPlayer
 # TODO: Heat should be a component, like in Forest Bath
 
 # TODO: Port Health system?
+@onready var health_system: HealthSystem = $HealthSystem
 # TODO: Port Interaction system?
 
 var animation_check_timer = Timer.new()

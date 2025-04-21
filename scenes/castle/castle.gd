@@ -44,8 +44,3 @@ func _get_position_for_tick(tick: int):
 # CRITICAL: castle speed can't be changed because of how it's used to calculate position
 func _on_change_castle_speed():
 	castle_on = !castle_on
-
-#@rpc("authority", "call_remote")
-#func _broadcast_castle_speed(new_castle_speed: float):
-	#print('im a client recieving', new_castle_speed)
-	#castle_speed = new_castle_speed

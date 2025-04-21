@@ -162,7 +162,7 @@ flat = true
 
 [node name="HostGame" type="Button" parent="Menu"]
 custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
+layout_mode = 0
 offset_left = 59.0
 offset_top = 51.0
 offset_right = 312.0
@@ -172,7 +172,7 @@ text = "Host Game"
 flat = true
 
 [node name="JoinGame" type="Button" parent="Menu"]
-layout_mode = 2
+layout_mode = 0
 offset_left = 59.0
 offset_top = 106.0
 offset_right = 312.0
