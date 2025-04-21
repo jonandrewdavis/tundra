@@ -16,12 +16,12 @@ const WALK_SPEED := 5.5
 @onready var rollback_synchronizer = $RollbackSynchronizer
 var _animation_player: AnimationPlayer
 
-@export_category("Custom Character Nodes")
+@export_category("Required Character Nodes")
 @export var sync: MultiplayerSynchronizer
 @export var skeleton: Skeleton3D
 @export var bones: PhysicalBoneSimulator3D
 @export var chest: PhysicalBone3D
-@export var snow_shader: ColorRect
+@export var health_system: HealthSystem
 
 @export_category("FPS Multiplayer Nodes")
 @export var weapons_manager: WeaponsManager
@@ -32,7 +32,6 @@ var _animation_player: AnimationPlayer
 # TODO: Heat should be a component, like in Forest Bath
 
 # TODO: Port Health system?
-@onready var health_system: HealthSystem = $HealthSystem
 # TODO: Port Interaction system?
 
 var animation_check_timer = Timer.new()

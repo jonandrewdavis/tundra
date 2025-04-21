@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=17 format=3 uid="uid://btdemgg0e0b4o"]
 
 [ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/HUD.gd" id="1_fatww"]
 [ext_resource type="Texture2D" uid="uid://uidicgaojgdi" path="res://assets/HUD ASSETS/crosshair046.png" id="3_nlx67"]
 [ext_resource type="Shader" uid="uid://k1t5yooesun6" path="res://scripts/shaders/snow.gdshader" id="4_mo8vb"]
+[ext_resource type="Theme" uid="uid://b3kq74llqlv3x" path="res://assets/themes/MinimalUI4/MinimalUI.tres" id="4_nlx67"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fatww"]
 
@@ -37,17 +38,38 @@ shader_parameter/speed = 0.5
 shader_parameter/wind = 0.0
 shader_parameter/num_of_layers = 40
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlx67"]
-bg_color = Color(0.230315, 0.230315, 0.230315, 0.388235)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fatww"]
-bg_color = Color(0.552956, 0.552956, 0.552956, 0.27451)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mo8vb"]
-bg_color = Color(0.910115, 0.910115, 0.910115, 0.4)
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.0627451)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
-[node name="PlayerUi" type="CanvasLayer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlx67"]
+bg_color = Color(0.04, 0.0028, 0.01644, 0.278431)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_by614"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0.949949, 0.883835, 0.931763, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_en3kk"]
+bg_color = Color(0.1, 0.1, 0.1, 0.164706)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_mo8vb"]
+color = Color(1, 1, 1, 1)
+
+[node name="PlayerUi" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "health_label")]
 script = ExtResource("1_fatww")
+health_bar = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthBar")
+health_label = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthLabel")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_fatww")
@@ -118,6 +140,7 @@ texture = ExtResource("3_nlx67")
 stretch_mode = 3
 
 [node name="SprintBar" type="HSlider" parent="."]
+visible = false
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -172,37 +195,109 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="BottomLeft" type="PanelContainer" parent="."]
 clip_contents = true
-custom_minimum_size = Vector2(350, 200)
+custom_minimum_size = Vector2(280, 200)
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -200.0
 offset_right = 200.0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_nlx67")
+theme = ExtResource("4_nlx67")
+theme_override_styles/panel = SubResource("StyleBoxFlat_mo8vb")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="BottomLeft"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomLeft/MarginContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="Health" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="HealthLabel" type="Label" parent="BottomLeft/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "100/100"
+text = "100 / 100"
 
-[node name="HealthBar" type="ProgressBar" parent="PanelContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 28)
+[node name="HealthBar" type="ProgressBar" parent="BottomLeft/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_fatww")
-theme_override_styles/fill = SubResource("StyleBoxFlat_mo8vb")
+theme_override_styles/background = SubResource("StyleBoxFlat_nlx67")
+theme_override_styles/fill = SubResource("StyleBoxFlat_by614")
 step = 1.0
 value = 50.0
 show_percentage = false
+
+[node name="BottomRight" type="PanelContainer" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(180, 180)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -180.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_nlx67")
+theme_override_styles/panel = SubResource("StyleBoxFlat_en3kk")
+
+[node name="MarginContainer" type="MarginContainer" parent="BottomRight"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomRight/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomRight/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CurrentWeaponLabel" type="Label" parent="BottomRight/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+text = "AR1"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="CurrentAmmo" type="Label" parent="BottomRight/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "30 / 300"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="BottomRight/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_mo8vb")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="BottomRight/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BackupWeaponLabel" type="Label" parent="BottomRight/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 13
+text = "Sniper"
+vertical_alignment = 2
+
+[node name="BackupAmmo" type="Label" parent="BottomRight/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+text = "4 / 20"
+horizontal_alignment = 2

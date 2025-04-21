@@ -23,7 +23,7 @@ radius = 0.3
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_nrabn"]
 
-[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "sync", "skeleton", "bones", "chest", "weapons_manager", "weapon_pivot", "player_ui")]
+[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "sync", "skeleton", "bones", "chest", "health_system", "weapons_manager", "weapon_pivot", "player_ui")]
 platform_on_leave = 2
 platform_floor_layers = 0
 script = ExtResource("1_u2qrv")
@@ -35,6 +35,7 @@ sync = NodePath("MultiplayerSynchronizer")
 skeleton = NodePath("master/Armature/GeneralSkeleton")
 bones = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D")
 chest = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone Chest")
+health_system = NodePath("HealthSystem")
 weapons_manager = NodePath("RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager")
 weapon_pivot = NodePath("RightHandBoneAttachment/WeaponPivot")
 player_ui = NodePath("PlayerUi")
@@ -57,7 +58,7 @@ metadata/_custom_type_script = "uid://d350u8evihs1u"
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("4_a47yd")
 root = NodePath("..")
-properties = Array[String]([":transform", "master:rotation"])
+properties = Array[String]([":transform", "master:transform"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -106,6 +107,10 @@ metadata/_custom_type_script = "uid://c1xw0v7hky5kl"
 rollback_synchronizer = NodePath("../RollbackSynchronizer")
 
 [node name="HealthSystem" parent="." instance=ExtResource("11_2hvjq")]
+max_health = null
+regen_delay = null
+regen_speed = null
+regen_increment = null
 
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("10_kusnb")

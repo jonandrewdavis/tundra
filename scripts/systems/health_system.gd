@@ -11,12 +11,12 @@ class_name HealthSystem
 @onready var health = max_health
 
 # TODO: Shield system? Halo / Apex, etc?
-# NOTE: Halo 1's shield regen is about 5 seconds
-@export var regen_delay : int = 5 # Halo 1
-@export var regen_speed: float = 0.1
+# NOTE: Halo 1's shield regen is about 6 seconds
+@export var regen_delay : int = 6 # Halo 1
+@export var regen_speed: float = 0.15
 @export var regen_increment: int = 2
 
-@onready var sync = $MultiplayerSynchronizer #Note - could be overriden by parent??
+#@onready var sync = $MultiplayerSynchronizer #Note - could be overriden by parent??
 @onready var regen_timer: Timer = Timer.new()
 @onready var regen_tick_timer: Timer = Timer.new()
 
@@ -26,17 +26,18 @@ signal death
 #signal revive
 
 func _ready() -> void:
-	Nodash.sync_property(sync, self, ['max_health'])
-	Nodash.sync_property(sync, self, ['health'])
+	# May need a syncronizer to display to other clients
+	#Nodash.sync_property(sync, self, ['max_health'])
+	#Nodash.sync_property(sync, self, ['health'])
 	
 	if multiplayer.is_server():
-		health_updated.connect(on_update_health)
+		health_updated.connect(broadcast_stub)
 		death.connect(on_death)
 		prepare_regen_timer()
 
-func _exit_tree() -> void:
-	if not multiplayer.is_server():
-		Nodash.sync_remove_all(sync)
+#func _exit_tree() -> void:
+	#if not multiplayer.is_server():
+		#Nodash.sync_remove_all(sync)
 
 func damage(value: int):
 	# Don't allow negative values when damaging
@@ -64,10 +65,17 @@ func heal(value):
 		next_health = max_health
 	
 	health = next_health
-	health_updated.emit(next_health)
+	health_updated.emit(health)
 
-func on_update_health(updated_health):
-	print('Listening to on_update_health: ', updated_health)
+func broadcast_stub(_health):
+	var target_id = int(get_parent().name)
+	if target_id:
+		broadcast_heath_signal.rpc_id(target_id, _health)
+
+@rpc('authority')
+func broadcast_heath_signal(updated_health):
+	print('got it')
+	health_updated.emit(updated_health)
 	
 # TODO: killed, killer
 # TODO: Report the stats to Hub

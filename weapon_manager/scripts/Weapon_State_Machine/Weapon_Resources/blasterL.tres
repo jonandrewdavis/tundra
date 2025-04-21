@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("2_gpxoe")
-weapon_name = "blasterL"
+weapon_name = "AR_1"
 pick_up_animation = "Global/blasterL Activate"
 shoot_animation = "Global/blasterL Shoot"
 reload_animation = "Global/blasterL Reload"
@@ -16,7 +16,7 @@ out_of_ammo_animation = "Global/blasterL OOA"
 melee_animation = "Global/blasterL Melee"
 has_ammo = true
 magazine = 30
-max_ammo = 9999
+max_ammo = 320
 damage = 1
 melee_damage = 1.0
 auto_fire = true

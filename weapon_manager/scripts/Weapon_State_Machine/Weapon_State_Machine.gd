@@ -14,13 +14,13 @@ class_name WeaponsManager
 @onready var bullet_point = $BulletPoint
 @onready var debug_bullet = preload("res://weapon_manager/Spawnable_Objects/hit_debug.tscn")
 
+# CRTL + Click on these to update weapon properties & stats
 var blasterL: WeaponResource = preload("res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres")
 var blasterN: WeaponResource = preload("res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres")
 
 enum WEAPONS {blasterL, blasterN}
 enum CHANGE_DIR { UP, DOWN}
 
-# TODO: Load the list programmatically as well.
 # NOTE: weapons_list: All the posible weapon resources & starting ammo, as WeaponSlot
 # NOTE: weapons_owned: (MultiplayerSync) A list of enums, 0 - 5
 # NOTE: weapon_index: (MultiplayerSync) indexes into -> weapons_list -> weapons_owned to retrieve the WeaponResource
@@ -35,27 +35,28 @@ var player_input: PlayerInput
 var player_camera_3D: Camera3D
 var busy = false
 
+
 func _ready() -> void:
 	Nodash.error_missing(player, 'player')
 	Nodash.error_missing(player_hud, 'player_hud')
 
-	# Prevent clients from doing anything with their 
-	# This should never happen, but just in case
-	# TODO: This line prevents preparing weapon spray
+	# Prevent clients from doing anything with their weapons.
+	# This should never happen, but just in case.
+	# NOTE: Weapons being invoked on clients sourced many bugs.
 	if not multiplayer.is_server():
 		return
 
 	##### SERVER ONLY ######
-	var slot1 = WeaponSlot.new()
-	slot1.current_ammo = blasterL.magazine
-	slot1.reserve_ammo = blasterL.max_ammo
-	slot1.weapon = blasterL
-	weapons_list.append(slot1)
- 
-	weapons_owned = [WEAPONS.blasterL]
-	for weapon_slot in weapons_list:
-		# NOTE: This allows each weapo_slot to track individual ammo. 
-		prepare_spray_patterns(weapon_slot.weapon)
+	##### SERVER ONLY ######
+	##### SERVER ONLY ######
+
+	# ATTENTION: If you add weapons using the UI, you must set it be a local to scene resource.
+	# Otherwise, scenes will share (and secretly deduct ammo from other players on the server).
+	create_slot(blasterL)
+	create_slot(blasterN)
+
+	# TODO: Make sure we can handle dropping, picking up new weapons, from the overall list
+	weapons_owned = [WEAPONS.blasterL, WEAPONS.blasterN]
 
 	# This listens for the end of shooting to continue shooting Auto Fire
 	# Also handles updating ammo after a reload. Must not be connected on clients.
@@ -63,8 +64,21 @@ func _ready() -> void:
 	
 	# Await for the multiplayer syncronizer to come online before changing to our first weapon	
 	await get_tree().create_timer(0.1).timeout
-	animation_player.play(get_weapon(weapons_owned[0]).pick_up_animation)
+	if weapons_owned.size() != 0:
+		animation_player.play(get_weapon(weapons_owned.front()).pick_up_animation)
+		update_weapon()
+		update_ammo()
+		if weapons_owned.size() > 1:
+			update_previous_weapon(weapons_owned[1])
+			update_previous_ammo(weapons_owned[1])
 	
+func create_slot(weapon_to_create: WeaponResource):
+	var new_slot = WeaponSlot.new()
+	new_slot.weapon = weapon_to_create
+	new_slot.current_ammo = weapon_to_create.magazine
+	new_slot.reserve_ammo = weapon_to_create.max_ammo
+	prepare_spray_pattern(weapon_to_create)
+	weapons_list.append(new_slot)
 
 func get_weapon(index: int) -> WeaponResource:
 	return weapons_list[weapons_owned[index]].weapon
@@ -82,7 +96,6 @@ func change_weapon(dir: CHANGE_DIR) -> void:
 	if busy: 
 		return
 
-	print('CHANGE WEAPON', dir)
 	var next_weapon_index
 	if dir == CHANGE_DIR.UP:
 		next_weapon_index = weapon_index - 1
@@ -95,14 +108,17 @@ func change_weapon(dir: CHANGE_DIR) -> void:
 	if not busy && next_weapon_index != weapon_index:
 		busy = true
 		await change_weapon_leave(weapon_index)
+
+		# NOTE: Swap text sooner to seem more responsive.
+		update_previous_weapon(weapon_index)
+		update_previous_ammo(weapon_index)
+
+		update_weapon(next_weapon_index)
+		update_ammo(next_weapon_index)
+
 		await change_weapon_enter(next_weapon_index)
 		weapon_index = next_weapon_index
-		update_ammo()
-		update_weapon()
 		busy = false	
-		
-	print('NEW WEAPON IS', get_weapon(weapon_index).pick_up_animation)
-	
 
 func change_weapon_enter(given_weapon_index: int):
 	animation_player.play(get_weapon(given_weapon_index).pick_up_animation)
@@ -112,12 +128,10 @@ func change_weapon_leave(given_weapon_index: int):
 	animation_player.play(get_weapon(given_weapon_index).change_animation)
 	await get_tree().create_timer(animation_player.current_animation_length + .2).timeout
 
-# TODO: networked weapon from netfox, ammo checks, more things
-# TODO: This runs for everyone. A client can reload another client's gun.
+# TODO: Optional refactor: Use network weapon from Netfox to shoot client side & rollback.
 func can_fire():
-	if get_slot(weapon_index) == null or get_weapon(weapon_index) == null:
+	if busy or get_slot(weapon_index) == null or get_weapon(weapon_index) == null:
 		return false
-
 	return true
 
 ##############################################################
@@ -125,7 +139,7 @@ func can_fire():
 ##############################################################
 
 # TODO: Make preparing and retrieving sprays not stored by name?
-func prepare_spray_patterns(weapon_to_prepare: WeaponResource):
+func prepare_spray_pattern(weapon_to_prepare: WeaponResource):
 	if weapon_to_prepare.weapon_spray:
 		spray_profiles[weapon_to_prepare.weapon_name] = weapon_to_prepare.weapon_spray.instantiate()
 
@@ -173,7 +187,6 @@ func shoot():
 		animation_player.play(current_weapon.shoot_animation)
 		if current_weapon.has_ammo:
 			current_slot.current_ammo -= 1
-			update_ammo()
 		
 		var Spread = Vector2.ZERO
 		
@@ -184,6 +197,9 @@ func shoot():
 			Spread = spray_profiles[current_weapon.weapon_name].Get_Spray(count, current_weapon.magazine)
 
 		load_projectile(Spread)
+		await get_tree().process_frame
+		update_ammo()
+
 
 func _on_animation_finished(animation_finished_name):
 	var current_weapon = get_weapon(weapon_index)
@@ -264,9 +280,16 @@ func melee() -> void:
 ######## HUD Helpers ########
 # TODO: Direct calls to HUD. Should we use signals? 
 # NOTE: Nice that we can type these functions.
-func update_ammo():
-	var weapon = get_slot(weapon_index)
+func update_weapon(given_index: int = weapon_index):
+	player_hud.update_weapon(get_slot(given_index).weapon.weapon_name)
+
+func update_ammo(given_index: int = weapon_index):
+	var weapon = get_slot(given_index)
 	player_hud.update_ammo([weapon.current_ammo, weapon.reserve_ammo])
 
-func update_weapon():
-	player_hud.update_weapon(get_slot(weapon_index).weapon.weapon_name)
+func update_previous_weapon(given_index: int):
+	player_hud.update_previous_weapon(get_slot(given_index).weapon.weapon_name)
+
+func update_previous_ammo(given_index: int):
+	var weapon = get_slot(given_index)
+	player_hud.update_previous_ammo([weapon.current_ammo, weapon.reserve_ammo])
