@@ -214,8 +214,4 @@ func debug_increase_heat_dome_radius():
 	Hub.heat_dome_value.emit(1)
 
 func debug_toggle_castle_speed():
-	print("What's the speed before we RPC on client: ", multiplayer.get_remote_sender_id(), ' speed: ', Hub.world.castle_speed)
-	if Hub.castle_speed == 0.0:
-		Hub.change_castle_speed.emit(2.0)
-	else:
-		Hub.change_castle_speed.emit(0.0)
+	Hub.debug_change_castle_speed()

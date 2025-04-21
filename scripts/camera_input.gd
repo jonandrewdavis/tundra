@@ -61,7 +61,6 @@ func rotate_camera(move):
 	# Currently, we only care to synch horizontal rotation, vertical camera changes are only for local client.
 	camera_mount.rotate_y(-move.x)
 	camera_mount.orthonormalize()
-	
 	# Vertical camera movement
 	camera_rot.rotation.x = clamp(camera_rot.rotation.x + (CAMERA_UP_DOWN_MOVEMENT * move.y), CAMERA_X_ROT_MIN, CAMERA_X_ROT_MAX)
 	#print('ON CLIENT', camera_rot.rotation.x)

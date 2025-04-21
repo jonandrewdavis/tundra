@@ -202,6 +202,8 @@ func fire():
 	_proj.set_linear_velocity( _direction * PROJECTILE_VELOCITY)
 	_proj.look_at(_target_point)	
 	_proj.body_entered.connect(_on_player_hit.bind(_proj))
+	var timer = _proj.get_node_or_null('Timer')
+	timer.timeout.connect(func (): queue_free())
 
 # TODO: Hit more than just players, damage to buildings, etc.
 func _on_player_hit(body, _projectile):

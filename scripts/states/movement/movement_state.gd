@@ -1,7 +1,9 @@
 @tool
+# A base movement state for common functions, extend when making new movement state.
+# NOTE: This class, MovementState, does not have tick, but contains common functions 
+# that each other state should call in tick.
 class_name MovementState 
 extends RewindableState
-
 
 # TODO: Move these into _player
 const SPRINT_SPEED_MODIFIER := 1.6
@@ -16,26 +18,51 @@ const JUMP_MOVE_SPEED := 3.0
 
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 
-# A base movement state for common functions, extend when making new movement state.
-# NOTE: This class, MovementState, does not have tick, but contains common functions 
-# that each other state should call in tick.
-
-func move_player(delta: float, _speed: float = parent.WALK_SPEED):
+func move_player(delta: float, speed: float = parent.WALK_SPEED):
+	var input_dir : Vector2 = get_movement_input()
+	
+	# Based on https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/platformer/player/player.gd#L65
+	var direction = (camera_input.camera_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var position_target = direction * speed
+	
+	# Allow movement in the air, a little bit. 
 	force_update_is_on_floor()
 	if not parent.is_on_floor():
 		parent.velocity.y -= gravity * delta
+	elif get_run():
+		# BUT NO RUNNING in the air
+		position_target *= SPRINT_SPEED_MODIFIER
+
+	if position_target:
+		parent.velocity = parent.velocity.move_toward(Vector3(position_target.x, parent.velocity.y, position_target.z), parent.ACCELERATION * delta)
 
 	var platform_velocity := Vector3.ZERO
 	platform_velocity = get_moving_platform_velocity(delta)
 
+	# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-velocity
 	parent.velocity += platform_velocity
 	parent.velocity *= NetworkTime.physics_factor
 	parent.move_and_slide()
 	parent.velocity /= NetworkTime.physics_factor
 	parent.velocity -= platform_velocity
 
+# NOTE: Used in IdleState to slow down. Includes friction.
 func stop_player(delta: float):
-	parent.velocity = parent.velocity.move_toward(Vector3.ZERO, parent.FRICTION * delta)
+	force_update_is_on_floor()
+	if not parent.is_on_floor():
+		parent.velocity.y -= gravity * delta
+
+	parent.velocity = parent.velocity.move_toward(Vector3(0.0, parent.velocity.y, 0.0), parent.FRICTION * delta)
+
+	var platform_velocity := Vector3.ZERO
+	platform_velocity = get_moving_platform_velocity(delta)
+
+	# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-velocity
+	parent.velocity += platform_velocity
+	parent.velocity *= NetworkTime.physics_factor
+	parent.move_and_slide()
+	parent.velocity /= NetworkTime.physics_factor
+	parent.velocity -= platform_velocity
 
 
 func check_for_ragdoll():
@@ -53,7 +80,6 @@ func check_for_ragdoll():
 
 	if parent.bones.active == false && parent.bones.is_simulating_physics() == true:
 		parent.bones.physical_bones_stop_simulation()
-		
 	
 	# Return to regular state flow
 	if parent.bones.active == false:

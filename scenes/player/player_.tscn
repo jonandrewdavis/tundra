@@ -106,8 +106,6 @@ metadata/_custom_type_script = "uid://c1xw0v7hky5kl"
 rollback_synchronizer = NodePath("../RollbackSynchronizer")
 
 [node name="HealthSystem" parent="." instance=ExtResource("11_2hvjq")]
-max_health = 100
-regen_delay = 5
 
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("10_kusnb")

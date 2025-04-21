@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bm50fehviyuy7"]
+[gd_scene load_steps=7 format=3 uid="uid://dstulorsu4idy"]
 
 [ext_resource type="Script" uid="uid://dqoup8e05txs1" path="res://scenes/castle/castle.gd" id="1_6letw"]
 [ext_resource type="PackedScene" uid="uid://cfxhvco4ghnve" path="res://assets/gridmap_castle.tscn" id="1_kks2f"]
@@ -10,6 +10,9 @@
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+properties/1/path = NodePath(".:castle_speed")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="Castle" type="Node3D"]
 script = ExtResource("1_6letw")

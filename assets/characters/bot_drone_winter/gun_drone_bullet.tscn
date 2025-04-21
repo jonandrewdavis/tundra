@@ -75,3 +75,5 @@ skeleton = NodePath("")
 replication_config = SubResource("SceneReplicationConfig_1tqu1")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
