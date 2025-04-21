@@ -46,6 +46,11 @@ func _ready():
 	hit_sight_timer.one_shot = true
 	hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 
+func _exit_tree() -> void:
+	if not multiplayer.is_server():
+		Nodash.sync_remove_all(sync)
+
+
 func _process(_delta: float) -> void:
 	_show_snow_shader()
 

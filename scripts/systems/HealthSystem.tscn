@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://qsh5m8pulul5"]
+
+[ext_resource type="Script" uid="uid://d1527jxguybfr" path="res://scripts/systems/health_system.gd" id="1_ocatx"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_m8vqj"]
+
+[node name="HealthSystem" type="Node"]
+script = ExtResource("1_ocatx")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_m8vqj")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+visible = false
+offset_right = 4.0
+offset_bottom = 27.0

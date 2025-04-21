@@ -3,8 +3,9 @@ extends Resource
 
 class_name WeaponResource
 
-#signal update_overlay
-#signal Zoom
+# NOTE: These were never implemented or emitted in the template.
+# signal update_overlay
+# signal Zoom
 
 @export_group("Weapon Animations")
 ##The Reference for the active weapons and pick ups

@@ -128,11 +128,11 @@ func process_player_input(input_string: StringName):
 		"melee":
 			weapons_manager.melee()
 		"interact":
-			interact()
+			debug_increase_heat_dome_radius()
 		"special":
 			debug_toggle_castle_speed()
 		"DEBUG_B":
-			toggle_ragdoll()
+			debug_toggle_ragdoll()
 		"DEBUG_0":
 			Hub.debug_create_enemy()
 
@@ -163,13 +163,11 @@ func _on_display_state_changed(_old_state: RewindableState, new_state: Rewindabl
 
 func interact():
 	pass
-	#debug_increase_heat_dome_radius()
-	#debug_toggle_castle_speed()
 
 # NOTE: Ragdoll state is entered with a bones.active check.
 # NOTE: See: movement_state.gd and "check_for_ragdoll()"
 # TODO: Document that Ragdoll bones are on Layer 3 collision. Adjust weights & poses.
-func toggle_ragdoll():
+func debug_toggle_ragdoll():
 	if bones.active == false:
 		_animation_player.active = false
 		bones.active = true
@@ -190,7 +188,7 @@ func apply_chest_force():
 # TODO: Death should be a state
 func death():
 	print("TODO: PLAYER DIED TEMP MESSAGE")
-	toggle_ragdoll()
+	debug_toggle_ragdoll()
 
 const animations_to_check = [ANIMATION_PREFIX + "rifle run", ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"]	
 

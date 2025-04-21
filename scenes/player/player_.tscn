@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dup2jh8uleo3l"]
+[gd_scene load_steps=20 format=3 uid="uid://dup2jh8uleo3l"]
 
 [ext_resource type="Script" uid="uid://dc7w7oe3lm0eu" path="res://scripts/player.gd" id="1_u2qrv"]
 [ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_ktqdq"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dlfbk4aggn6u1" path="res://scripts/states/movement/move_state.gd" id="8_a47yd"]
 [ext_resource type="Script" uid="uid://c8pgkna7f6aye" path="res://scripts/states/movement/ragdoll.gd" id="10_gjnd3"]
 [ext_resource type="Script" uid="uid://5oxt7p6a1uo8" path="res://scripts/player_input.gd" id="10_kusnb"]
+[ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="11_2hvjq"]
 [ext_resource type="PackedScene" uid="uid://btdemgg0e0b4o" path="res://scenes/player/player_ui.tscn" id="12_ua4at"]
 [ext_resource type="PackedScene" uid="uid://cf6jco7ctb45m" path="res://weapons_manager.tscn" id="13_nrabn"]
 [ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="14_kusnb"]
@@ -103,6 +104,10 @@ metadata/_custom_type_script = "uid://c1xw0v7hky5kl"
 
 [node name="CameraInput" parent="." node_paths=PackedStringArray("rollback_synchronizer") instance=ExtResource("4_g37aj")]
 rollback_synchronizer = NodePath("../RollbackSynchronizer")
+
+[node name="HealthSystem" parent="." instance=ExtResource("11_2hvjq")]
+max_health = 100
+regen_delay = 5
 
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("10_kusnb")

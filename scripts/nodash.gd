@@ -18,6 +18,7 @@ func error_missing(node: Node, node_name: String):
 
 # TODO: accept just a string OR a string array to get fancy & set more at once. 
 ## Add a property to a MultiplayerSynchronizer using code instead of UI. Default replication mode is "On Change".
+# NOTE: Keep in mind that REPLICATION_MODE_ON_CHANGE will send updates RELIABLY, which comes with a large performance/latency penalty
 func sync_property(sync: MultiplayerSynchronizer, node: Node, properties: Array[String], on_change: bool = true):
 	var node_path = str(node.get_path()) + ':' + ":".join(properties)
 	
