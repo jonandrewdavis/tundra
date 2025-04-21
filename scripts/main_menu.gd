@@ -10,6 +10,7 @@ func _ready():
 		get_tree().call_deferred(&"change_scene_to_packed", load(GAME_SCENE))
 
 	if OS.has_feature("join"):
+		await get_tree().create_timer(0.2).timeout
 		join_game()
 
 func _input(event: InputEvent) -> void:

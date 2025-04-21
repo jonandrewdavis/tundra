@@ -92,42 +92,6 @@ offset_right = 2.5
 offset_bottom = 2.5
 theme_override_styles/panel = SubResource("StyleBoxFlat_tyawr")
 
-[node name="debug_hud" type="VBoxContainer" parent="."]
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 142.0
-grow_vertical = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="debug_hud"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="debug_hud/HBoxContainer"]
-layout_mode = 2
-text = "Current Weapon: "
-
-[node name="CurrentWeapon" type="Label" parent="debug_hud/HBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="debug_hud"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="debug_hud/HBoxContainer2"]
-layout_mode = 2
-text = "Ammo:"
-
-[node name="CurrentAmmo" type="Label" parent="debug_hud/HBoxContainer2"]
-layout_mode = 2
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="debug_hud"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="debug_hud/HBoxContainer3"]
-layout_mode = 2
-text = "Weapon Stack:"
-
-[node name="WeaponStack" type="Label" parent="debug_hud/HBoxContainer3"]
-layout_mode = 2
-
 [node name="HitSight" type="TextureRect" parent="."]
 visible = false
 anchors_preset = 15

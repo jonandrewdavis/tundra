@@ -73,7 +73,8 @@ func _ready():
 	#TODO: Disabling physics on the client might help the server & client not fight over positioning
 	#if not multiplayer.is_server():
 		#set_physics_process(false)
-	#
+
+
 	#### SERVER ONLY ####
 	# TODO: To be fully server authoratitve, this line should be uncommented
 	if not multiplayer.is_server():
@@ -135,6 +136,7 @@ func process_player_input(input_string: StringName):
 			debug_toggle_ragdoll()
 		"DEBUG_0":
 			Hub.debug_create_enemy()
+			
 
 # TODO: Document "Nodash.sync_property"
 # TODO: Also sync the Netfox properties. Right now these are just for On Change in MultiplayerSyncronizer 
@@ -186,8 +188,10 @@ func apply_chest_force():
 			bone.apply_central_impulse(-_player_model.basis.z * -1.0 * 1200.0)
 
 # TODO: Death should be a state
+# TESTING: How would ragdoll & death interact?
+# TESTING: How do we prevent input during these states
+# TESTING: Also think about "Locked" activities
 func death():
-	print("TODO: PLAYER DIED TEMP MESSAGE")
 	debug_toggle_ragdoll()
 
 const animations_to_check = [ANIMATION_PREFIX + "rifle run", ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"]	

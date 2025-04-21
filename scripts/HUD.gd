@@ -8,13 +8,12 @@ class_name PlayerHUD
 # TODO: When UI items move around, they're often reparented...
 # Use the export & select method above. It keeps them current.
 # Alternatively, use "access as unique name", which is kinda the same effect.
-@onready var current_weapon_label = $debug_hud/HBoxContainer/CurrentWeapon
-@onready var current_ammo_label = $debug_hud/HBoxContainer2/CurrentAmmo
-@onready var current_weapon_stack = $debug_hud/HBoxContainer3/WeaponStack
 @onready var hit_sight = $HitSight
 @onready var snow_shader = $Shaders/SnowShader
 
 @onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
+
+var local_max_health: int = 100
 
 # TODO: Is this the best place for these?
 # TODO: Weapon stack, current weapon, current weapon image
@@ -32,9 +31,6 @@ func _ready():
 		DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
 
 	Nodash.error_missing(weapons_manager, 'Weapons Manager')
-	Nodash.warn_missing(health_bar, 'Health Bar')
-	Nodash.warn_missing(health_label, 'Health Label')
-	
 
 	Nodash.sync_property(sync, hit_sight, ['visible'])
 	Nodash.sync_property(sync, %CurrentAmmo, ['text'], false)
@@ -52,13 +48,6 @@ func _ready():
 		#sync.set_visibility_for(peer_uid, false)
 		#sync.update_visibility(peer_uid)
 
-
-	# TESTING: Here we have our exact client listen for signals
-	# This is client side. Could get messy. Or could work for UI.
-	if str(peer_uid) == get_parent().name:
-		var player_health_system: HealthSystem = get_parent().health_system
-		player_health_system.health_updated.connect(update_health)
-
 	# Connect signals, only on the server.
 	# Control visibility via syncronizer.
 	if multiplayer.is_server():
@@ -67,6 +56,12 @@ func _ready():
 		hit_sight_timer.one_shot = true
 		hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)	
 
+	# TESTING: Here we have our exact client listen for signals
+	# This is client side. Could get messy. Or could work for UI.
+	if str(peer_uid) == get_parent().name:
+		var player_health_system: HealthSystem = get_parent().health_system
+		player_health_system.health_updated.connect(update_health)
+		player_health_system.max_health_updated.connect(func (new_max): local_max_health = new_max)
 
 func _exit_tree() -> void:
 	if not multiplayer.is_server():
@@ -76,8 +71,9 @@ func _process(_delta: float) -> void:
 	_show_snow_shader()
 
 func update_health(new_health):
-	health_label.text = str(new_health) + " / " + str('100')
+	health_label.text = str(new_health) + " / " + str(local_max_health)
 	health_bar.value = new_health
+	health_bar.max_value = local_max_health
 
 func update_ammo(ammo: Array[int]):
 	%CurrentAmmo.set_text(str(ammo[0])+" / "+str(ammo[1]))

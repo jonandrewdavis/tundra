@@ -11,8 +11,8 @@ class_name HealthSystem
 @onready var health = max_health
 
 # TODO: Shield system? Halo / Apex, etc?
-# NOTE: Halo 1's shield regen is about 6 seconds
-@export var regen_delay : int = 6 # Halo 1
+# NOTE: Halo 1's shield regen is about 5 seconds
+@export var regen_delay: float = 5.5 # Halo 1
 @export var regen_speed: float = 0.15
 @export var regen_increment: int = 2
 
@@ -21,19 +21,25 @@ class_name HealthSystem
 @onready var regen_tick_timer: Timer = Timer.new()
 
 signal health_updated
+signal max_health_updated
 signal death
 # TODO:
 #signal revive
 
 func _ready() -> void:
-	# May need a syncronizer to display to other clients
+	# NOTICE: May need a syncronizer to display to other clients
+	# ike if we decide to use the floating health display
 	#Nodash.sync_property(sync, self, ['max_health'])
 	#Nodash.sync_property(sync, self, ['health'])
 	
 	if multiplayer.is_server():
+		call_deferred('prepare_regen_timer')
 		health_updated.connect(broadcast_stub)
 		death.connect(on_death)
-		prepare_regen_timer()
+
+		# CAUTION: Recieved Node not found & process_rpc errors if this is not delayed
+		await get_tree().process_frame
+		heal(max_health)
 
 #func _exit_tree() -> void:
 	#if not multiplayer.is_server():
@@ -74,8 +80,8 @@ func broadcast_stub(_health):
 
 @rpc('authority')
 func broadcast_heath_signal(updated_health):
-	print('got it')
 	health_updated.emit(updated_health)
+	max_health_updated.emit(max_health)
 	
 # TODO: killed, killer
 # TODO: Report the stats to Hub

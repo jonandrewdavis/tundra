@@ -48,9 +48,12 @@ func _ready():
 	# Only visuals and some rpcs are sync'd out.
 	if not multiplayer.is_server():
 		set_physics_process(false)
-		# WARNING: Sometimes MultiplayerSyncronizer can fail to start up if we don't wait a frame 
-		await get_tree().process_frame
-		set_process(false)
+		
+		# CAUTION: While tempting, disabling process on clients can cause
+		# MultiplayerSyncronizer issues
+		#await get_tree().process_frame
+		#set_process(false)
+
 		return # Early return, no other code runs
 
 	# Connect & create
