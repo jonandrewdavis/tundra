@@ -47,7 +47,6 @@ func _ready():
 	# Only visuals and some rpcs are sync'd out.
 	if not multiplayer.is_server():
 		set_physics_process(false)
-		set_process(false)
 		return # Early return, no other code runs
 
 	# Connect & create
@@ -191,19 +190,31 @@ func hit(damage):
 		# TODO: "Ragdoll" the drone so it flops out of the sky better
 		set_state(States.DYING)
 
+func can_fire():
+	match state:
+		States.CHASING, States.ATTACKING, States.HURTING:
+			return true
+	
+	return false
+
 
 func fire():
+	if can_fire() == false:
+		return
+	
 	var _proj = rigid_body_projectile.instantiate()
 	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
 	var _origin_point = GunOrigin.global_position
 	var _direction = (_target_point - _origin_point).normalized()
+	var timer = _proj.get_node_or_null('Timer')
+	# Connect
+	_proj.body_entered.connect(_on_player_hit.bind(_proj))
+	timer.timeout.connect(func (): queue_free())
+	# Add bullet
 	environment_container.add_child(_proj, true)
 	_proj.position = _origin_point
 	_proj.set_linear_velocity( _direction * PROJECTILE_VELOCITY)
-	_proj.look_at(_target_point)	
-	_proj.body_entered.connect(_on_player_hit.bind(_proj))
-	var timer = _proj.get_node_or_null('Timer')
-	timer.timeout.connect(func (): queue_free())
+	_proj.look_at(_target_point)
 
 # TODO: Hit more than just players, damage to buildings, etc.
 func _on_player_hit(body, _projectile):

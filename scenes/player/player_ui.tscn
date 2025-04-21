@@ -28,14 +28,14 @@ thickness = 6
 color = Color(1, 1, 1, 1)
 thickness = 10
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nlx67"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mo8vb"]
 shader = ExtResource("4_mo8vb")
 shader_parameter/spread = 0.5
 shader_parameter/size = 0.5
-shader_parameter/snow_color = Color(0.489412, 0.647688, 1, 0.482353)
-shader_parameter/snow_transparency = 0.6
-shader_parameter/speed = 2.0
-shader_parameter/wind = 0.6
+shader_parameter/snow_color = Color(1, 1, 1, 1)
+shader_parameter/snow_transparency = 0.223
+shader_parameter/speed = 0.5
+shader_parameter/wind = 0.0
 shader_parameter/num_of_layers = 40
 
 [node name="PlayerUi" type="CanvasLayer"]
@@ -63,16 +63,6 @@ offset_top = -2.5
 offset_right = 2.5
 offset_bottom = 2.5
 theme_override_styles/panel = SubResource("StyleBoxFlat_tyawr")
-
-[node name="Overlay" type="TextureRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-expand_mode = 1
-stretch_mode = 5
 
 [node name="debug_hud" type="VBoxContainer" parent="."]
 anchors_preset = 9
@@ -177,7 +167,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SnowShader" type="ColorRect" parent="Shaders"]
-material = SubResource("ShaderMaterial_nlx67")
+material = SubResource("ShaderMaterial_mo8vb")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

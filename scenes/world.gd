@@ -1,8 +1,6 @@
 @tool
 extends Node3D
 
-@export var castle_speed: float = 0.0
-
 @onready var world_env: WorldEnvironment = $Env/WorldEnvironment
 
 # Editor debug fog

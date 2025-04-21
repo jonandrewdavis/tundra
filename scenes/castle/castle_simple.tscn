@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dy85183h2d31p"]
+[gd_scene load_steps=9 format=3 uid="uid://dy85183h2d31p"]
 
 [ext_resource type="Script" uid="uid://dqoup8e05txs1" path="res://scenes/castle/castle.gd" id="1_2hve7"]
 [ext_resource type="Shape3D" uid="uid://ckwxmoxwdn23j" path="res://scenes/castle/castle_model/castle_csg_mesh1.tres" id="2_8nt25"]
@@ -6,10 +6,22 @@
 [ext_resource type="PackedScene" uid="uid://jqyjx5vv1fpy" path="res://scenes/castle/heat_dome/HeatDome.tscn" id="4_8nt25"]
 [ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="4_g8b6n"]
 [ext_resource type="PackedScene" uid="uid://cabgrr2bvykhs" path="res://scenes/castle/spider_bot/spider_bot.tscn" id="6_cyhqv"]
+[ext_resource type="PackedScene" uid="uid://ck7oc7brookcs" path="res://scenes/lighthouse/light_house.tscn" id="7_2rh0a"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2rh0a"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:castle_on")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="CastleSimple" type="AnimatableBody3D"]
 sync_to_physics = false
 script = ExtResource("1_2hve7")
+
+[node name="LightHouse" parent="." instance=ExtResource("7_2rh0a")]
+transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 9.76767, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-3, 0, -2.62268e-07, 0, 3, 0, 2.62268e-07, 0, -3, 0, 0, -13.066)
@@ -33,3 +45,6 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.44642, 0)
 
 [node name="SpiderBot" parent="Marker3D" node_paths=PackedStringArray("castle") instance=ExtResource("6_cyhqv")]
 castle = NodePath("../..")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_2rh0a")

@@ -4,10 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://gk0m2leyfs75" path="res://assets/characters/bot_drone_winter/gun_drone_bullet.tscn" id="2_2nx2y"]
 [ext_resource type="PackedScene" uid="uid://pemaubyxeipn" path="res://assets/characters/bot_drone_winter/bot_drone_winter.glb" id="2_gsfr6"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3ixi"]
-radius = 0.6
-height = 3.0
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gsfr6"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -24,6 +20,10 @@ properties/3/replication_mode = 2
 properties/4/path = NodePath("AnimationPlayer:current_animation")
 properties/4/spawn = true
 properties/4/replication_mode = 1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3ixi"]
+radius = 0.6
+height = 3.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gsfr6"]
 size = Vector3(35, 15, 35)
@@ -122,6 +122,9 @@ rigid_body_projectile = ExtResource("2_2nx2y")
 GunOrigin = NodePath("GunOrigin")
 max_health = 1.0
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gsfr6")
+
 [node name="Mesh" type="Node3D" parent="."]
 
 [node name="Sketchfab_Scene" parent="Mesh" instance=ExtResource("2_gsfr6")]
@@ -133,9 +136,6 @@ shape = SubResource("CapsuleShape3D_p3ixi")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_height_offset = -8.0
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_gsfr6")
 
 [node name="SearchBox" type="Area3D" parent="."]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, -20)

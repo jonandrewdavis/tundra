@@ -7,13 +7,13 @@ class_name PlayerHUD
 @onready var current_ammo_label = $debug_hud/HBoxContainer2/CurrentAmmo
 @onready var current_weapon_stack = $debug_hud/HBoxContainer3/WeaponStack
 @onready var hit_sight = $HitSight
-@onready var overlay = $Overlay
 @onready var snow_shader = $Shaders/SnowShader
 
-
-@onready var sync = $MultiplayerSynchronizer
+@onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
 
 # TODO: Is this the best place for these?
+# TODO: Weapon stack, current weapon, current weapon image
+
 #signal weapon_changed
 #signal update_ammo
 #signal update_weapon_stack
@@ -30,22 +30,28 @@ func _ready():
 		push_warning("Player's HUD has no weapon manager.")
 		return
 
-	# NOTE: Hide this node if it's on a client & it's not owned by that client.
-	if not multiplayer.is_server():
-		if str(multiplayer.get_unique_id()) != get_parent().name:
-			hide()
-			set_process(false)
-	
-	sync.replication_config.resource_local_to_scene = true
+	# NOTE: Hide this node if it's on a client & it's not owned by that client.			
 	Nodash.sync_property(sync, current_ammo_label, ['text'])
 	Nodash.sync_property(sync, hit_sight, ['visible'])
 	Nodash.sync_property(sync, current_weapon_label, ['text'])
 
+	var peer_uid: int = multiplayer.get_unique_id()
+	if str(peer_uid) != get_parent().name:
+		hide()
+		set_process(false)
+		
+		# WARNING: Not functioning. 
+		# TODO: Need to find out why set_visibility_for doesn't work.
+		#sync.set_visibility_for(peer_uid, false)
+		#sync.update_visibility(peer_uid)
+
+
 	# Hit Sight
-	add_child(hit_sight_timer)
-	hit_sight_timer.wait_time = 0.05
-	hit_sight_timer.one_shot = true
-	hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
+	if multiplayer.is_server():
+		add_child(hit_sight_timer)
+		hit_sight_timer.wait_time = 0.05
+		hit_sight_timer.one_shot = true
+		hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 
 func _exit_tree() -> void:
 	if not multiplayer.is_server():
@@ -76,12 +82,12 @@ func _on_weapons_manager_hit_signal():
 func _on_hit_sight_timer_timeout():
 	hit_sight.set_visible(false)
 
-func load_over_lay_texture(Active:bool, txtr: Texture2D = null):
-		overlay.set_texture(txtr)
-		overlay.set_visible(Active)
+#func load_over_lay_texture(Active:bool, txtr: Texture2D = null):
+		#overlay.set_texture(txtr)
+		#overlay.set_visible(Active)
 
-func _on_weapons_manager_connect_weapon_to_hud(_weapon_resouce: WeaponResource):
-	_weapon_resouce.update_overlay.connect(load_over_lay_texture)
+#func _on_weapons_manager_connect_weapon_to_hud(_weapon_resouce: WeaponResource):
+	#_weapon_resouce.update_overlay.connect(load_over_lay_texture)
 
 # TODO: Emit a singal when inside heat dome if other systems need to know
 func _show_snow_shader():
