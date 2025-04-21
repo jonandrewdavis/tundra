@@ -73,3 +73,5 @@ skeleton = NodePath("")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_1tqu1")
+
+[node name="Timer" type="Timer" parent="."]

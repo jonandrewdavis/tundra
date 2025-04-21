@@ -23,7 +23,8 @@ class_name PlayerHUD
 var hit_sight_timer = Timer.new()
 
 func _ready():
-	DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
+	if not multiplayer.is_server():
+		DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
 
 	if !weapons_manager:
 		push_warning("Player's HUD has no weapon manager.")

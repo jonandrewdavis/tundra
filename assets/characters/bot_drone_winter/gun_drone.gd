@@ -26,7 +26,7 @@ const PROJECTILE_VELOCITY = 50.0
 @export var max_speed = 5.0
 @export var speed = max_speed
 
-@onready var world = get_tree().get_first_node_in_group("EnvironmentContainer")
+@onready var environment_container = get_tree().get_first_node_in_group("EnvironmentContainer")
 
 var timer_target_aquire = Timer.new()
 var timer_attack = Timer.new()
@@ -49,7 +49,6 @@ func _ready():
 		set_physics_process(false)
 		set_process(false)
 		return # Early return, no other code runs
-
 
 	# Connect & create
 	#hit_box.area_entered.connect(on_hitbox_area_entered)	
@@ -167,9 +166,10 @@ func on_animation_finished(animation_name):
 # or, a hitbox can have a hit() function the bullet calls
 func on_hitbox_area_entered(_area):
 	pass
-	
-func on_search_box_body_entered(body: CharacterBody3D):
-	if body.is_in_group('players'):
+
+# WARNING: Do not type this as "CharacterBody3D". It must be more generic or it'll error.
+func on_search_box_body_entered(body: Node3D):
+	if body && body.is_in_group('players'):
 		target = body
 		set_state(States.CHASING)
 
@@ -197,7 +197,7 @@ func fire():
 	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
 	var _origin_point = GunOrigin.global_position
 	var _direction = (_target_point - _origin_point).normalized()
-	world.add_child(_proj, true)
+	environment_container.add_child(_proj, true)
 	_proj.position = _origin_point
 	_proj.set_linear_velocity( _direction * PROJECTILE_VELOCITY)
 	_proj.look_at(_target_point)	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=11 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
@@ -12,6 +12,14 @@ properties/0/spawn = true
 properties/0/replication_mode = 2
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71j4m"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_71j4m"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qfnet"]
+plane = Plane(-1, 0, 0, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_i7141"]
+plane = Plane(1, 0, 0, 0)
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_71j4m")
@@ -60,3 +68,23 @@ replication_config = SubResource("SceneReplicationConfig_4mrxx")
 [node name="CastleSimple" parent="." instance=ExtResource("5_71j4m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 physics_material_override = SubResource("PhysicsMaterial_71j4m")
+
+[node name="WorldBoundary" type="Marker3D" parent="."]
+
+[node name="WorldBoundaryGround" type="StaticBody3D" parent="WorldBoundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary/WorldBoundaryGround"]
+shape = SubResource("WorldBoundaryShape3D_71j4m")
+
+[node name="WorldBoundaryLeft" type="StaticBody3D" parent="WorldBoundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary/WorldBoundaryLeft"]
+shape = SubResource("WorldBoundaryShape3D_qfnet")
+
+[node name="WorldBoundaryRight" type="StaticBody3D" parent="WorldBoundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary/WorldBoundaryRight"]
+shape = SubResource("WorldBoundaryShape3D_i7141")
