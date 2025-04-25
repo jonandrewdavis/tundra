@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/hitmarker.mp3-a6c29ea7ed44ed6f9cba0af374200b8
 [params]
 
 loop=false
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

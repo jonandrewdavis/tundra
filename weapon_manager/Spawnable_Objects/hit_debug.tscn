@@ -4,7 +4,7 @@
 
 [sub_resource type="Gradient" id="Gradient_ettvt"]
 offsets = PackedFloat32Array(0.547094, 0.55511)
-colors = PackedColorArray(0.85, 0.85, 0, 0.431373, 0.5, 0.5, 0.5, 0)
+colors = PackedColorArray(0.85, 0, 0.0141665, 0.431373, 0.5, 0.5, 0.5, 0)
 metadata/_snap_count = 2
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_83hnf"]
@@ -17,11 +17,13 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_83hnf"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/replication_mode = 1
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:axis")
+properties/1/spawn = true
+properties/1/replication_mode = 2
 
 [node name="Node3D" type="Sprite3D"]
 billboard = 2
-double_sided = false
 alpha_antialiasing_mode = 2
 alpha_antialiasing_edge = 0.5
 texture = SubResource("GradientTexture2D_83hnf")

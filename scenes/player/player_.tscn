@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dup2jh8uleo3l"]
+[gd_scene load_steps=22 format=3 uid="uid://dup2jh8uleo3l"]
 
 [ext_resource type="Script" uid="uid://dc7w7oe3lm0eu" path="res://scripts/player.gd" id="1_u2qrv"]
 [ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_ktqdq"]
@@ -10,18 +10,24 @@
 [ext_resource type="Script" uid="uid://btj80uq43ccmt" path="res://scripts/states/movement/jump_state.gd" id="6_a47yd"]
 [ext_resource type="Script" uid="uid://8ympfbj5i4hc" path="res://scripts/states/movement/fall_state.gd" id="8_4l86x"]
 [ext_resource type="Script" uid="uid://dlfbk4aggn6u1" path="res://scripts/states/movement/move_state.gd" id="8_a47yd"]
-[ext_resource type="Script" uid="uid://c8pgkna7f6aye" path="res://scripts/states/movement/ragdoll.gd" id="10_gjnd3"]
+[ext_resource type="Script" uid="uid://c8pgkna7f6aye" path="res://scripts/states/movement/ragdoll_state.gd" id="10_gjnd3"]
+[ext_resource type="Script" uid="uid://ds61cf4l63bue" path="res://scripts/states/movement/interact.gd" id="10_h5dd4"]
 [ext_resource type="Script" uid="uid://5oxt7p6a1uo8" path="res://scripts/player_input.gd" id="10_kusnb"]
 [ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="11_2hvjq"]
 [ext_resource type="PackedScene" uid="uid://btdemgg0e0b4o" path="res://scenes/player/player_ui.tscn" id="12_ua4at"]
+[ext_resource type="Script" uid="uid://d0r47oscrxt5o" path="res://scripts/states/movement/dead.gd" id="13_2hvjq"]
 [ext_resource type="PackedScene" uid="uid://cf6jco7ctb45m" path="res://weapons_manager.tscn" id="13_nrabn"]
-[ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="14_kusnb"]
 [ext_resource type="PackedScene" uid="uid://r31q8k2be4qk" path="res://scenes/player/player_interact_sensors/sensor_cast.tscn" id="17_2hvjq"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_nrabn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y8poy"]
 radius = 0.3
+height = 1.5
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_nrabn"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2hvjq"]
+radius = 0.15
+height = 0.4
 
 [node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "sync", "skeleton", "bones", "chest", "health_system", "weapons_manager", "weapon_pivot", "player_ui")]
 platform_on_leave = 2
@@ -42,18 +48,8 @@ player_ui = NodePath("PlayerUi")
 
 [node name="master" parent="." instance=ExtResource("2_v7wsi")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_y8poy")
-
-[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("2_ktqdq")
-root = NodePath("..")
-enable_prediction = true
-state_properties = Array[String](["RewindableStateMachine:state", ":transform", ":velocity", "master:transform"])
-input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "PlayerInput:shoot_input", "CameraInput:camera_look"])
-enable_input_broadcast = false
-metadata/_custom_type_script = "uid://d350u8evihs1u"
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_nrabn")
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("4_a47yd")
@@ -61,35 +57,48 @@ root = NodePath("..")
 properties = Array[String]([":transform", "master:transform"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_nrabn")
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_ktqdq")
+root = NodePath("..")
+enable_prediction = true
+state_properties = Array[String]([":transform", ":velocity", "master:transform", "RewindableStateMachine:state"])
+input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "PlayerInput:shoot_input", "CameraInput:camera_look"])
+enable_input_broadcast = false
+metadata/_custom_type_script = "uid://d350u8evihs1u"
 
 [node name="RewindableStateMachine" type="Node" parent="."]
 script = ExtResource("3_lo6j0")
 metadata/_custom_type_script = "uid://byrgwv2o7hstx"
 
-[node name="IdleState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
+[node name="Idle" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("5_4l86x")
 animation_name = "rifle aiming idle"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
 
-[node name="JumpState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
+[node name="Interact" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
+script = ExtResource("10_h5dd4")
+animation_name = "rifle aiming idle"
+camera_input = NodePath("../../CameraInput")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")
+
+[node name="Jump" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("6_a47yd")
 animation_name = "walking"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
 
-[node name="MoveState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
+[node name="Move" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("8_a47yd")
 animation_name = "rifle run"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
 
-[node name="FallState" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
+[node name="Fall" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("8_4l86x")
 animation_name = "walking"
 camera_input = NodePath("../../CameraInput")
@@ -98,25 +107,39 @@ parent = NodePath("../..")
 
 [node name="Ragdoll" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("10_gjnd3")
+animation_name = "rifle aiming idle"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
 metadata/_custom_type_script = "uid://c1xw0v7hky5kl"
 
-[node name="CameraInput" parent="." node_paths=PackedStringArray("rollback_synchronizer") instance=ExtResource("4_g37aj")]
-rollback_synchronizer = NodePath("../RollbackSynchronizer")
+[node name="Dead" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
+script = ExtResource("13_2hvjq")
+animation_name = "rifle aiming idle"
+camera_input = NodePath("../../CameraInput")
+player_input = NodePath("../../PlayerInput")
+parent = NodePath("../..")
+metadata/_custom_type_script = "uid://c1xw0v7hky5kl"
 
 [node name="HealthSystem" parent="." instance=ExtResource("11_2hvjq")]
-max_health = null
-regen_delay = null
-regen_speed = null
-regen_increment = null
+regen_enabled = true
+
+[node name="PlayerUi" parent="." node_paths=PackedStringArray("weapons_manager") instance=ExtResource("12_ua4at")]
+weapons_manager = NodePath("../RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager")
 
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("10_kusnb")
 
-[node name="PlayerUi" parent="." node_paths=PackedStringArray("weapons_manager") instance=ExtResource("12_ua4at")]
-weapons_manager = NodePath("../RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager")
+[node name="CameraInput" parent="." node_paths=PackedStringArray("rollback_synchronizer") instance=ExtResource("4_g37aj")]
+rollback_synchronizer = NodePath("../RollbackSynchronizer")
+
+[node name="BodyCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.769434, 0)
+shape = SubResource("CapsuleShape3D_y8poy")
+
+[node name="HeadCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65716, 0)
+shape = SubResource("CapsuleShape3D_2hvjq")
 
 [node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="."]
 transform = Transform3D(-3.77201e-07, -1, -2.02998e-07, 6.32877e-06, 2.02996e-07, -1, 1, -3.77202e-07, 6.32877e-06, -0.681878, 1.47919, -0.0687138)
@@ -134,12 +157,6 @@ transform = Transform3D(-2.84053e-08, 0, 1, 0, 0.999999, 1.11759e-07, -1, 2.2351
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.410812, -0.213233, 0.115377)
 player_hud = NodePath("../../../../PlayerUi")
 player = NodePath("../../../..")
-
-[node name="Hitmarker" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50861, 0)
-stream = ExtResource("14_kusnb")
-volume_db = -18.0
-pitch_scale = 1.4
 
 [node name="SensorCast" parent="." instance=ExtResource("17_2hvjq")]
 script = null

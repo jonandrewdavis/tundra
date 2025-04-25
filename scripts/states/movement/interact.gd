@@ -5,7 +5,3 @@ extends MovementState
 func tick(delta, _tick, _is_fresh):
 	rotate_player_model(delta)
 	stop_player(delta)
-
-	force_update_is_on_floor()
-	if parent.is_on_floor() && get_jump():
-		state_machine.transition(&"Ragdoll")

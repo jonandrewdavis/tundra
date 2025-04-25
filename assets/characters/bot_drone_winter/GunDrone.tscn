@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgpb1jrk0htrx"]
+[gd_scene load_steps=13 format=3 uid="uid://bgpb1jrk0htrx"]
 
 [ext_resource type="Script" uid="uid://qn3fulhfygss" path="res://assets/characters/bot_drone_winter/gun_drone.gd" id="1_p3ixi"]
 [ext_resource type="PackedScene" uid="uid://gk0m2leyfs75" path="res://assets/characters/bot_drone_winter/gun_drone_bullet.tscn" id="2_2nx2y"]
 [ext_resource type="PackedScene" uid="uid://pemaubyxeipn" path="res://assets/characters/bot_drone_winter/bot_drone_winter.glb" id="2_gsfr6"]
+[ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="3_u268q"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gsfr6"]
 properties/0/path = NodePath(".:position")
@@ -113,14 +114,21 @@ _data = {
 &"hurt": SubResource("Animation_u268q")
 }
 
-[node name="GunDrone" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "search_box", "animation_player", "GunOrigin")]
+[node name="GunDrone" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "search_box", "animation_player", "gun_origin", "health_system")]
 script = ExtResource("1_p3ixi")
 nav_agent = NodePath("NavigationAgent3D")
 search_box = NodePath("SearchBox")
 animation_player = NodePath("AnimationPlayer")
+gun_origin = NodePath("GunOrigin")
+health_system = NodePath("HealthSystem")
 rigid_body_projectile = ExtResource("2_2nx2y")
-GunOrigin = NodePath("GunOrigin")
 max_health = 1.0
+
+[node name="HealthSystem" parent="." instance=ExtResource("3_u268q")]
+max_health = 10
+regen_delay = 0.0
+regen_speed = 0.0
+regen_increment = 0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gsfr6")

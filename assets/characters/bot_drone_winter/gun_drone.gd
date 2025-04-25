@@ -14,9 +14,12 @@ const PROJECTILE_VELOCITY = 50.0
 @export var nav_agent: NavigationAgent3D
 @export var search_box: Area3D
 @export var animation_player: AnimationPlayer
+@export var gun_origin: Marker3D
+@export var health_system: HealthSystem
 @export var rigid_body_projectile: PackedScene
-@export var GunOrigin: Marker3D
-# TOOD: Weak points and eyeline
+
+# TODO: Weak points and eyeline
+# TODO: Give up chase 
 #@export var hit_box: Area3D
 #@export var eyeline: Area3D 
 
@@ -49,9 +52,7 @@ func _ready():
 	if not multiplayer.is_server():
 		set_physics_process(false)
 		
-		# CAUTION: While tempting, disabling process on clients can cause
-		# MultiplayerSyncronizer issues
-		#await get_tree().process_frame
+		# CAUTION: Trying to disable process on clients can cause MultiplayerSyncronizer issues.
 		#set_process(false)
 
 		return # Early return, no other code runs
@@ -66,6 +67,10 @@ func _ready():
 	timer_target_aquire.timeout.connect(retarget)
 	timer_target_aquire.wait_time = 1.0
 	timer_target_aquire.one_shot = false
+
+	# Health
+	health_system.hurt.connect(on_hurt)
+	health_system.death.connect(on_death)
 
 	await get_tree().create_timer(0.2).timeout
 	set_state(States.SEARCHING)
@@ -173,6 +178,7 @@ func on_animation_finished(animation_name):
 func on_hitbox_area_entered(_area):
 	pass
 
+# TODO: Allow castle hits.
 # WARNING: Do not type this as "CharacterBody3D". It must be more generic or it'll error.
 func on_search_box_body_entered(body: Node3D):
 	if body && body.is_in_group('players'):
@@ -185,25 +191,27 @@ func retarget():
 		nav_agent.set_target_position(target.global_transform.origin) # 1 vertical m up?
 		fire()
 
+# TODO: Use health system? 
 # TODO: could call this "take_hit" or "get_hit" in a refactor
 # basic_rigid_body_projectile calls "hit"
-func hit(damage):
-	if health - damage > 0:
-		health = health - damage
-		set_state(States.HURTING)
-		print('health',health)
-		# TODO: If no target, get closest player
-	else:
-		# TODO: "Ragdoll" the drone so it flops out of the sky better
-		set_state(States.DYING)
+func on_hurt():
+	set_state(States.HURTING)
+	if !target:
+		var get_player = Hub.get_player(health_system.last_damage_source) 
+		if get_player:
+			target = get_player
+			set_state(States.CHASING)
+
+# TODO: Ragdoll so it flops out of the sky better
+func on_death():
+	set_state(States.DYING)
 
 func can_fire():
 	match state:
 		States.CHASING, States.ATTACKING, States.HURTING:
 			return true
-	
+			
 	return false
-
 
 func fire():
 	if can_fire() == false:
@@ -211,7 +219,7 @@ func fire():
 	
 	var _proj = rigid_body_projectile.instantiate()
 	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
-	var _origin_point = GunOrigin.global_position
+	var _origin_point = gun_origin.global_position
 	var _direction = (_target_point - _origin_point).normalized()
 	var timer = _proj.get_node_or_null('Timer')
 	# Connect

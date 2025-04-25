@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://dy85183h2d31p"]
 
 [ext_resource type="Script" uid="uid://dqoup8e05txs1" path="res://scenes/castle/castle.gd" id="1_2hve7"]
-[ext_resource type="Shape3D" uid="uid://ckwxmoxwdn23j" path="res://scenes/castle/castle_model/castle_csg_mesh1.tres" id="2_8nt25"]
-[ext_resource type="ArrayMesh" uid="uid://cild4qsq8d8t8" path="res://scenes/castle/castle_model/castle_csg_col1.tres" id="3_cyhqv"]
+[ext_resource type="ArrayMesh" uid="uid://ckwxmoxwdn23j" path="res://scenes/castle/castle_model/castle_csg_mesh1.tres" id="2_8nt25"]
+[ext_resource type="Shape3D" uid="uid://cild4qsq8d8t8" path="res://scenes/castle/castle_model/castle_csg_col1.tres" id="3_cyhqv"]
 [ext_resource type="PackedScene" uid="uid://jqyjx5vv1fpy" path="res://scenes/castle/heat_dome/HeatDome.tscn" id="4_8nt25"]
 [ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="4_g8b6n"]
 [ext_resource type="PackedScene" uid="uid://cabgrr2bvykhs" path="res://scenes/castle/spider_bot/spider_bot.tscn" id="6_cyhqv"]
@@ -20,16 +20,19 @@ properties/1/replication_mode = 1
 sync_to_physics = false
 script = ExtResource("1_2hve7")
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_2rh0a")
+
 [node name="LightHouse" parent="." instance=ExtResource("7_2rh0a")]
-transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 9.76767, 0)
+transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 13.1411, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-3, 0, -2.62268e-07, 0, 3, 0, 2.62268e-07, 0, -3, 0, 0, -13.066)
-shape = ExtResource("2_8nt25")
+shape = ExtResource("3_cyhqv")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-3, 0, -2.62268e-07, 0, 3, 0, 2.62268e-07, 0, -3, 0, 0, -13.066)
-mesh = ExtResource("3_cyhqv")
+mesh = ExtResource("2_8nt25")
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("4_g8b6n")
@@ -45,6 +48,3 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.44642, 0)
 
 [node name="SpiderBot" parent="Marker3D" node_paths=PackedStringArray("castle") instance=ExtResource("6_cyhqv")]
 castle = NodePath("../..")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_2rh0a")

@@ -15,8 +15,9 @@ func _ready():
 		multiplayer.peer_connected.connect(_client_connected)
 		multiplayer.peer_disconnected.connect(_client_disconnected)
 		
-		# TODO: Revisit hosting flags
+		# TODO: Revisit hosting flags, particularly for final exit
 		# NOTE: can remove this if you want to test locally as a dedicated server (no player)
+		# NOTE: See network_manager.gd for --feature flags & debug - auto joining
 		if not OS.has_feature("dedicated-server"):
 			_add_player_to_game(1)
 	

@@ -23,7 +23,6 @@ func _ready():
 	if multiplayer.is_server():
 		Hub.change_castle_speed.connect(_on_change_castle_speed)
 
-
 func get_velocity() -> Vector3:
 	return _velocity
 
@@ -40,7 +39,7 @@ func _get_position_for_tick(tick: int):
 	var distance_moved = NetworkTime.ticks_to_seconds(tick) * castle_speed
 	var progress = distance_moved / _distance
 	return _origin.lerp(castle_target, progress)
-
+	
 # CRITICAL: castle speed can't be changed because of how it's used to calculate position
 func _on_change_castle_speed():
 	castle_on = !castle_on

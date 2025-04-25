@@ -38,15 +38,14 @@ func _ready():
 	Nodash.sync_property(sync, %BackupWeaponLabel, ['text'])
 	Nodash.sync_property(sync, %BackupAmmo, ['text'])
 
-	# NOTE: Hide UI if it's on a client & it's not owned by that client.			
-	var peer_uid: int = multiplayer.get_unique_id()
+	# If the parent is the player that owns the UI 
+	var peer_uid: int = multiplayer.get_unique_id()	
 	if str(peer_uid) != get_parent().name:
 		hide()
-		set_process(false)		
-		# CRITICAL: Not functioning. 
-		# TODO: Need to find out why `set_visibility_for` refuses to work at all.
-		#sync.set_visibility_for(peer_uid, false)
-		#sync.update_visibility(peer_uid)
+		# CRITICAL: Not working
+		#$MultiplayerSynchronizer.set_visibility_for(peer_uid, false)
+		#$MultiplayerSynchronizer.update_visibility(0)
+		pass
 
 	# Connect signals, only on the server.
 	# Control visibility via syncronizer.

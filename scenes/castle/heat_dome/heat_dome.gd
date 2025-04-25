@@ -23,8 +23,8 @@ func _ready() -> void:
 	Hub.heat_dome = self
 
 	# NOTE: World fog is 0.3 (dense)
-	fog_volume_1.material.density = -0.12
-	fog_volume_2.material.density = -0.2
+	fog_volume_1.material.density = -0.08
+	fog_volume_2.material.density = -0.15
 
 	exterior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 	interior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF

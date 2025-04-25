@@ -31,6 +31,7 @@ func on_change_heat_dome_value(_value: int):
 	pass
 	
 func debug_create_enemy():
+	print('caled once', get_multiplayer_authority())
 	var container = world.get_node('EnemiesContainer')
 	var new_drone = gun_drone.instantiate()
 	container.add_child(new_drone, true)

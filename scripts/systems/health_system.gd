@@ -12,32 +12,40 @@ class_name HealthSystem
 
 # TODO: Shield system? Halo / Apex, etc?
 # NOTE: Halo 1's shield regen is about 5 seconds
+@export var regen_enabled: bool = false
 @export var regen_delay: float = 5.5 # Halo 1
 @export var regen_speed: float = 0.15
 @export var regen_increment: int = 2
 
-#@onready var sync = $MultiplayerSynchronizer #Note - could be overriden by parent??
 @onready var regen_timer: Timer = Timer.new()
 @onready var regen_tick_timer: Timer = Timer.new()
 
+var last_damage_source := 0
+
+@warning_ignore("unused_signal")
+signal hurt
 signal health_updated
 signal max_health_updated
 signal death
-# TODO:
-#signal revive
+
+# NOTE: If used, could be overriden to be the parent's sync, reducing # of syncs
+#@onready var sync = $MultiplayerSynchronizer 
 
 func _ready() -> void:
-	# NOTICE: May need a syncronizer to display to other clients
-	# ike if we decide to use the floating health display
+	
+	# NOTE: May need a syncronizer to display to other clients
+	# Like if we decide to use the floating health display
+
 	#Nodash.sync_property(sync, self, ['max_health'])
 	#Nodash.sync_property(sync, self, ['health'])
 	
 	if multiplayer.is_server():
-		call_deferred('prepare_regen_timer')
-		health_updated.connect(broadcast_stub)
-		death.connect(on_death)
+		death.connect(on_report_death)
+		if regen_enabled:
+			prepare_regen_timer()
+			health_updated.connect(broadcast_stub)
 
-		# CAUTION: Recieved Node not found & process_rpc errors if this is not delayed
+		# CAUTION: Recieved Node not found & process_rpc errors if this heal is not delayed
 		await get_tree().process_frame
 		heal(max_health)
 
@@ -45,23 +53,34 @@ func _ready() -> void:
 	#if not multiplayer.is_server():
 		#Nodash.sync_remove_all(sync)
 
-func damage(value: int):
+func damage(value: int, source: int = 0) -> bool:
 	# Don't allow negative values when damaging
 	var next_health = health - abs(value)
+	
+	# Do not allow damage when dead.
+	if health == 0:
+		return false
 
-	# Do not allow overkill
+	# Do not allow overkill. Just die.
 	if next_health <= 0:
 		regen_timer.stop()
+		health = 0
+		last_damage_source = source
 		health_updated.emit(0)
+		hurt.emit()
 		death.emit()
-		return
+		return true
 	
 	# Valid damage, not dead
+	last_damage_source = source
 	health = next_health
 	health_updated.emit(next_health)
-	if regen_delay != 0:
+	hurt.emit()
+
+	if regen_enabled:
 		regen_timer.start()
-		
+	
+	return true
 
 func heal(value):
 	var next_health = health + abs(value)
@@ -76,23 +95,24 @@ func heal(value):
 func broadcast_stub(_health):
 	var target_id = int(get_parent().name)
 	if target_id:
-		broadcast_heath_signal.rpc_id(target_id, _health)
+		narrow_cast_signals.rpc_id(target_id, _health)
 
+# NOTE: This calls down to the peer's UI
 @rpc('authority')
-func broadcast_heath_signal(updated_health):
+func narrow_cast_signals(updated_health):
 	health_updated.emit(updated_health)
 	max_health_updated.emit(max_health)
-	
+
 # TODO: killed, killer
 # TODO: Report the stats to Hub
-func on_death():
-	print("PLAYER DIED fOR REAL")
+func on_report_death():
+	print('reboot')
 	pass
 
-# TODO: Could abstract this to handle regen of any property, like HEAT.
+# TODO: Could abstract this system to handle regen of any property, like HEAT.
 # OR FATIGUE
 func prepare_regen_timer():
-	if regen_delay != 0:
+	if regen_enabled:
 		add_child(regen_timer)
 		regen_timer.wait_time = regen_delay
 		regen_timer.one_shot = true
@@ -104,6 +124,7 @@ func prepare_regen_timer():
 
 func start_regen_health():
 	if regen_timer.is_stopped() && health < max_health:
+		last_damage_source = 0
 		regen_tick_timer.start()
 		
 func regen_health_tick():

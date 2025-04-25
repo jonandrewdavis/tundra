@@ -159,6 +159,7 @@ func load_projectile(spread):
 	bullet_point.add_child(_projectile, true)
 	var bullet_point_origin = bullet_point.global_position
 	_projectile.debug_bullet = debug_bullet
+	_projectile.source = int(player.name)
 	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point_origin)
 
 # Calls directly to the parent HUD.	
