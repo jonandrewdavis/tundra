@@ -126,9 +126,6 @@ max_health = 1.0
 
 [node name="HealthSystem" parent="." instance=ExtResource("3_u268q")]
 max_health = 10
-regen_delay = 0.0
-regen_speed = 0.0
-regen_increment = 0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gsfr6")

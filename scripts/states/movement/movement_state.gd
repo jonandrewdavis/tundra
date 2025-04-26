@@ -22,12 +22,12 @@ const JUMP_MOVE_SPEED := 3.0
 
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 
-func move_player(delta: float, speed: float = parent.WALK_SPEED):
+func move_player(delta: float):
 	var input_dir : Vector2 = get_movement_input()
 	
 	# Based on https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/platformer/player/player.gd#L65
 	var direction = (camera_input.camera_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	var position_target = direction * speed
+	var position_target = direction * parent.WALK_SPEED
 	
 	# Allow movement in the air, a little bit. 
 	force_update_is_on_floor()
@@ -101,6 +101,14 @@ func get_moving_platform_velocity(delta: float) -> Vector3:
 			_platform_velocity = platform.get_velocity()
 			
 	return _platform_velocity
+
+func check_for_ragdoll():
+	if not parent.bones:
+		push_warning("No bones for ragdoll")
+	
+	if parent.bones.active == true:
+		state_machine.transition(&"Ragdoll")
+
 
 # TODO: Absolutely lock.
 func freeze_player():

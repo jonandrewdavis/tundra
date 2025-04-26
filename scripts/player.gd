@@ -51,6 +51,8 @@ func _enter_tree():
 
 # TODO: Programmatically set the Moving Platform properties (For Netfox controller matching)
 # TODO: Programmatically set the slope properties
+# TODO: Programatically add rollback sync properties: 
+# https://foxssake.github.io/netfox/latest/netfox/tutorials/configuring-properties-from-code/
 
 # TODO: Warn if any of our required nodes are missing.
 # TODO: abstract this so we can just like, give some nodes
@@ -108,7 +110,6 @@ func _exit_tree() -> void:
 
 func _process(_delta: float) -> void:
 	# NOTE: Runs on the client.
-	print(_state_machine.state)
 	weapon_vertical_tilt()
 	#ragdoll_on_client()
 
@@ -171,10 +172,16 @@ func interact():
 
 func debug_toggle_ragdoll():
 	if _state_machine.state == (&"Ragdoll"):
-		_state_machine.transition(&"Idle")
+		bones.active = false
+		_animation_player.active = true
+		#_state_machine.transition(&"Idle")
+		#NetworkRollback.mutate(self)
 	else:
-		_state_machine.transition(&"Ragdoll")
-	
+		bones.active = true
+		_animation_player.active = false
+		#_state_machine.transition(&"Ragdoll")
+		#NetworkRollback.mutate(self)
+ 
 func ragdoll_on_client():
 	if bones.active && bones.is_simulating_physics() == false:
 		bones.physical_bones_start_simulation()
@@ -227,6 +234,7 @@ func on_animation_check():
 	
 	if _player_input.input_dir.y != 0:
 		_animation_player.play(ANIMATION_PREFIX + "rifle run")
+
 
 # NOTE: -1.0 makes it move the right way and 0.5 dampens it slightly
 func weapon_vertical_tilt():

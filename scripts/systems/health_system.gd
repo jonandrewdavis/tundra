@@ -42,7 +42,8 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		death.connect(on_report_death)
 		if regen_enabled:
-			prepare_regen_timer()
+			# CRITICAL: This requires `call_deferred` for some reason...
+			call_deferred('prepare_regen_timer')
 			health_updated.connect(broadcast_stub)
 
 		# CAUTION: Recieved Node not found & process_rpc errors if this heal is not delayed
@@ -113,13 +114,13 @@ func on_report_death():
 # OR FATIGUE
 func prepare_regen_timer():
 	if regen_enabled:
-		add_child(regen_timer)
 		regen_timer.wait_time = regen_delay
 		regen_timer.one_shot = true
+		add_child(regen_timer)
 		regen_timer.timeout.connect(start_regen_health)
 		
-		add_child(regen_tick_timer)
 		regen_tick_timer.wait_time = regen_speed # regen_speed?
+		add_child(regen_tick_timer)
 		regen_tick_timer.timeout.connect(regen_health_tick)
 
 func start_regen_health():

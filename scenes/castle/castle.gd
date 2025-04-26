@@ -16,8 +16,10 @@ var _velocity: Vector3 = Vector3.ZERO
 
 func _ready():
 	Hub.castle = self
-	
+
+	NetworkRollback.before_loop.connect(_save_previous)
 	NetworkRollback.on_prepare_tick.connect(_apply_tick)
+
 	sync_to_physics = false
 
 	if multiplayer.is_server():
@@ -26,20 +28,24 @@ func _ready():
 func get_velocity() -> Vector3:
 	return _velocity
 
+var prev: Vector3
+
+func _save_previous():
+	prev = global_position
+
 func _apply_tick(tick: int):
 	if castle_on:
-		var previous_position = _get_position_for_tick(tick - 1)
-		global_position = _get_position_for_tick(tick)
-		_velocity = (global_position - previous_position) / NetworkTime.ticktime
+		#var previous_position = global_position
+		translate(Vector3(0.0, 0.0, -0.02))
+		_velocity = (global_position - prev) / NetworkTime.ticktime * 2
 	else:
 		_velocity = Vector3.ZERO
-		
 
-func _get_position_for_tick(tick: int):
-	var distance_moved = NetworkTime.ticks_to_seconds(tick) * castle_speed
-	var progress = distance_moved / _distance
-	return _origin.lerp(castle_target, progress)
-	
-# CRITICAL: castle speed can't be changed because of how it's used to calculate position
+func _get_position_for_tick(_tick: int):
+	#var distance_moved = NetworkTime.ticks_to_seconds(tick) * castle_speed
+	#var progress = distance_moved / _distance
+	#return _origin.lerp(castle_target, progress)
+	return global_position
+		
 func _on_change_castle_speed():
 	castle_on = !castle_on

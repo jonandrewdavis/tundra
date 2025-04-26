@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://btj80uq43ccmt" path="res://scripts/states/movement/jump_state.gd" id="6_a47yd"]
 [ext_resource type="Script" uid="uid://8ympfbj5i4hc" path="res://scripts/states/movement/fall_state.gd" id="8_4l86x"]
 [ext_resource type="Script" uid="uid://dlfbk4aggn6u1" path="res://scripts/states/movement/move_state.gd" id="8_a47yd"]
-[ext_resource type="Script" uid="uid://c8pgkna7f6aye" path="res://scripts/states/movement/ragdoll_state.gd" id="10_gjnd3"]
+[ext_resource type="Script" uid="uid://c8pgkna7f6aye" path="res://scripts/states/movement/ragdoll.gd" id="10_gjnd3"]
 [ext_resource type="Script" uid="uid://ds61cf4l63bue" path="res://scripts/states/movement/interact.gd" id="10_h5dd4"]
 [ext_resource type="Script" uid="uid://5oxt7p6a1uo8" path="res://scripts/player_input.gd" id="10_kusnb"]
 [ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="11_2hvjq"]
