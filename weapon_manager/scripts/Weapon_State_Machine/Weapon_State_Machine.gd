@@ -8,7 +8,7 @@ class_name WeaponsManager
 @export var animation_player: AnimationPlayer
 @export var melee_hitbox: ShapeCast3D
 @export var max_weapons: int # not used
-@export var player_hud: PlayerHUD
+@export var player_hud: PlayerUI
 @export var player: CharacterBody3D
 
 @onready var bullet_point = $BulletPoint
@@ -159,6 +159,7 @@ func load_projectile(spread):
 	bullet_point.add_child(_projectile, true)
 	var bullet_point_origin = bullet_point.global_position
 	_projectile.debug_bullet = debug_bullet
+	_projectile.source = int(player.name)
 	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point_origin)
 
 # Calls directly to the parent HUD.	

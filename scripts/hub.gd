@@ -1,6 +1,9 @@
 extends Node
 
-const gun_drone = preload("res://assets/characters/bot_drone_winter/GunDrone.tscn")
+const gun_drone = preload("res://scenes/enemies/gun_drone/GunDrone.tscn")
+
+# NOTICE: Needs to be hardcoded, since the server is headless & uses Hub.viewport to cast rays from the "camera"
+var viewport = Vector2i(1152, 648)
 
 var world: Node3D
 var player_container: Node3D

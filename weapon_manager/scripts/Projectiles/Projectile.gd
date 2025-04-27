@@ -9,7 +9,7 @@ signal hit_signal
 @export_enum ("Hitscan","Rigidbody_Projectile","over_ride") var Projectile_Type: String = "Hitscan"
 
 # TODO: Better decals (flat).
-@export var Display_Debug_Decal: bool = false
+@export var Display_Debug_Decal: bool = true
 
 @export var Projectile_Velocity: int = 20
 @export var Expirey_Time: int = 5
@@ -18,24 +18,22 @@ signal hit_signal
 
 @onready var world = get_tree().get_first_node_in_group("EnvironmentContainer")
 var debug_bullet
+var source: int = 1
 
-var damage: float = 0
+var damage: int = 0
 var Projectiles_Spawned = []
 var hit_objects: Array = []
 
-# TODO: un hardcode viewport -AD
-# TODO: Needs to be set by the player, since all players  could have different viewports
 var _Camera: Camera3D
-var _Viewport = Vector2i(1152, 648)
 
 func _ready() -> void:
 	pass
 
-func _Set_Projectile(_damage: int = 0,_spread:Vector2 = Vector2.ZERO, _Range: int = 1000, origin_point: Vector3 = Vector3.ZERO):
+func _Set_Projectile(_damage: int = 0, _spread:Vector2 = Vector2.ZERO, _Range: int = 1000, origin_point: Vector3 = Vector3.ZERO):
 	damage = _damage
-	Fire_Projectile(_spread, _Range, Rigid_Body_Projectile, origin_point, )
+	Fire_Projectile(_spread, _Range, Rigid_Body_Projectile, origin_point)
 
-func Fire_Projectile(_spread: Vector2 ,_range: int, _proj:PackedScene, origin_point: Vector3):
+func Fire_Projectile(_spread: Vector2, _range: int, _proj:PackedScene, origin_point: Vector3):
 	var Camera_Collision = Camera_Ray_Cast(_spread,_range)
 	
 	match Projectile_Type:
@@ -50,12 +48,16 @@ func _over_ride_collision(_camera_collision:Array, _damage: float) -> void:
 	pass
 
 func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
-	var Ray_Origin = _Camera.project_ray_origin(_Viewport/2)
-	var Ray_End = (Ray_Origin + _Camera.project_ray_normal((_Viewport/2)+Vector2i(_spread)) * _range)
+	var Ray_Origin = _Camera.project_ray_origin(Hub.viewport/2)
+	var Ray_End = (Ray_Origin + _Camera.project_ray_normal((Hub.viewport/2)+Vector2i(_spread)) * _range)
 	var New_Intersection:PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
 	New_Intersection.set_collision_mask(0b11101111) # 15? 
 	New_Intersection.set_hit_from_inside(false) # In Jolt this is set to true by defualt
 	
+	# 0: The colliding object
+	# 1: The colliding object's ID.
+	# 2: The object's surface normal at the intersection point or Vector3.ZERO
+	# 3: position: The intersection point.
 	var Intersection = get_world_3d().direct_space_state.intersect_ray(New_Intersection)
 	
 	if Intersection.is_empty():
@@ -64,7 +66,7 @@ func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
 	if Intersection.position.distance_to(Ray_Origin) < 4.0:
 		return [null, Ray_End, null]
 	
-	return [Intersection.collider,Intersection.position,Intersection.normal]
+	return [Intersection.collider, Intersection.position, Intersection.normal]
 
 
 func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
@@ -86,6 +88,7 @@ func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
 				Hit_Scan_damage(Bullet_Collision.collider, Bullet_Direction,Bullet_Collision.position,_damage)
 				if pass_through and check_pass_through(Bullet_Collision.collider, Bullet_Collision.rid):
 					var pass_through_collision : Array = [Bullet_Collision.collider, Bullet_Collision.position, Bullet_Collision.normal]
+					@warning_ignore("integer_division")
 					var pass_through_damage: float = damage/2
 					Hit_Scan_Collision(pass_through_collision,pass_through_damage,Bullet_Collision.position)
 					return
@@ -103,14 +106,14 @@ func Hit_Scan_damage(collision, _direction, _position, _damage):
 		hit_signal.emit()
 		collision.hit(_damage)
 
-# This can create an error sometimes in headless mode (mmesh_get_surface_count).
-# Upgrade to 4.4 to fix.
 func Load_Decal(pos, normal):
 	if Display_Debug_Decal:
 		var rd = debug_bullet.instantiate()
 		if world:
 			world.add_child(rd, true)
-			rd.global_translate(pos+(normal*.01))
+			rd.global_translate(pos)
+			if normal.y == 1.0:
+				rd.axis = 1
 
 func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 	var point = collision_data[1]
@@ -125,6 +128,7 @@ func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 	_proj.look_at(point)	
 	Projectiles_Spawned.push_back(_proj)
 
+	# TODO: Can use on `body_shape_entered` or areas for crit damage.
 	_proj.body_entered.connect(_on_body_entered.bind(_proj, norm))
 	
 	var _direction = (point - origin_point).normalized()
@@ -135,24 +139,19 @@ func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
 	_proj.queue_free()
 	Projectiles_Spawned.erase(_proj)
 	
-	if Projectiles_Spawned.is_empty():
+	if Projectiles_Spawned.is_empty(): 
 		queue_free()
 
-# TODO: Add static typing. What is _norm?  It's sometimes missing.
-# NOTE: "invalid operands 'Nil' and 'float' in operator * caused at this call site - AD
+#print('DEBUG: BODY:', body, '_proj: ', proj, 'norm: ', norm)
 func _on_body_entered(body, proj, norm):
-	#print('DEBUG: BODY:', body, '_proj: ', proj, 'norm: ', norm)
-	
-	if body.is_in_group("targets") && body.has_method("hit"):
-		body.hit(damage)
-		hit_signal.emit()
-		
-	if body.is_in_group("players") && body.has_method("hit"):
-		body.hit(damage)
-		hit_signal.emit()
+	if body.is_in_group("targets") or body.is_in_group("players"):
+		var heath_system: HealthSystem = body.health_system
+		var damage_successful = heath_system.damage(damage, source)
+		if damage_successful:
+			hit_signal.emit()
 
 	if norm:
-		Load_Decal(proj.get_position(),norm)
+		Load_Decal(proj.get_position(), norm)
 		proj.queue_free()
 		Projectiles_Spawned.erase(proj)
 		if Projectiles_Spawned.is_empty():

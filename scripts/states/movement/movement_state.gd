@@ -2,6 +2,10 @@
 # A base movement state for common functions, extend when making new movement state.
 # NOTE: This class, MovementState, does not have tick, but contains common functions 
 # that each other state should call in tick.
+
+# CRITICAL: Reminder that new states do not have their nodes assigned. This cost me 1 hour
+# working with a state I added that did not have an assigned: camera_input, etc.
+
 class_name MovementState 
 extends RewindableState
 
@@ -18,12 +22,12 @@ const JUMP_MOVE_SPEED := 3.0
 
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 
-func move_player(delta: float, speed: float = parent.WALK_SPEED):
+func move_player(delta: float):
 	var input_dir : Vector2 = get_movement_input()
 	
 	# Based on https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/platformer/player/player.gd#L65
 	var direction = (camera_input.camera_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	var position_target = direction * speed
+	var position_target = direction * parent.WALK_SPEED
 	
 	# Allow movement in the air, a little bit. 
 	force_update_is_on_floor()
@@ -46,7 +50,8 @@ func move_player(delta: float, speed: float = parent.WALK_SPEED):
 	parent.velocity /= NetworkTime.physics_factor
 	parent.velocity -= platform_velocity
 
-# NOTE: Used in IdleState to slow down. Includes friction.
+# NOTE: Used in Idle to slow down. Includes friction.
+# NOTE: Can not leave, see Idle for leaving
 func stop_player(delta: float):
 	force_update_is_on_floor()
 	if not parent.is_on_floor():
@@ -63,35 +68,6 @@ func stop_player(delta: float):
 	parent.move_and_slide()
 	parent.velocity /= NetworkTime.physics_factor
 	parent.velocity -= platform_velocity
-
-
-func check_for_ragdoll():
-	if not parent.bones:
-		push_warning("No bones for ragdoll")
-		return
-	
-	if parent.bones.active == true:
-		state_machine.transition(&"Ragdoll")
-	
-	# NOTE: Calling this physical_bones_start_simulation 
-	if parent.bones.active && parent.bones.is_simulating_physics() == false:
-		parent.bones.physical_bones_start_simulation()
-
-
-	if parent.bones.active == false && parent.bones.is_simulating_physics() == true:
-		parent.bones.physical_bones_stop_simulation()
-	
-	# Return to regular state flow
-	if parent.bones.active == false:
-		force_update_is_on_floor()
-		if parent.is_on_floor():	
-			if get_movement_input() != Vector2.ZERO:
-				state_machine.transition(&"MoveState")
-			elif get_jump():
-				state_machine.transition(&"JumpState")
-		else:
-			state_machine.transition(&"FallState")		
-
 
 func rotate_player_model(delta: float):
 	var camera_basis : Basis = camera_input.camera_basis
@@ -112,7 +88,6 @@ func force_update_is_on_floor():
 	parent.move_and_slide()
 	parent.velocity = old_velocity
 
-
 func get_moving_platform_velocity(delta: float) -> Vector3:
 	var _platform_velocity := Vector3.ZERO
 	var collision_result := KinematicCollision3D.new()
@@ -123,6 +98,14 @@ func get_moving_platform_velocity(delta: float) -> Vector3:
 			_platform_velocity = platform.get_velocity()
 			
 	return _platform_velocity
+
+func check_for_ragdoll():
+	if not parent.bones:
+		push_warning("No bones for ragdoll")
+	
+	if parent.bones.active == true:
+		state_machine.transition(&"Ragdoll")
+
 
 # Are these "get" functions necessary?
 func get_movement_input() -> Vector2:
