@@ -1,4 +1,6 @@
 # TODO: This entire part of the code-base needs a complete refactor.
+# TODO: This entire part of the code-base needs a complete refactor.
+# TODO: This entire part of the code-base needs a complete refactor.
 
 extends Node3D
 class_name Projectile
@@ -62,9 +64,6 @@ func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
 	
 	if Intersection.is_empty():
 		return [null, Ray_End, null]	
-	
-	if Intersection.position.distance_to(Ray_Origin) < 4.0:
-		return [null, Ray_End, null]
 	
 	return [Intersection.collider, Intersection.position, Intersection.normal]
 

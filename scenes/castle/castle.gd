@@ -17,10 +17,6 @@ var _velocity: Vector3 = Vector3.ZERO
 func _ready():
 	Hub.castle = self
 
-	NetworkTime.before_tick.connect(_save_previous_position)
-	NetworkTime.on_tick.connect(_apply_tick)
-	NetworkTime.after_tick.connect(_calc_velocity)
-
 	sync_to_physics = false
 
 	# Player Bones
@@ -28,7 +24,13 @@ func _ready():
 	set_collision_mask_value(4, true)
 	
 	if multiplayer.is_server():
+		NetworkTime.before_tick.connect(_save_previous_position)
+		NetworkTime.on_tick.connect(_apply_tick)
+		NetworkTime.after_tick.connect(_calc_velocity)
 		Hub.change_castle_speed.connect(_on_change_castle_speed)
+	else:
+		set_process(false)
+		set_physics_process(false)	
 
 func get_velocity() -> Vector3:
 	return _velocity
@@ -40,11 +42,10 @@ func _save_previous_position(_delta: float, _tick: int):
 
 func _apply_tick(_delta: float, _tick: int):
 	if castle_on:
-		translate(Vector3(0.0, 0.0, -0.05))
+		translate(Vector3(0.0, 0.0, -1.2 * _delta))
 
 func _calc_velocity(_delta: float, _tick: int):
 	_velocity = (global_position - prev) / NetworkTime.ticktime
-	
 	
 func _on_change_castle_speed():
 	castle_on = !castle_on

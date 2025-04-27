@@ -33,6 +33,7 @@ spring_length = 1.8
 margin = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraMount/CameraRot/SpringArm3D"]
+current = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_rew3i")

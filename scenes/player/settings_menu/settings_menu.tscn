@@ -50,10 +50,9 @@ offset_right = 350.0
 offset_bottom = 243.5
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
 
 [node name="Settings" type="PanelContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("1_wfram")
@@ -185,7 +184,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_k8v64")
-text = "Unstuck (Respawn)"
+text = "Respawn"
 
 [node name="Quit" type="Button" parent="TabContainer/Settings/MarginContainer/VBoxContainer/buttons"]
 unique_name_in_owner = true
@@ -214,6 +213,7 @@ visible = false
 layout_mode = 2
 
 [node name="Keybindings" type="PanelContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme = ExtResource("1_wfram")

@@ -5,7 +5,10 @@ var ROTATION_INTERPOLATE_SPEED = 40.0
 
 const FRICTION = 100
 const ACCELERATION = 22.0
-const WALK_SPEED := 5.5
+const DEFAULT_SPEED := 5.5
+const SLOW_SPEED := 2.0
+
+var CURRENT_SPEED = DEFAULT_SPEED
 
 @export_category("BAD Template Nodes")
 # TODO: I end up refrencing these repeatedly in the project.
@@ -77,12 +80,16 @@ func _ready():
 	Nodash.warn_missing(_animation_player, '_animation_player')
 	Nodash.sync_property(sync, _animation_player, ['active'])
 	Nodash.sync_property(sync, _animation_player, ['current_animation'])
+	Nodash.sync_property(sync, _animation_player, ['speed_scale'])
 	Nodash.sync_property(sync, bones, ['active'])
+	
+	_animation_player.playback_default_blend_time = 0.3
 
 	#TODO: Document cases where this helps prevent jitter. Might not be necessary if fully server authoratitve
 	#TODO: Disabling physics on the client might help the server & client not fight over positioning
-	#if not multiplayer.is_server():
-		#set_physics_process(false)
+	#NOTE: This is probably not necessary
+	if not multiplayer.is_server():
+		set_physics_process(false)
 
 	#### SERVER ONLY ####
 	# TODO: To be fully server authoratitve, this line should be uncommented
@@ -96,9 +103,10 @@ func _ready():
 
 	# TIMERS
 	add_child(animation_check_timer)
-	animation_check_timer.wait_time = 0.2
+	animation_check_timer.wait_time = 0.1
 	animation_check_timer.start()
-	animation_check_timer.timeout.connect(on_animation_check)
+	# TODO: better in process
+	#animation_check_timer.timeout.connect(on_animation_check)
 
 	# Allow raycast shooting from camera position
 	weapons_manager.player_camera_3D = _camera_input.camera_3D
@@ -111,6 +119,8 @@ func _exit_tree() -> void:
 func _process(_delta: float) -> void:
 	# NOTE: Runs on the client.
 	weapon_vertical_tilt()
+	if multiplayer.is_server():
+		on_animation_check()
 	# ragdoll_on_client()
 
 # NOTE: The way this works is:
@@ -152,18 +162,12 @@ func process_player_input(input_string: StringName):
 # using a server driven AnimationStateTree (how will that work with rollback, if at all)
 # or using sync'd interpolation values (top half / bottom half ).
 # For now, try not to over-do it in the prototype phase. Ignore unncessary polish.
-const ANIMATION_PREFIX = 'master_x_bot_animations/'
+const ANIMATION_PREFIX = 'master2/'
 
 func _on_display_state_changed(_old_state: RewindableState, new_state: RewindableState):	
 	var animation_name = new_state.animation_name
 	if _animation_player && animation_name != "":
-		if animation_name == "rifle run" && _player_input.input_dir.y == 0:
-			if _player_input.input_dir.x > 0:
-				_animation_player.play(ANIMATION_PREFIX + "strafe")
-			else:
-				_animation_player.play(ANIMATION_PREFIX + "strafe (2)")
-		else:
-			_animation_player.play(ANIMATION_PREFIX + animation_name)
+		_animation_player.play(ANIMATION_PREFIX + animation_name)
 
 func interact():
 	pass
@@ -218,25 +222,55 @@ func death():
 	respawn()
 
 func respawn():
+	toggle_ragdoll()
+	_state_machine.transition(&"Idle")
 	health_system.heal(health_system.max_health)
 	position = Vector3(randi_range(-2, 2), 1, randi_range(-2, 2)) * 10
 	$TickInterpolator.teleport()
 
-const animations_to_check = [ANIMATION_PREFIX + "rifle run", ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"]	
+#const animations_to_check = [ANIMATION_PREFIX + "rifle run", ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"]	
+
+const MOVES = { 
+	'STRAFE': {
+		'FAST': [ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"],
+		'SLOW': [ANIMATION_PREFIX + "strafe right", ANIMATION_PREFIX + "strafe left"]
+	},
+	'WALK': {
+		'FAST': [ANIMATION_PREFIX + "walking backwards", ANIMATION_PREFIX + "rifle run"],
+		'SLOW': [ANIMATION_PREFIX + "walking backwards", ANIMATION_PREFIX + "walking"]
+	}
+}
+
+var slowed
 
 # TODO: refactor animations completely
+# NOTE: playback_default_blend_time = 0.4
 func on_animation_check():
-	if not _animation_player.current_animation in animations_to_check:
-		return
-	
-	if _player_input.input_dir.y == 0:
-		if _player_input.input_dir.x > 0:
-			_animation_player.play(ANIMATION_PREFIX + "strafe")
+	if _state_machine.state == (&'Move'):
+		var _dir = _player_input.input_dir
+
+		if slowed:
+			CURRENT_SPEED = SLOW_SPEED
 		else:
-			_animation_player.play(ANIMATION_PREFIX + "strafe (2)")
-	
-	if _player_input.input_dir.y != 0:
-		_animation_player.play(ANIMATION_PREFIX + "rifle run")
+			CURRENT_SPEED = DEFAULT_SPEED
+
+		# Strafing (no input forward or backwards)
+		if _dir.y == 0:
+			if slowed:
+				if _dir.x < 0: _animation_player.play(MOVES.STRAFE.SLOW[1])
+				if _dir.x > 0:_animation_player.play(MOVES.STRAFE.SLOW[0])
+			else:
+				if _dir.x < 0: _animation_player.play(MOVES.STRAFE.FAST[1])
+				if _dir.x > 0:_animation_player.play(MOVES.STRAFE.FAST[0])				
+		else:
+			if slowed:
+				if _dir.y < 0: _animation_player.play(MOVES.WALK.SLOW[1])
+				if _dir.y > 0:_animation_player.play(MOVES.WALK.SLOW[0])
+			else:
+				if _dir.y < 0: _animation_player.play(MOVES.WALK.FAST[1])
+				if _dir.y > 0:
+					_animation_player.play(MOVES.WALK.SLOW[0])
+					CURRENT_SPEED = SLOW_SPEED # No running backwards
 
 
 # NOTE: -1.0 makes it move the right way and 0.5 dampens it slightly
@@ -248,3 +282,25 @@ func debug_increase_heat_dome_radius():
 
 func debug_toggle_castle_speed():
 	Hub.debug_change_castle_speed()
+
+
+func interact_ray_cast():
+	var Ray_Origin = _camera_input.camera_3D.project_ray_origin(Hub.viewport/2)
+	var Ray_End = (Ray_Origin +  _camera_input.camera_3D.project_ray_normal((Hub.viewport/2)) * 3.0)
+	var New_Intersection:PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
+	New_Intersection.set_collision_mask(0b11101111) # 15? 
+	New_Intersection.set_hit_from_inside(false) # In Jolt this is set to true by defualt
+	
+	# 0: The colliding object
+	# 1: The colliding object's ID.
+	# 2: The object's surface normal at the intersection point or Vector3.ZERO
+	# 3: position: The intersection point.
+	var Intersection = get_world_3d().direct_space_state.intersect_ray(New_Intersection)
+	
+	if Intersection.is_empty():
+		return [null, Ray_End]	
+	
+	if Intersection.position.distance_to(Ray_Origin) < 4.0:
+		return [null, Ray_End]
+	
+	return [Intersection.collider, Intersection.position]

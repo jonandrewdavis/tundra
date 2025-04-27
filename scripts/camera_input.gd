@@ -3,7 +3,7 @@ class_name CameraInput extends Node3D
 @export var camera_mount : Node3D
 @export var camera_rot : Node3D
 @export var camera_3D : Camera3D
-@export var rollback_synchronizer : RollbackSynchronizer
+#@export var rollback_synchronizer : RollbackSynchronizer
 
 var camera_basis : Basis = Basis.IDENTITY
 var camera_look : float = 0.0
@@ -42,6 +42,9 @@ func _gather():
 	camera_look = get_camera_vertical_look()
 
 func _input(event):
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		return 
+		
 	if event is InputEventMouseMotion:
 		rotate_camera(event.relative * CAMERA_MOUSE_ROTATION_SPEED)
 	

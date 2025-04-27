@@ -20,6 +20,8 @@ const JUMP_MOVE_SPEED := 3.0
 @export var player_input: PlayerInput
 @export var parent: Player
 
+const ANIMATION_PREFIX = 'master2/'
+
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 
 func move_player(delta: float):
@@ -27,7 +29,7 @@ func move_player(delta: float):
 	
 	# Based on https://github.com/godotengine/godot-demo-projects/blob/4.2-31d1c0c/3d/platformer/player/player.gd#L65
 	var direction = (camera_input.camera_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	var position_target = direction * parent.WALK_SPEED
+	var position_target = direction * parent.CURRENT_SPEED
 	
 	# Allow movement in the air, a little bit. 
 	force_update_is_on_floor()
@@ -106,13 +108,16 @@ func check_for_ragdoll():
 	if parent.bones.active == true:
 		state_machine.transition(&"Ragdoll")
 
-
-# Are these "get" functions necessary?
 func get_movement_input() -> Vector2:
 	return player_input.input_dir
 
 func get_run() -> bool:
-	return player_input.run_input
+	# If we are moving forward (-1.0), allow sprinting
+	if player_input.input_dir.y < 0:
+		return player_input.run_input
+	else:
+		return false
 	
 func get_jump() -> float:
 	return player_input.jump_input
+	
