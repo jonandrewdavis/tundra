@@ -135,6 +135,12 @@ script = ExtResource("1_2hve7")
 [node name="LightHouse" parent="." instance=ExtResource("7_2rh0a")]
 transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 13.1411, 0)
 
+[node name="StateSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("8_1abs5")
+root = NodePath("..")
+properties = Array[String]([":transform"])
+metadata/_custom_type_script = "uid://3lbngqcexe0l"
+
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("4_g8b6n")
 root = NodePath("..")
@@ -149,12 +155,6 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.44642, 0)
 
 [node name="SpiderBot" parent="Marker3D" node_paths=PackedStringArray("castle") instance=ExtResource("6_cyhqv")]
 castle = NodePath("../..")
-
-[node name="StateSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("8_1abs5")
-root = NodePath("..")
-properties = Array[String]([":transform"])
-metadata/_custom_type_script = "uid://3lbngqcexe0l"
 
 [node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 14.8583)

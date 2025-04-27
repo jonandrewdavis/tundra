@@ -8,7 +8,7 @@ class_name WeaponsManager
 @export var animation_player: AnimationPlayer
 @export var melee_hitbox: ShapeCast3D
 @export var max_weapons: int # not used
-@export var player_hud: PlayerHUD
+@export var player_hud: PlayerUI
 @export var player: CharacterBody3D
 
 @onready var bullet_point = $BulletPoint

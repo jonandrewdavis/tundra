@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="11_2hvjq"]
 [ext_resource type="PackedScene" uid="uid://btdemgg0e0b4o" path="res://scenes/player/player_ui.tscn" id="12_ua4at"]
 [ext_resource type="Script" uid="uid://d0r47oscrxt5o" path="res://scripts/states/movement/dead.gd" id="13_2hvjq"]
-[ext_resource type="PackedScene" uid="uid://cf6jco7ctb45m" path="res://weapons_manager.tscn" id="13_nrabn"]
+[ext_resource type="PackedScene" uid="uid://cf6jco7ctb45m" path="res://weapon_manager/weapons_manager.tscn" id="13_nrabn"]
 [ext_resource type="PackedScene" uid="uid://r31q8k2be4qk" path="res://scenes/player/player_interact_sensors/sensor_cast.tscn" id="17_2hvjq"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_nrabn"]

@@ -111,7 +111,7 @@ func _exit_tree() -> void:
 func _process(_delta: float) -> void:
 	# NOTE: Runs on the client.
 	weapon_vertical_tilt()
-	#ragdoll_on_client()
+	# ragdoll_on_client()
 
 # NOTE: The way this works is:
 # - Process runs in `player_input.gd` 
@@ -144,7 +144,7 @@ func process_player_input(input_string: StringName):
 		"special":
 			debug_toggle_castle_speed()
 		"DEBUG_B":
-			debug_toggle_ragdoll()
+			toggle_ragdoll()
 		"DEBUG_0":
 			Hub.debug_create_enemy()
 
@@ -170,18 +170,30 @@ func interact():
 
 # TODO: Document that Ragdoll bones are on Layer 3 collision. Adjust weights & poses.
 
-func debug_toggle_ragdoll():
-	if _state_machine.state == (&"Ragdoll"):
+func toggle_ragdoll():
+	# CRITICAL: Solve the forced state issue.
+	#if _state_machine.state == (&"Ragdoll"):
+
+	if bones.active == true:
 		bones.active = false
 		_animation_player.active = true
-		#_state_machine.transition(&"Idle")
-		#NetworkRollback.mutate(self)
+		bones.physical_bones_stop_simulation()
+
+		_state_machine.state = (&"Idle")
+		#NetworkRollback.mutate(_state_machine)
+		await get_tree().process_frame
+		ragdoll_on_client.rpc()
 	else:
 		bones.active = true
 		_animation_player.active = false
-		#_state_machine.transition(&"Ragdoll")
-		#NetworkRollback.mutate(self)
+		bones.physical_bones_start_simulation()
+
+		_state_machine.state = (&"Ragdoll")
+		#NetworkRollback.mutate(_state_machine)
+		await get_tree().process_frame
+		ragdoll_on_client.rpc()
  
+@rpc('call_remote')
 func ragdoll_on_client():
 	if bones.active && bones.is_simulating_physics() == false:
 		bones.physical_bones_start_simulation()
@@ -189,35 +201,26 @@ func ragdoll_on_client():
 	if bones.active == false && bones.is_simulating_physics() == true:
 		bones.physical_bones_stop_simulation()
 
-	#if bones.active == false:
-		#_animation_player.active = false
-		#bones.active = true
-		## TODO: ['RightShoulder', 'LeftShoulder', 'RightUpperLeg', 'LeftUpperLeg']
-		## CRITICAL: Fix force
-		##apply_chest_force()
-	#else:
-		#_animation_player.active = true
-		#bones.active = false
-		#bones.physical_bones_stop_simulation()	
-
 # Apply force away from current facing: -_player_model.basis.z
 func apply_chest_force():
 	for bone in bones.get_children():
 		if bone.bone_name == 'Chest':
 			bone.apply_central_impulse(-_player_model.basis.z * -1.0 * 1200.0)
-
+	
 # TODO: Death should be a state
 # TESTING: How would ragdoll & death interact?
 # TESTING: How do we prevent input during these states
 # TESTING: Also think about "Locked" activities
 func death():
+	toggle_ragdoll()
 	_state_machine.transition(&"Dead")
-	await get_tree().create_timer(10).timeout
+	await get_tree().create_timer(1).timeout
 	respawn()
 
 func respawn():
 	health_system.heal(health_system.max_health)
-	_state_machine.transition(&"Idle")
+	position = Vector3(randi_range(-2, 2), 1, randi_range(-2, 2)) * 10
+	$TickInterpolator.teleport()
 
 const animations_to_check = [ANIMATION_PREFIX + "rifle run", ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"]	
 

@@ -7,7 +7,7 @@ var input_dir : Vector2 = Vector2.ZERO
 var run_input = false
 var shoot_input = false
 var jump_input = false
-var static_states: Array[StringName] = [&'Dead', &'Static', &'Ragdoll']
+var static_states: Array[StringName] = [&"Dead", &"Static", &"Ragdoll"]
 
 func _ready():
 	if is_multiplayer_authority():

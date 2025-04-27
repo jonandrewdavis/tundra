@@ -32,7 +32,6 @@ Nodash="*res://scripts/nodash.gd"
 
 [display]
 
-window/size/mode=3
 window/size/initial_position=Vector2i(-50, 0)
 window/size/resizable=false
 window/size/always_on_top=true

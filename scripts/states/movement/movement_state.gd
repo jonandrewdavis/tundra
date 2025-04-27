@@ -51,11 +51,8 @@ func move_player(delta: float):
 	parent.velocity -= platform_velocity
 
 # NOTE: Used in Idle to slow down. Includes friction.
+# NOTE: Can not leave, see Idle for leaving
 func stop_player(delta: float):
-	var input_dir : Vector2 = get_movement_input()
-	if input_dir != Vector2.ZERO:
-		state_machine.transition(&"Move")
-
 	force_update_is_on_floor()
 	if not parent.is_on_floor():
 		parent.velocity.y -= gravity * delta
@@ -109,10 +106,6 @@ func check_for_ragdoll():
 	if parent.bones.active == true:
 		state_machine.transition(&"Ragdoll")
 
-
-# TODO: Absolutely lock.
-func freeze_player():
-	pass
 
 # Are these "get" functions necessary?
 func get_movement_input() -> Vector2:

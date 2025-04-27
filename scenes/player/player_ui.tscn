@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://btdemgg0e0b4o"]
 
-[ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/HUD.gd" id="1_fatww"]
-[ext_resource type="Texture2D" uid="uid://uidicgaojgdi" path="res://assets/HUD ASSETS/crosshair046.png" id="3_nlx67"]
+[ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/player_ui.gd" id="1_fatww"]
+[ext_resource type="Texture2D" uid="uid://clx8vvaklih15" path="res://scenes/player/player_assets/crosshair046.png" id="2_by614"]
 [ext_resource type="Shader" uid="uid://k1t5yooesun6" path="res://scripts/shaders/snow.gdshader" id="4_mo8vb"]
 [ext_resource type="Theme" uid="uid://b3kq74llqlv3x" path="res://assets/themes/MinimalUI4/MinimalUI.tres" id="4_nlx67"]
 [ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="5_by614"]
@@ -102,7 +102,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("3_nlx67")
+texture = ExtResource("2_by614")
 stretch_mode = 3
 
 [node name="SprintBar" type="HSlider" parent="."]

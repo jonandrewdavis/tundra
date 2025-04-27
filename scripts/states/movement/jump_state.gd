@@ -7,7 +7,6 @@ func tick(delta, _tick, _is_fresh):
 	move_player(delta)
 	check_for_ragdoll()
 
-
 	force_update_is_on_floor()
 	if not parent.is_on_floor():
 		state_machine.transition(&"Fall")

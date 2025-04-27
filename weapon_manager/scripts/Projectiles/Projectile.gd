@@ -24,10 +24,7 @@ var damage: int = 0
 var Projectiles_Spawned = []
 var hit_objects: Array = []
 
-# TODO: un hardcode viewport -AD
-# TODO: Needs to be set by the player, since all players  could have different viewports
 var _Camera: Camera3D
-var _Viewport = Vector2i(1152, 648)
 
 func _ready() -> void:
 	pass
@@ -51,8 +48,8 @@ func _over_ride_collision(_camera_collision:Array, _damage: float) -> void:
 	pass
 
 func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
-	var Ray_Origin = _Camera.project_ray_origin(_Viewport/2)
-	var Ray_End = (Ray_Origin + _Camera.project_ray_normal((_Viewport/2)+Vector2i(_spread)) * _range)
+	var Ray_Origin = _Camera.project_ray_origin(Hub.viewport/2)
+	var Ray_End = (Ray_Origin + _Camera.project_ray_normal((Hub.viewport/2)+Vector2i(_spread)) * _range)
 	var New_Intersection:PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
 	New_Intersection.set_collision_mask(0b11101111) # 15? 
 	New_Intersection.set_hit_from_inside(false) # In Jolt this is set to true by defualt
