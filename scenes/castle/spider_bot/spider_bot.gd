@@ -13,7 +13,6 @@ extends Node3D
 @onready var br_leg = $BackRightIKTarget
 
 
-
 #func _process(delta):
 	#var plane1 = Plane(bl_leg.global_position, fl_leg.global_position, fr_leg.global_position)
 	#var plane2 = Plane(fr_leg.global_position, br_leg.global_position, bl_leg.global_position)

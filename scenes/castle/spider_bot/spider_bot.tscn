@@ -21,6 +21,7 @@ albedo_color = Color(0.52549, 0.52549, 0.52549, 1)
 
 [node name="SpiderBot" instance=ExtResource("1_vovvw")]
 script = ExtResource("2_kfpvc")
+ground_offset = 1.0
 
 [node name="Armature" parent="." index="0"]
 transform = Transform3D(3.06884, 0, 0, 0, 3.06884, 0, 0, 0, 3.06884, 0.115582, 0, 0)

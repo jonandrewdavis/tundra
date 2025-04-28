@@ -330,7 +330,14 @@ func interact():
 		return
 
 	if interactable:
-		# TODO: play sound
 		var interact_result = interactable.interact(self)
-		if interact_result == true && interactable.enable_pickup == true && holding == null:
-			holding = interactable
+
+		if interact_result == false:
+			# TODO: play sound
+			return
+
+		if 'enable_pickup' in interactable:
+			if interactable.enable_pickup == true && holding == null:
+				holding = interactable
+			elif interactable.enable_pickup == true && holding:
+				holding = null
