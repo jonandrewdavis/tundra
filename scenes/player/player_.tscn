@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dup2jh8uleo3l"]
+[gd_scene load_steps=22 format=3 uid="uid://dup2jh8uleo3l"]
 
 [ext_resource type="Script" uid="uid://dc7w7oe3lm0eu" path="res://scripts/player.gd" id="1_u2qrv"]
 [ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_ktqdq"]
@@ -18,7 +18,6 @@
 [ext_resource type="Script" uid="uid://d0r47oscrxt5o" path="res://scripts/states/movement/dead.gd" id="13_2hvjq"]
 [ext_resource type="Script" uid="uid://r1boayxutr47" path="res://scripts/states/movement/static.gd" id="13_h5dd4"]
 [ext_resource type="PackedScene" uid="uid://cf6jco7ctb45m" path="res://weapon_manager/weapons_manager.tscn" id="13_nrabn"]
-[ext_resource type="PackedScene" uid="uid://r31q8k2be4qk" path="res://scenes/player/player_interact_sensors/sensor_cast.tscn" id="17_2hvjq"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_nrabn"]
 
@@ -61,7 +60,6 @@ metadata/_custom_type_script = "uid://dour8fehaaugp"
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("2_ktqdq")
 root = NodePath("..")
-enable_prediction = true
 state_properties = Array[String]([":transform", ":velocity", "master:transform", "RewindableStateMachine:state"])
 input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "PlayerInput:shoot_input", "CameraInput:camera_look"])
 enable_input_broadcast = false
@@ -148,7 +146,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65716, 0)
 shape = SubResource("CapsuleShape3D_2hvjq")
 
 [node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="."]
-transform = Transform3D(-0.0929795, 0.0644278, 0.993582, 0.991807, 0.0937961, 0.0867313, -0.0876061, 0.993505, -0.0726209, -0.173107, 1.44551, 0.168059)
+transform = Transform3D(-5.27654e-08, -1, -6.31676e-05, -0.00261688, 6.31675e-05, -0.999997, 0.999997, 1.12537e-07, -0.00261688, -0.68188, 1.47929, -0.0687136)
 bone_name = "RightHand"
 bone_idx = 35
 use_external_skeleton = true
@@ -163,9 +161,6 @@ transform = Transform3D(-2.84053e-08, 0, 1, 0, 0.999999, 1.11759e-07, -1, 2.2351
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.410812, -0.213233, 0.115377)
 player_hud = NodePath("../../../../PlayerUi")
 player = NodePath("../../../..")
-
-[node name="SensorCast" parent="." instance=ExtResource("17_2hvjq")]
-script = null
 
 [node name="RootMotionView" type="RootMotionView" parent="."]
 animation_path = NodePath("../master/AnimationPlayer")

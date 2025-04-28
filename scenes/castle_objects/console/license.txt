@@ -1,0 +1,11 @@
+Model Information:
+* title:	Sci-Fi Computer Console
+* source:	https://sketchfab.com/3d-models/sci-fi-computer-console-05ace13ccbd048eb9c6c55ac3c3d8501
+* author:	TheoClarke (https://sketchfab.com/TheoClarke)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Sci-Fi Computer Console" (https://sketchfab.com/3d-models/sci-fi-computer-console-05ace13ccbd048eb9c6c55ac3c3d8501) by TheoClarke (https://sketchfab.com/TheoClarke) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

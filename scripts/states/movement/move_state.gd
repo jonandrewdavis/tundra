@@ -10,9 +10,9 @@ func tick(delta, _tick, _is_fresh):
 
 	force_update_is_on_floor()
 	if parent.is_on_floor():
-		if get_movement_input() == Vector2.ZERO:
-			state_machine.transition(&"Idle")
-		elif get_jump():
+		if get_jump():
 			state_machine.transition(&"Jump")
+		elif get_movement_input() == Vector2.ZERO:
+			state_machine.transition(&"Idle")
 	else:
 		state_machine.transition(&"Fall")

@@ -3,6 +3,8 @@ class_name CameraInput extends Node3D
 @export var camera_mount : Node3D
 @export var camera_rot : Node3D
 @export var camera_3D : Camera3D
+@export var holder: Marker3D
+
 #@export var rollback_synchronizer : RollbackSynchronizer
 
 var camera_basis : Basis = Basis.IDENTITY

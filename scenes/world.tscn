@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=11 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
 [ext_resource type="Environment" uid="uid://d2vhvx143fvtc" path="res://scenes/tundra/TundraWorldEnvironment_1.tres" id="2_qfnet"]
 [ext_resource type="PackedScene" uid="uid://dy85183h2d31p" path="res://scenes/castle/castle_simple.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="5_qfnet"]
+[ext_resource type="PackedScene" uid="uid://ceekvxqimoa8x" path="res://scenes/interactables/oil-drum/oil_drum.tscn" id="6_qfnet"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71j4m"]
 
@@ -79,3 +80,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary/WorldBoundaryRight"]
 shape = SubResource("WorldBoundaryShape3D_i7141")
+
+[node name="OilDrum" parent="." instance=ExtResource("6_qfnet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3005, -24.4086)
+
+[node name="OilDrum2" parent="." instance=ExtResource("6_qfnet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.38081, 2.3005, -24.4086)
+
+[node name="OilDrum3" parent="." instance=ExtResource("6_qfnet")]
+transform = Transform3D(1, 0, 0, 0, 0.555585, 0.83146, 0, -0.83146, 0.555585, 4.28884, 2.3005, -24.4086)

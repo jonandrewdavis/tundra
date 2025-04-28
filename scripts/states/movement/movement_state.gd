@@ -90,6 +90,8 @@ func force_update_is_on_floor():
 	parent.move_and_slide()
 	parent.velocity = old_velocity
 
+# TODO: Raycast down, only hitting castle instead of KinematicCollision3D
+# This would let us stand on a barrel on the castle as well.
 func get_moving_platform_velocity(delta: float) -> Vector3:
 	var _platform_velocity := Vector3.ZERO
 	var collision_result := KinematicCollision3D.new()

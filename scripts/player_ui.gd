@@ -55,7 +55,7 @@ func _ready():
 		hit_sight_timer.one_shot = true
 		hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)	
 
-	# TESTING: Here we have our exact client listen for signals
+	# TESTING: Here we have our exact client listen for signals (emitted in rpc_id)
 	# This is client side. Could get messy. Or could work for UI.
 	if str(peer_uid) == get_parent().name:
 		var player_health_system: HealthSystem = get_parent().health_system
@@ -115,3 +115,8 @@ func _show_snow_shader():
 			if snow_shader.visible == true: snow_shader.visible = false
 		else:
 			if snow_shader.visible == false: snow_shader.visible = true
+
+
+@rpc
+func update_interaction_label(interactable_name: String):
+	%InteractLabel.text = interactable_name

@@ -16,11 +16,12 @@ properties/2/path = NodePath("CameraMount/CameraRot:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="CameraInput" type="Node3D" node_paths=PackedStringArray("camera_mount", "camera_rot", "camera_3D")]
+[node name="CameraInput" type="Node3D" node_paths=PackedStringArray("camera_mount", "camera_rot", "camera_3D", "holder")]
 script = ExtResource("1_3wtcb")
 camera_mount = NodePath("CameraMount")
 camera_rot = NodePath("CameraMount/CameraRot")
 camera_3D = NodePath("CameraMount/CameraRot/SpringArm3D/Camera3D")
+holder = NodePath("CameraMount/CameraRot/Holder")
 
 [node name="CameraMount" type="Node3D" parent="."]
 
@@ -33,7 +34,9 @@ spring_length = 1.8
 margin = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraMount/CameraRot/SpringArm3D"]
-current = true
+
+[node name="Holder" type="Marker3D" parent="CameraMount/CameraRot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.60102, 0, -1.9851)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_rew3i")

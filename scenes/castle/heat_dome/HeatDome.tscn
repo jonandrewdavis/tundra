@@ -63,12 +63,12 @@ script = ExtResource("1_l7s2y")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 
 [node name="FogVolume1" type="FogVolume" parent="FogVolumes"]
-size = Vector3(40, 25, 40)
+size = Vector3(40, 30, 40)
 shape = 2
 material = SubResource("FogMaterial_px6c0")
 
 [node name="FogVolume2" type="FogVolume" parent="FogVolumes"]
-size = Vector3(70, 25, 70)
+size = Vector3(70, 30, 70)
 shape = 2
 material = SubResource("FogMaterial_w4mjc")
 
