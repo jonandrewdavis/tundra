@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bgpb1jrk0htrx"]
+[gd_scene load_steps=14 format=3 uid="uid://bgpb1jrk0htrx"]
 
 [ext_resource type="Script" uid="uid://qn3fulhfygss" path="res://scenes/enemies/gun_drone/gun_drone.gd" id="1_p3ixi"]
 [ext_resource type="PackedScene" uid="uid://gk0m2leyfs75" path="res://scenes/enemies/gun_drone/gun_drone_bullet.tscn" id="2_2nx2y"]
 [ext_resource type="PackedScene" uid="uid://pemaubyxeipn" path="res://scenes/enemies/gun_drone/bot_drone_winter.glb" id="2_gsfr6"]
 [ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="3_u268q"]
+[ext_resource type="Script" uid="uid://dgmmwgxl0beil" path="res://scripts/systems/navigation_system.gd" id="4_1w0da"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gsfr6"]
 properties/0/path = NodePath(".:position")
@@ -27,7 +28,7 @@ radius = 0.6
 height = 3.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gsfr6"]
-size = Vector3(35, 15, 35)
+size = Vector3(30, 12, 30)
 
 [sub_resource type="Animation" id="Animation_2nx2y"]
 length = 0.001
@@ -114,18 +115,23 @@ _data = {
 &"hurt": SubResource("Animation_u268q")
 }
 
-[node name="GunDrone" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "search_box", "animation_player", "gun_origin", "health_system")]
+[node name="GunDrone" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "search_box", "animation_player", "gun_origin", "health_system", "nav")]
 script = ExtResource("1_p3ixi")
 nav_agent = NodePath("NavigationAgent3D")
 search_box = NodePath("SearchBox")
 animation_player = NodePath("AnimationPlayer")
 gun_origin = NodePath("GunOrigin")
 health_system = NodePath("HealthSystem")
+nav = NodePath("NavigationSystem")
 rigid_body_projectile = ExtResource("2_2nx2y")
 max_health = 1.0
 
 [node name="HealthSystem" parent="." instance=ExtResource("3_u268q")]
 max_health = 10
+
+[node name="NavigationSystem" type="Node" parent="." node_paths=PackedStringArray("nav_agent")]
+script = ExtResource("4_1w0da")
+nav_agent = NodePath("../NavigationAgent3D")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gsfr6")
@@ -138,16 +144,25 @@ transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, -0.0941432)
 shape = SubResource("CapsuleShape3D_p3ixi")
+disabled = true
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+process_thread_group = 2
+process_thread_group_order = 5
+process_thread_messages = 3
 path_height_offset = -8.0
+path_postprocessing = 2
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(1, 0.19, 0.19, 1)
 
 [node name="SearchBox" type="Area3D" parent="."]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, -20)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SearchBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4203, -1.86436, 4.4203)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4203, -3.48206, 4.4203)
 shape = SubResource("BoxShape3D_gsfr6")
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -18,6 +18,7 @@ plane = Plane(1, 0, 0, 0)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4mrxx"]
 material = ExtResource("6_i7141")
+size = Vector2(500, 500)
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_71j4m")
@@ -84,7 +85,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary/WorldBoundaryRight"]
 shape = SubResource("WorldBoundaryShape3D_i7141")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="WorldBoundary"]
+[node name="WorldMesh" type="MeshInstance3D" parent="WorldBoundary"]
 mesh = SubResource("PlaneMesh_4mrxx")
 
 [node name="OilDrum" parent="." instance=ExtResource("6_qfnet")]

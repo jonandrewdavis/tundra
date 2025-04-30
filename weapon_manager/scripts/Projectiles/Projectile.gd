@@ -78,7 +78,7 @@ func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
 
 			var Bullet_Direction = (Point - origin_point).normalized()
 			var New_Intersection = PhysicsRayQueryParameters3D.create(origin_point,Point+Bullet_Direction*2)
-			New_Intersection.set_collision_mask(0b11101111)
+			New_Intersection.set_collision_mask(0b11101111) 
 			New_Intersection.set_hit_from_inside(false)
 			New_Intersection.set_exclude(hit_objects)
 			var Bullet_Collision = Bullet.intersect_ray(New_Intersection)
@@ -99,11 +99,6 @@ func check_pass_through(collider: Node3D, rid: RID)-> bool:
 		hit_objects.append(rid)
 		valid_pass_though = true
 	return valid_pass_though
-
-func Hit_Scan_damage(collision, _direction, _position, _damage):
-	if collision.is_in_group("targets") and collision.has_method("hit"):
-		hit_signal.emit()
-		collision.hit(_damage)
 
 func Load_Decal(pos, normal):
 	if Display_Debug_Decal:
@@ -155,3 +150,10 @@ func _on_body_entered(body, proj, norm):
 		Projectiles_Spawned.erase(proj)
 		if Projectiles_Spawned.is_empty():
 			queue_free()
+
+func Hit_Scan_damage(collision, _direction, _position, _damage):
+	if collision.is_in_group("targets") or collision.is_in_group("players"):
+		var heath_system: HealthSystem = collision.health_system
+		var damage_successful = heath_system.damage(damage, source)
+		if damage_successful:
+			hit_signal.emit()

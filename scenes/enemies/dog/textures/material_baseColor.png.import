@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://db704sf6w4jb4"
-path.s3tc="res://.godot/imported/Snow006.png-393aafcee72115642d4f0330c547f9bd.s3tc.ctex"
+uid="uid://d0uiiqvqnbaom"
+path.s3tc="res://.godot/imported/material_baseColor.png-3554061226564dd88f6f7482cf1ab88e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/ambient/Snow006_1K-JPG/Snow006.png"
-dest_files=["res://.godot/imported/Snow006.png-393aafcee72115642d4f0330c547f9bd.s3tc.ctex"]
+source_file="res://scenes/enemies/dog/textures/material_baseColor.png"
+dest_files=["res://.godot/imported/material_baseColor.png-3554061226564dd88f6f7482cf1ab88e.s3tc.ctex"]
 
 [params]
 

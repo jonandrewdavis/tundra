@@ -18,6 +18,9 @@ var CURRENT_SPEED = DEFAULT_SPEED
 @export var _player_model : Node3D # NOTE: When updating _player_model, also update RollbackSync & TickInterpolater.
 @export var _state_machine: RewindableStateMachine
 @onready var rollback_synchronizer = $RollbackSynchronizer
+@warning_ignore("unused_private_class_variable")
+@export var _tick_interpolator: TickInterpolator
+
 var _animation_player: AnimationPlayer
 
 @export_category("Required Character Nodes")
@@ -34,7 +37,8 @@ var _animation_player: AnimationPlayer
 @export var weapon_pivot: Marker3D
 @export var player_ui: PlayerUI
 
-var peer_id
+var peer_id: int
+var respawn: bool
 
 # TODO: Heat should be a stat like health, and signals can change it
 # TODO: Heat should be a component, like in Forest Bath
@@ -88,7 +92,6 @@ func _ready():
 	Nodash.sync_property(sync, bones, ['active'])
 	
 	_animation_player.playback_default_blend_time = 0.3
-
 	# NOTE: Might not be necessary if fully server authoratitve.
 	# TODO: Document cases where this helps prevent jitter.
 	# TODO: Disabling physics on the client might help the server & client not fight over positioning
@@ -101,10 +104,11 @@ func _ready():
 	if not multiplayer.is_server():
 		return
 
+	_state_machine.state = &"Ragdoll"
+	_state_machine.on_display_state_changed.connect(_on_display_state_changed)
+
 	health_system.death.connect(death)
 
-	_state_machine.state = &"Idle"
-	_state_machine.on_display_state_changed.connect(_on_display_state_changed)
 
 	# TIMERS
 	add_child(interaction_check_timer)
@@ -126,7 +130,6 @@ func _exit_tree() -> void:
 func _process(_delta: float) -> void:
 	weapon_vertical_tilt()
 	on_animation_check()
-
 
 # NOTE: The way this works is:
 # - Process runs in `player_input.gd` 
@@ -163,6 +166,22 @@ func process_player_input(input_string: StringName):
 		"DEBUG_0":
 			Hub.debug_create_enemy()
 
+
+func _rollback_tick(_delta, _tick, _is_fresh):
+	if health_system.health == 0:
+		_state_machine.transition(&"Dead")
+
+
+	if respawn == true:
+		health_system.heal(health_system.max_health)
+		_state_machine.transition(&"Idle")
+		respawn = false
+
+
+	#if health_system.health == health_system.max_health: 
+		#print('respawn')
+		#_state_machine.transition(&"Idle")
+
 # TODO: Animations will need to be overhauled completely eventually...
 # using a server driven AnimationStateTree (how will that work with rollback, if at all)
 # or using sync'd interpolation values (top half / bottom half ).
@@ -187,8 +206,7 @@ func toggle_ragdoll():
 		_animation_player.active = true
 		bones.physical_bones_stop_simulation()
 
-		_state_machine.state = (&"Idle")
-		#NetworkRollback.mutate(_state_machine)
+		#_state_machine.transition(&"Ragdoll")
 		await get_tree().process_frame
 		ragdoll_on_client.rpc()
 	else:
@@ -196,13 +214,14 @@ func toggle_ragdoll():
 		_animation_player.active = false
 		bones.physical_bones_start_simulation()
 
-		_state_machine.state = (&"Ragdoll")
-		#NetworkRollback.mutate(_state_machine)
+		#_state_machine.transition(&"Ragdoll")
 		await get_tree().process_frame
 		ragdoll_on_client.rpc()
  
 @rpc('call_remote')
 func ragdoll_on_client():
+	#_state_machine.transition(&"Ragdoll")
+	
 	if bones.active && bones.is_simulating_physics() == false:
 		bones.physical_bones_start_simulation()
 		
@@ -220,18 +239,12 @@ func apply_chest_force():
 # TESTING: How do we prevent input during these states
 # TESTING: Also think about "Locked" activities
 func death():
-	toggle_ragdoll()
-	_state_machine.transition(&"Dead")
-	await get_tree().create_timer(1).timeout
-	respawn()
-
-func respawn():
-	toggle_ragdoll()
-	_state_machine.transition(&"Idle")
-	health_system.heal(health_system.max_health)
-	position = Vector3(randi_range(-2, 2), 1, randi_range(-2, 2)) * 10
-	$TickInterpolator.teleport()
-
+	await get_tree().create_timer(5).timeout
+	respawn = true
+	pass
+	#toggle_ragdoll()
+	#_state_machine.transition(&"Dead")
+	
 #const animations_to_check = [ANIMATION_PREFIX + "rifle run", ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"]	
 
 const MOVES = { 
@@ -251,7 +264,8 @@ const MOVES = {
 func on_animation_check():
 	if _state_machine.state == (&'Move'):
 		var _dir = _player_input.input_dir
-		var _slowed = _player_input.shoot_input or weapons_manager.animation_player.is_playing()
+		var _slowed = false
+		#var _slowed = _player_input.shoot_input or weapons_manager.animation_player.is_playing()
 
 		if _slowed:
 			CURRENT_SPEED = SLOW_SPEED
@@ -274,9 +288,8 @@ func on_animation_check():
 				if _dir.y > 0:_animation_player.play(MOVES.WALK.SLOW[0])
 			else:
 				if _dir.y < 0: _animation_player.play(MOVES.WALK.FAST[1])
-				if _dir.y > 0:
-					_animation_player.play(MOVES.WALK.SLOW[0])
-					CURRENT_SPEED = SLOW_SPEED # No running backwards
+				if _dir.y > 0: _animation_player.play(MOVES.WALK.FAST[0])
+				#CURRENT_SPEED = SLOW_SPEED # No running backwards
 
 
 # NOTE: -1.0 makes it move the right way and 0.5 dampens it slightly

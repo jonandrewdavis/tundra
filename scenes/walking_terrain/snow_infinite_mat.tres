@@ -1,3 +1,7 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://teb2w3f6ts0s"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://teb2w3f6ts0s"]
+
+[ext_resource type="Texture2D" uid="uid://c27t400jfimnq" path="res://assets/ambient/Snow008A_1K-JPG/Snow008A_1K-JPG_AmbientOcclusion.jpg" id="1_1hbpi"]
 
 [resource]
+albedo_texture = ExtResource("1_1hbpi")
+uv1_scale = Vector3(50, 50, 50)

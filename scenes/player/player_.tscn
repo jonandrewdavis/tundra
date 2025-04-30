@@ -29,7 +29,7 @@ height = 1.5
 radius = 0.15
 height = 0.4
 
-[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "sync", "skeleton", "bones", "chest", "health_system", "weapons_manager", "weapon_pivot", "player_ui")]
+[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "_tick_interpolator", "sync", "skeleton", "bones", "chest", "health_system", "weapons_manager", "weapon_pivot", "player_ui")]
 platform_on_leave = 2
 platform_floor_layers = 0
 script = ExtResource("1_u2qrv")
@@ -37,6 +37,7 @@ _player_input = NodePath("PlayerInput")
 _camera_input = NodePath("CameraInput")
 _player_model = NodePath("master")
 _state_machine = NodePath("RewindableStateMachine")
+_tick_interpolator = NodePath("TickInterpolator")
 sync = NodePath("MultiplayerSynchronizer")
 skeleton = NodePath("master/Armature/GeneralSkeleton")
 bones = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D")
@@ -60,6 +61,7 @@ metadata/_custom_type_script = "uid://dour8fehaaugp"
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("2_ktqdq")
 root = NodePath("..")
+enable_prediction = true
 state_properties = Array[String]([":transform", ":velocity", "master:transform", "RewindableStateMachine:state"])
 input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "PlayerInput:shoot_input", "CameraInput:camera_look"])
 enable_input_broadcast = false

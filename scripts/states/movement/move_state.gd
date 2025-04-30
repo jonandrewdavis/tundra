@@ -6,7 +6,7 @@ extends MovementState
 func tick(delta, _tick, _is_fresh):
 	rotate_player_model(delta)
 	move_player(delta)
-	check_for_ragdoll()
+	#check_for_ragdoll()
 
 	force_update_is_on_floor()
 	if parent.is_on_floor():
