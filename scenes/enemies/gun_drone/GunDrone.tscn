@@ -144,7 +144,6 @@ transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, -0.0941432)
 shape = SubResource("CapsuleShape3D_p3ixi")
-disabled = true
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 process_thread_group = 2
@@ -162,7 +161,6 @@ transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SearchBox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4203, -3.48206, 4.4203)
 shape = SubResource("BoxShape3D_gsfr6")
-disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -81,6 +81,7 @@ func rotate_player_model(delta: float):
 	var q_to = Transform3D().looking_at(camera_basis.z, Vector3.UP).basis.get_rotation_quaternion()
 
 	var set_model_rotation = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
+
 	parent._player_model.global_transform.basis = set_model_rotation
 
 # https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-on-floor

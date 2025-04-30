@@ -32,7 +32,6 @@ Nodash="*res://scripts/nodash.gd"
 
 [display]
 
-window/size/mode=2
 window/size/resizable=false
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
@@ -164,11 +163,10 @@ open_menu={
 
 [netfox]
 
-logging/log_level=4
-logging/netfox_noray_log_level=4
-logging/netfox_log_level=4
-logging/netfox_extras_log_level=4
 logging/clear_settings=true
+logging/netfox_extras_log_level=5
+logging/log_level=5
+logging/netfox_noray_log_level=5
 
 [physics]
 

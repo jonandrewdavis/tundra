@@ -103,7 +103,7 @@ func move_and_look(delta):
 	else:
 		# If "Target and up vectors are colinear" use "* Vector3.UP"
 		# https://github.com/godotengine/godot/issues/53793 do * Vector3.UP
-		new_look_at = nav.next_path_pos
+		new_look_at = nav.next_path_pos * Vector3.UP 
 
 	var old = transform.basis.orthonormalized()
 	look_at(new_look_at)

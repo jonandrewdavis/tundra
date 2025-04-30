@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8i2l7usul6u2"]
+[gd_scene load_steps=4 format=3 uid="uid://c8i2l7usul6u2"]
 
 [ext_resource type="Material" uid="uid://dwmedoe14jqjo" path="res://weapon_manager/Spawnable_Objects/Projectiles_To_Load/bullet_yellow_material.tres" id="1_dg2xw"]
 
@@ -12,14 +12,6 @@ top_radius = 0.006
 bottom_radius = 0.006
 height = 0.07
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4sh6g"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-
 [node name="bullet" type="RigidBody3D"]
 collision_layer = 16
 collision_mask = 37
@@ -30,13 +22,9 @@ max_contacts_reported = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-visible = false
 shape = SubResource("CapsuleShape3D_bix2d")
 
 [node name="foamBulletA2" type="MeshInstance3D" parent="."]
 transform = Transform3D(5, 0, 0, 0, -2.18557e-07, -5, 0, 5, -2.18557e-07, 0, 0, 0)
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_dg2xw")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_4sh6g")

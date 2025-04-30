@@ -112,7 +112,7 @@ func _ready():
 
 	# TIMERS
 	add_child(interaction_check_timer)
-	interaction_check_timer.wait_time = 0.2
+	interaction_check_timer.wait_time = 0.3
 	interaction_check_timer.start()
 	# TODO: better in process
 	interaction_check_timer.timeout.connect(interact_check)
@@ -171,12 +171,10 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 	if health_system.health == 0:
 		_state_machine.transition(&"Dead")
 
-
 	if respawn == true:
 		health_system.heal(health_system.max_health)
 		_state_machine.transition(&"Idle")
 		respawn = false
-
 
 	#if health_system.health == health_system.max_health: 
 		#print('respawn')
@@ -291,7 +289,6 @@ func on_animation_check():
 				if _dir.y > 0: _animation_player.play(MOVES.WALK.FAST[0])
 				#CURRENT_SPEED = SLOW_SPEED # No running backwards
 
-
 # NOTE: -1.0 makes it move the right way and 0.5 dampens it slightly
 func weapon_vertical_tilt():
 	weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.5, 0.5)
@@ -329,6 +326,7 @@ func interact_check():
 	var intersect = interact_ray_cast()
 	if intersect:
 		interactable = intersect
+		# TODO: DETACH FROM UI DEPENDENCY (Allow no UI)
 		player_ui.update_interaction_label.rpc_id(peer_id, intersect.label)
 	else:
 		interactable = null

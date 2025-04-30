@@ -7,8 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="5_by614"]
 [ext_resource type="PackedScene" uid="uid://s5lur3jc6w4b" path="res://scenes/player/settings_menu/settings_menu.tscn" id="6_en3kk"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fatww"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyawr"]
 bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 5
@@ -80,13 +78,13 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="PlayerUi" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "health_label")]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_by614"]
+
+[node name="PlayerUi" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "health_label", "sync")]
 script = ExtResource("1_fatww")
 health_bar = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthBar")
 health_label = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthLabel")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_fatww")
+sync = NodePath("MultiplayerSynchronizer")
 
 [node name="CustomSight" type="Control" parent="."]
 layout_mode = 3
@@ -315,3 +313,6 @@ pitch_scale = 1.4
 
 [node name="SettingsMenu" parent="." instance=ExtResource("6_en3kk")]
 visible = false
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_by614")

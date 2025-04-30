@@ -19,6 +19,8 @@ signal hit_signal
 @export var pass_through: bool = false
 
 @onready var world = get_tree().get_first_node_in_group("EnvironmentContainer")
+@onready var projectile_spawner = get_tree().get_first_node_in_group("ProjectileSpawner")
+
 var debug_bullet
 var source: int = 1
 
@@ -109,47 +111,18 @@ func Load_Decal(pos, normal):
 			if normal.y == 1.0:
 				rd.axis = 1
 
-func Launch_Rigid_Body_Projectile(collision_data, projectile, origin_point):
-	var point = collision_data[1]
-	var norm = collision_data[2]
-
-	var _proj = projectile.instantiate()
-
-	_proj.position = origin_point
-
-	world.add_child(_proj, true)
+func Launch_Rigid_Body_Projectile(collision_data, projectile: PackedScene, origin_point):
+	var projectile_data = { 
+		'projectile_name': projectile.get_state().get_node_name(0),
+		'origin_point': origin_point,
+		'target_point': collision_data[1],
+		'projectile_velocity': Projectile_Velocity,
+		'normal': collision_data[2],
+		'damage': damage,
+		'source': source
+	}
 	
-	_proj.look_at(point)	
-	Projectiles_Spawned.push_back(_proj)
-
-	# TODO: Can use on `body_shape_entered` or areas for crit damage.
-	_proj.body_entered.connect(_on_body_entered.bind(_proj, norm))
-	
-	var _direction = (point - origin_point).normalized()
-	_proj.set_linear_velocity( _direction * Projectile_Velocity)
-	
-	# NOTE: Added, because in the previous implementation timer wasn't started, so...  - AD
-	await get_tree().create_timer(Expirey_Time).timeout
-	_proj.queue_free()
-	Projectiles_Spawned.erase(_proj)
-	
-	if Projectiles_Spawned.is_empty(): 
-		queue_free()
-
-#print('DEBUG: BODY:', body, '_proj: ', proj, 'norm: ', norm)
-func _on_body_entered(body, proj, norm):
-	if body.is_in_group("targets") or body.is_in_group("players"):
-		var heath_system: HealthSystem = body.health_system
-		var damage_successful = heath_system.damage(damage, source)
-		if damage_successful:
-			hit_signal.emit()
-
-	if norm:
-		Load_Decal(proj.get_position(), norm)
-		proj.queue_free()
-		Projectiles_Spawned.erase(proj)
-		if Projectiles_Spawned.is_empty():
-			queue_free()
+	Hub.projectile_spawner.spawn(projectile_data)
 
 func Hit_Scan_damage(collision, _direction, _position, _damage):
 	if collision.is_in_group("targets") or collision.is_in_group("players"):

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dy85183h2d31p" path="res://scenes/castle/castle_simple.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="5_qfnet"]
 [ext_resource type="Material" uid="uid://teb2w3f6ts0s" path="res://scenes/walking_terrain/snow_infinite_mat.tres" id="6_i7141"]
-[ext_resource type="PackedScene" uid="uid://ceekvxqimoa8x" path="res://scenes/interactables/oil-drum/oil_drum.tscn" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://crep3klgx68p5" path="res://scripts/systems/projectile_system.tscn" id="8_4mrxx"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_71j4m"]
 
@@ -41,6 +41,8 @@ environment = ExtResource("2_qfnet")
 [node name="MultiplayerManager" parent="." node_paths=PackedStringArray("_player_spawn_point") instance=ExtResource("1_dos3o")]
 _player_spawn_point = NodePath("../PlayerContainer")
 
+[node name="ProjectileSystem" parent="." instance=ExtResource("8_4mrxx")]
+
 [node name="PlayerContainer" type="Node3D" parent="."]
 
 [node name="EnvironmentContainer" type="Node3D" parent="." groups=["EnvironmentContainer"]]
@@ -52,7 +54,7 @@ _spawnable_scenes = PackedStringArray("uid://dup2jh8uleo3l")
 spawn_path = NodePath("../PlayerContainer")
 
 [node name="EnvironmentSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://gk0m2leyfs75", "uid://c8i2l7usul6u2", "uid://dguqnsdowqt3w")
+_spawnable_scenes = PackedStringArray("uid://gk0m2leyfs75", "uid://dguqnsdowqt3w")
 spawn_path = NodePath("../EnvironmentContainer")
 
 [node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
@@ -87,6 +89,3 @@ shape = SubResource("WorldBoundaryShape3D_i7141")
 
 [node name="WorldMesh" type="MeshInstance3D" parent="WorldBoundary"]
 mesh = SubResource("PlaneMesh_4mrxx")
-
-[node name="OilDrum" parent="." instance=ExtResource("6_qfnet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6663, -15.9615)

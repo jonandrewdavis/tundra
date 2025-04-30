@@ -21,6 +21,13 @@ var blasterN: WeaponResource = preload("res://weapon_manager/scripts/Weapon_Stat
 enum WEAPONS {blasterL, blasterN}
 enum CHANGE_DIR { UP, DOWN}
 
+
+signal update_weapon_signal
+signal update_weapon_prev_signal
+
+signal update_ammo_signal
+signal update_ammo_prev_signal
+
 # NOTE: weapons_list: All the posible weapon resources & starting ammo, as WeaponSlot
 # NOTE: weapons_owned: (MultiplayerSync) A list of enums, 0 - 5
 # NOTE: weapon_index: (MultiplayerSync) indexes into -> weapons_list -> weapons_owned to retrieve the WeaponResource
@@ -34,7 +41,6 @@ var spray_profiles: Dictionary = {}
 var player_input: PlayerInput
 var player_camera_3D: Camera3D
 var busy = false
-
 
 func _ready() -> void:
 	Nodash.error_missing(player, 'player')
@@ -87,7 +93,6 @@ func get_slot(index: int) -> WeaponSlot:
 	return weapons_list[weapons_owned[index]]
 
 # TODO: Could use signals here to update multiple things, like HUD, etc.
-# TODO: Decide if we want to emit the current "WeaponSlot" (might be helpful for HUD)
 func change_weapon(dir: CHANGE_DIR) -> void:
 	if not multiplayer.is_server():
 		push_error('Tried to change weapons on the client')
@@ -279,18 +284,19 @@ func melee() -> void:
 ######## HUD Helpers ########
 ######## HUD Helpers ########
 ######## HUD Helpers ########
-# TODO: Direct calls to HUD. Should we use signals? 
-# NOTE: Nice that we can type these functions.
+
+# These emit on the server in the player HUD
+# The server's player HUD then RPCs (rpc_id) the data down the client to display
 func update_weapon(given_index: int = weapon_index):
-	player_hud.update_weapon(get_slot(given_index).weapon.weapon_name)
+	update_weapon_signal.emit(get_slot(given_index).weapon.weapon_name)
 
 func update_ammo(given_index: int = weapon_index):
 	var weapon = get_slot(given_index)
-	player_hud.update_ammo([weapon.current_ammo, weapon.reserve_ammo])
+	update_ammo_signal.emit(weapon.current_ammo, weapon.reserve_ammo)
 
 func update_previous_weapon(given_index: int):
-	player_hud.update_previous_weapon(get_slot(given_index).weapon.weapon_name)
+	update_weapon_prev_signal.emit(get_slot(given_index).weapon.weapon_name)
 
 func update_previous_ammo(given_index: int):
 	var weapon = get_slot(given_index)
-	player_hud.update_previous_ammo([weapon.current_ammo, weapon.reserve_ammo])
+	update_ammo_signal.emit(weapon.current_ammo, weapon.reserve_ammo)
