@@ -299,4 +299,4 @@ func update_previous_weapon(given_index: int):
 
 func update_previous_ammo(given_index: int):
 	var weapon = get_slot(given_index)
-	update_ammo_signal.emit(weapon.current_ammo, weapon.reserve_ammo)
+	update_ammo_prev_signal.emit(weapon.current_ammo, weapon.reserve_ammo)

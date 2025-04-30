@@ -53,6 +53,9 @@ func chase_target():
 		if parent.global_position.distance_to(target.global_transform.origin) > 3.0:
 			nav_agent.set_target_position(target.global_transform.origin)
 			next_path_pos = nav_agent.get_next_path_position()
+			
+	if nav_agent.is_navigation_finished():
+		parent.fire()
 
 func pick_patrol_destination():
 	var map = NavigationServer3D.get_maps()[0]

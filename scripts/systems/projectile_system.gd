@@ -1,11 +1,13 @@
 extends Node
+class_name ProjectileSystem
 
-@onready var projectile_container: Node3D = $ProjectileContainer
-@onready var projectile_spawner: MultiplayerSpawner = $ProjectileSpawner
+@onready var container: Node3D = $ProjectileContainer
+@onready var spawner: MultiplayerSpawner = $ProjectileSpawner
 
 # TODO: Move these out of weapon manager & into a Projectile System folder
 # TODO: OR - move THIS file into a restructed weapon manager area
 var bullet = preload("res://weapon_manager/Spawnable_Objects/bullet.tscn")
+var gun_drone_bullet = preload("res://scenes/enemies/gun_drone/gun_drone_bullet.tscn")
 var debug_decal = preload("res://weapon_manager/Spawnable_Objects/hit_debug.tscn")
 
 var display_debug_decal = true
@@ -13,7 +15,8 @@ var display_debug_decal = true
 signal hit_signal
 
 func _ready():
-	Hub.projectile_spawner = $ProjectileSpawner
+	Hub.projectile_system = self
+
 	$ProjectileSpawner.set_spawn_function(handle_projectile_spawn)
 
 #var projectile_data = { 
@@ -44,7 +47,7 @@ func _on_body_entered(body, _bullet, data):
 		var heath_system: HealthSystem = body.health_system
 		var damage_successful = heath_system.damage(data.damage, data.source)
 		if damage_successful:
-			hit_signal.emit()
+			hit_signal.emit(data.source)
 	
 	if data.normal:
 		create_debug_decal(_bullet.get_position(), data.normal)
@@ -59,7 +62,7 @@ func _on_tree_entered(_bullet):
 func create_debug_decal(pos, normal):
 	if display_debug_decal:
 		var rd = debug_decal.instantiate()
-		projectile_container.add_child(rd, true)
+		container.add_child(rd, true)
 		rd.global_translate(pos)
 		if normal.y == 1.0:
 			rd.axis = 1

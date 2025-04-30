@@ -122,7 +122,7 @@ func Launch_Rigid_Body_Projectile(collision_data, projectile: PackedScene, origi
 		'source': source
 	}
 	
-	Hub.projectile_spawner.spawn(projectile_data)
+	Hub.projectile_system.spawner.spawn(projectile_data)
 
 func Hit_Scan_damage(collision, _direction, _position, _damage):
 	if collision.is_in_group("targets") or collision.is_in_group("players"):

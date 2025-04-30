@@ -10,7 +10,7 @@ var player_container: Node3D
 var heat_dome: Node3D
 var castle: MovingCastle
 
-var projectile_spawner: MultiplayerSpawner
+var projectile_system: ProjectileSystem
 
 # NOTE: Signals do not allow typed params. Even the docs say "you're on your own"...
 signal player_added #network_id: int

@@ -201,8 +201,12 @@ func on_death():
 	set_state(States.DYING)
 
 func can_fire():
+	if not target:
+		return false
+		
 	if health_system.health == 0:
 		return false
+		
 
 func fire():
 	if can_fire() == false:

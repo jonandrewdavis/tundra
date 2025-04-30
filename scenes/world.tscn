@@ -22,7 +22,6 @@ size = Vector2(500, 500)
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_71j4m")
-fog = false
 
 [node name="Env" type="Node3D" parent="."]
 
@@ -54,7 +53,7 @@ _spawnable_scenes = PackedStringArray("uid://dup2jh8uleo3l")
 spawn_path = NodePath("../PlayerContainer")
 
 [node name="EnvironmentSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://gk0m2leyfs75", "uid://dguqnsdowqt3w")
+_spawnable_scenes = PackedStringArray("uid://gk0m2leyfs75")
 spawn_path = NodePath("../EnvironmentContainer")
 
 [node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
@@ -88,4 +87,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_i7141")
 
 [node name="WorldMesh" type="MeshInstance3D" parent="WorldBoundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 mesh = SubResource("PlaneMesh_4mrxx")
