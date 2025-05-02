@@ -22,6 +22,12 @@ properties/3/replication_mode = 2
 properties/4/path = NodePath("AnimationPlayer:current_animation")
 properties/4/spawn = true
 properties/4/replication_mode = 1
+properties/5/path = NodePath(".:collision_layer")
+properties/5/spawn = true
+properties/5/replication_mode = 2
+properties/6/path = NodePath(".:collision_mask")
+properties/6/spawn = true
+properties/6/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3ixi"]
 radius = 0.6

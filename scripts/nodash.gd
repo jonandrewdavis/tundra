@@ -14,8 +14,6 @@ func error_missing(node: Node, node_name: String):
 	if !node:
 		push_error('Missing: ', node_name, _format_stack())
 
-
-
 # TODO: accept just a string OR a string array to get fancy & set more at once. 
 ## Add a property to a MultiplayerSynchronizer using code instead of UI. Default replication mode is "On Change".
 # NOTE: Keep in mind that REPLICATION_MODE_ON_CHANGE will send updates RELIABLY, which comes with a large performance/latency penalty

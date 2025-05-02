@@ -36,6 +36,7 @@ var _animation_player: AnimationPlayer
 @export var weapons_manager: WeaponsManager
 @export var weapon_pivot: Marker3D
 @export var player_ui: PlayerUI
+@export var pvp = false
 
 var peer_id: int
 var respawn: bool
@@ -67,7 +68,7 @@ func _enter_tree():
 # TODO: abstract this so we can just like, give some nodes
 func _ready():
 	add_to_group('players')
-	peer_id = str(name).to_int()
+	#peer_id = str(name).to_int()
 	
 	Nodash.error_missing(weapons_manager, 'weapons_manager')
 	Nodash.warn_missing(player_ui, 'player_ui')
@@ -90,6 +91,7 @@ func _ready():
 	Nodash.sync_property(sync, _animation_player, ['current_animation'])
 	Nodash.sync_property(sync, _animation_player, ['speed_scale'])
 	Nodash.sync_property(sync, bones, ['active'])
+	Nodash.sync_property(sync, self, ['pvp'])
 	
 	_animation_player.playback_default_blend_time = 0.3
 	# NOTE: Might not be necessary if fully server authoratitve.
@@ -323,14 +325,16 @@ func interact_ray_cast():
 
 # INTERACTABLES: LAYER 8
 func interact_check():
+	if not is_inside_tree():
+		return
+
 	var intersect = interact_ray_cast()
 	if intersect:
 		interactable = intersect
 		# TODO: DETACH FROM UI DEPENDENCY (Allow no UI)
-		player_ui.update_interaction_label.rpc_id(peer_id, intersect.label)
+		player_ui.update_interaction_label.rpc_id(name.to_int(), intersect.label)
 	else:
 		interactable = null
-		player_ui.update_interaction_label.rpc_id(peer_id, '')
 
 # TODO: play "nope" sound if not able to do it
 # TODO: bind self or something here?

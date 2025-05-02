@@ -8,7 +8,7 @@ extends CharacterBody3D
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 const FRICTION = 2
 const ROTATION_SPEED = 2.0
-const PROJECTILE_VELOCITY = 50.0
+const PROJECTILE_VELOCITY = 40.0
 
 @export_category("Enemy Required Nodes")
 @export var nav_agent: NavigationAgent3D
@@ -145,13 +145,14 @@ func set_state(new_state: States) -> void:
 		#fire()
 
 	if state == States.DYING:
+		set_collision_layer_value(1, false)
+		set_collision_layer_value(2, true)
 		animation_player.play('dying')
 		clean_up()
 
 	if state == States.EXPLODING:
 		animation_player.pause()
 		explode()
-		
 
 func explode():
 	# TODO: Explode.
@@ -187,7 +188,6 @@ func on_search_box_body_exited(body: Node3D):
 
 # TODO: Use health system? 
 # TODO: could call this "take_hit" or "get_hit" in a refactor
-# basic_rigid_body_projectile calls "hit"
 func on_hurt():
 	set_state(States.HURTING)
 	if !target:
@@ -212,19 +212,24 @@ func fire():
 	if can_fire() == false:
 		return
 	
-	var _proj = rigid_body_projectile.instantiate()
-	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
+	#var _proj = rigid_body_projectile.instantiate()
 	var _origin_point = gun_origin.global_position
-	var _direction = (_target_point - _origin_point).normalized()
-	var timer = _proj.get_node_or_null('Timer')
-	# Connect
-	_proj.body_entered.connect(_on_player_hit.bind(_proj))
-	timer.timeout.connect(func (): queue_free())
-	# Add bullet
-	environment_container.add_child(_proj, true)
-	_proj.position = _origin_point
-	_proj.set_linear_velocity( _direction * PROJECTILE_VELOCITY)
-	_proj.look_at(_target_point)
+	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
+
+	var projectile_data = { 
+		'projectile_name': '',
+		'origin_point': _origin_point,
+		'target_point': _target_point,
+		'projectile_velocity': PROJECTILE_VELOCITY,
+		'normal': null,
+		'damage': attack_value,
+		'source': 0,
+	}
+	
+	Hub.projectile_system.spawner.spawn(projectile_data)
+
+
+
 
 # TODO: Hit more than just players, damage to buildings, etc.
 func _on_player_hit(body, _projectile):
@@ -232,7 +237,9 @@ func _on_player_hit(body, _projectile):
 		body.health_system.damage(attack_value)
 
 	_projectile.queue_free()
-
+	
+	
+	
 
 func give_up():
 	set_state(States.SEARCHING)

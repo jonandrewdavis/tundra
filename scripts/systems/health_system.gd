@@ -41,22 +41,30 @@ func _ready() -> void:
 	
 	if multiplayer.is_server():
 		death.connect(on_report_death)
-		if regen_enabled:
-			# CRITICAL: This requires `call_deferred` for some reason...
-			call_deferred('prepare_regen_timer')
-			health_updated.connect(broadcast_stub)
-
+		
 		# CAUTION: Recieved Node not found & process_rpc errors if this heal is not delayed
 		await get_tree().process_frame
 		heal(max_health)
+		max_health_updated.emit(max_health)
+		
+		if regen_enabled:
+			# CRITICAL: This requires `call_deferred` for some reason...
+			call_deferred('prepare_regen_timer')
+
 
 #func _exit_tree() -> void:
 	#if not multiplayer.is_server():
 		#Nodash.sync_remove_all(sync)
+		
+# TODO: could do teams here
+
 
 func damage(value: int, source: int = 0) -> bool:
 	# Don't allow negative values when damaging
 	var next_health = health - abs(value)
+	
+	if allow_damage_from_source(source) == false:
+		return false
 	
 	# Do not allow damage when dead.
 	if health == 0:
@@ -83,6 +91,28 @@ func damage(value: int, source: int = 0) -> bool:
 	
 	return true
 
+# TODO: Could also implement "teams" here. 
+# 0 is enemy fire
+func allow_damage_from_source(source):
+	# Health system has to have a parent. 
+	var parent = get_parent()
+
+	# Enemies can not hurt each other.
+	if not parent.is_in_group("players") and source == 0:
+		return false
+		
+	# Player rules
+	if parent.is_in_group("players"):
+		# PVP is off	
+		if source != 0 and parent.pvp == false:
+			return false
+
+		# PVP is on
+		elif source != 0 and parent.pvp == true:
+			return true
+		
+	return true
+
 func heal(value):
 	var next_health = health + abs(value)
 	
@@ -93,21 +123,11 @@ func heal(value):
 	health = next_health
 	health_updated.emit(health)
 
-func broadcast_stub(_health):
-	var target_id = int(get_parent().name)
-	if target_id:
-		narrow_cast_signals.rpc_id(target_id, _health)
-
-# NOTE: This calls down to the peer's UI
-@rpc('authority')
-func narrow_cast_signals(updated_health):
-	health_updated.emit(updated_health)
-	max_health_updated.emit(max_health)
 
 # TODO: killed, killer
 # TODO: Report the stats to Hub
 func on_report_death():
-	print('reboot')
+	print('TODO: Reporting the death of a player')
 	pass
 
 # TODO: Could abstract this system to handle regen of any property, like HEAT.

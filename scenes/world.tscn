@@ -69,6 +69,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="WorldBoundaryGround" type="StaticBody3D" parent="WorldBoundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+collision_layer = 255
+collision_mask = 255
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary/WorldBoundaryGround"]
 shape = SubResource("WorldBoundaryShape3D_71j4m")
@@ -76,12 +78,16 @@ disabled = true
 
 [node name="WorldBoundaryLeft" type="StaticBody3D" parent="WorldBoundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 0)
+collision_layer = 255
+collision_mask = 255
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary/WorldBoundaryLeft"]
 shape = SubResource("WorldBoundaryShape3D_qfnet")
 
 [node name="WorldBoundaryRight" type="StaticBody3D" parent="WorldBoundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0)
+collision_layer = 255
+collision_mask = 255
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary/WorldBoundaryRight"]
 shape = SubResource("WorldBoundaryShape3D_i7141")

@@ -55,7 +55,7 @@ func _on_body_entered(body, _bullet, data):
 	_bullet.queue_free()
 	
 func _on_tree_entered(_bullet):
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(3.5).timeout
 	if _bullet:
 		_bullet.queue_free()
 		

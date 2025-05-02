@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=19 format=3 uid="uid://btdemgg0e0b4o"]
 
 [ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/player_ui.gd" id="1_fatww"]
 [ext_resource type="Texture2D" uid="uid://clx8vvaklih15" path="res://scenes/player/player_assets/crosshair046.png" id="2_by614"]
@@ -78,13 +78,10 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_by614"]
-
-[node name="PlayerUi" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "health_label", "sync")]
+[node name="PlayerUi" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "health_label")]
 script = ExtResource("1_fatww")
 health_bar = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthBar")
 health_label = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthLabel")
-sync = NodePath("MultiplayerSynchronizer")
 
 [node name="CustomSight" type="Control" parent="."]
 layout_mode = 3
@@ -313,6 +310,3 @@ pitch_scale = 1.4
 
 [node name="SettingsMenu" parent="." instance=ExtResource("6_en3kk")]
 visible = false
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_by614")

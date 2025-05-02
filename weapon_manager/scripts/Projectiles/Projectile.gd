@@ -5,8 +5,6 @@
 extends Node3D
 class_name Projectile
 
-signal hit_signal
-
 ## Can Be Either A Hit Scan or Rigid Body Projectile. If Rigid body is select a Rigid body must be provided.
 @export_enum ("Hitscan","Rigidbody_Projectile","over_ride") var Projectile_Type: String = "Hitscan"
 
@@ -73,7 +71,8 @@ func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
 func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
 	var Point = Collision[1]
 	if Collision[0]:
-		Load_Decal(Point, Collision[2])
+		
+		Hub.projectile_system.create_debug_decal(Point, Collision[2])
 		
 		if Collision[0].is_in_group("targets"):
 			var Bullet = get_world_3d().direct_space_state
@@ -82,9 +81,8 @@ func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
 			var New_Intersection = PhysicsRayQueryParameters3D.create(origin_point,Point+Bullet_Direction*2)
 			New_Intersection.set_collision_mask(0b11101111) 
 			New_Intersection.set_hit_from_inside(false)
-			New_Intersection.set_exclude(hit_objects)
+			#New_Intersection.set_exclude(hit_objects)
 			var Bullet_Collision = Bullet.intersect_ray(New_Intersection)
-	
 			if Bullet_Collision:
 				Hit_Scan_damage(Bullet_Collision.collider, Bullet_Direction,Bullet_Collision.position,_damage)
 				if pass_through and check_pass_through(Bullet_Collision.collider, Bullet_Collision.rid):
@@ -95,13 +93,14 @@ func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
 					return
 			queue_free()
 
-func check_pass_through(collider: Node3D, rid: RID)-> bool:
-	var valid_pass_though: bool = false
-	if collider.is_in_group("Pass Through"):
-		hit_objects.append(rid)
-		valid_pass_though = true
-	return valid_pass_though
-
+func check_pass_through(_collider: Node3D, _rid: RID)-> bool:
+	#var valid_pass_though: bool = false
+	#if collider.is_in_group("targets"):
+		#hit_objects.append(rid)
+		#valid_pass_though = true
+	#return valid_pass_though
+	return true
+	
 func Load_Decal(pos, normal):
 	if Display_Debug_Decal:
 		var rd = debug_bullet.instantiate()
@@ -129,4 +128,4 @@ func Hit_Scan_damage(collision, _direction, _position, _damage):
 		var heath_system: HealthSystem = collision.health_system
 		var damage_successful = heath_system.damage(damage, source)
 		if damage_successful:
-			hit_signal.emit()
+			Hub.projectile_system.hit_signal.emit(source)

@@ -63,7 +63,7 @@ script = ExtResource("2_ktqdq")
 root = NodePath("..")
 enable_prediction = true
 state_properties = Array[String]([":transform", ":velocity", "master:transform", "RewindableStateMachine:state"])
-input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "PlayerInput:shoot_input", "CameraInput:camera_look"])
+input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "CameraInput:camera_look", "PlayerInput:shoot_input"])
 enable_input_broadcast = false
 metadata/_custom_type_script = "uid://d350u8evihs1u"
 

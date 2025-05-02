@@ -38,8 +38,9 @@ func _ready():
 		camera_3D.current = false
 
 func _gather():
-	camera_basis = get_camera_rotation_basis()
-	camera_look = get_camera_vertical_look()
+	if camera_mount.is_inside_tree():
+		camera_basis = get_camera_rotation_basis()
+		camera_look = get_camera_vertical_look()
 
 func _input(event):
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:

@@ -1,9 +1,12 @@
 extends Node3D
 class_name WeaponsManager
 
+
 # TODO: This should be a true StateMachine (RewindableStateMachine?) and each WeaponResource a state within
 # TODO: Enter and exit animations, updating ammo, etc.
 # TODO: If you have a that weapon in posession, you can travel to it.
+# TODO: This could be fully incorporated into the existing statemachine, with lots of enter, exit, display, etc.
+
 
 @export var animation_player: AnimationPlayer
 @export var melee_hitbox: ShapeCast3D
@@ -158,7 +161,7 @@ func load_projectile(spread):
 	############
 	# TODO: Document how I connected the signals in code.
 	############
-	_projectile.hit_signal.connect(hit_signal_stub)
+	#_projectile.hit_signal.connect(hit_signal_stub)
 	
 	# NOTE: added true
 	bullet_point.add_child(_projectile, true)
@@ -169,8 +172,8 @@ func load_projectile(spread):
 
 # Calls directly to the parent HUD.	
 # When using signals, tended to emit on other players
-func hit_signal_stub():
-	player_hud._on_weapons_manager_hit_signal()
+#func hit_signal_stub():
+	#player_hud._on_weapons_manager_hit_signal()
 
 func shoot():
 	# TODO: Use the rollback syncronizer and "is_fresh".

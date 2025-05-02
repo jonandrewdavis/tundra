@@ -4,7 +4,6 @@ class_name PlayerUI
 @export var weapons_manager: WeaponsManager
 @export var health_bar: ProgressBar
 @export var health_label: Label
-@export var sync: MultiplayerSynchronizer
 
 # TODO: When UI items move around, they're often reparented...
 # Use the export & select method above. It keeps them current.
@@ -12,6 +11,7 @@ class_name PlayerUI
 @onready var hit_sight = $HitSight
 @onready var snow_shader = $Shaders/SnowShader
 
+var local_health: int = 100
 var local_max_health: int = 100
 
 # TODO: Is this the best place for these?
@@ -19,54 +19,53 @@ var local_max_health: int = 100
 var hit_sight_timer = Timer.new()
 
 func _ready():
-	if not multiplayer.is_server():
+	var peer_id = get_parent().name.to_int()
+
+	# CRITICAL: If we're not server, and NOT the player that owns the UI. 
+	# Delete the UI and return early.
+	if not multiplayer.is_server() and multiplayer.get_unique_id() != peer_id:
+		queue_free()
+		return
+
+	if multiplayer.is_server():
+		weapons_manager.update_ammo_signal.connect(func(curr, res): update_ammo.rpc_id(peer_id, curr, res))
+		weapons_manager.update_weapon_signal.connect(func(text): update_weapon.rpc_id(peer_id, text))
+		weapons_manager.update_ammo_prev_signal.connect(func(curr, res): update_ammo_prev.rpc_id(peer_id, curr, res))
+		weapons_manager.update_weapon_prev_signal.connect(func(text): update_weapon_prev.rpc_id(peer_id, text))
+
+		Hub.projectile_system.hit_signal.connect(handle_hit_signal)
+		
+		var player_health_system: HealthSystem = get_parent().health_system
+		player_health_system.health_updated.connect(func(new_health): update_health.rpc(new_health))
+		player_health_system.max_health_updated.connect(func (new_max): update_max_health.rpc(new_max))
+		# TODO: Listen for death and fade out UI? 
+	else:
+		# Client code
 		DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
 	
-		# only clients need hit sight timer
+		# Only clients need hit sight timer. RPC just starts it.
 		add_child(hit_sight_timer)
 		hit_sight_timer.wait_time = 0.05
 		hit_sight_timer.one_shot = true
 		hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)	
-	
-	Nodash.error_missing(weapons_manager, 'Weapons Manager')
 
-	# WITH: 130 kib
-	#Nodash.sync_property(sync, hit_sight, ['visible'])
-	Nodash.sync_property(sync, %CurrentAmmo, ['text'])
-	Nodash.sync_property(sync, %CurrentWeaponLabel, ['text'])
-	Nodash.sync_property(sync, %BackupWeaponLabel, ['text'])
-	Nodash.sync_property(sync, %BackupAmmo, ['text'])
-
-	# If the parent is the player that owns the UI 
-	var peer_uid: int = multiplayer.get_unique_id()	
-	if str(peer_uid) != get_parent().name:
-		hide()
-		# CRITICAL: Not working
-		#$MultiplayerSynchronizer.set_visibility_for(peer_uid, false)
-		#$MultiplayerSynchronizer.update_visibility(0)
-		#return
-
-	if multiplayer.is_server():
-		weapons_manager.update_ammo_signal.connect(update_ammo)
-		weapons_manager.update_weapon_signal.connect(update_weapon)
-		weapons_manager.update_ammo_prev_signal.connect(update_ammo_prev)
-		weapons_manager.update_weapon_prev_signal.connect(update_weapon_prev)
-
-		Hub.projectile_system.hit_signal.connect(func(source): show_hit_signal.rpc_id(source))
-
-
+		
 	# CRITICAL: This pattern sucks
 	# TESTING: Here we have our exact client listen for signals (emitted in rpc_id)
 	# This is client side. Could get messy. Or could work for UI.
-	if str(peer_uid) == get_parent().name:
-		var player_health_system: HealthSystem = get_parent().health_system
-		player_health_system.health_updated.connect(update_health)
-		player_health_system.max_health_updated.connect(func (new_max): local_max_health = new_max)
+	#if str(peer_uid) == get_parent().name:
+		#player_health_system.health_updated.connect(update_health)
+		#player_health_system.max_health_updated.connect(func (new_max): local_max_health = new_max)
+
 
 func _process(_delta: float) -> void:
 	_show_snow_shader()
 
-@rpc('authority', 'call_remote')
+func handle_hit_signal(source):
+	if source == get_parent().name.to_int():
+		show_hit_signal.rpc_id(source)
+
+@rpc
 func show_hit_signal():
 	hit_sight.set_visible(true)
 	hit_sight_timer.start()	
@@ -74,22 +73,34 @@ func show_hit_signal():
 func _on_hit_sight_timer_timeout():
 	hit_sight.set_visible(false)
 	
+@rpc
 func update_health(new_health):
 	health_label.text = str(new_health) + " / " + str(local_max_health)
+	local_health = new_health
 	health_bar.value = new_health
-	health_bar.max_value = local_max_health
+	
+@rpc
+func update_max_health(new_max_health):
+	health_label.text = str(local_health) + " / " + str(new_max_health)
+	local_max_health = new_max_health
+	health_bar.max_value = new_max_health
 
+@rpc
 func update_ammo(current_ammo: int, reserve_ammo: int):
 	%CurrentAmmo.set_text(str(current_ammo)+" / "+str(reserve_ammo))
 
+@rpc
 func update_weapon(weapon_name: String):
 	%CurrentWeaponLabel.set_text(weapon_name)
 
+@rpc
 func update_weapon_prev(weapon_name: String):
 	%BackupWeaponLabel.set_text(weapon_name)
 
+@rpc
 func update_ammo_prev(current_ammo: int, reserve_ammo: int):
 	%BackupAmmo.set_text(str(current_ammo)+" / "+str(reserve_ammo))
+
 
 # DEPRECATED: These are from the previous template. May be useful.
 #func load_over_lay_texture(Active:bool, txtr: Texture2D = null):
