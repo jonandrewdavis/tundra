@@ -71,6 +71,7 @@ func _ready():
 	
 	# Nav
 	nav.give_up_signal.connect(give_up)
+	nav.attack_signal.connect(attack)
 
 	await get_tree().create_timer(0.2).timeout
 	set_state(States.SEARCHING)
@@ -200,7 +201,7 @@ func on_hurt():
 func on_death():
 	set_state(States.DYING)
 
-func can_fire():
+func can_attack():
 	if not target:
 		return false
 		
@@ -208,8 +209,8 @@ func can_fire():
 		return false
 		
 
-func fire():
-	if can_fire() == false:
+func attack():
+	if can_attack() == false:
 		return
 	
 	#var _proj = rigid_body_projectile.instantiate()
@@ -228,18 +229,13 @@ func fire():
 	
 	Hub.projectile_system.spawner.spawn(projectile_data)
 
-
-
-
 # TODO: Hit more than just players, damage to buildings, etc.
 func _on_player_hit(body, _projectile):
 	if body.is_in_group('players'):
 		body.health_system.damage(attack_value)
 
 	_projectile.queue_free()
-	
-	
-	
+
 
 func give_up():
 	set_state(States.SEARCHING)
