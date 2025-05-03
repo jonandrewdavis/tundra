@@ -1,5 +1,91 @@
-[gd_scene format=3 uid="uid://vydo5ihqeu0v"]
+[gd_scene load_steps=9 format=3 uid="uid://vydo5ihqeu0v"]
 
-[node name="DogEnemy" type="CharacterBody3D"]
+[ext_resource type="Script" uid="uid://yg2m7lbiip0y" path="res://scenes/enemies/dog/dog_enemy.gd" id="1_nd7sd"]
+[ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="1_v2iur"]
+[ext_resource type="Script" uid="uid://dgmmwgxl0beil" path="res://scripts/systems/navigation_system.gd" id="2_fk3wx"]
+[ext_resource type="PackedScene" uid="uid://cn4tnc734h4v6" path="res://scenes/enemies/dog/dog.gltf" id="3_fk3wx"]
+[ext_resource type="AnimationLibrary" uid="uid://cfwdh8i5dg5c2" path="res://scenes/enemies/dog/dog_animations/dog_animations_1.res" id="5_mpiel"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_nd7sd"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:health")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath(".:speed")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fk3wx"]
+size = Vector3(0.55, 1, 1.7)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nd7sd"]
+size = Vector3(30, 3, 30)
+
+[node name="DogEnemy" type="CharacterBody3D" node_paths=PackedStringArray("search_box", "animation_player", "health_system", "nav", "nav_agent")]
+script = ExtResource("1_nd7sd")
+search_box = NodePath("SearchBox")
+animation_player = NodePath("Sketchfab_Scene/AnimationPlayer")
+health_system = NodePath("HealthSystem")
+nav = NodePath("NavigationSystem")
+nav_agent = NodePath("NavigationAgent3D")
+
+[node name="HealthSystem" parent="." instance=ExtResource("1_v2iur")]
+max_health = 10
+
+[node name="NavigationSystem" type="Node" parent="." node_paths=PackedStringArray("nav_agent")]
+script = ExtResource("2_fk3wx")
+nav_agent = NodePath("../NavigationAgent3D")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_nd7sd")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("3_fk3wx")]
+
+[node name="GeneralSkeleton" parent="Sketchfab_Scene/Sketchfab_model/DOG_fbx/Object_2/RootNode/DOG_skeleton/Object_5" index="0"]
+bones/1/position = Vector3(-1.2529e-17, -0.323165, 0.265457)
+bones/2/rotation = Quaternion(0.532929, 0.607217, -0.377895, 0.452183)
+bones/3/rotation = Quaternion(0.0276364, -0.0573986, 0.369903, 0.926884)
+bones/6/rotation = Quaternion(0.0625671, -0.0808157, 0.646524, 0.756016)
+bones/7/rotation = Quaternion(-2.19516e-08, -1.53513e-08, -0.573462, 0.819232)
+bones/8/rotation = Quaternion(0.0119444, -0.109492, 0.113473, 0.987417)
+bones/9/rotation = Quaternion(-3.8726e-09, -1.44971e-07, 0.424125, 0.905604)
+bones/12/rotation = Quaternion(0.0599187, -0.0513589, 0.719023, 0.690491)
+bones/13/rotation = Quaternion(0.0723108, 0.11663, -0.517837, 0.844401)
+bones/14/rotation = Quaternion(3.3735e-08, 4.72321e-08, 0.328682, 0.944441)
+bones/15/rotation = Quaternion(-4.33821e-08, 1.49426e-09, 0.279054, 0.960275)
+bones/18/rotation = Quaternion(0.39822, -0.569059, 0.620895, 0.363432)
+bones/19/rotation = Quaternion(-0.0753663, -0.0575164, 0.0872666, 0.991663)
+bones/20/rotation = Quaternion(0.11191, -0.136779, -0.252833, 0.951232)
+bones/21/rotation = Quaternion(-4.27779e-08, 7.57313e-08, 0.00787392, 0.999969)
+bones/24/rotation = Quaternion(0.0901957, -0.0901954, 0.633941, -0.76279)
+bones/25/rotation = Quaternion(0.0304246, -0.0791047, 0.221087, 0.971564)
+bones/26/rotation = Quaternion(0.00422214, 0.0232218, -0.358879, 0.933086)
+bones/27/rotation = Quaternion(0.11517, 0.305724, -0.096324, 0.940208)
+bones/30/rotation = Quaternion(0.0292043, 0.0202187, -0.876137, 0.480752)
+bones/31/rotation = Quaternion(0.0352016, -0.0726029, 0.437818, 0.895436)
+bones/32/rotation = Quaternion(-0.0346076, -0.12418, -0.21986, 0.966976)
+bones/33/rotation = Quaternion(-0.0376185, -0.114946, -0.311397, 0.942552)
+
+[node name="AnimationPlayer" parent="Sketchfab_Scene" index="1"]
+libraries = {
+&"dog_animations_1": ExtResource("5_mpiel")
+}
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.569016, 0)
+shape = SubResource("BoxShape3D_fk3wx")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="SearchBox" type="Area3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, -8)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SearchBox"]
+shape = SubResource("BoxShape3D_nd7sd")
+
+[editable path="Sketchfab_Scene"]

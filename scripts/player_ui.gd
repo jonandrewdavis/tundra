@@ -9,7 +9,8 @@ class_name PlayerUI
 # Use the export & select method above. It keeps them current.
 # Alternatively, use "access as unique name", which is kinda the same effect.
 @onready var hit_sight = $HitSight
-@onready var snow_shader = $Shaders/SnowShader
+@onready var snow_shader_light = $Shaders/SnowShaderLight
+@onready var snow_shader_heavy = $Shaders/SnowShaderHeavy
 
 var local_health: int = 100
 var local_max_health: int = 100
@@ -101,7 +102,6 @@ func update_weapon_prev(weapon_name: String):
 func update_ammo_prev(current_ammo: int, reserve_ammo: int):
 	%BackupAmmo.set_text(str(current_ammo)+" / "+str(reserve_ammo))
 
-
 # DEPRECATED: These are from the previous template. May be useful.
 #func load_over_lay_texture(Active:bool, txtr: Texture2D = null):
 		#overlay.set_texture(txtr)
@@ -115,13 +115,22 @@ func update_ammo_prev(current_ammo: int, reserve_ammo: int):
 	#for i in WeaponStack:
 		#current_weapon_stack.text += "\n"+i.weapon.weapon_name
 
-# TODO: Emit a singal when inside heat dome if other systems need to know
+# TODO: SOURCE THESE FROM HEAT DOME! OR HEAT SYSTEM and emit here.
 func _show_snow_shader():
-	if Hub.heat_dome:
-		if get_parent().global_position.distance_to(Hub.heat_dome.global_position) <= Hub.heat_dome.heat_dome_radius:
-			if snow_shader.visible == true: snow_shader.visible = false
+	if Hub.castle && Hub.castle.heat_dome:
+		var player_heat_distance = get_parent().global_position.distance_to(Hub.castle.heat_dome.global_position)
+		var dome_and_spread = Hub.castle.heat_dome.heat_dome_radius + 15
+				
+		if player_heat_distance <= Hub.castle.heat_dome.heat_dome_radius:
+			if snow_shader_light.visible == true: snow_shader_light.visible = false
+			if snow_shader_heavy.visible == true: snow_shader_heavy.visible = false
+		elif player_heat_distance >= Hub.castle.heat_dome.heat_dome_radius and\
+			player_heat_distance <= dome_and_spread:
+			if snow_shader_light.visible == false: snow_shader_light.visible = true
+			if snow_shader_heavy.visible == true: snow_shader_heavy.visible = false
 		else:
-			if snow_shader.visible == false: snow_shader.visible = true
+			if snow_shader_light.visible == true: snow_shader_light.visible = false
+			if snow_shader_heavy.visible == false: snow_shader_heavy.visible = true
 
 @rpc
 func update_interaction_label(interactable_name: String):

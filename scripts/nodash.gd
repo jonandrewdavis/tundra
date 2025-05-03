@@ -30,6 +30,9 @@ func sync_property(sync: MultiplayerSynchronizer, node: Node, properties: Array[
 	else:
 		sync.replication_config.property_set_replication_mode(node_path, SceneReplicationConfig.REPLICATION_MODE_ALWAYS)
 
+func sync_cleanup_hook(sync: MultiplayerSynchronizer):
+	sync.tree_exiting.connect(sync_remove_all.bind(sync))
+
 ## Remove all properties from a MultiplayerSynchronizer. Useful during on_exit clean up to prevent errors.
 func sync_remove_all(sync: MultiplayerSynchronizer):
 	for property: NodePath in sync.replication_config.get_properties():

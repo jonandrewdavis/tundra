@@ -6,6 +6,8 @@ var _multiplayer_scene = load("res://scenes/player/player_.tscn")
 
 var _players_in_game: Dictionary = {}
 
+# TODO: Move Player Spawner and Container into this System or manager
+
 func _ready():
 	# need this to allow time for the callbacks to be established
 	await get_tree().process_frame

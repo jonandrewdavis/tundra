@@ -11,8 +11,8 @@ var timer_navigate = Timer.new()
 var timer_give_up = Timer.new()
 
 signal give_up_signal
+@warning_ignore("unused_signal")
 signal attack_signal
-
 
 func _ready() -> void:
 	parent = get_parent()
@@ -23,10 +23,6 @@ func _ready() -> void:
 		return
 
 	Nodash.error_missing(nav_agent, 'nav_agent')
-
-	nav_agent.path_height_offset = randf_range(-4.5, -10.5)
-	nav_agent.target_desired_distance = randf_range(2.2, 25.0)
-	nav_agent.avoidance_enabled = true
 
 	# Navigation
 	add_child(timer_navigate)

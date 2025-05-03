@@ -1,4 +1,5 @@
 # TODO: Tool? Or does it cause issues? It's not necessary.
+# TODO: Occlude? 
 @tool
 extends Node3D
 
@@ -21,7 +22,8 @@ enum DIR {
 }
 
 func _ready() -> void:
-	multiplayer_spawner.add_spawnable_scene(walking_scene.resource_path)	
+	if not Engine.is_editor_hint():
+		multiplayer_spawner.add_spawnable_scene(walking_scene.resource_path)	
 
 	# To be server authoratative, return early if not server
 	if not multiplayer.is_server():
@@ -65,9 +67,9 @@ func on_check_walking_timer():
 	if !walking_scene_tracker:
 		#push_warning('No walking_scene_tracker to check')
 
-		# Try heat dome if there's none
-		if Hub.heat_dome:
-			walking_scene_tracker = Hub.heat_dome
+		# Set tracking to Castle 
+		if Hub.castle:
+			walking_scene_tracker = Hub.castle
 		return
 	
 	if current_platforms.size() != 3 || platforms_container.get_child_count() != 3:
@@ -84,7 +86,6 @@ func on_check_walking_timer():
 		remove_platform(DIR.INFRONT)
 		add_platform(DIR.BEHIND)
 		walking_scene_center = walking_scene_center - walking_scene_length
-
 
 func remove_platform(dir: DIR):
 	if dir == DIR.BEHIND:

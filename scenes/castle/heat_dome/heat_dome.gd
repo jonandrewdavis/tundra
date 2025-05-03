@@ -1,10 +1,11 @@
 extends Node3D
+class_name HeatDome
 
 # TODO: Max value
 @export var heat_dome_radius: int = 20
 
 # Controls how far the 2nd ring goes
-const spread = 100
+const spread: int = 100
 
 @onready var fog_volume_1 = $FogVolumes/FogVolume1
 @onready var fog_volume_2 = $FogVolumes/FogVolume2
@@ -20,11 +21,9 @@ const spread = 100
 # TODO: New areas. If hte player is in it, out of it/ hurt. etc. cold
 # TODO: Set visiblity range fade mode & fix the shader to be compatbile.
 func _ready() -> void:
-	Hub.heat_dome = self
-
-	# NOTE: World fog is 0.3 (dense)
-	fog_volume_1.material.density = -0.15 # Small
-	fog_volume_2.material.density = -0.15 # Large Dome
+	# NOTE: World fog is 0.8 (super dense)
+	fog_volume_1.material.density = -0.07 # Small
+	fog_volume_2.material.density = -0.8 # Large Dome
 
 	exterior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 	interior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
@@ -37,7 +36,7 @@ func _ready() -> void:
 		return
 
 	heat_dome_radius = 20
-	Hub.heat_dome_value.connect(on_change_heat_dome_value)
+	
 	on_change_heat_dome_value(0)
 	
 # TODO: It's possible that we want:
@@ -88,5 +87,5 @@ func on_change_heat_dome_value(value: int = 0):
 	fog_volume_1.size.x = heat_dome_radius * 2
 	fog_volume_1.size.z = heat_dome_radius * 2
 	
-	fog_volume_2.size.x = heat_dome_radius * 2 + spread
-	fog_volume_2.size.z = heat_dome_radius * 2 + spread
+	fog_volume_2.size.x = (heat_dome_radius * 2) + spread
+	fog_volume_2.size.z = (heat_dome_radius * 2) + spread

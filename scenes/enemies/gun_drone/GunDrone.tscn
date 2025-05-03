@@ -22,19 +22,13 @@ properties/3/replication_mode = 2
 properties/4/path = NodePath("AnimationPlayer:current_animation")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath(".:collision_layer")
-properties/5/spawn = true
-properties/5/replication_mode = 2
-properties/6/path = NodePath(".:collision_mask")
-properties/6/spawn = true
-properties/6/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3ixi"]
 radius = 0.6
 height = 3.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gsfr6"]
-size = Vector3(30, 12, 30)
+size = Vector3(30, 10, 30)
 
 [sub_resource type="Animation" id="Animation_2nx2y"]
 length = 0.001
@@ -165,7 +159,7 @@ debug_path_custom_color = Color(1, 0.19, 0.19, 1)
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, -20)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SearchBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4203, -3.48206, 4.4203)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42, -3, 4.42)
 shape = SubResource("BoxShape3D_gsfr6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

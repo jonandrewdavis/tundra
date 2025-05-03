@@ -6,18 +6,16 @@
 extends CharacterBody3D
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-const FRICTION = 2
+const FRICTION = 15
 const ROTATION_SPEED = 2.0
 const PROJECTILE_VELOCITY = 40.0
 
 @export_category("Enemy Required Nodes")
-@export var nav_agent: NavigationAgent3D
 @export var search_box: Area3D
 @export var animation_player: AnimationPlayer
-@export var gun_origin: Marker3D
 @export var health_system: HealthSystem
 @export var nav: NavigationSystem
-@export var rigid_body_projectile: PackedScene
+@export var nav_agent: NavigationAgent3D
 
 # TODO: Weak points and eyeline
 # TODO: Give up chase 
@@ -29,14 +27,14 @@ const PROJECTILE_VELOCITY = 40.0
 @export var health = max_health
 @export var max_speed = 5.0
 @export var speed = max_speed
-@export var attack_value: int = 10
+@export var attack_value: int = 20
 
 var timer_attack = Timer.new()
 
 var target = null
 
 # This enum lists all the possible states the character can be in.
-enum States { IDLE, SEARCHING, CHASING, ATTACKING, HURTING, DODGING, DYING, EXPLODING }
+enum States { IDLE, SEARCHING, CHASING, ATTACKING, HURTING, DODGING, DYING, DECAYING }
 
 # This variable keeps track of the character's current state.
 var state: States = States.IDLE
@@ -44,6 +42,11 @@ var state: States = States.IDLE
 func _ready(): 
 	# TODO: enemies group as well.
 	add_to_group("targets")
+	
+	Nodash.sync_property($MultiplayerSynchronizer, animation_player, ['current_animation'])
+	Nodash.sync_cleanup_hook($MultiplayerSynchronizer)
+	
+	animation_player.playback_default_blend_time = 0.5
 
 	# This enemy only runs on the server.
 	# Only visuals and some rpcs are sync'd out.
@@ -52,14 +55,14 @@ func _ready():
 		set_process(false)
 		# CRITICAL: Having this big search area enabled causes
 		# HUGE frame rate issues for some reason
-		$SearchBox/CollisionShape3D.disabled = true
+		search_box.monitoring = false
+		search_box.get_node("CollisionShape3D").disabled = true
 		# CAUTION: Trying to disable process on clients can cause MultiplayerSyncronizer issues.
 		#set_process(false)
 
 		return # Early return, no other code runs
 
-	nav_agent.path_height_offset = randf_range(-4.5, -10.5)
-	nav_agent.target_desired_distance = randf_range(22.0, 25.0)
+	nav_agent.target_desired_distance = randf_range(3.0, 4.0)
 	nav_agent.avoidance_enabled = true
 
 	# Connect & create
@@ -74,6 +77,8 @@ func _ready():
 	# Nav
 	nav.give_up_signal.connect(give_up)
 	nav.attack_signal.connect(attack)
+	nav_agent.navigation_finished.connect(on_navigation_finished)
+	nav_agent.path_changed.connect(on_path_changed)
 
 	await get_tree().create_timer(0.2).timeout
 	set_state(States.SEARCHING)
@@ -85,11 +90,7 @@ func _physics_process(delta: float) -> void:
 		#States.ATTACKING:
 			#velocity = velocity.move_toward(Vector3.ZERO, FRICTION * delta)
 		States.DYING:
-			if not is_on_floor():
-				velocity.y -= gravity * delta
-			else:
-				set_state(States.EXPLODING)
-				velocity = Vector3.ZERO
+			velocity = Vector3.ZERO
 	
 	move_and_slide()
 
@@ -120,6 +121,7 @@ func move_and_look(delta):
 	var new = transform.basis.orthonormalized()
 	transform.basis = lerp(old, new, ROTATION_SPEED * delta).orthonormalized()
 
+
 func set_state(new_state: States) -> void:
 	var previous_state := state
 	state = new_state
@@ -134,20 +136,23 @@ func set_state(new_state: States) -> void:
 	# Here, I check the new state.
 	if state == States.SEARCHING:
 		target = null
-		animation_player.play('fly')
+		animation_player.play('dog_animations_1/walk')
 		speed = 3.0
 		nav.pick_patrol_destination()
 		pass
 
 	if state == States.CHASING:
-		if animation_player.is_playing() == false:
-			animation_player.play('fly')
+		animation_player.play('dog_animations_1/walk')
 		nav.chase_target()
 		speed = 6.5
 		pass
 	
 	if state == States.HURTING:
-		animation_player.play('hurt')
+		var side = randi_range(0, 1)
+		if side == 1:
+			animation_player.play('dog_animations_1/hurt')
+		else:
+			animation_player.play('dog_animations_1/hurt')
 		# interrupt whever we are doing to get hurt. Maybe a 33% chance to? 
 		pass
 
@@ -155,25 +160,21 @@ func set_state(new_state: States) -> void:
 		#fire()
 
 	if state == States.DYING:
-		set_collision_layer_value(1, false)
-		set_collision_layer_value(2, true)
-		animation_player.play('dying')
-		clean_up()
+		animation_player.play('dog_animations_1/dying')
+		dying_timer()
 
-	if state == States.EXPLODING:
-		animation_player.pause()
-		explode()
+	if state == States.DECAYING:
+		decay()
+		pass
 
-func explode():
-	# TODO: Explode.
-	animation_player.stop(true)
-	await get_tree().create_timer(3.0).timeout
+func decay():
+	await get_tree().create_timer(10.0).timeout
 	queue_free()
 
-func clean_up():
-	await get_tree().create_timer(5).timeout
-	if state == States.DYING:
-		set_state(States.EXPLODING)
+func dying_timer():
+	await get_tree().create_timer(2.5).timeout
+	animation_player.pause()
+	set_state(States.DECAYING)
 
 # TODO: Would be nice to have an enum of animation names somehow
 func on_animation_finished(animation_name):
@@ -223,20 +224,22 @@ func attack():
 		return
 	
 	#var _proj = rigid_body_projectile.instantiate()
-	var _origin_point = gun_origin.global_position
+	var _origin_point = transform.origin
 	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
+#
+	animation_player.play('dog_animations_1/jump')
 
-	var projectile_data = { 
-		'projectile_name': '',
-		'origin_point': _origin_point,
-		'target_point': _target_point,
-		'projectile_velocity': PROJECTILE_VELOCITY,
-		'normal': null,
-		'damage': attack_value,
-		'source': 0,
-	}
-	
-	Hub.projectile_system.spawner.spawn(projectile_data)
+	#var projectile_data = { 
+		#'projectile_name': '',
+		#'origin_point': _origin_point,
+		#'target_point': _target_point,
+		#'projectile_velocity': PROJECTILE_VELOCITY,
+		#'normal': null,
+		#'damage': attack_value,
+		#'source': 0,
+	#}
+	#
+	#Hub.projectile_system.spawner.spawn(projectile_data)
 
 # TODO: Hit more than just players, damage to buildings, etc.
 func _on_player_hit(body, _projectile):
@@ -248,3 +251,11 @@ func _on_player_hit(body, _projectile):
 
 func give_up():
 	set_state(States.SEARCHING)
+
+
+func on_navigation_finished():
+	animation_player.play('dog_animations_1/idle')
+
+func on_path_changed():
+	if animation_player.current_animation == 'dog_animations_1/idle':
+		animation_player.play('dog_animations_1/walk')

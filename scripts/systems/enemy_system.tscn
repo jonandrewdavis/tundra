@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccj6ll20fnwya"]
+
+[ext_resource type="Script" uid="uid://djjwrct3fdc3b" path="res://scripts/systems/enemy_system.gd" id="1_xbxes"]
+
+[node name="EnemySystem" type="Node"]
+script = ExtResource("1_xbxes")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../EnemyContainer")
+
+[node name="EnemyContainer" type="Node3D" parent="."]

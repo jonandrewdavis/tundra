@@ -1,10 +1,10 @@
 extends Interactable
 
 func interact(_player):
-	Hub.debug_change_castle_speed()
+	Hub.castle.change_castle_speed.emit()
 	if Hub.castle.castle_on:
-		label = 'Off'
+		label = 'Engine Off'
 	else:
-		label = 'On'
+		label = 'Engine On'
 	
 	return true

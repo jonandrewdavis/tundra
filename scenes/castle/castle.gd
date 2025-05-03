@@ -1,9 +1,13 @@
 extends AnimatableBody3D
 class_name MovingCastle
 
-# TODO: skip hub
+@export var heat_dome: HeatDome
+
 @export var castle_speed: float = 1.2
 @export var castle_on: bool = false
+
+signal change_heat_dome_value #value: int
+signal change_castle_speed
 
 # TODO: Allow picking new targets on a map or something
 # TODO: Rotation, stop at crossroads
@@ -18,6 +22,8 @@ func _ready():
 	Hub.castle = self
 
 	sync_to_physics = false
+	set_process(false)
+	set_physics_process(false)	
 
 	# Player Bones
 	set_collision_layer_value(4, true)
@@ -26,11 +32,12 @@ func _ready():
 	if multiplayer.is_server():
 		NetworkTime.before_tick.connect(_save_previous_position)
 		NetworkTime.on_tick.connect(_apply_tick)
-		NetworkTime.after_tick.connect(_calc_velocity)
-		Hub.change_castle_speed.connect(_on_change_castle_speed)
-	else:
-		set_process(false)
-		set_physics_process(false)	
+		NetworkTime.on_tick.connect(_calc_velocity)
+		
+		# Castle Control Signals (called from Hub.castle)
+		change_castle_speed.connect(_on_change_castle_speed)
+		change_heat_dome_value.connect(func(new_value): heat_dome.on_change_heat_dome_value(new_value))
+
 
 func get_velocity() -> Vector3:
 	return _velocity

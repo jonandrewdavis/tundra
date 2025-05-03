@@ -1,26 +1,21 @@
 extends Node
 
-const gun_drone = preload("res://scenes/enemies/gun_drone/GunDrone.tscn")
-
 # NOTICE: Needs to be hardcoded, since the server is headless & uses Hub.viewport to cast rays from the "camera"
 var viewport = Vector2i(1152, 648)
 
 var world: Node3D
 var player_container: Node3D
-var heat_dome: Node3D
-var castle: MovingCastle
+var castle: MovingCastle 
 
-var projectile_system: ProjectileSystem
+var projectile_system: ProjectileSystem # Sets self on ready
+var enemy_system: EnemySystem # Sets self on ready
 
 # NOTE: Signals do not allow typed params. Even the docs say "you're on your own"...
 signal player_added #network_id: int
-signal heat_dome_value #value: int
-signal change_castle_speed
 
 func _ready() -> void:
 	# Can copy paste these into other files to listen to signals (also removes unused warning):
 	player_added.connect(on_player_added_hub)
-	heat_dome_value.connect(on_change_heat_dome_value)
 
 func get_player(network_id: int):
 	var players = world.get_node('PlayerContainer').get_children()
@@ -31,16 +26,3 @@ func get_player(network_id: int):
 # TODO: Scoreboard
 func on_player_added_hub(_network_id):
 	pass
-
-func on_change_heat_dome_value(_value: int):
-	pass
-	
-func debug_create_enemy():
-	var container = world.get_node('EnemiesContainer')
-	var new_drone = gun_drone.instantiate()
-	container.add_child(new_drone, true)
-	var rand = randi_range(0, 3)
-	new_drone.global_position = Vector3(0.0 + rand, 8.0, -35.0 + rand)
-
-func debug_change_castle_speed():
-	change_castle_speed.emit()

@@ -129,10 +129,10 @@ _surfaces = [{
 "vertex_data": PackedByteArray("mpnZP8zMzD+amSnAzczcP8zMzD9mZibAmpnZP8zMzD+amQnBzczcPwAAAEBmZibAZ2bWPwAAAEBmZibAZ2bWPwAAAEA0MwnBZ2bWPwAA4D+amSnAZ2bWPwAAAEA0MwnBZ2bWPwAAAEBmZibAzczcP8zMzD9mZibAzczcPwAAAEBmZibAzczcP8zMzD+amQnBzczcPwAAAECamQnBzczcPwAAAEBmZibAmpnZPwAAAECamQnBmpnZPwAAAECamQnBzczcPwAAAEBmZibAZ2bWPwAAAECamQnBZ2bWPwAAAECamQnBzczcPwAAAEBmZibAZ2bWPwAAAEA0MwnBzczcP8zMzD+amQnBzczcPwAAAEBmZibAzczcPwAAAECamQnBZ2bWPwAAAEA0MwnBZ2bWPwAA4D+amSnAZ2bWPwAA4D80MwnBmpnZPwAAAECamQnBzczcP8zMzD+amQnBzczcPwAAAECamQnBzczcP8zMzD+amQnBmpnZPwAAAECamQnBmpnZP8zMzD+amQnBmpnZP8zMzD+amQnBzczcP8zMzD9mZibAzczcP8zMzD+amQnBZ2bWP8zMzD9mZibAmpnZP8zMzD+amSnAZ2bWP8zMzD+amSnAzczcP8zMzD9mZibAmpnZP8zMzD+amSnAZ2bWP8zMzD9mZibAZ2bWP8zMzD+amSnAZ2bWPwAAAEBmZibAZ2bWP8zMzD9mZibAZ2bWP8zMzD9mZibAzczcPwAAAEBmZibAzczcP8zMzD9mZibAZ2bWPwAA4D+amSnAZ2bWPwAAAEBmZibAZ2bWP8zMzD+amSnAZ2bWPwAAAEBmZibAzczcPwAAAEBmZibAZ2bWP8zMzD9mZibA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//////AAD/f/////8AAP9//////wAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5/////f/9//n////9//3/+f////3//f/5//3//////AAD/f/////8AAP9//////wAA/3//////AAD/f/////8AAP9//////wAA/3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//////wAA/z//////AAD/P/////8AAP8//////wAA/z//////AAD/P/////8AAP8//38AAP//AAD/fwAA//8AAP9/AAD//wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8/")
 }]
 
-[node name="CastleSimple" type="AnimatableBody3D"]
-physics_interpolation_mode = 1
+[node name="CastleSimple" type="AnimatableBody3D" node_paths=PackedStringArray("heat_dome")]
 sync_to_physics = false
 script = ExtResource("1_2hve7")
+heat_dome = NodePath("HeatDome")
 
 [node name="LightHouse" parent="." instance=ExtResource("7_2rh0a")]
 transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 13.1411, 0)
@@ -154,17 +154,17 @@ shape = SubResource("ConcavePolygonShape3D_776o2")
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 14.8583)
 mesh = SubResource("ArrayMesh_naar7")
 
-[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("4_g8b6n")
-root = NodePath("..")
-properties = Array[String]([":position"])
-metadata/_custom_type_script = "uid://dour8fehaaugp"
-
 [node name="StateSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("8_1abs5")
 root = NodePath("..")
 properties = Array[String]([":position"])
 metadata/_custom_type_script = "uid://3lbngqcexe0l"
 
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("4_g8b6n")
+root = NodePath("..")
+properties = Array[String]([":position"])
+metadata/_custom_type_script = "uid://dour8fehaaugp"
+
 [node name="ConsoleScene" parent="." instance=ExtResource("11_s82xe")]
-transform = Transform3D(-0.25, 0, 3.7749e-08, 0, 0.25, 0, -3.7749e-08, 0, -0.25, 0, 5.65514, -9.56387)
+transform = Transform3D(-0.45, 0, 6.79481e-08, 0, 0.45, 0, -6.79481e-08, 0, -0.45, 0, 4.03389, -10.3538)

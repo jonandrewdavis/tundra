@@ -114,7 +114,7 @@ func _ready():
 
 	# TIMERS
 	add_child(interaction_check_timer)
-	interaction_check_timer.wait_time = 0.3
+	interaction_check_timer.wait_time = 0.2
 	interaction_check_timer.start()
 	# TODO: better in process
 	interaction_check_timer.timeout.connect(interact_check)
@@ -126,7 +126,6 @@ func _ready():
 func _exit_tree() -> void:
 	if not multiplayer.is_server():
 		Nodash.sync_remove_all(sync)
-		
 
 # CRITICAL: Process is turned off for clients.
 func _process(_delta: float) -> void:
@@ -162,11 +161,11 @@ func process_player_input(input_string: StringName):
 		"interact":
 			interact()
 		"special": # F
-			pass
+			Hub.enemy_system.spawn_dog.emit()
 		"DEBUG_B":
 			toggle_ragdoll()
 		"DEBUG_0":
-			Hub.debug_create_enemy()
+			Hub.enemy_system.spawn_drone.emit()
 
 
 func _rollback_tick(_delta, _tick, _is_fresh):
@@ -296,10 +295,11 @@ func weapon_vertical_tilt():
 	weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.5, 0.5)
 
 func debug_increase_heat_dome_radius():
-	Hub.heat_dome_value.emit(1)
-
+	Hub.castle.change_heat_dome_value.emit(1)
+	
 func debug_toggle_castle_speed():
-	Hub.debug_change_castle_speed()
+	Hub.castle.change_castle_speed.emit()
+
 
 # TODO: Consider moving to an "InteractableSystem", but considering
 # only players can interact, all in one script is fine for now
@@ -325,16 +325,16 @@ func interact_ray_cast():
 
 # INTERACTABLES: LAYER 8
 func interact_check():
-	if not is_inside_tree():
-		return
-
 	var intersect = interact_ray_cast()
 	if intersect:
 		interactable = intersect
 		# TODO: DETACH FROM UI DEPENDENCY (Allow no UI)
 		player_ui.update_interaction_label.rpc_id(name.to_int(), intersect.label)
 	else:
+		if interactable:
+			player_ui.update_interaction_label.rpc_id(name.to_int(), '')	
 		interactable = null
+
 
 # TODO: play "nope" sound if not able to do it
 # TODO: bind self or something here?

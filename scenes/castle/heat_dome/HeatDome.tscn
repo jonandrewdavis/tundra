@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://jqyjx5vv1fpy"]
+[gd_scene load_steps=15 format=3 uid="uid://jqyjx5vv1fpy"]
 
 [ext_resource type="Script" uid="uid://b1ejhdshlsua3" path="res://scenes/castle/heat_dome/heat_dome.gd" id="1_l7s2y"]
 [ext_resource type="Material" uid="uid://liy0127m0psj" path="res://scenes/castle/heat_dome/heat_shader_mat.tres" id="2_l7s2y"]
@@ -6,13 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://en057mecswqa" path="res://scenes/castle/heat_dome/clear+sea+water-2048x2048.png" id="3_qfupc"]
 [ext_resource type="Texture2D" uid="uid://ddwcquq3qs1ad" path="res://assets/ambient/Ice003_1K-JPG/Ice003_1K-JPG_Color.jpg" id="4_xujgp"]
 
-[sub_resource type="FogMaterial" id="FogMaterial_px6c0"]
-albedo = Color(0.977664, 0.815678, 3.85046e-07, 1)
-emission = Color(0.976471, 0.815686, 0, 1)
+[sub_resource type="FogMaterial" id="FogMaterial_xujgp"]
 
-[sub_resource type="FogMaterial" id="FogMaterial_w4mjc"]
-albedo = Color(0.623529, 0.85098, 1, 1)
-emission = Color(0.623529, 0.85098, 1, 1)
+[sub_resource type="FogMaterial" id="FogMaterial_qfupc"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_l7s2y"]
 material = ExtResource("2_l7s2y")
@@ -56,6 +52,9 @@ properties/0/path = NodePath(".:heat_dome_radius")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
+[sub_resource type="QuadOccluder3D" id="QuadOccluder3D_qfupc"]
+size = Vector2(100, 50)
+
 [node name="HeatDome" type="Node3D"]
 script = ExtResource("1_l7s2y")
 
@@ -63,14 +62,14 @@ script = ExtResource("1_l7s2y")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 
 [node name="FogVolume1" type="FogVolume" parent="FogVolumes"]
-size = Vector3(40, 30, 40)
+size = Vector3(40, 40, 40)
 shape = 2
-material = SubResource("FogMaterial_px6c0")
+material = SubResource("FogMaterial_xujgp")
 
 [node name="FogVolume2" type="FogVolume" parent="FogVolumes"]
-size = Vector3(70, 30, 70)
+size = Vector3(70, 40, 70)
 shape = 2
-material = SubResource("FogMaterial_w4mjc")
+material = SubResource("FogMaterial_qfupc")
 
 [node name="HeatDomeExterior" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
@@ -88,3 +87,13 @@ mesh = SubResource("SphereMesh_px6c0")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qfupc")
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 80)
+visible = false
+occluder = SubResource("QuadOccluder3D_qfupc")
+
+[node name="OccluderInstance3D3" type="OccluderInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, -80)
+visible = false
+occluder = SubResource("QuadOccluder3D_qfupc")

@@ -36,6 +36,7 @@ window/size/mode=2
 window/size/resizable=false
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
 
 [editor_plugins]
 
@@ -43,7 +44,6 @@ enabled=PackedStringArray("res://addons/debug_menu/plugin.cfg", "res://addons/ne
 
 [global_group]
 
-EnvironmentContainer="Used to spawn objects like bullets, etc."
 targets="Can be damaged"
 players="humans lol"
 
@@ -172,3 +172,7 @@ logging/netfox_noray_log_level=5
 [physics]
 
 3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+occlusion_culling/use_occlusion_culling=true

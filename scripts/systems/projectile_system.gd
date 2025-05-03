@@ -28,7 +28,8 @@ func _ready():
 	#'source': source
 #}
 func handle_projectile_spawn(data: Variant):
-	var _new_bullet = bullet.instantiate()
+	# TODO: Accept a different projectile type
+	var _new_bullet = gun_drone_bullet.instantiate()
 	_new_bullet.position = data.origin_point
 	_new_bullet.look_at_from_position(data.origin_point, data.target_point, Vector3.UP)
 	
