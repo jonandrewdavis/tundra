@@ -35,5 +35,7 @@ func sync_cleanup_hook(sync: MultiplayerSynchronizer):
 
 ## Remove all properties from a MultiplayerSynchronizer. Useful during on_exit clean up to prevent errors.
 func sync_remove_all(sync: MultiplayerSynchronizer):
+	if not sync:
+		return
 	for property: NodePath in sync.replication_config.get_properties():
 		sync.replication_config.remove_property(property)

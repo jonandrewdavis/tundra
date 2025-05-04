@@ -47,10 +47,6 @@ func _ready():
 	set_collision_mask_value(1, false) 
 	set_collision_mask_value(2, true)
 
-
-	Nodash.sync_property($MultiplayerSynchronizer, animation_player, ['current_animation'])
-	Nodash.sync_cleanup_hook($MultiplayerSynchronizer)
-	
 	animation_player.playback_default_blend_time = 0.5
 	animation_player.speed_scale = 1.5
 
@@ -293,12 +289,11 @@ func attack():
 	if state == States.CHASING or state == States.HURTING:
 		await get_tree().create_timer(0.7).timeout
 		if nav_agent.is_navigation_finished():
-			if global_position.distance_to(target.transform.origin) < 9.0:
+			if target and global_position.distance_to(target.transform.origin) < 9.0:
 				attack_position = target.transform.origin
 				set_state(States.ATTACKING)
 				attack_position = attack_position + Vector3(0.0, 0.5, 0.0)
 				animation_player.play('dog_animations_1/jump')
-
 
 func give_up():
 	set_state(States.SEARCHING)

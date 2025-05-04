@@ -67,6 +67,7 @@ shape = 2
 material = SubResource("FogMaterial_xujgp")
 
 [node name="FogVolume2" type="FogVolume" parent="FogVolumes"]
+visible = false
 size = Vector3(70, 40, 70)
 shape = 2
 material = SubResource("FogMaterial_qfupc")

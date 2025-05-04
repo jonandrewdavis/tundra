@@ -155,6 +155,9 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:speed")
 properties/2/spawn = true
 properties/2/replication_mode = 2
+properties/3/path = NodePath("Sketchfab_Scene/AnimationPlayer:current_animation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cnbhw"]
 radius = 0.45

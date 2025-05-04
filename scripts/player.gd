@@ -343,6 +343,10 @@ func interact_check():
 # TODO: play "nope" sound if not able to do it
 # TODO: bind self or something here?
 func interact():
+	#if holding.is_inside_tree() == false:
+		#holding = null
+		#return
+	
 	if holding && interactable == null:
 		if holding.interact(self):
 			holding = null

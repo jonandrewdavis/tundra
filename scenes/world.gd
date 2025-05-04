@@ -1,7 +1,7 @@
 @tool
 extends Node3D
 
-@onready var world_env: WorldEnvironment = $Env/WorldEnvironment
+@onready var world_env: WorldEnvironment =  $Environment_V2/WorldEnvironment
 
 # Editor debug fog
 @export var fog: bool = true:

@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw2uu68fn7w"]
+
+[ext_resource type="Environment" uid="uid://d2vhvx143fvtc" path="res://scenes/tundra/TundraWorldEnvironment_1.tres" id="1_d84er"]
+
+[node name="Env" type="Node3D"]
+
+[node name="TestCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.903238, 0.42914, 0, -0.42914, 0.903238, 0, 7.94788, 27.7297)
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.409696, 0.0698432, 0.909545, -0.776614, -0.496364, 0.387934, 0.47856, -0.8653, -0.149117, -28.3006, 16.77, 0)
+light_bake_mode = 1
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_d84er")

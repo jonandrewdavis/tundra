@@ -19,15 +19,12 @@ var walking_scene_timer = Timer.new()
 # Server's Headless mode DOES NOT work well with instances & rebuild. 
 # Presumably due to lack of GPU
 
-
 # CRITICAL: Walking platforms must have a MultiplayerSync with position
 # TODO: Use a custom spawn function to set it!!
-var snow_1 = preload("res://scenes/walking_terrain/walking_snow_1/walking_snow.tscn")
-var snow_2 = preload("res://scenes/walking_terrain/walking_snow_2/walking_snow_2.tscn")
-
 var start = preload("res://scenes/walking_terrain/walking_scenes/starting_area.tscn")
+var forest_1 = preload("res://scenes/walking_terrain/walking_scenes/forest_1.tscn")
 
-var SCENE_LIST = [start]
+var SCENE_LIST = [start, forest_1]
 
 var walking_scene_length = 200.0
 var walking_scene_center = 0.0
@@ -35,9 +32,8 @@ var walking_scene_center = 0.0
 # 0 = "most behind"
 # 1 = "center"
 # 2 = "coming soon!"
-var starting_platforms: Array[PackedScene] = [start, start, start]
+var starting_platforms: Array[PackedScene] = [forest_1, forest_1, forest_1]
 var current_platforms: Array[Node3D] = []
-
 
 enum DIR { 
 	BEHIND,

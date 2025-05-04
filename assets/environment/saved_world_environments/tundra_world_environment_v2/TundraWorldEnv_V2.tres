@@ -1,0 +1,14 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://c5g0wrqetp50h"]
+
+[ext_resource type="Material" uid="uid://5nhbp0n3qde8" path="res://scenes/tundra/TundraSkyMaterial_1.tres" id="1_u5fuh"]
+
+[sub_resource type="Sky" id="Sky_0ay63"]
+sky_material = ExtResource("1_u5fuh")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_0ay63")
+ambient_light_source = 1
+reflected_light_source = 1
+volumetric_fog_enabled = true
+volumetric_fog_emission = Color(1, 1, 1, 1)

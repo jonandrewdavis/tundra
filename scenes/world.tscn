@@ -1,14 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=13 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
-[ext_resource type="Environment" uid="uid://d2vhvx143fvtc" path="res://scenes/tundra/TundraWorldEnvironment_1.tres" id="2_qfnet"]
+[ext_resource type="Environment" uid="uid://c5g0wrqetp50h" path="res://assets/environment/saved_world_environments/tundra_world_environment_v2/TundraWorldEnv_V2.tres" id="2_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://ccj6ll20fnwya" path="res://scripts/systems/enemy_system.tscn" id="5_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://dy85183h2d31p" path="res://scenes/castle/castle_simple.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="5_qfnet"]
 [ext_resource type="Material" uid="uid://teb2w3f6ts0s" path="res://scenes/walking_terrain/snow_infinite_mat.tres" id="6_i7141"]
 [ext_resource type="PackedScene" uid="uid://crep3klgx68p5" path="res://scripts/systems/projectile_system.tscn" id="8_4mrxx"]
-[ext_resource type="PackedScene" uid="uid://ceekvxqimoa8x" path="res://scenes/interactables/oil-drum/oil_drum.tscn" id="9_7r4gi"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_71j4m"]
 
@@ -18,26 +17,24 @@ plane = Plane(-1, 0, 0, 0)
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_i7141"]
 plane = Plane(1, 0, 0, 0)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_4mrxx"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_i7141"]
 material = ExtResource("6_i7141")
-size = Vector2(500, 500)
+size = Vector2(10000, 10000)
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_71j4m")
 
-[node name="Env" type="Node3D" parent="."]
+[node name="Environment_V2" type="Node3D" parent="."]
 
-[node name="TestCamera" type="Camera3D" parent="Env"]
-transform = Transform3D(1, 0, 0, 0, 0.903238, 0.42914, 0, -0.42914, 0.903238, 0, 7.94788, 27.7297)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment_V2"]
+environment = ExtResource("2_4mrxx")
 
-[node name="Sun" type="DirectionalLight3D" parent="Env"]
-transform = Transform3D(0.409696, 0.0698432, 0.909545, -0.776614, -0.496364, 0.387934, 0.47856, -0.8653, -0.149117, -28.3006, 16.77, 0)
-light_bake_mode = 1
+[node name="SunV2" type="DirectionalLight3D" parent="Environment_V2"]
 shadow_enabled = true
 directional_shadow_mode = 0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
-environment = ExtResource("2_qfnet")
+[node name="Camera3D" type="Camera3D" parent="Environment_V2"]
+transform = Transform3D(0.901289, 0, 0.433219, 0, 1, 0, -0.433219, 0, 0.901289, 0, 6.23504, 30.9048)
 
 [node name="MultiplayerManager" parent="." node_paths=PackedStringArray("_player_spawn_point") instance=ExtResource("1_dos3o")]
 _player_spawn_point = NodePath("../PlayerContainer")
@@ -86,10 +83,4 @@ disabled = true
 
 [node name="WorldMesh" type="MeshInstance3D" parent="WorldBoundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
-mesh = SubResource("PlaneMesh_4mrxx")
-
-[node name="OilDrum" parent="." instance=ExtResource("9_7r4gi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.28664, -20.0453)
-
-[node name="OilDrum2" parent="." instance=ExtResource("9_7r4gi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.80761, 2.28664, -20.0453)
+mesh = SubResource("PlaneMesh_i7141")
