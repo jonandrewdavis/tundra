@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://sue4sjdgodwq"]
+
+[ext_resource type="Script" uid="uid://bucwmniicxv86" path="res://weapon_manager/Spawnable_Objects/SprayProfiles/spray_profile.gd" id="1_sk74a"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4msk4"]
+seed = 145
+frequency = 0.307
+cellular_jitter = -1.115
+cellular_return_type = 0
+domain_warp_type = 1
+domain_warp_amplitude = 30.075
+domain_warp_frequency = -0.835
+domain_warp_fractal_type = 2
+domain_warp_fractal_octaves = 1
+
+[node name="Spray_Profile" type="Node"]
+script = ExtResource("1_sk74a")
+Spray_Noise = SubResource("FastNoiseLite_4msk4")
+Random_Spray_Multiplier = 2.0
+Max_Limit = 12
+Use_Count = false

@@ -22,8 +22,12 @@ const spread: int = 100
 # TODO: Set visiblity range fade mode & fix the shader to be compatbile.
 func _ready() -> void:
 	# NOTE: World fog is 0.8 (super dense)
-	fog_volume_1.material.density = -0.07 # Small
+	fog_volume_1.material.density = -0.05 # Small
 	fog_volume_2.material.density = -0.8 # Large Dome
+
+	# NOTE: World fog is 0.8 (super dense)
+	#fog_volume_1.material.density = -0.35 # Small
+	#fog_volume_2.material.density = -0.8 # Large Dome
 
 	exterior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 	interior.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF

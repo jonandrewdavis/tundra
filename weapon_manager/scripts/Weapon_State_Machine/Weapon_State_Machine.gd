@@ -199,10 +199,9 @@ func shoot():
 		
 		var Spread = Vector2.ZERO
 		
-		# TODO: weapon_name is required for spray... remove this
-		# to allow us to rename weapons from "blasterL', eww...
 		if current_weapon.weapon_spray:
 			count = count + 1
+			# if player_input.aim == false:
 			Spread = spray_profiles[current_weapon.weapon_name].Get_Spray(count, current_weapon.magazine)
 
 		load_projectile(Spread)

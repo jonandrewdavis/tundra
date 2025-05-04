@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=4 format=3 uid="uid://bwrs8ensewkgc"]
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=5 format=3 uid="uid://bwrs8ensewkgc"]
 
 [ext_resource type="PackedScene" uid="uid://dyujeepgj83mf" path="res://weapon_manager/Spawnable_Objects/Projectiles_To_Load/basic_rigid_body_projectile.tscn" id="1_1tllq"]
 [ext_resource type="Script" uid="uid://v2x8jrcvd86" path="res://weapon_manager/scripts/Weapon_State_Machine/weapon_resource.gd" id="2_gpxoe"]
 [ext_resource type="PackedScene" uid="uid://gtthejj2wmyj" path="res://weapon_manager/Spawnable_Objects/Weapons/blaster_n.tscn" id="3_5a5l8"]
+[ext_resource type="PackedScene" uid="uid://sue4sjdgodwq" path="res://weapon_manager/Spawnable_Objects/SprayProfiles/spray_profile_assault_rifle_1.tscn" id="4_goki6"]
 
 [resource]
 script = ExtResource("2_gpxoe")
@@ -23,5 +24,6 @@ auto_fire = true
 fire_range = 100
 can_be_dropped = true
 weapon_drop = ExtResource("3_5a5l8")
+weapon_spray = ExtResource("4_goki6")
 projectile_to_load = ExtResource("1_1tllq")
 incremental_reload = false

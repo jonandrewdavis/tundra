@@ -7,6 +7,7 @@ class_name Spray_Profile
 @export var Max_Limit: int = 30
 @export var Updwards_Lock: bool = false
 @export var True_Random: bool = true
+@export var Use_Count: bool = true
 
 @export_category("Path_Spray")
 @export var Spray_Path: Path2D
@@ -20,9 +21,13 @@ func Get_Spray(count: int,_max_count: int)->Vector2:
 	if Spray_Noise:
 		if True_Random:
 			Spray_Noise.set_seed(randi())
+		
+		var Min_Limit = count
+		if Use_Count == false: 
+			Min_Limit = Max_Limit
 			
-		var x = Spray_Noise.get_noise_1d(count)*min(count,Max_Limit)
-		var y = Spray_Noise.get_noise_2d(_max_count,count)*min(count,Max_Limit)
+		var x = Spray_Noise.get_noise_1d(count)*min(Min_Limit,Max_Limit)
+		var y = Spray_Noise.get_noise_2d(_max_count,count)*min(Min_Limit,Max_Limit)
 		
 		if Updwards_Lock:
 			y = -abs(y)
