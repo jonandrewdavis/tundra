@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfu1f2dflklew"]
+
+[ext_resource type="ArrayMesh" uid="uid://di256ppyhaavx" path="res://assets/nature/proton_scatters/p_arbol9.tres" id="1_rpqyn"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jw4ap"]
+height = 3.0
+radius = 0.11
+
+[node name="PArbol9" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_rpqyn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0680201, 1.42275, 0)
+shape = SubResource("CylinderShape3D_jw4ap")

@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=4 uid="uid://gk0m2leyfs75"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bix2d"]
-radius = 0.099605
-height = 0.419677
+radius = 0.07
+height = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x0fj0"]
 resource_name = "yellow"
@@ -45,9 +45,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ly6dy")
 
-[node name="bullet" type="RigidBody3D"]
+[node name="GunDroneBullet" type="RigidBody3D"]
 collision_layer = 0
-collision_mask = 3
+collision_mask = 7
+input_ray_pickable = false
 gravity_scale = 0.0
 continuous_cd = true
 contact_monitor = true
@@ -55,10 +56,9 @@ max_contacts_reported = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-visible = false
 shape = SubResource("CapsuleShape3D_bix2d")
 
 [node name="foamBulletA2" type="MeshInstance3D" parent="."]
-transform = Transform3D(5, 0, 0, 0, -2.18557e-07, -5, 0, 5, -2.18557e-07, 0, 0, 0)
+transform = Transform3D(3.5, 0, 0, 0, -4.15258e-07, -3.5, 0, 9.5, -1.5299e-07, 0, 0, 0)
 mesh = SubResource("ArrayMesh_sqgwv")
 skeleton = NodePath("")

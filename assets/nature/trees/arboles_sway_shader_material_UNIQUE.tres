@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://syy36ahb2e6k"]
+
+[ext_resource type="Shader" uid="uid://2spvdwvnvvvq" path="res://scripts/shaders/SwayShaderExtended.gdshader" id="1_80wxi"]
+[ext_resource type="Texture2D" uid="uid://yevd4w1c1cra" path="res://assets/nature/trees/arbol7_Rama2.png" id="2_sq2li"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_80wxi")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_sq2li")
+shader_parameter/alpha_scissor_threshold = 0.8
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/sway_speed = 1.5
+shader_parameter/sway_strength = 1.5
+shader_parameter/sway_phase_len = 1.5

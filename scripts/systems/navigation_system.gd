@@ -42,20 +42,17 @@ func _ready() -> void:
 	timer_give_up.wait_time = 10.0
 	timer_give_up.one_shot = true # Do not repeatedly give up
 
+
+
+
 func chase_target():
 	if timer_chase_target.is_stopped():
 		timer_chase_target.start()
 	
 	var target = parent.target
 	if target:
-		#if parent.global_position.distance_to(target.global_transform.origin) > 3.0:
-			nav_agent.set_target_position(target.global_transform.origin)
-			next_path_pos = nav_agent.get_next_path_position()
-		#else:
-			#attack_signal.emit()
-			
-	#if nav_agent.is_navigation_finished():
-		#attack_signal.emit()
+		nav_agent.set_target_position(target.global_transform.origin)
+		next_path_pos = nav_agent.get_next_path_position()
 
 func pick_patrol_destination():
 	var map = NavigationServer3D.get_maps()[0]

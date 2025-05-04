@@ -10,7 +10,7 @@ platforms_container = NodePath("PlatformsContainer")
 [node name="PlatformsContainer" type="Node3D" parent="."]
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.286453)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.98735)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../PlatformsContainer")

@@ -131,7 +131,6 @@ _surfaces = [{
 }]
 
 [node name="CastleSimple" type="AnimatableBody3D" node_paths=PackedStringArray("heat_dome", "castle_maw")]
-sync_to_physics = false
 script = ExtResource("1_2hve7")
 heat_dome = NodePath("HeatDome")
 castle_maw = NodePath("CastleMaw")

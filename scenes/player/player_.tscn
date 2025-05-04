@@ -61,7 +61,6 @@ metadata/_custom_type_script = "uid://dour8fehaaugp"
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("2_ktqdq")
 root = NodePath("..")
-enable_prediction = true
 state_properties = Array[String]([":transform", ":velocity", "master:transform", "RewindableStateMachine:state"])
 input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "CameraInput:camera_look", "PlayerInput:shoot_input"])
 enable_input_broadcast = false

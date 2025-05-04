@@ -23,13 +23,11 @@ const ROTATION_SPEED = 3.0
 #@export var eyeline: Area3D 
 
 @export_category("Enemy Stats")
-@export var max_health = 10.0
-@export var health = max_health
 @export var max_speed = 5.0
 @export var speed = max_speed
 @export var attack_value: int = 30
 
-var timer_attack = Timer.new()
+var timer_attack_cooldown = Timer.new()
 
 var target = null
 
@@ -49,8 +47,7 @@ func _ready():
 	set_collision_mask_value(1, false) 
 	set_collision_mask_value(2, true)
 
-	Nodash.sync_property($MultiplayerSynchronizer, self, ['collision_layer'])
-	Nodash.sync_property($MultiplayerSynchronizer, attack_box, ['monitoring'])
+
 	Nodash.sync_property($MultiplayerSynchronizer, animation_player, ['current_animation'])
 	Nodash.sync_cleanup_hook($MultiplayerSynchronizer)
 	
@@ -95,6 +92,14 @@ func _ready():
 	nav_agent.navigation_finished.connect(on_navigation_finished)
 	nav_agent.path_changed.connect(on_path_changed)
 
+
+	add_child(timer_attack_cooldown)
+	timer_attack_cooldown.timeout.connect(attack)
+	timer_attack_cooldown.wait_time = randf_range(4.0, 7.0)
+	timer_attack_cooldown.one_shot = false
+	timer_attack_cooldown.start()
+
+
 	await get_tree().create_timer(0.2).timeout
 	set_state(States.SEARCHING)
 
@@ -119,8 +124,11 @@ func _physics_process(delta: float) -> void:
 	
 # TODO: ADD LOOK
 func move_and_attack(delta):
-	if position.distance_to(attack_position) > 0.5:
+	if position.distance_to(attack_position) > 1.0:
 		velocity = (attack_position - global_transform.origin).normalized() * speed * 1.2
+	elif position.distance_to(attack_position) > 12.0: 
+		velocity = velocity.move_toward(Vector3.ZERO, FRICTION * delta)
+		set_state(States.CHASING)
 	else:
 		velocity = velocity.move_toward(Vector3.ZERO, FRICTION * delta)
 		set_state(States.CHASING)
@@ -157,17 +165,19 @@ func set_state(new_state: States) -> void:
 	var previous_state := state
 	state = new_state
 
-	#############
+	############
 	# You can check both the previous and the new state to determine what to do when the state changes. 
 	# This checks the previous state.
+
+	# Never leave Decaying.
+	if previous_state == States.DECAYING: 
+		return
+
 	if previous_state == States.ATTACKING && new_state == States.HURTING:
 		animation_player.play('dog_animations_1/hurt')
 		return
 		
 	if previous_state == States.ATTACKING && animation_player.current_animation == 'dog_animations_1/jump': 
-		return
-		
-	if previous_state == States.DECAYING: 
 		return
 
 	#############
@@ -191,6 +201,8 @@ func set_state(new_state: States) -> void:
 		attack_box.set_deferred('monitoring', false)
 	
 	if state == States.HURTING:
+		if health_system.health == 0:
+			return
 		animation_player.play('dog_animations_1/hurt')
 		# TODO: interrupt whever we are doing to get hurt. Maybe a 33% chance to? 
 		if !target:
@@ -200,6 +212,7 @@ func set_state(new_state: States) -> void:
 				set_state(States.CHASING)
 
 	if state == States.DYING:
+		# Helps prevent monitoring issues
 		nav.timer_chase_target.stop()
 		nav.timer_navigate.stop()
 		nav.timer_give_up.stop()
@@ -213,19 +226,24 @@ func set_state(new_state: States) -> void:
 
 func decay():
 	await get_tree().create_timer(10.0).timeout
+	animation_player.stop()
+	set_process(false)
+	await get_tree().process_frame
 	queue_free()
-
 
 # TODO: Would be nice to have an enum of animation names somehow
 func on_animation_finished(animation_name):
 	if animation_name == 'dog_animations_1/hurt':
-		if state == States.CHASING: 
+		if target:
+			set_state(States.CHASING)
 			animation_player.play('dog_animations_1/idle')
 	
 	if animation_name == 'dog_animations_1/dying':
 		set_state(States.DECAYING)
-	#elif animation_name == 'dog_animations_1/jump':
-		#set_state(States.CHASING)
+		
+	if animation_name == 'dog_animations_1/jump':
+		if health_system.health == 0:
+			set_state(States.DYING)
 
 # TODO: Allow castle hits.
 # WARNING: Do not type this as "CharacterBody3D". It must be more generic or it'll error.
@@ -268,25 +286,27 @@ func can_attack() -> bool:
 
 var attack_position
 
-func attack(_attack_position):
+func attack():
 	if can_attack() == false:
 		return
-		
-	set_state(States.ATTACKING)
-	attack_position = _attack_position + Vector3(0.0, 0.5, 0.0)
-	animation_player.play('dog_animations_1/jump')
+
+	if state == States.CHASING or state == States.HURTING:
+		await get_tree().create_timer(0.7).timeout
+		if nav_agent.is_navigation_finished():
+			if global_position.distance_to(target.transform.origin) < 9.0:
+				attack_position = target.transform.origin
+				set_state(States.ATTACKING)
+				attack_position = attack_position + Vector3(0.0, 0.5, 0.0)
+				animation_player.play('dog_animations_1/jump')
+
 
 func give_up():
 	set_state(States.SEARCHING)
 
-# TODO: These are bad. 
+# TODO: These are bad. ...
 func on_navigation_finished():
 	animation_player.play('dog_animations_1/idle')
-	if state == States.CHASING:
-		await get_tree().create_timer(0.7).timeout
-		if nav_agent.is_navigation_finished():
-			if global_position.distance_to(target.transform.origin) < 9.0:
-				attack(target.transform.origin)
+
 
 func on_path_changed():
 	if state == States.ATTACKING: 

@@ -9,11 +9,10 @@ class_name Projectile
 @export_enum ("Hitscan","Rigidbody_Projectile","over_ride") var Projectile_Type: String = "Hitscan"
 
 # TODO: Better decals (flat).
-@export var Display_Debug_Decal: bool = true
+@export var display_decal: bool = true
 
-@export var Projectile_Velocity: int = 20
-@export var Expirey_Time: int = 5
-@export var Rigid_Body_Projectile: PackedScene
+@export var projectile_velocity: int = 20
+@export var rigid_body_projectile: PackedScene
 @export var pass_through: bool = false
 
 @onready var world = get_tree().get_first_node_in_group("EnvironmentContainer")
@@ -33,7 +32,7 @@ func _ready() -> void:
 
 func _Set_Projectile(_damage: int = 0, _spread:Vector2 = Vector2.ZERO, _Range: int = 1000, origin_point: Vector3 = Vector3.ZERO):
 	damage = _damage
-	Fire_Projectile(_spread, _Range, Rigid_Body_Projectile, origin_point)
+	Fire_Projectile(_spread, _Range, rigid_body_projectile, origin_point)
 
 func Fire_Projectile(_spread: Vector2, _range: int, _proj:PackedScene, origin_point: Vector3):
 	var Camera_Collision = Camera_Ray_Cast(_spread,_range)
@@ -42,7 +41,7 @@ func Fire_Projectile(_spread: Vector2, _range: int, _proj:PackedScene, origin_po
 		"Hitscan":
 			Hit_Scan_Collision(Camera_Collision, damage, origin_point)
 		"Rigidbody_Projectile":
-			Launch_Rigid_Body_Projectile(Camera_Collision, Rigid_Body_Projectile, origin_point)
+			Launch_Rigid_Body_Projectile(Camera_Collision, rigid_body_projectile, origin_point)
 		"over_ride":
 			_over_ride_collision(Camera_Collision, damage)
 
@@ -101,22 +100,15 @@ func check_pass_through(_collider: Node3D, _rid: RID)-> bool:
 		#valid_pass_though = true
 	#return valid_pass_though
 	return true
-	
-func Load_Decal(pos, normal):
-	if Display_Debug_Decal:
-		var rd = debug_bullet.instantiate()
-		if world:
-			world.add_child(rd, true)
-			rd.global_translate(pos)
-			if normal.y == 1.0:
-				rd.axis = 1
 
-func Launch_Rigid_Body_Projectile(collision_data, projectile: PackedScene, origin_point):
+
+# TODO: PackedBytes or Array to save data over the wire.
+func Launch_Rigid_Body_Projectile(collision_data, _projectile: PackedScene, origin_point):
 	var projectile_data = { 
-		'projectile_name': projectile.get_state().get_node_name(0),
+		#'projectile_name': projectile.get_state().get_node_name(0),
 		'origin_point': origin_point,
 		'target_point': collision_data[1],
-		'projectile_velocity': Projectile_Velocity,
+		'projectile_velocity': projectile_velocity,
 		'normal': collision_data[2],
 		'damage': damage,
 		'source': source

@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://q6w14r3rstn4"
+path.s3tc="res://.godot/imported/arbol9_rough_wood_nor_gl_2k.png-6a33afb11f0c6d61a7c587b19a15ba29.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "f4adcd50581a697c14f1d26700d01969"
+}
+
+[deps]
+
+source_file="res://assets/nature/trees/arbol9_rough_wood_nor_gl_2k.png"
+dest_files=["res://.godot/imported/arbol9_rough_wood_nor_gl_2k.png-6a33afb11f0c6d61a7c587b19a15ba29.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=1
+roughness/src_normal="res://assets/environment_objects/trees/arbol9_rough_wood_nor_gl_2k.png"
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

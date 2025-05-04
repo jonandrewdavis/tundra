@@ -13,11 +13,7 @@ bottom_radius = 0.006
 height = 0.07
 
 [node name="bullet" type="RigidBody3D"]
-collision_layer = 16
-collision_mask = 37
 gravity_scale = 0.0
-continuous_cd = true
-contact_monitor = true
 max_contacts_reported = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
