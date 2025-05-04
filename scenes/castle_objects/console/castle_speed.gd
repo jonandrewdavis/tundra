@@ -6,5 +6,4 @@ func interact(_player):
 		label = 'Engine Off'
 	else:
 		label = 'Engine On'
-	
 	return true

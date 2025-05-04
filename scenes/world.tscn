@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=14 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="5_qfnet"]
 [ext_resource type="Material" uid="uid://teb2w3f6ts0s" path="res://scenes/walking_terrain/snow_infinite_mat.tres" id="6_i7141"]
 [ext_resource type="PackedScene" uid="uid://crep3klgx68p5" path="res://scripts/systems/projectile_system.tscn" id="8_4mrxx"]
+[ext_resource type="PackedScene" uid="uid://ceekvxqimoa8x" path="res://scenes/interactables/oil-drum/oil_drum.tscn" id="9_7r4gi"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_71j4m"]
 
@@ -86,3 +87,9 @@ shape = SubResource("WorldBoundaryShape3D_i7141")
 [node name="WorldMesh" type="MeshInstance3D" parent="WorldBoundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 mesh = SubResource("PlaneMesh_4mrxx")
+
+[node name="OilDrum" parent="." instance=ExtResource("9_7r4gi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.28664, -20.0453)
+
+[node name="OilDrum2" parent="." instance=ExtResource("9_7r4gi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.80761, 2.28664, -20.0453)

@@ -2,9 +2,11 @@ extends AnimatableBody3D
 class_name MovingCastle
 
 @export var heat_dome: HeatDome
-
+@export var castle_maw: Node3D
 @export var castle_speed: float = 1.2
 @export var castle_on: bool = false
+
+@export var fuel = 1000
 
 signal change_heat_dome_value #value: int
 signal change_castle_speed
@@ -56,3 +58,4 @@ func _calc_velocity(_delta: float, _tick: int):
 	
 func _on_change_castle_speed():
 	castle_on = !castle_on
+	

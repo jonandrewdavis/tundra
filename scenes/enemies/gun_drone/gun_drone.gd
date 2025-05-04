@@ -21,6 +21,7 @@ const PROJECTILE_VELOCITY = 40.0
 
 # TODO: Weak points and eyeline
 # TODO: Give up chase 
+
 #@export var hit_box: Area3D
 #@export var eyeline: Area3D 
 
@@ -66,6 +67,7 @@ func _ready():
 	animation_player.animation_finished.connect(on_animation_finished)
 	search_box.body_entered.connect(on_search_box_body_entered)
 	search_box.body_exited.connect(on_search_box_body_exited)
+	nav_agent.navigation_finished.connect(on_navigation_finished)
 	
 	# Health
 	health_system.hurt.connect(on_hurt)
@@ -140,9 +142,9 @@ func set_state(new_state: States) -> void:
 		pass
 
 	if state == States.CHASING:
+		nav.chase_target()	
 		if animation_player.is_playing() == false:
 			animation_player.play('fly')
-		nav.chase_target()
 		speed = 6.5
 		pass
 	
@@ -179,7 +181,7 @@ func clean_up():
 func on_animation_finished(animation_name):
 	if animation_name == 'hurt':
 		set_state(States.CHASING)
-		# TODO: if no target, add it
+
 
 # TODO: Allow castle hits.
 # WARNING: Do not type this as "CharacterBody3D". It must be more generic or it'll error.
@@ -248,3 +250,9 @@ func _on_player_hit(body, _projectile):
 
 func give_up():
 	set_state(States.SEARCHING)
+	
+func on_navigation_finished():
+	if state == States.CHASING:
+		await get_tree().create_timer(0.1).timeout
+		if nav_agent.is_navigation_finished():
+			attack()

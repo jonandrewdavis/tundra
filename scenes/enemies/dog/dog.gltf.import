@@ -35,7 +35,7 @@ import_script/path=""
 _subresources={
 "animations": {
 "DOG_skeleton|DOG_skeleton|DOG_skeleton|DOG_anm": {
-"save_to_file/enabled": true,
+"save_to_file/enabled": false,
 "save_to_file/fallback_path": "res://scenes/enemies/dog/dog_animations/DOG_skeleton_DOG_skeleton_DOG_skeleton_DOG_anm.res",
 "save_to_file/keep_custom_tracks": true,
 "save_to_file/path": "uid://dourl6kolva8d",

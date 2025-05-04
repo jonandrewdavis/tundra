@@ -1,0 +1,140 @@
+[gd_scene load_steps=7 format=3 uid="uid://bb3ena3ml40f"]
+
+[ext_resource type="Material" uid="uid://cfahq750phpw0" path="res://scenes/castle/castle_concrete_mat.tres" id="1_oqkrc"]
+[ext_resource type="Script" uid="uid://bxheekboo1l1k" path="res://scenes/castle/castle_model/castle_maw.gd" id="1_us1oy"]
+[ext_resource type="Script" uid="uid://84pwod0y2ajt" path="res://scenes/castle/castle_model/castle_maw_interact.gd" id="3_pwmnt"]
+[ext_resource type="PackedScene" uid="uid://cvltw4muk7hv2" path="res://scenes/castle/castle_model/Big Red Button.glb" id="4_dtweg"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pwmnt"]
+properties/0/path = NodePath("CastleMawPivot:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("OpenMaw:label")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dtweg"]
+
+[node name="CastleMaw" type="Node3D"]
+script = ExtResource("1_us1oy")
+
+[node name="CastleMawPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.92388, -0.382683, 0, 0.382683, 0.92388, 0, 0, 0)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="CastleMawPivot"]
+material_override = ExtResource("1_oqkrc")
+use_collision = true
+
+[node name="slope" type="CSGBox3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, -0.0779469, -1.34683)
+size = Vector3(4, 0.2, 4)
+
+[node name="back" type="CSGBox3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.431387, 3.27172)
+size = Vector3(4, 0.2, 3)
+
+[node name="back2" type="CSGBox3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.07434, 1.86697)
+size = Vector3(4, 0.2, 3)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.82413, 0.431387, 1.7094)
+size = Vector3(3, 0.2, 3)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -1.86855, 0.431387, 1.7094)
+size = Vector3(3, 0.2, 3)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.71304, -0.0816057, 0.389002)
+polygon = PackedVector2Array(0, 2, 0, -1, 3.5, 0.95)
+depth = 0.2
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.95045, -0.0816057, 0.389002)
+polygon = PackedVector2Array(0, 2, 0, -1, 3.5, 0.95)
+depth = 0.2
+
+[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26805, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D4" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5581, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D5" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02188, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D6" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.730761, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D7" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.481983, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D8" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.208895, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D9" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.132099, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D10" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.469243, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D11" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.807295, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D12" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12664, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D13" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12664, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D14" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44737, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D15" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77867, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="CSGPolygon3D16" type="CSGPolygon3D" parent="CastleMawPivot/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.03762, 0.85545, -3.02248)
+polygon = PackedVector2Array(0.2, 0, 0.25, 0.25, 0.4, 0)
+depth = 0.1
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_pwmnt")
+
+[node name="OpenMaw" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.80112, -0.356454, 5.50267)
+script = ExtResource("3_pwmnt")
+label = "Open Gate"
+
+[node name="Big Red Button" parent="OpenMaw" instance=ExtResource("4_dtweg")]
+transform = Transform3D(-4.37114e-08, -1, -3.82137e-15, 4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, 4.37114e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="OpenMaw"]
+shape = SubResource("BoxShape3D_dtweg")

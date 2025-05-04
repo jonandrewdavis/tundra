@@ -52,8 +52,8 @@ func chase_target():
 			nav_agent.set_target_position(target.global_transform.origin)
 			next_path_pos = nav_agent.get_next_path_position()
 			
-	if nav_agent.is_navigation_finished():
-		parent.attack()
+	#if nav_agent.is_navigation_finished():
+		#attack_signal.emit()
 
 func pick_patrol_destination():
 	var map = NavigationServer3D.get_maps()[0]

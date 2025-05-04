@@ -6,16 +6,16 @@
 extends CharacterBody3D
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-const FRICTION = 15
-const ROTATION_SPEED = 2.0
-const PROJECTILE_VELOCITY = 40.0
+const FRICTION = 12
+const ROTATION_SPEED = 3.0
 
 @export_category("Enemy Required Nodes")
-@export var search_box: Area3D
-@export var animation_player: AnimationPlayer
+@export var animation_player: AnimationPlayer 
 @export var health_system: HealthSystem
 @export var nav: NavigationSystem
 @export var nav_agent: NavigationAgent3D
+@export var search_box: Area3D
+@export var attack_box: Area3D
 
 # TODO: Weak points and eyeline
 # TODO: Give up chase 
@@ -27,7 +27,7 @@ const PROJECTILE_VELOCITY = 40.0
 @export var health = max_health
 @export var max_speed = 5.0
 @export var speed = max_speed
-@export var attack_value: int = 20
+@export var attack_value: int = 30
 
 var timer_attack = Timer.new()
 
@@ -43,6 +43,7 @@ func _ready():
 	# TODO: enemies group as well.
 	add_to_group("targets")
 	
+	Nodash.sync_property($MultiplayerSynchronizer, attack_box, ['monitoring'])
 	Nodash.sync_property($MultiplayerSynchronizer, animation_player, ['current_animation'])
 	Nodash.sync_cleanup_hook($MultiplayerSynchronizer)
 	
@@ -53,22 +54,28 @@ func _ready():
 	if not multiplayer.is_server():
 		set_physics_process(false)
 		set_process(false)
+
 		# CRITICAL: Having this big search area enabled causes
 		# HUGE frame rate issues for some reason
-		search_box.monitoring = false
 		search_box.get_node("CollisionShape3D").disabled = true
+		attack_box.get_node("CollisionShape3D").disabled = true
+		
 		# CAUTION: Trying to disable process on clients can cause MultiplayerSyncronizer issues.
 		#set_process(false)
 
 		return # Early return, no other code runs
 
-	nav_agent.target_desired_distance = randf_range(3.0, 4.0)
+	nav_agent.target_desired_distance = randf_range(6.5, 9.0)
 	nav_agent.avoidance_enabled = true
 
 	# Connect & create
-	animation_player.animation_finished.connect(on_animation_finished)
 	search_box.body_entered.connect(on_search_box_body_entered)
 	search_box.body_exited.connect(on_search_box_body_exited)
+	attack_box.body_entered.connect(on_attack_box_entered)
+	
+	
+	# TODO: Probably best to just use set_state enter/exit rather than this?
+	#animation_player.animation_finished.connect(on_animation_finished)
 	
 	# Health
 	health_system.hurt.connect(on_hurt)
@@ -85,14 +92,24 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	match state:
-		States.CHASING, States.SEARCHING, States.HURTING:
+		States.SEARCHING:
 			move_and_look(delta)
-		#States.ATTACKING:
-			#velocity = velocity.move_toward(Vector3.ZERO, FRICTION * delta)
+		States.CHASING, States.HURTING:
+			move_and_look(delta)
+		States.ATTACKING:
+			move_and_attack(delta)
 		States.DYING:
 			velocity = Vector3.ZERO
 	
 	move_and_slide()
+	
+# TODO: ADD LOOK
+func move_and_attack(delta):
+	if position.distance_to(attack_position) > 0.5:
+		velocity = (attack_position - global_transform.origin).normalized() * speed * 1.2
+	else:
+		velocity = velocity.move_toward(Vector3.ZERO, FRICTION * delta)
+		set_state(States.CHASING)
 
 func move_and_look(delta):
 	var new_look_at
@@ -100,7 +117,6 @@ func move_and_look(delta):
 		velocity = (nav.next_path_pos - global_transform.origin).normalized() * speed
 	else:
 		velocity = velocity.move_toward(Vector3.ZERO, FRICTION * delta)
-
 	#look
 	if target:
 		new_look_at = target.transform.origin
@@ -129,8 +145,15 @@ func set_state(new_state: States) -> void:
 	#############
 	# You can check both the previous and the new state to determine what to do when the state changes. 
 	# This checks the previous state.
-	if previous_state == States.SEARCHING:
-		pass
+	if previous_state == States.ATTACKING && new_state == States.HURTING:
+		animation_player.play('dog_animations_1/hurt')
+		return
+		
+	if previous_state == States.ATTACKING && animation_player.current_animation == 'dog_animations_1/jump': 
+		return
+		
+	if previous_state == States.DECAYING: 
+		return
 
 	#############
 	# Here, I check the new state.
@@ -146,20 +169,29 @@ func set_state(new_state: States) -> void:
 		nav.chase_target()
 		speed = 6.5
 		pass
+		
+	if state == States.ATTACKING:
+		attack_box.monitoring = true
+	else:
+		attack_box.monitoring = false
 	
 	if state == States.HURTING:
 		var side = randi_range(0, 1)
 		if side == 1:
 			animation_player.play('dog_animations_1/hurt')
 		else:
-			animation_player.play('dog_animations_1/hurt')
+			animation_player.play_backwards('dog_animations_1/hurt')
 		# interrupt whever we are doing to get hurt. Maybe a 33% chance to? 
-		pass
-
-	#if state == States.ATTACKING:
-		#fire()
+		if !target:
+			var get_player = Hub.get_player(health_system.last_damage_source) 
+			if get_player:
+				target = get_player
+				set_state(States.CHASING)
 
 	if state == States.DYING:
+		nav.timer_chase_target.stop()
+		nav.timer_navigate.stop()
+		nav.timer_give_up.stop()
 		animation_player.play('dog_animations_1/dying')
 		dying_timer()
 
@@ -173,14 +205,13 @@ func decay():
 
 func dying_timer():
 	await get_tree().create_timer(2.5).timeout
-	animation_player.pause()
+	animation_player.play('dog_animations_1/decay')
 	set_state(States.DECAYING)
 
 # TODO: Would be nice to have an enum of animation names somehow
-func on_animation_finished(animation_name):
-	if animation_name == 'hurt':
-		set_state(States.CHASING)
-		# TODO: if no target, add it
+#func on_animation_finished(animation_name):
+	#if animation_name == 'dog_animations_1/jump':
+		#set_state(States.CHASING)
 
 # TODO: Allow castle hits.
 # WARNING: Do not type this as "CharacterBody3D". It must be more generic or it'll error.
@@ -201,61 +232,56 @@ func on_search_box_body_exited(body: Node3D):
 # TODO: could call this "take_hit" or "get_hit" in a refactor
 func on_hurt():
 	set_state(States.HURTING)
-	if !target:
-		var get_player = Hub.get_player(health_system.last_damage_source) 
-		if get_player:
-			target = get_player
-			set_state(States.CHASING)
-
+	
 # TODO: Ragdoll so it flops out of the sky better
 func on_death():
 	set_state(States.DYING)
 
-func can_attack():
+func can_attack() -> bool:
 	if not target:
 		return false
 		
 	if health_system.health == 0:
 		return false
 		
+	if state in [States.ATTACKING, States.DYING, States.DECAYING]:
+		return false
 
-func attack():
+	return true
+
+
+var attack_position
+
+func attack(_attack_position):
 	if can_attack() == false:
 		return
-	
-	#var _proj = rigid_body_projectile.instantiate()
-	var _origin_point = transform.origin
-	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
-#
+		
+	set_state(States.ATTACKING)
+	attack_position = _attack_position
 	animation_player.play('dog_animations_1/jump')
-
-	#var projectile_data = { 
-		#'projectile_name': '',
-		#'origin_point': _origin_point,
-		#'target_point': _target_point,
-		#'projectile_velocity': PROJECTILE_VELOCITY,
-		#'normal': null,
-		#'damage': attack_value,
-		#'source': 0,
-	#}
-	#
-	#Hub.projectile_system.spawner.spawn(projectile_data)
-
-# TODO: Hit more than just players, damage to buildings, etc.
-func _on_player_hit(body, _projectile):
-	if body.is_in_group('players'):
-		body.health_system.damage(attack_value)
-
-	_projectile.queue_free()
 
 
 func give_up():
 	set_state(States.SEARCHING)
 
-
+# TODO: These are bad. 
 func on_navigation_finished():
 	animation_player.play('dog_animations_1/idle')
+	print(state)
+	if state == States.CHASING:
+		await get_tree().create_timer(1.0).timeout
+		if nav_agent.is_navigation_finished():
+			attack(target.global_position)
 
 func on_path_changed():
+	if state == States.ATTACKING: 
+		return
+
 	if animation_player.current_animation == 'dog_animations_1/idle':
 		animation_player.play('dog_animations_1/walk')
+
+func on_attack_box_entered(body):
+	if body.is_in_group('players'):
+		var damage_successful = body.health_system.damage(attack_value, 0)
+		if damage_successful:
+			attack_box.set_deferred('monitoring', false)
