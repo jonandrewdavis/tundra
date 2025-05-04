@@ -2,14 +2,24 @@
 
 [ext_resource type="Script" uid="uid://bpnxrfobm3pp2" path="res://scenes/interactables/oil-drum/oil_drum.gd" id="1_jwr7d"]
 [ext_resource type="PackedScene" uid="uid://c3ho5dumc6nh8" path="res://scenes/interactables/oil-drum/oil_drum_mesh/oil_drum.gltf" id="2_2v5x0"]
-[ext_resource type="Script" uid="uid://3lbngqcexe0l" path="res://addons/netfox/state-synchronizer.gd" id="3_hta14"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2v5x0"]
 height = 2.6
 radius = 1.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jwr7d"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:linear_velocity")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
 [node name="OilDrum" type="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.626259, 0)
+collision_layer = 7
 script = ExtResource("1_jwr7d")
 enable_pickup = true
 
@@ -21,8 +31,6 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.710119, 0)
 shape = SubResource("CylinderShape3D_2v5x0")
 debug_fill = false
 
-[node name="StateSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("3_hta14")
-root = NodePath("..")
-properties = Array[String]([":global_position", ":linear_velocity", ":rotation"])
-metadata/_custom_type_script = "uid://3lbngqcexe0l"
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+physics_interpolation_mode = 1
+replication_config = SubResource("SceneReplicationConfig_jwr7d")

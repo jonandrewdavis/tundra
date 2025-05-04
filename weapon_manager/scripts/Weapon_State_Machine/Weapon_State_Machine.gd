@@ -15,7 +15,6 @@ class_name WeaponsManager
 @export var player: CharacterBody3D
 
 @onready var bullet_point = $BulletPoint
-@onready var debug_bullet = preload("res://weapon_manager/Spawnable_Objects/hit_debug.tscn")
 
 # CRTL + Click on these to update weapon properties & stats
 var blasterL: WeaponResource = preload("res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterL.tres")
@@ -166,7 +165,6 @@ func load_projectile(spread):
 	# NOTE: added true
 	bullet_point.add_child(_projectile, true)
 	var bullet_point_origin = bullet_point.global_position
-	_projectile.debug_bullet = debug_bullet
 	_projectile.source = int(player.name)
 	_projectile._Set_Projectile(current_weapon.damage, spread, current_weapon.fire_range, bullet_point_origin)
 

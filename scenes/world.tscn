@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=14 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
@@ -20,6 +20,9 @@ plane = Plane(1, 0, 0, 0)
 [sub_resource type="PlaneMesh" id="PlaneMesh_i7141"]
 material = ExtResource("6_i7141")
 size = Vector2(10000, 10000)
+
+[sub_resource type="FogMaterial" id="FogMaterial_4mrxx"]
+density = 0.0
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_71j4m")
@@ -88,3 +91,7 @@ disabled = true
 [node name="WorldMesh" type="MeshInstance3D" parent="WorldBoundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 mesh = SubResource("PlaneMesh_i7141")
+
+[node name="DEATHFOG" type="FogVolume" parent="WorldBoundary"]
+shape = 4
+material = SubResource("FogMaterial_4mrxx")

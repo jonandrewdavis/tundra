@@ -19,9 +19,8 @@ class_name ProjectileSystem
 	#_new_bullet.contact_monitor = true
 	#_new_bullet.max_contacts_reported = 5
 
-var bullet = preload("res://weapon_manager/Spawnable_Objects/bullet.tscn")
-var gun_drone_bullet = preload("res://scenes/enemies/gun_drone/gun_drone_bullet.tscn")
-var debug_decal = preload("res://weapon_manager/Spawnable_Objects/hit_debug.tscn")
+var pink_bullet = preload("res://weapon_manager/Spawnable_Objects/bullet_scenes/pink_bullet.tscn")
+var debug_decal = preload("res://weapon_manager/Spawnable_Objects/bullet_scenes/hit_debug.tscn")
 
 var display_debug_decal = true
 
@@ -29,7 +28,9 @@ signal hit_signal
 
 func _ready():
 	Hub.projectile_system = self
-	$ProjectileSpawner.set_spawn_function(handle_projectile_spawn)
+	spawner.add_spawnable_scene(pink_bullet.get_state().get_path())
+	spawner.add_spawnable_scene(debug_decal.get_state().get_path())
+	spawner.set_spawn_function(handle_projectile_spawn)
 
 #var projectile_data = { 
 	#'origin_point': origin_point,
@@ -41,7 +42,7 @@ func _ready():
 #}
 func handle_projectile_spawn(data: Variant):
 	# TODO: Accept a different projectile type
-	var _new_bullet: RigidBody3D = gun_drone_bullet.instantiate()
+	var _new_bullet: RigidBody3D = pink_bullet.instantiate()
 
 	_new_bullet.position = data.origin_point
 	_new_bullet.look_at_from_position(data.origin_point, data.target_point, Vector3.UP)
@@ -58,7 +59,6 @@ func handle_projectile_spawn(data: Variant):
 	return _new_bullet
 
 func _on_body_entered(body, _bullet, data):
-	print(body)
 	if body.is_in_group("targets") or body.is_in_group("players"):
 		var heath_system: HealthSystem = body.health_system
 		var damage_successful = heath_system.damage(data.damage, data.source)
