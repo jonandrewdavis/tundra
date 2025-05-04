@@ -45,6 +45,8 @@ var state: States = States.IDLE
 func _ready(): 
 	# TODO: enemies group as well.
 	add_to_group("targets")
+	set_collision_layer_value(1, false) 
+	set_collision_layer_value(2, true)
 
 	# This enemy only runs on the server.
 	# Only visuals and some rpcs are sync'd out.
@@ -157,8 +159,6 @@ func set_state(new_state: States) -> void:
 		#fire()
 
 	if state == States.DYING:
-		set_collision_layer_value(1, false)
-		set_collision_layer_value(2, true)
 		animation_player.play('dying')
 		clean_up()
 

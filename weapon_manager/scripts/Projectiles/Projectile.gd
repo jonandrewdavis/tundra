@@ -91,6 +91,7 @@ func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
 					var pass_through_damage: float = damage/2
 					Hit_Scan_Collision(pass_through_collision,pass_through_damage,Bullet_Collision.position)
 					return
+
 			queue_free()
 
 func check_pass_through(_collider: Node3D, _rid: RID)-> bool:

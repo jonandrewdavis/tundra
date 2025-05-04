@@ -172,4 +172,4 @@ metadata/_custom_type_script = "uid://dour8fehaaugp"
 transform = Transform3D(-0.45, 0, 6.79481e-08, 0, 0.45, 0, -6.79481e-08, 0, -0.45, 0, 4.03389, -10.3538)
 
 [node name="CastleMaw" parent="." instance=ExtResource("12_mwv14")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4667, -7.53732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.77066, -7.2181)

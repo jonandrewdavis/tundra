@@ -62,6 +62,8 @@ navigation_mesh = SubResource("NavigationMesh_lh8dw")
 
 [node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -50)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("2_2coox")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground"]

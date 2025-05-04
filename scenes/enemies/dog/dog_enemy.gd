@@ -43,11 +43,19 @@ func _ready():
 	# TODO: enemies group as well.
 	add_to_group("targets")
 	
+	# TODO: FIGURE OUT CONDITIONAL set_collision_layer_value (mask?) PASS THROUGH FOR PLAYERS / OTHERS
+	set_collision_layer_value(1, false) 
+	set_collision_layer_value(2, true)
+	set_collision_mask_value(1, false) 
+	set_collision_mask_value(2, true)
+
+	Nodash.sync_property($MultiplayerSynchronizer, self, ['collision_layer'])
 	Nodash.sync_property($MultiplayerSynchronizer, attack_box, ['monitoring'])
 	Nodash.sync_property($MultiplayerSynchronizer, animation_player, ['current_animation'])
 	Nodash.sync_cleanup_hook($MultiplayerSynchronizer)
 	
 	animation_player.playback_default_blend_time = 0.5
+	animation_player.speed_scale = 1.5
 
 	# This enemy only runs on the server.
 	# Only visuals and some rpcs are sync'd out.
@@ -65,7 +73,7 @@ func _ready():
 
 		return # Early return, no other code runs
 
-	nav_agent.target_desired_distance = randf_range(6.5, 9.0)
+	nav_agent.target_desired_distance = randf_range(6.5, 8.0)
 	nav_agent.avoidance_enabled = true
 
 	# Connect & create
@@ -75,7 +83,7 @@ func _ready():
 	
 	
 	# TODO: Probably best to just use set_state enter/exit rather than this?
-	#animation_player.animation_finished.connect(on_animation_finished)
+	animation_player.animation_finished.connect(on_animation_finished)
 	
 	# Health
 	health_system.hurt.connect(on_hurt)
@@ -100,7 +108,13 @@ func _physics_process(delta: float) -> void:
 			move_and_attack(delta)
 		States.DYING:
 			velocity = Vector3.ZERO
+		States.DECAYING:
+			velocity = Vector3.ZERO
 	
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+		
+
 	move_and_slide()
 	
 # TODO: ADD LOOK
@@ -122,6 +136,7 @@ func move_and_look(delta):
 		new_look_at = target.transform.origin
 	else:
 		new_look_at = nav.next_path_pos
+
 
 	# Finally fix "Target and up vectors are colinear" by
 	# doing the same checks as the source code (used C++ source!)
@@ -171,17 +186,13 @@ func set_state(new_state: States) -> void:
 		pass
 		
 	if state == States.ATTACKING:
-		attack_box.monitoring = true
+		attack_box.set_deferred('monitoring', true)
 	else:
-		attack_box.monitoring = false
+		attack_box.set_deferred('monitoring', false)
 	
 	if state == States.HURTING:
-		var side = randi_range(0, 1)
-		if side == 1:
-			animation_player.play('dog_animations_1/hurt')
-		else:
-			animation_player.play_backwards('dog_animations_1/hurt')
-		# interrupt whever we are doing to get hurt. Maybe a 33% chance to? 
+		animation_player.play('dog_animations_1/hurt')
+		# TODO: interrupt whever we are doing to get hurt. Maybe a 33% chance to? 
 		if !target:
 			var get_player = Hub.get_player(health_system.last_damage_source) 
 			if get_player:
@@ -193,9 +204,10 @@ func set_state(new_state: States) -> void:
 		nav.timer_navigate.stop()
 		nav.timer_give_up.stop()
 		animation_player.play('dog_animations_1/dying')
-		dying_timer()
+		# Decay triggered by animation
 
 	if state == States.DECAYING:
+		animation_player.play('dog_animations_1/decay')
 		decay()
 		pass
 
@@ -203,14 +215,16 @@ func decay():
 	await get_tree().create_timer(10.0).timeout
 	queue_free()
 
-func dying_timer():
-	await get_tree().create_timer(2.5).timeout
-	animation_player.play('dog_animations_1/decay')
-	set_state(States.DECAYING)
 
 # TODO: Would be nice to have an enum of animation names somehow
-#func on_animation_finished(animation_name):
-	#if animation_name == 'dog_animations_1/jump':
+func on_animation_finished(animation_name):
+	if animation_name == 'dog_animations_1/hurt':
+		if state == States.CHASING: 
+			animation_player.play('dog_animations_1/idle')
+	
+	if animation_name == 'dog_animations_1/dying':
+		set_state(States.DECAYING)
+	#elif animation_name == 'dog_animations_1/jump':
 		#set_state(States.CHASING)
 
 # TODO: Allow castle hits.
@@ -223,19 +237,20 @@ func on_search_box_body_entered(body: Node3D):
 		target = body
 		set_state(States.CHASING)
 
+
+# TODO: Refactor. Giving up, if we can't  see them
 func on_search_box_body_exited(body: Node3D):
-	if target == body: 
-		nav.timer_give_up.start()
+	if target == body:
+		nav.timer_give_up.start(10)
 
 
-# TODO: Use health system? 
-# TODO: could call this "take_hit" or "get_hit" in a refactor
 func on_hurt():
 	set_state(States.HURTING)
 	
-# TODO: Ragdoll so it flops out of the sky better
+	
 func on_death():
 	set_state(States.DYING)
+
 
 func can_attack() -> bool:
 	if not target:
@@ -247,6 +262,7 @@ func can_attack() -> bool:
 	if state in [States.ATTACKING, States.DYING, States.DECAYING]:
 		return false
 
+
 	return true
 
 
@@ -257,9 +273,8 @@ func attack(_attack_position):
 		return
 		
 	set_state(States.ATTACKING)
-	attack_position = _attack_position
+	attack_position = _attack_position + Vector3(0.0, 0.5, 0.0)
 	animation_player.play('dog_animations_1/jump')
-
 
 func give_up():
 	set_state(States.SEARCHING)
@@ -267,11 +282,11 @@ func give_up():
 # TODO: These are bad. 
 func on_navigation_finished():
 	animation_player.play('dog_animations_1/idle')
-	print(state)
 	if state == States.CHASING:
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(0.7).timeout
 		if nav_agent.is_navigation_finished():
-			attack(target.global_position)
+			if global_position.distance_to(target.transform.origin) < 9.0:
+				attack(target.transform.origin)
 
 func on_path_changed():
 	if state == States.ATTACKING: 
@@ -279,9 +294,13 @@ func on_path_changed():
 
 	if animation_player.current_animation == 'dog_animations_1/idle':
 		animation_player.play('dog_animations_1/walk')
+		
+	if animation_player.current_animation == 'dog_animations_1/hurt':
+		animation_player.play('dog_animations_1/walk')
+
 
 func on_attack_box_entered(body):
 	if body.is_in_group('players'):
 		var damage_successful = body.health_system.damage(attack_value, 0)
-		if damage_successful:
+		if damage_successful && attack_box:
 			attack_box.set_deferred('monitoring', false)

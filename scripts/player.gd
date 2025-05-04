@@ -6,7 +6,7 @@ var ROTATION_INTERPOLATE_SPEED = 40.0
 const FRICTION = 100
 const ACCELERATION = 22.0
 const DEFAULT_SPEED := 5.5
-const SLOW_SPEED := 2.5
+const SLOW_SPEED := 3.5
 
 var CURRENT_SPEED = DEFAULT_SPEED
 
@@ -89,7 +89,7 @@ func _ready():
 	Nodash.warn_missing(_animation_player, '_animation_player')
 	Nodash.sync_property(sync, _animation_player, ['active'])
 	Nodash.sync_property(sync, _animation_player, ['current_animation'])
-	Nodash.sync_property(sync, _animation_player, ['speed_scale'])
+	Nodash.sync_property(sync, _animation_player, ['speed_scale'], false)
 	Nodash.sync_property(sync, bones, ['active'])
 	Nodash.sync_property(sync, self, ['pvp'])
 	
@@ -190,7 +190,7 @@ const ANIMATION_PREFIX = 'master2/'
 func _on_display_state_changed(_old_state: RewindableState, new_state: RewindableState):	
 	var animation_name = new_state.animation_name
 	if _animation_player && animation_name != "":
-		_animation_player.speed_scale = 1.0
+		#_animation_player.speed_scale = 1.0
 		_animation_player.play(ANIMATION_PREFIX + animation_name)
 
 
@@ -268,7 +268,7 @@ func on_animation_check():
 
 		if _slowed:
 			CURRENT_SPEED = SLOW_SPEED
-			_animation_player.speed_scale = 1.2
+			_animation_player.speed_scale = 2.0
 		else:
 			CURRENT_SPEED = DEFAULT_SPEED
 			_animation_player.speed_scale = 1.0
@@ -287,8 +287,12 @@ func on_animation_check():
 				if _dir.y > 0:_animation_player.play(MOVES.WALK.SLOW[0])
 			else:
 				if _dir.y < 0: _animation_player.play(MOVES.WALK.FAST[1])
-				if _dir.y > 0: _animation_player.play(MOVES.WALK.FAST[0])
-				#CURRENT_SPEED = SLOW_SPEED # No running backwards
+				 # No running backwards
+				if _dir.y > 0: 
+					_animation_player.speed_scale = 1.7
+					await get_tree().process_frame
+					_animation_player.play(MOVES.WALK.SLOW[0])
+					CURRENT_SPEED = SLOW_SPEED
 
 # NOTE: -1.0 makes it move the right way and 0.5 dampens it slightly
 func weapon_vertical_tilt():

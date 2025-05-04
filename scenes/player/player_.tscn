@@ -148,7 +148,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65716, 0)
 shape = SubResource("CapsuleShape3D_2hvjq")
 
 [node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="."]
-transform = Transform3D(-5.27654e-08, -1, -6.31676e-05, -0.00261688, 6.31675e-05, -0.999997, 0.999997, 1.12537e-07, -0.00261688, -0.68188, 1.47929, -0.0687136)
+transform = Transform3D(-0.190826, -0.0409561, 0.980769, 0.975907, 0.0997585, 0.194046, -0.105787, 0.994168, 0.0209328, -0.190472, 1.3959, 0.14019)
 bone_name = "RightHand"
 bone_idx = 35
 use_external_skeleton = true

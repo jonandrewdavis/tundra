@@ -66,7 +66,6 @@ collision_mask = 127
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBoundary/WorldBoundaryGround"]
 shape = SubResource("WorldBoundaryShape3D_71j4m")
-disabled = true
 
 [node name="WorldBoundaryLeft" type="StaticBody3D" parent="WorldBoundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 0)

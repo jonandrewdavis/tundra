@@ -6,7 +6,6 @@ func _ready() -> void:
 	label = "Open Gate"
 
 func interact(_player):
-	print('eee')
 	if get_parent().open == false:
 		get_parent().open_maw.emit()
 		return true

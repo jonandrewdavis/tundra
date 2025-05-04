@@ -48,9 +48,11 @@ func chase_target():
 	
 	var target = parent.target
 	if target:
-		if parent.global_position.distance_to(target.global_transform.origin) > 3.0:
+		#if parent.global_position.distance_to(target.global_transform.origin) > 3.0:
 			nav_agent.set_target_position(target.global_transform.origin)
 			next_path_pos = nav_agent.get_next_path_position()
+		#else:
+			#attack_signal.emit()
 			
 	#if nav_agent.is_navigation_finished():
 		#attack_signal.emit()
