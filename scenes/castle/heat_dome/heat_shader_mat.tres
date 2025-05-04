@@ -26,4 +26,4 @@ shader_parameter/wave_scale = 0.02
 shader_parameter/pixelation_level = 512
 shader_parameter/FoamSize = 0.5
 shader_parameter/WaterOpacity = 0.5
-shader_parameter/FoamGlowIntensity = 0.5
+shader_parameter/FoamGlowIntensity = 1.0

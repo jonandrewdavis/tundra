@@ -9,22 +9,25 @@ top_radius = 0.2
 height = 1.0
 
 [node name="LightHouse" type="StaticBody3D"]
-transform = Transform3D(-0.523986, -0.319063, 0.789708, 0, 0.927184, 0.374607, -0.851727, 0.196289, -0.485831, 0, 0, 0)
+transform = Transform3D(-0.523986, -0.47628, 0.706114, 0, 0.829038, 0.559193, -0.851727, 0.293009, -0.434404, 0, 0, 0)
 script = ExtResource("1_b4if5")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 light_color = Color(1, 0.6, 0.380392, 1)
-light_energy = 5.0
-light_indirect_energy = 8.0
-light_volumetric_fog_energy = 12.0
-spot_range = 80.0
-spot_attenuation = -0.2
-spot_angle = 2.5
-spot_angle_attenuation = 4.59479
+light_energy = 2.0
+light_indirect_energy = 2.0
+light_volumetric_fog_energy = 3.0
+light_size = 5.0
+spot_range = 60.0
+spot_attenuation = -0.1
+spot_angle = 5.5
+spot_angle_attenuation = 0.574349
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
 shape = SubResource("BoxShape3D_71j4m")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 0, 0)
+visible = false
 mesh = SubResource("CylinderMesh_qfnet")

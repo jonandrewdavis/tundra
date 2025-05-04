@@ -30,6 +30,10 @@ script = ExtResource("1_71j4m")
 environment = ExtResource("2_4mrxx")
 
 [node name="SunV2" type="DirectionalLight3D" parent="Environment_V2"]
+transform = Transform3D(0.838671, -0.385118, 0.385118, 0, 0.707107, 0.707107, -0.544639, -0.59303, 0.59303, 0, 0, 0)
+light_energy = 0.3
+light_indirect_energy = 0.4
+light_volumetric_fog_energy = 2.0
 shadow_enabled = true
 directional_shadow_mode = 0
 

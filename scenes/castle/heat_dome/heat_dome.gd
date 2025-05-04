@@ -22,7 +22,7 @@ const spread: int = 100
 # TODO: Set visiblity range fade mode & fix the shader to be compatbile.
 func _ready() -> void:
 	# NOTE: World fog is 0.8 (super dense)
-	fog_volume_1.material.density = -0.05 # Small
+	fog_volume_1.material.density = -0.02 # Small
 	fog_volume_2.material.density = -0.8 # Large Dome
 
 	# NOTE: World fog is 0.8 (super dense)
@@ -50,6 +50,8 @@ func _ready() -> void:
 
 # TODO: Gradual decay without fuel
 func _process(_delta: float) -> void:
+	
+
 	pass
 
 func sync_path(node: Node3D, properties: Array[String]):

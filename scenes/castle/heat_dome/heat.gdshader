@@ -1,5 +1,7 @@
 shader_type spatial;
-render_mode blend_mix, cull_back, diffuse_lambert, shadows_disabled, fog_disabled, specular_disabled, ambient_light_disabled, unshaded;
+render_mode blend_mix, cull_back, diffuse_lambert, shadows_disabled, fog_disabled, unshaded;
+
+// removed optional:  specular_disabled, ambient_light_disabled
 
 uniform vec3 albedo : source_color;
 uniform sampler2D water_texture1;

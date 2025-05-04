@@ -41,6 +41,7 @@ func _ready():
 		change_castle_speed.connect(_on_change_castle_speed)
 		change_heat_dome_value.connect(func(new_value): heat_dome.on_change_heat_dome_value(new_value))
 
+@export var speed: float = 0.0
 
 func get_velocity() -> Vector3:
 	return _velocity
@@ -51,12 +52,16 @@ func _save_previous_position(_delta: float, _tick: int):
 	prev = global_position
 
 func _apply_tick(_delta: float, _tick: int):
-	if castle_on:
-		translate(Vector3(0.0, 0.0, -1.2 * _delta))
+	translate(Vector3(0.0, 0.0, speed  * _delta))
 
 func _calc_velocity(_delta: float, _tick: int):
 	_velocity = (global_position - prev) / NetworkTime.ticktime
 	
 func _on_change_castle_speed():
-	castle_on = !castle_on
+	if castle_on:
+		castle_on = false
+		speed = 0.0
+	else:
+		castle_on = true
+		speed = -1.0
 	

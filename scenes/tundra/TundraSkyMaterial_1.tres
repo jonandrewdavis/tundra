@@ -1,4 +1,6 @@
 [gd_resource type="ProceduralSkyMaterial" format=3 uid="uid://5nhbp0n3qde8"]
 
 [resource]
-sky_top_color = Color(0.803322, 0.869432, 0.999998, 1)
+sky_top_color = Color(1, 1, 1, 1)
+sky_energy_multiplier = 0.5
+ground_bottom_color = Color(1, 1, 1, 1)
