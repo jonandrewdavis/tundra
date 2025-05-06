@@ -34,7 +34,7 @@ func _ready():
 	# Server only?
 	NetworkTime.before_tick.connect(_save_previous_position)
 	NetworkTime.on_tick.connect(_apply_tick)
-	NetworkTime.on_tick.connect(_calc_velocity)
+	NetworkRollback.on_record_tick.connect(_calc_velocity)
 
 	if multiplayer.is_server():
 		# Castle Control Signals (called from Hub.castle)
@@ -54,7 +54,7 @@ func _save_previous_position(_delta: float, _tick: int):
 func _apply_tick(_delta: float, _tick: int):
 	translate(Vector3(0.0, 0.0, speed  * _delta))
 
-func _calc_velocity(_delta: float, _tick: int):
+func _calc_velocity(_tick: int):
 	_velocity = (global_position - prev) / NetworkTime.ticktime
 	
 func _on_change_castle_speed():

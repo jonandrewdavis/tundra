@@ -15,7 +15,6 @@ class_name Projectile
 @export var rigid_body_projectile: PackedScene
 @export var pass_through: bool = false
 
-@onready var world = get_tree().get_first_node_in_group("EnvironmentContainer")
 @onready var projectile_spawner = get_tree().get_first_node_in_group("ProjectileSpawner")
 
 var debug_bullet
@@ -32,9 +31,9 @@ func _ready() -> void:
 
 func _Set_Projectile(_damage: int = 0, _spread:Vector2 = Vector2.ZERO, _Range: int = 1000, origin_point: Vector3 = Vector3.ZERO):
 	damage = _damage
-	Fire_Projectile(_spread, _Range, rigid_body_projectile, origin_point)
+	Fire_Projectile(_spread, _Range, origin_point)
 
-func Fire_Projectile(_spread: Vector2, _range: int, _proj:PackedScene, origin_point: Vector3):
+func Fire_Projectile(_spread: Vector2, _range: int, origin_point: Vector3):
 	var Camera_Collision = Camera_Ray_Cast(_spread,_range)
 	
 	match Projectile_Type:
@@ -103,9 +102,9 @@ func check_pass_through(_collider: Node3D, _rid: RID)-> bool:
 
 
 # TODO: PackedBytes or Array to save data over the wire.
-func Launch_Rigid_Body_Projectile(collision_data, _projectile: PackedScene, origin_point):
+func Launch_Rigid_Body_Projectile(collision_data, projectile: PackedScene, origin_point):
 	var projectile_data = { 
-		#'projectile_name': projectile.get_state().get_node_name(0),
+		'projectile_name': projectile.get_state().get_node_name(0),
 		'origin_point': origin_point,
 		'target_point': collision_data[1],
 		'projectile_velocity': projectile_velocity,

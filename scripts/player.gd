@@ -364,3 +364,7 @@ func interact():
 				holding = interactable
 			elif interactable.enable_pickup == true && holding:
 				holding = null
+
+func interact_holding(item_to_hold):
+	holding = item_to_hold
+	item_to_hold.interact(self)

@@ -1,6 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://gk0m2leyfs75"]
-
-[ext_resource type="Material" uid="uid://m4y5otcmibon" path="res://weapon_manager/Spawnable_Objects/bullet_scenes/bullet_pink_material_v2.tres" id="1_skpu2"]
+[gd_scene load_steps=4 format=4 uid="uid://yalsytj12nx6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bix2d"]
 radius = 0.07
@@ -20,7 +18,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_sqgwv"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_gxbwb"]
 resource_name = "foamBulletA_Mesh foamBulletA"
 _surfaces = [{
 "aabb": AABB(-0.01, -0.025, -0.01, 0.02, 0.05, 0.02),
@@ -28,8 +26,7 @@ _surfaces = [{
 "format": 34359742487,
 "index_count": 276,
 "index_data": PackedByteArray("AgAAAAEAAQADAAIAAQAEAAMABAAFAAMABAAGAAUABgAHAAUABgAIAAcACAAJAAcACAAKAAkACgALAAkACgAMAAsADAANAAsADAAOAA0ADgAPAA0ADwAQAA0ADwARABAADwASABEAEgATABEAEgAUABMAFAAVABMAFAAWABUAFgAXABUAGgAYABkAGQAbABoAHgAcAB0AHQAfAB4AIgAgACEAIQAjACIAJgAkACUAJQAnACYAKgAoACkAKQArACoALgAsAC0ALQAvAC4AMgAwADEAMQAzADIANgA0ADUANQA3ADYANQA4ADcAOAA5ADcAOAA6ADkAOgA7ADkAOgA8ADsAPAA9ADsAPAA+AD0APgA/AD0APgBAAD8AQABBAD8AQABCAEEAQgBDAEEAQgBEAEMARABFAEMARABGAEUARgBHAEUARgBIAEcASABJAEcASABKAEkASgBLAEkATgBMAE0ATQBPAE4AUgBQAFEAUQBTAFIAVgBUAFUAVQBXAFYAWgBYAFkAWQBbAFoAXgBcAF0AXQBfAF4AYgBgAGEAYQBjAGIAZgBkAGUAZQBnAGYAagBoAGkAaQBrAGoAbgBsAG0AbQBvAG4AcgBwAHEAcQBzAHIAdgB0AHUAdQB3AHYAegB4AHkAeQB7AHoAfgB8AH0AfQB/AH4AggCAAIEAgQCDAIIAhgCEAIUAhQCHAIYAigCIAIkAiQCLAIoAjgCMAI0AjQCPAI4A"),
-"material": ExtResource("1_skpu2"),
-"name": "pink",
+"name": "orange",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 144,
@@ -38,7 +35,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ly6dy")
 
-[node name="GunDroneBullet" type="RigidBody3D"]
+[node name="OrangeBullet" type="RigidBody3D"]
 collision_layer = 0
 collision_mask = 7
 input_ray_pickable = false
@@ -52,6 +49,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 shape = SubResource("CapsuleShape3D_bix2d")
 
 [node name="foamBulletA2" type="MeshInstance3D" parent="."]
-transform = Transform3D(3.5, 0, 0, 0, -4.15258e-07, -3.5, 0, 9.5, -1.5299e-07, 0, 0, 0)
-mesh = SubResource("ArrayMesh_sqgwv")
+transform = Transform3D(2.5, 0, 0, 0, -2.84124e-07, -2.5, 0, 6.5, -1.09278e-07, 0, 0, 0)
+mesh = SubResource("ArrayMesh_gxbwb")
 skeleton = NodePath("")

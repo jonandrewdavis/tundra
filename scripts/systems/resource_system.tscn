@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://7u0288w3c63v"]
+
+[ext_resource type="Script" uid="uid://dqwwia7q3w5cr" path="res://scripts/systems/resource_system.gd" id="1_cb71r"]
+
+[node name="ResourceSystem" type="Node" node_paths=PackedStringArray("spawner", "container")]
+script = ExtResource("1_cb71r")
+spawner = NodePath("MultiplayerSpawner")
+container = NodePath("ResourceContainer")
+
+[node name="ResourceContainer" type="Node3D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../ResourceContainer")

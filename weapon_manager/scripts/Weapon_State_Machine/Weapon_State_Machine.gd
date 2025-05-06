@@ -23,7 +23,6 @@ var blasterN: WeaponResource = preload("res://weapon_manager/scripts/Weapon_Stat
 enum WEAPONS {blasterL, blasterN}
 enum CHANGE_DIR { UP, DOWN}
 
-
 signal update_weapon_signal
 signal update_weapon_prev_signal
 

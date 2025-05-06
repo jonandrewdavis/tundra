@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=15 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ccj6ll20fnwya" path="res://scripts/systems/enemy_system.tscn" id="5_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://dy85183h2d31p" path="res://scenes/castle/castle_simple.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="5_qfnet"]
+[ext_resource type="PackedScene" uid="uid://7u0288w3c63v" path="res://scripts/systems/resource_system.tscn" id="6_7r4gi"]
 [ext_resource type="Material" uid="uid://teb2w3f6ts0s" path="res://scenes/walking_terrain/snow_infinite_mat.tres" id="6_i7141"]
 [ext_resource type="PackedScene" uid="uid://crep3klgx68p5" path="res://scripts/systems/projectile_system.tscn" id="8_4mrxx"]
 
@@ -50,6 +51,8 @@ _player_spawn_point = NodePath("../PlayerContainer")
 
 [node name="EnemySystem" parent="." instance=ExtResource("5_4mrxx")]
 
+[node name="ResourceSystem" parent="." instance=ExtResource("6_7r4gi")]
+
 [node name="PlayerContainer" type="Node3D" parent="."]
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
@@ -89,7 +92,6 @@ shape = SubResource("WorldBoundaryShape3D_i7141")
 disabled = true
 
 [node name="WorldMesh" type="MeshInstance3D" parent="WorldBoundary"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 mesh = SubResource("PlaneMesh_i7141")
 
 [node name="DEATHFOG" type="FogVolume" parent="WorldBoundary"]

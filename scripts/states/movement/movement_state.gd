@@ -36,7 +36,6 @@ func move_player(delta: float):
 	if not parent.is_on_floor():
 		parent.velocity.y -= gravity * delta
 	elif get_run():
-		# BUT NO RUNNING in the air
 		position_target *= SPRINT_SPEED_MODIFIER
 
 	if position_target:

@@ -19,8 +19,14 @@ class_name ProjectileSystem
 	#_new_bullet.contact_monitor = true
 	#_new_bullet.max_contacts_reported = 5
 
+var rifle_round = preload("res://weapon_manager/Spawnable_Objects/bullet_scenes/rifle_round.tscn")
+
+var orange_bullet = preload("res://weapon_manager/Spawnable_Objects/bullet_scenes/orange_bullet.tscn")
 var pink_bullet = preload("res://weapon_manager/Spawnable_Objects/bullet_scenes/pink_bullet.tscn")
 var debug_decal = preload("res://weapon_manager/Spawnable_Objects/bullet_scenes/hit_debug.tscn")
+var rifle_round_decal = preload("res://weapon_manager/Spawnable_Objects/bullet_scenes/rifle_round_decal.tscn")
+
+var bullet_list = [orange_bullet, rifle_round, pink_bullet, debug_decal, rifle_round_decal]
 
 var display_debug_decal = true
 
@@ -28,11 +34,14 @@ signal hit_signal
 
 func _ready():
 	Hub.projectile_system = self
-	spawner.add_spawnable_scene(pink_bullet.get_state().get_path())
-	spawner.add_spawnable_scene(debug_decal.get_state().get_path())
+
+	for bullet in bullet_list:
+		spawner.add_spawnable_scene(bullet.get_state().get_path())
+
 	spawner.set_spawn_function(handle_projectile_spawn)
 
 #var projectile_data = { 
+	# projectile_name: string 
 	#'origin_point': origin_point,
 	#'target_point': point,
 	#'projectile_velocity': Projectile_Velocity,
@@ -42,7 +51,18 @@ func _ready():
 #}
 func handle_projectile_spawn(data: Variant):
 	# TODO: Accept a different projectile type
-	var _new_bullet: RigidBody3D = pink_bullet.instantiate()
+	var _new_bullet: RigidBody3D 
+
+	
+	match data.projectile_name:
+		'PinkBullet':
+			_new_bullet = pink_bullet.instantiate()
+		'OrangeBullet':
+			_new_bullet = orange_bullet.instantiate()
+		'RifleRound':
+			_new_bullet = rifle_round.instantiate()
+		'_':
+			_new_bullet = rifle_round.instantiate()
 
 	_new_bullet.position = data.origin_point
 	_new_bullet.look_at_from_position(data.origin_point, data.target_point, Vector3.UP)
@@ -80,7 +100,7 @@ func _on_tree_entered(_bullet):
 		
 func create_debug_decal(pos, normal):
 	if display_debug_decal:
-		var rd = debug_decal.instantiate()
+		var rd = rifle_round_decal.instantiate()
 		container.add_child(rd, true)
 		rd.global_translate(pos)
 		if normal.y == 1.0:

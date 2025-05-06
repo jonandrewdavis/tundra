@@ -32,7 +32,7 @@ var walking_scene_center = 0.0
 # 0 = "most behind"
 # 1 = "center"
 # 2 = "coming soon!"
-var starting_platforms: Array[PackedScene] = [forest_1, forest_1, forest_1]
+var starting_platforms: Array[PackedScene] = [forest_1, start, forest_1]
 var current_platforms: Array[Node3D] = []
 
 enum DIR { 

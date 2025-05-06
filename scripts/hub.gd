@@ -7,6 +7,7 @@ var world: Node3D
 var player_container: Node3D
 var castle: MovingCastle 
 
+var resource_system: ResourceSystem
 var projectile_system: ProjectileSystem # Sets self on ready
 var enemy_system: EnemySystem # Sets self on ready
 

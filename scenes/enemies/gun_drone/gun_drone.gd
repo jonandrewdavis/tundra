@@ -26,8 +26,6 @@ const PROJECTILE_VELOCITY = 40.0
 #@export var eyeline: Area3D 
 
 @export_category("Enemy Stats")
-@export var max_health = 10.0
-@export var health = max_health
 @export var max_speed = 5.0
 @export var speed = max_speed
 @export var attack_value: int = 10
@@ -229,7 +227,7 @@ func attack():
 	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
 
 	var projectile_data = { 
-		'projectile_name': '',
+		'projectile_name': 'PinkBullet',
 		'origin_point': _origin_point,
 		'target_point': _target_point,
 		'projectile_velocity': PROJECTILE_VELOCITY,

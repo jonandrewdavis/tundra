@@ -95,7 +95,6 @@ func _ready():
 	timer_attack_cooldown.one_shot = false
 	timer_attack_cooldown.start()
 
-
 	await get_tree().create_timer(0.2).timeout
 	set_state(States.SEARCHING)
 
@@ -112,22 +111,20 @@ func _physics_process(delta: float) -> void:
 		States.DECAYING:
 			velocity = Vector3.ZERO
 	
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-		
+	velocity.y -= gravity * delta
 
 	move_and_slide()
 	
 # TODO: ADD LOOK
-func move_and_attack(delta):
+func move_and_attack(_delta):
 	if position.distance_to(attack_position) > 1.0:
-		velocity = (attack_position - global_transform.origin).normalized() * speed * 1.2
+		velocity = (attack_position - global_transform.origin).normalized() * speed * 2
 	elif position.distance_to(attack_position) > 12.0: 
-		velocity = velocity.move_toward(Vector3.ZERO, FRICTION * delta)
 		set_state(States.CHASING)
+		nav.chase_target()
 	else:
-		velocity = velocity.move_toward(Vector3.ZERO, FRICTION * delta)
 		set_state(States.CHASING)
+		nav.chase_target()
 
 func move_and_look(delta):
 	var new_look_at
@@ -135,6 +132,8 @@ func move_and_look(delta):
 		velocity = (nav.next_path_pos - global_transform.origin).normalized() * speed
 	else:
 		velocity = velocity.move_toward(Vector3.ZERO, FRICTION * delta)
+		velocity.y -= gravity * delta
+
 	#look
 	if target:
 		new_look_at = target.transform.origin

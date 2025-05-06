@@ -463,7 +463,7 @@ libraries = {
 }
 
 [node name="HealthSystem" parent="." instance=ExtResource("1_v2iur")]
-max_health = 10
+max_health = 80
 
 [node name="NavigationSystem" type="Node" parent="." node_paths=PackedStringArray("nav_agent")]
 script = ExtResource("2_fk3wx")

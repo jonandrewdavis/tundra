@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dyujeepgj83mf"]
 
 [ext_resource type="Script" uid="uid://deg71cq18ciaq" path="res://weapon_manager/scripts/Projectiles/Projectile.gd" id="1_won33"]
-[ext_resource type="PackedScene" uid="uid://gk0m2leyfs75" path="res://scenes/enemies/gun_drone/gun_drone_bullet.tscn" id="2_sowem"]
+[ext_resource type="PackedScene" uid="uid://blls0k40w45rf" path="res://weapon_manager/Spawnable_Objects/bullet_scenes/rifle_round.tscn" id="2_sowem"]
 
 [node name="RigidBodyProjectile" type="Node3D"]
 script = ExtResource("1_won33")

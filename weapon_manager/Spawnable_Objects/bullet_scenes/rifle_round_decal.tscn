@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3kpd7uoxot8p"]
+
+[ext_resource type="Script" uid="uid://dodrimit2hok6" path="res://weapon_manager/scripts/Weapon_State_Machine/hit_debug.gd" id="1_kep5t"]
+[ext_resource type="PackedScene" uid="uid://61hry0ayuigx" path="res://weapon_manager/Spawnable_Objects/bullet_scenes/shell_particles.tscn" id="2_tyvyn"]
+[ext_resource type="Material" uid="uid://b5442xcndl6ii" path="res://weapon_manager/Spawnable_Objects/bullet_scenes/bullet_yellow_material_v2.tres" id="3_hkat1"]
+
+[sub_resource type="Gradient" id="Gradient_ettvt"]
+offsets = PackedFloat32Array(0.552102, 0.55511)
+colors = PackedColorArray(1, 1, 1, 0.756863, 0.5, 0.5, 0.5, 0)
+metadata/_snap_count = 2
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_83hnf"]
+gradient = SubResource("Gradient_ettvt")
+width = 12
+height = 12
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_83hnf"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:axis")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_nu1or"]
+material = ExtResource("3_hkat1")
+size = Vector3(0.02, 0.02, 0.03)
+
+[node name="Node3D" type="Sprite3D"]
+billboard = 2
+alpha_antialiasing_mode = 2
+alpha_antialiasing_edge = 0.5
+texture = SubResource("GradientTexture2D_83hnf")
+script = ExtResource("1_kep5t")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_83hnf")
+
+[node name="ShellParticles" parent="." instance=ExtResource("2_tyvyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0179901)
+lifetime = 0.4
+randomness = 0.4
+draw_pass_1 = SubResource("BoxMesh_nu1or")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

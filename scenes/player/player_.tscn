@@ -49,15 +49,6 @@ player_ui = NodePath("PlayerUi")
 
 [node name="master" parent="." instance=ExtResource("2_v7wsi")]
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_nrabn")
-
-[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("4_a47yd")
-root = NodePath("..")
-properties = Array[String]([":transform", "master:transform"])
-metadata/_custom_type_script = "uid://dour8fehaaugp"
-
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("2_ktqdq")
 root = NodePath("..")
@@ -65,6 +56,9 @@ state_properties = Array[String]([":transform", ":velocity", "master:transform",
 input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "CameraInput:camera_look", "PlayerInput:shoot_input"])
 enable_input_broadcast = false
 metadata/_custom_type_script = "uid://d350u8evihs1u"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_nrabn")
 
 [node name="RewindableStateMachine" type="Node" parent="."]
 script = ExtResource("3_lo6j0")
@@ -126,6 +120,12 @@ camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
 metadata/_custom_type_script = "uid://usyufdtn83hc"
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("4_a47yd")
+root = NodePath("..")
+properties = Array[String]([":transform", "master:transform", ":velocity"])
+metadata/_custom_type_script = "uid://dour8fehaaugp"
 
 [node name="HealthSystem" parent="." instance=ExtResource("11_2hvjq")]
 regen_enabled = true

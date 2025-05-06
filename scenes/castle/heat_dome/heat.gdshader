@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode blend_mix, cull_back, diffuse_lambert, shadows_disabled, fog_disabled, unshaded;
+render_mode blend_mix, cull_back, diffuse_lambert, shadows_disabled, unshaded;
 
 // removed optional:  specular_disabled, ambient_light_disabled
 
@@ -54,7 +54,7 @@ void fragment() {
     ALBEDO = blended_water_color.rgb * albedo;
 	// https://godotshaders.com/shader/psx-style-water-surface-pixelation-waves-scrolling-textures/
 	// NOTE: added min(finalOpacity, ALPHA);
-    ALPHA = min(finalOpacity, ALPHA);
+    ALPHA = finalOpacity;
     EMISSION = vec3(foamEffectRounded) * FoamGlowIntensity;
     METALLIC = 0.0;
     ROUGHNESS = 1.0;

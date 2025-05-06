@@ -14,9 +14,6 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:linear_velocity")
-properties/2/spawn = true
-properties/2/replication_mode = 1
 
 [node name="OilDrum" type="RigidBody3D"]
 collision_layer = 7
@@ -24,10 +21,10 @@ script = ExtResource("1_jwr7d")
 enable_pickup = true
 
 [node name="Sketchfab_Scene" parent="." instance=ExtResource("2_2v5x0")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.654549, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.710119, 0)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.05557, 0)
 shape = SubResource("CylinderShape3D_2v5x0")
 debug_fill = false
 

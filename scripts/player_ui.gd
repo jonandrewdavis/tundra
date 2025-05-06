@@ -29,16 +29,17 @@ func _ready():
 		return
 
 	if multiplayer.is_server():
+		Hub.projectile_system.hit_signal.connect(handle_hit_signal)
+
 		weapons_manager.update_ammo_signal.connect(func(curr, res): update_ammo.rpc_id(peer_id, curr, res))
 		weapons_manager.update_weapon_signal.connect(func(text): update_weapon.rpc_id(peer_id, text))
 		weapons_manager.update_ammo_prev_signal.connect(func(curr, res): update_ammo_prev.rpc_id(peer_id, curr, res))
 		weapons_manager.update_weapon_prev_signal.connect(func(text): update_weapon_prev.rpc_id(peer_id, text))
 
-		Hub.projectile_system.hit_signal.connect(handle_hit_signal)
-		
 		var player_health_system: HealthSystem = get_parent().health_system
-		player_health_system.health_updated.connect(func(new_health): update_health.rpc(new_health))
-		player_health_system.max_health_updated.connect(func (new_max): update_max_health.rpc(new_max))
+		player_health_system.health_updated.connect(func(new_health): update_health.rpc_id(peer_id, new_health))
+		player_health_system.max_health_updated.connect(func (new_max): update_max_health.rpc_id(peer_id, new_max))
+
 		# TODO: Listen for death and fade out UI? 
 	else:
 		# Client code

@@ -20,4 +20,4 @@ func _Set_Projectile(_damage: int = 0,_spread:Vector2 = Vector2.ZERO, _Range: in
 		SprayPoint.x = SprayPoint.x + randf_range(-Randomness, Randomness)
 		SprayPoint.y = SprayPoint.y + randf_range(-Randomness, Randomness)
 		
-		Fire_Projectile(SprayPoint,_Range,Rigid_Body_Projectile, origin_point, )
+		#Fire_Projectile(SprayPoint,_Range,Rigid_Body_Projectile, origin_point, )
