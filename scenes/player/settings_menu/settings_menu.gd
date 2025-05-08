@@ -47,10 +47,10 @@ func _ready():
 	#sfx_slider.value = volume_sfx_value
 	#background_slider.value = volume_background_value
 	Nodash.error_missing(player, 'player')
-	if player:
-		camera_sensitivity = player._camera_input.CAMERA_MOUSE_ROTATION_SPEED
-		sensitivity_slider.max_value = camera_sensitivity * 2
-		sensitivity_slider.value = camera_sensitivity
+	#if player:
+		#camera_sensitivity = player._camera_input.CAMERA_MOUSE_ROTATION_SPEED
+		#sensitivity_slider.max_value = camera_sensitivity * 2
+		#sensitivity_slider.value = camera_sensitivity
 
 #func _process(_delta: float) -> void:
 	#if (Input.get_mouse_mode() != 2):

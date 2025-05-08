@@ -27,12 +27,10 @@ func host_game():
 func join_game():
 	_show_secondary_network_options()
 
-var test = preload("res://scenes/menu/enet_menu.tscn")
-
 func _show_secondary_network_options(is_hosting: bool = false):
 	_hide_main_menu_options()
 	
-	var second_menu_to_load = test
+	var second_menu_to_load = load(NetworkManager.selected_network_configuration.menu)
 	var active_secondary_menu = second_menu_to_load.instantiate()
 	
 	# Add whatever necessary configuration is required in the sub menu

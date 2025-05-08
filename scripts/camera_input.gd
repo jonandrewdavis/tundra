@@ -77,3 +77,6 @@ func get_camera_rotation_basis() -> Basis:
 
 func get_camera_vertical_look() -> float:
 	return camera_rot.rotation.x
+	
+func _exit_tree():
+	NetworkTime.before_tick_loop.disconnect(_gather)

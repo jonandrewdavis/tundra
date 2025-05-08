@@ -63,5 +63,5 @@ func _on_change_castle_speed():
 		speed = 0.0
 	else:
 		castle_on = true
-		speed = -1.0
+		speed = -10.0
 	

@@ -55,3 +55,7 @@ func _gather():
 	run_input = Input.is_action_pressed("run")
 	shoot_input = Input.is_action_pressed("shoot")
 	jump_input = Input.is_action_pressed("jump")
+
+
+func _exit_tree():
+	NetworkTime.before_tick_loop.disconnect(_gather)

@@ -55,7 +55,6 @@ func _input(event: InputEvent) -> void:
 		get_tree().quit()
 
 func _enter_tree():
-	set_multiplayer_authority(1)
 	_player_input.set_multiplayer_authority(str(name).to_int())
 	_camera_input.set_multiplayer_authority(str(name).to_int())
 
@@ -83,7 +82,7 @@ func _ready():
 	# https://foxssake.github.io/netfox/netfox/tutorials/responsive-player-movement/#ownership
 	_animation_player = _player_model.get_node("AnimationPlayer")
 	rollback_synchronizer.process_settings()
-	
+
 	# MultiplayerSyncronizer properties
 	Nodash.sync_property(sync, weapon_pivot, ['rotation'], false)
 	Nodash.warn_missing(_animation_player, '_animation_player')
@@ -100,6 +99,8 @@ func _ready():
 	if not multiplayer.is_server():
 		set_process(false)
 		set_physics_process(false)
+		if multiplayer.get_unique_id() == str(name).to_int():
+			NetworkManager.hide_loading()
 
 	#### SERVER ONLY ####
 	# TODO: To be fully server authoratitve, this line should be uncommented

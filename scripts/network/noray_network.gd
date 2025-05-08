@@ -30,7 +30,6 @@ func create_client_peer(network_connection_configs: NetworkConnectionConfigs):
 	
 	Noray.connect_nat(network_connection_configs.game_id)
 
-
 func _register_with_noray(host_ip: String):
 	print("Register with Noray hosted at: %s" % host_ip)
 	var err = OK

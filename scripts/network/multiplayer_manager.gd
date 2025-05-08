@@ -23,14 +23,19 @@ func _ready():
 		
 		# Handle the disconnect signal here so we have access to what needs cleaned up in game.
 		multiplayer.peer_disconnected.connect(_peer_disconnected)
-		
+
+		# CRITICAL: Changed to never add a host player
+		# TODO: Support a host player (probably good to do if we add Steam)
 		# We don't want to add a player to a dedicated server instance
-		if NetworkManager.is_hosting_game && not OS.has_feature(NetworkManager.DEDICATED_SERVER_FEATURE_NAME):
-			print("Adding Host player to game...")
-			_add_player_to_game(1)
+		#if NetworkManager.is_hosting_game && not OS.has_feature(NetworkManager.DEDICATED_SERVER_FEATURE_NAME):
+			#print("Adding Host player to game...")
+			#_add_player_to_game(1)
 
 func _add_player_to_game(network_id: int):
-	if is_multiplayer_authority():
+	print('ADDING!')
+	if is_multiplayer_authority():		
+		await get_tree().create_timer(4.0).timeout
+
 		print("Adding player to game: %s" % network_id)
 		
 		if _players_in_game.get(network_id) == null:
