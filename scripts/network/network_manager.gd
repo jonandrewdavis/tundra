@@ -111,8 +111,7 @@ func reset_selected_network():
 
 func _load_game_scene():
 	print("NetworkManager: Loading game scene...")
-	get_tree().change_scene_to_file(GAME_SCENE)
-	#get_tree().call_deferred(&"change_scene_to_packed", preload(GAME_SCENE))
+	get_tree().call_deferred(&"change_scene_to_packed", preload(GAME_SCENE))
 
 func _load_main_menu_scene():
 	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
@@ -125,5 +124,6 @@ func show_loading():
 func hide_loading():
 	print("Hide loading")
 	if _active_loading_scene != null:
-		get_tree().root.remove_child(_active_loading_scene)
+		get_tree().root.call_deferred('remove_child', _active_loading_scene)
 		_active_loading_scene.queue_free()
+		

@@ -7,4 +7,5 @@ func _ready():
 	label = "Oil"	
 
 func interact(player):
-	Hub.resource_system.spawn_as_movable(self, player)
+	if multiplayer.is_server():
+		Hub.resource_system.spawn_as_movable(self, player)

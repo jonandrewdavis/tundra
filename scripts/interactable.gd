@@ -12,6 +12,7 @@ func _ready() -> void:
 func interact(_player: Player) -> bool:
 	return true
 
+
 # If this wasn't created by a spawner, broadcast it's deletion
 @rpc
 func queue_free_on_clients():

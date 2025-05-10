@@ -15,18 +15,25 @@ func _ready() -> void:
 	for scene in scenes_to_spawn:
 		spawner.add_spawnable_scene(scene.get_state().get_path())
 
-func spawn_as_movable(item: Interactable, player: Player):
+	spawner.set_spawn_function(handle_movable_spawn)
 
-	var transform = item.transform
-	var temp_global_positon = item.global_position
-	# case:
+# TODO: Additional resource types, for now, just oil.
+func handle_movable_spawn(data: Variant):
+	var given_pos = data[0]
+	var given_transform = data[1]
+	
 	var new_movable = oil_drum.instantiate()
-	container.add_child(new_movable, true)
-	new_movable.global_position = temp_global_positon
-	new_movable.transform = transform
+	new_movable.position = given_pos
+	new_movable.transform = given_transform
+
+	return new_movable
+
+func spawn_as_movable(item: Interactable, player: Player):
+	var new_interactable = spawner.spawn([item.global_position, item.transform])
+	
 	# If this wasn't created by a spawner, broadcast it's deletion
 	item.queue_free_signal.emit()
 	item.queue_free()
-
-	if new_movable.enable_pickup == true:
-		player.interact_holding(new_movable)
+	
+	if new_interactable.enable_pickup == true:
+		player.interact_holding(new_interactable)

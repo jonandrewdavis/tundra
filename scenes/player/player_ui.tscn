@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=23 format=3 uid="uid://btdemgg0e0b4o"]
 
 [ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/player_ui.gd" id="1_fatww"]
 [ext_resource type="Texture2D" uid="uid://clx8vvaklih15" path="res://scenes/player/player_assets/crosshair046.png" id="2_by614"]
 [ext_resource type="Material" uid="uid://34b3q43337o3" path="res://scripts/shaders/snow_ui_shader_material.tres" id="3_by614"]
 [ext_resource type="Theme" uid="uid://b3kq74llqlv3x" path="res://assets/themes/MinimalUI4/MinimalUI.tres" id="4_nlx67"]
 [ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="5_by614"]
+[ext_resource type="Shader" uid="uid://cwtodhje057a1" path="res://scripts/shaders/hex.gdshader" id="5_en3kk"]
 [ext_resource type="PackedScene" uid="uid://s5lur3jc6w4b" path="res://scenes/player/settings_menu/settings_menu.tscn" id="6_en3kk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyawr"]
@@ -124,8 +125,8 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlx67"]
-bg_color = Color(0.04, 0.0028, 0.01644, 0.278431)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g18nd"]
+bg_color = Color(1, 0.07, 0.411, 0.278431)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_by614"]
 content_margin_left = 5.0
@@ -133,6 +134,20 @@ content_margin_top = 5.0
 content_margin_right = 5.0
 content_margin_bottom = 2.0
 bg_color = Color(0.949949, 0.883835, 0.931763, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4qoov"]
+render_priority = 0
+shader = ExtResource("5_en3kk")
+shader_parameter/scale = 8.0
+shader_parameter/radius = 1.0
+shader_parameter/alpha = 0.5
+shader_parameter/offset = 0.268
+shader_parameter/power = 1.0
+shader_parameter/hide_incomplete = false
+shader_parameter/color = Vector4(0, 0.6, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlx67"]
+bg_color = Color(0.04, 0.0028, 0.01644, 0.278431)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_en3kk"]
 bg_color = Color(0.1, 0.1, 0.1, 0.164706)
@@ -152,10 +167,12 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="PlayerUi" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "health_label")]
+[node name="PlayerUi" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "health_label", "temp_bar", "temp_label")]
 script = ExtResource("1_fatww")
 health_bar = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthBar")
-health_label = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthLabel")
+health_label = NodePath("BottomLeft/MarginContainer/VBoxContainer/HBoxContainer/HealthLabel")
+temp_bar = NodePath("BottomLeft/MarginContainer/VBoxContainer/TempBar")
+temp_label = NodePath("BottomLeft/MarginContainer/VBoxContainer/HBoxContainer/TempLabel")
 
 [node name="CustomSight" type="Control" parent="."]
 layout_mode = 3
@@ -275,11 +292,31 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 alignment = 2
 
-[node name="HealthLabel" type="Label" parent="BottomLeft/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomLeft/MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="BottomLeft/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "100 / 100"
 
+[node name="TempLabel" type="Label" parent="BottomLeft/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "30"
+horizontal_alignment = 2
+
+[node name="TempBar" type="ProgressBar" parent="BottomLeft/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_g18nd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_by614")
+step = 1.0
+value = 50.0
+show_percentage = false
+
 [node name="HealthBar" type="ProgressBar" parent="BottomLeft/MarginContainer/VBoxContainer"]
+material = SubResource("ShaderMaterial_4qoov")
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_nlx67")

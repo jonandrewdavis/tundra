@@ -2,5 +2,4 @@
 
 [resource]
 sky_top_color = Color(1, 1, 1, 1)
-sky_energy_multiplier = 0.5
 ground_bottom_color = Color(1, 1, 1, 1)

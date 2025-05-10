@@ -78,7 +78,7 @@ reference_frame = 2
 [sub_resource type="Resource" id="Resource_tje6t"]
 script = ExtResource("14_yllmb")
 operation = 0
-position = Vector3(0, 2, 0)
+position = Vector3(0, 0.5, 0)
 enabled = true
 override_global_seed = false
 custom_seed = 0
@@ -190,308 +190,308 @@ shape = SubResource("Resource_xky8s")
 
 [node name="Bush" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput"]
 
-[node name="bush" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-1.01475, 0.0345223, -0.350727, -0.0069495, 1.06687, 0.125119, 0.352354, 0.120463, -1.00759, -17.0369, -0.135764, 2.01385)
 
-[node name="bush2" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush2" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.607399, -0.190974, 0.867647, 0.195631, 1.054, 0.0950387, -0.866609, 0.104081, 0.62958, 24.3125, -0.127637, -90.441)
 
-[node name="bush3" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush3" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-1.02647, -0.221814, 0.201156, -0.250587, 1.02953, -0.143449, -0.163924, -0.184851, -1.04032, 17.2916, 0.0195397, -85.0032)
 
-[node name="bush4" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush4" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.070727, 0.171495, -1.06102, 0.0123069, 1.06338, 0.171056, 1.07472, -0.000890966, -0.0717843, 44.6585, -0.0855281, 73.5887)
 
-[node name="bush5" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush5" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.677443, -0.0181114, 0.754415, -0.0864528, 1.009, -0.0534088, -0.749664, -0.0999928, -0.675577, -42.4065, -0.120418, 50.4179)
 
-[node name="bush6" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush6" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.480646, -0.0774629, 0.944435, -0.0239261, 1.05963, 0.0747349, -0.947305, 0.0125402, -0.481078, 23.9189, 0.0642124, 38.4326)
 
-[node name="bush7" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush7" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.578601, -0.0796938, -0.89404, 0.0864392, 1.0637, -0.0388757, 0.893414, -0.0513025, 0.582768, -6.07218, -0.0968991, 65.6427)
 
-[node name="bush8" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush8" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.937409, 0.0199001, -0.440992, -0.100691, 0.99817, 0.259081, 0.429804, 0.277247, -0.901115, 27.1278, 0.0390986, -57.0108)
 
-[node name="bush9" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush9" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-1.0092, 0.227588, -0.301725, 0.178876, 1.04551, 0.190321, 0.332922, 0.12815, -1.01688, 19.0308, -0.0376339, -63.2853)
 
-[node name="bush10" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush10" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.953938, -0.140431, 0.368356, -0.0672635, 1.00831, 0.210212, -0.388436, 0.170272, -0.941026, 18.0664, -0.101167, 92.993)
 
-[node name="bush11" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush11" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.12477, -0.330827, -0.988602, -0.00492282, 0.995833, -0.332626, 1.04248, -0.0348928, -0.119893, -40.1069, 0.0689416, -7.59761)
 
-[node name="bush12" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush12" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.982439, 0.318682, 0.154406, 0.239728, 0.933674, -0.401708, -0.260633, -0.342464, -0.951512, -33.7428, -0.11467, 25.0708)
 
-[node name="bush13" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush13" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.34373, -0.396559, -0.875654, 0.0909788, 0.939199, -0.389623, 0.956949, 0.0531499, 0.351571, 47.9833, 0.0152319, -49.7489)
 
-[node name="bush14" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush14" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.253294, 0.0274657, 1.06793, 0.000995743, 1.09755, -0.0279912, -1.06829, -0.00548918, -0.253236, -12.6755, 0.0517819, 42.5229)
 
-[node name="bush15" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush15" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.0123685, -0.0832321, 1.07683, 0.00121373, 1.0769, 0.0832514, -1.08004, 0.00216336, -0.0122382, 18.0142, -0.0815585, -64.7322)
 
-[node name="bush16" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush16" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-1.02066, 0.0447372, -0.135192, 0.0422957, 1.02945, 0.021343, 0.135975, 0.0155897, -1.02141, 7.45864, 0.0644033, 56.8119)
 
-[node name="bush17" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush17" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.769652, 0.52918, 0.532045, 0.269013, 0.906054, -0.512022, -0.700525, -0.233459, -0.781172, 15.2073, -0.147672, 6.3305)
 
-[node name="bush18" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush18" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.121126, 0.187791, 1.00969, -0.0314145, 1.01689, -0.185361, -1.02652, -0.00896113, 0.124812, 12.9921, 0.134263, -35.9523)
 
-[node name="bush19" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush19" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.70949, -0.149697, 0.761931, -0.128365, 1.0405, 0.0848972, -0.765814, -0.0357204, -0.720124, -22.4874, 0.0735753, 55.2185)
 
-[node name="bush20" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush20" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.334375, 0.181085, -0.995403, 0.0532818, 1.05005, 0.173129, 1.01034, 0.00455466, -0.338563, 43.0758, -0.00149682, -29.8203)
 
-[node name="bush21" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush21" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.249076, 0.184785, -0.986018, -0.0567111, 1.01692, 0.176251, 1.00158, 0.0116271, 0.255185, -25.6335, -0.115817, 20.0389)
 
-[node name="bush22" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush22" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.260469, -0.05957, -1.0316, -0.0146505, 1.06398, -0.0577404, 1.03322, 6.93356e-05, -0.260881, -17.7915, 0.0814775, -67.4543)
 
-[node name="bush23" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush23" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.357817, 0.15926, -0.964304, -0.0532099, 1.0222, 0.188566, 0.975917, 0.114125, -0.343278, 42.8214, -0.125429, -26.8415)
 
-[node name="bush24" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush24" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.595165, -0.00856383, 0.89949, -0.141093, 1.06431, 0.10349, -0.888396, -0.174768, 0.586161, 5.74563, 0.125925, 21.7596)
 
-[node name="bush25" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush25" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.867748, -0.233839, -0.462752, 0.211801, 0.983361, -0.0997473, 0.473245, -0.0113329, 0.893151, 23.073, -0.0438104, 99.1161)
 
-[node name="bush26" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush26" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.941219, -0.404343, 0.386225, 0.300736, 1.00357, 0.317757, -0.471402, -0.167089, 0.973867, 23.0065, -0.1356, -11.3562)
 
-[node name="bush27" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush27" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(1.08919, 0.0969762, 0.0729695, -0.104546, 1.08438, 0.119385, -0.0616363, -0.125612, 1.08696, 5.5417, -0.0390021, 1.25183)
 
-[node name="bush28" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush28" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.987558, -0.041783, -0.42473, 0.0537209, 1.04998, -0.228201, 0.423386, -0.230685, -0.961739, 21.6107, 0.129878, 74.0156)
 
-[node name="bush29" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush29" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.207106, 0.384991, 0.975171, 0.0441876, 0.996338, -0.383963, -1.04748, -0.0340896, -0.209006, -29.2613, -0.0896853, 10.2692)
 
-[node name="bush30" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush30" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.92544, -0.0364494, -0.496548, -0.0849608, 1.04424, 0.0816926, 0.490581, 0.112087, -0.922548, -3.30316, -0.132359, 28.728)
 
-[node name="bush31" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush31" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.858906, -0.410845, 0.542464, 0.264517, 1.00642, 0.343408, -0.62697, -0.138223, 0.888023, 17.3471, -0.0287817, -49.9751)
 
-[node name="bush32" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush32" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.981176, 0.197909, 0.209605, -0.161595, 0.993356, -0.181489, -0.238724, 0.141008, 0.984345, 12.6535, -0.0686744, 60.3417)
 
-[node name="bush33" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush33" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.0342987, 0.116052, -1.0219, -0.000455941, 1.02247, 0.116131, 1.02847, 0.00432351, -0.0340281, 33.7294, 0.126427, -88.4738)
 
-[node name="bush34" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush34" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.906984, -0.432674, 0.307009, 0.326193, 0.934337, 0.353121, -0.418401, -0.209498, 0.940815, -19.4944, 0.0589265, 42.9662)
 
-[node name="bush35" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush35" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.0599092, 0.228939, 1.04822, -0.00472143, 1.0499, -0.229036, -1.07292, 0.00816326, 0.059538, -48.2047, 0.067422, -80.0266)
 
-[node name="bush36" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush36" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.936363, 0.207943, 0.452718, 0.208042, 1.03898, -0.0469294, -0.452672, 0.0473688, -0.958025, -49.2435, -0.0785649, -20.5345)
 
-[node name="bush37" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush37" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.252166, 0.0323249, -0.968898, 0.0869982, 0.997854, 0.0106488, 0.965525, -0.0814689, -0.254006, 11.4697, 0.143612, -31.7072)
 
-[node name="bush38" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush38" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(1.04409, 0.284282, 0.0161875, -0.272356, 1.015, -0.258445, -0.0830716, 0.245265, 1.05078, -13.5404, -0.128552, -25.9391)
 
-[node name="bush39" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush39" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.758622, 0.0711041, 0.683856, 0.0322234, 1.01354, -0.14113, -0.686787, 0.126096, 0.748763, 6.95634, 0.0232691, 51.1739)
 
-[node name="bush40" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush40" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.588873, 0.441533, 0.787939, 0.191779, 0.980287, -0.40599, -0.882621, -0.0815849, -0.613917, -21.0928, -0.100725, 69.9699)
 
-[node name="bush41" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush41" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.952498, 0.265415, 0.434524, -0.30275, 1.0363, 0.0306528, -0.409388, -0.148834, 0.988311, -22.6744, -0.0865955, 27.1328)
 
-[node name="bush42" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush42" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.971688, 0.316963, -0.0523248, -0.320383, 0.968376, -0.0835697, 0.0236283, 0.0957261, 1.01866, 39.4109, -0.126309, -32.7217)
 
-[node name="bush43" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush43" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.214805, 0.0977595, -1.0403, -0.0627696, 1.06135, 0.0867762, 1.043, 0.0437402, 0.219473, 15.5325, -0.0640806, 54.4056)
 
-[node name="bush44" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush44" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(1.0527, -0.151468, -0.0529635, 0.158058, 1.03942, 0.168938, 0.0276681, -0.17487, 1.05003, -3.24452, 0.0648177, 69.4857)
 
-[node name="bush45" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush45" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(1.0179, 0.0728963, -0.186273, -0.0102225, 0.983727, 0.329111, 0.199767, -0.321099, 0.965984, 21.2453, 0.122412, 48.513)
 
-[node name="bush46" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush46" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(-0.82291, 0.440543, -0.496748, 0.233475, 0.93256, 0.440271, 0.621551, 0.232962, -0.823055, -41.9588, 0.00218194, -83.1115)
 
-[node name="bush47" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
+[node name="bush47" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/Bush" instance=ExtResource("9_5b38t")]
 transform = Transform3D(0.684923, -0.253462, 0.685082, 0.0072504, 0.941448, 0.341062, -0.73043, -0.228326, 0.645786, 7.6543, -0.0288125, 57.2225)
 
 [node name="SmallRock" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput"]
 
-[node name="small_rock" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.867836, -0.0933834, 0.551847, -0.0640439, 1.02807, 0.073254, -0.556016, 0.0273371, -0.869766, 32.2394, 0.115472, 89.9351)
 
-[node name="small_rock2" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock2" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.927491, 0.13228, -0.399738, 0.17847, 0.999362, -0.0833869, 0.381363, -0.145968, -0.933159, -39.2162, 0.0442651, -29.0928)
 
-[node name="small_rock3" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock3" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.752274, 0.363541, 0.647407, -0.171037, 0.981683, -0.352507, -0.722527, 0.146125, 0.757508, 47.6951, 0.0795627, -93.0209)
 
-[node name="small_rock4" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock4" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.928872, 0.28365, 0.378489, -0.20777, 0.99403, -0.235054, -0.424904, 0.13402, 0.942343, 44.3716, -0.0353804, 9.06693)
 
-[node name="small_rock5" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock5" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.699607, -0.135782, -0.764162, -0.221718, 1.02088, 0.021589, 0.743788, 0.176601, -0.712334, -45.0714, -0.0984114, -32.8202)
 
-[node name="small_rock6" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock6" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-1.04485, -0.175545, -0.0173495, -0.168592, 1.02442, -0.212051, 0.0519023, -0.206331, -1.03806, -49.6356, 0.145083, 91.8448)
 
-[node name="small_rock7" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock7" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.926592, 0.293263, -0.355609, 0.306256, 0.988406, 0.0171206, 0.344482, -0.0899053, -0.971742, -12.831, 0.139255, 6.24226)
 
-[node name="small_rock8" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock8" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(1.01947, 0.0722068, 0.159505, -0.0882609, 1.02579, 0.0997508, -0.151214, -0.111921, 1.01715, 33.7329, -0.0313703, -15.582)
 
-[node name="small_rock9" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock9" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.811752, 0.182505, 0.704628, -0.0884988, 1.07239, -0.175805, -0.72248, 0.0736964, 0.81323, 25.7938, -0.111008, 86.7059)
 
-[node name="small_rock10" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock10" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.130892, 0.326429, -1.02686, 0.00461339, 1.03457, 0.328292, 1.07749, 0.0352247, -0.126148, -36.6612, -0.144978, 28.2982)
 
-[node name="small_rock11" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock11" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.15732, -0.525508, -0.839014, 0.0483613, 0.852606, -0.524953, 0.988819, 0.0419081, 0.15916, -30.1633, 0.109507, -88.7283)
 
-[node name="small_rock12" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock12" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(1.0148, 0.0818404, -0.219122, -0.097508, 1.03479, -0.0650946, 0.212614, 0.083948, 1.01601, -29.857, 0.123397, -34.7747)
 
-[node name="small_rock13" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock13" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-1.01182, -0.137821, 0.245917, -0.148907, 1.03931, -0.0302087, -0.239367, -0.0639636, -1.02071, 28.8031, 0.110518, 1.76809)
 
-[node name="small_rock14" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock14" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.187413, 0.0560364, -0.993289, -0.0379109, 1.00962, 0.0641109, 0.994146, 0.0490649, -0.184807, 5.04859, 0.0303738, 15.0556)
 
-[node name="small_rock15" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock15" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.938323, 0.205657, 0.442956, -0.123034, 1.02804, -0.216676, -0.472618, 0.140681, 0.93584, -22.2521, 0.103062, 85.4499)
 
-[node name="small_rock16" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock16" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.358513, -0.397131, -0.934185, 0.0190288, 0.993192, -0.414913, 1.01492, 0.121663, 0.337774, 45.7181, 0.114695, -19.1454)
 
-[node name="small_rock17" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock17" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.992805, 0.320255, -0.00704558, -0.298212, 0.932404, 0.360509, 0.116971, -0.341079, 0.978906, 49.4229, -0.0546839, 3.77848)
 
-[node name="small_rock18" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock18" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.153799, -0.484559, 0.962502, 0.0294559, 0.973783, 0.485531, -1.07719, -0.0425559, 0.1507, -23.4314, -0.0902183, 41.4213)
 
-[node name="small_rock19" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock19" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.0665434, -0.419909, 0.986637, 0.0112808, 0.988754, 0.42005, -1.07222, -0.0156575, 0.0656515, -22.8399, -0.0452303, -36.2424)
 
-[node name="small_rock20" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock20" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.698065, 0.0629518, -0.754634, 0.101035, 1.02492, -0.00796178, 0.750485, -0.0794258, -0.700853, -12.7445, -0.121607, -41.7664)
 
-[node name="small_rock21" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock21" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.117207, 0.325693, -0.957838, -0.000103382, 0.964241, 0.327883, 1.0117, 0.0378307, -0.110934, 3.74686, -0.00422209, 42.0358)
 
-[node name="small_rock22" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock22" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-1.03316, 0.138979, 0.0361938, 0.143584, 1.005, 0.239587, -0.00295016, 0.242288, -1.01456, -31.3992, 0.119348, 98.8101)
 
-[node name="small_rock23" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock23" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.695693, -0.0824545, -0.742303, -0.0134681, 1.01567, -0.100197, 0.746747, -0.058499, -0.69336, 10.2391, -0.132656, 24.1354)
 
-[node name="small_rock24" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock24" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.0456667, -0.314906, -0.998913, -0.0122091, 0.999954, -0.314676, 1.0473, -0.00207407, -0.0472251, -11.3336, 0.13025, -26.7346)
 
-[node name="small_rock25" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock25" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(1.02351, -0.0364437, 0.108345, 0.0658799, 0.985774, -0.290769, -0.0934164, 0.295903, 0.982014, 22.5098, 0.0455944, -14.1465)
 
-[node name="small_rock26" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock26" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.995237, -0.396208, -0.238768, 0.285661, 0.971949, -0.42214, 0.363852, 0.320661, 0.984518, -28.5033, -0.061773, 21.3976)
 
-[node name="small_rock27" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock27" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.376425, -0.485322, 0.820397, -0.13289, 0.900157, 0.471532, -0.94389, 0.066815, -0.393562, -6.44514, 0.131292, -0.948227)
 
-[node name="small_rock28" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock28" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.861818, -0.0572527, 0.679724, 0.064435, 1.0835, 0.172959, -0.679081, 0.175467, -0.846223, 44.4347, 0.00684115, -95.0437)
 
-[node name="small_rock29" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock29" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.54811, -0.0391344, -0.873189, 0.00284161, 1.03074, -0.044412, 0.874061, 0.0211896, 0.547707, -48.3293, -0.0100095, 95.5964)
 
-[node name="small_rock30" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock30" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.281517, -0.0206884, 1.04674, 0.0267812, 1.08371, 0.0142164, -1.0466, 0.022166, 0.281918, 15.3882, 0.0558572, 1.2374)
 
-[node name="small_rock31" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock31" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.245299, -0.241437, -0.95242, 0.0451478, 0.983385, -0.237659, 0.981507, 0.0151059, 0.248961, -36.662, -0.049746, 24.5375)
 
-[node name="small_rock32" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock32" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.702649, 0.218263, 0.708598, -0.242784, 0.990148, -0.0642403, -0.700575, -0.124227, 0.732958, -42.7227, -0.0174912, 47.6617)
 
-[node name="small_rock33" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock33" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(1.00788, -0.074399, -0.0272642, 0.0777171, 0.995993, 0.155093, 0.0154464, -0.156712, 0.998649, -44.1485, -0.0289833, -52.2325)
 
-[node name="small_rock34" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock34" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.789811, 0.166144, -0.659079, 0.243926, 1.01238, -0.0371044, 0.63442, -0.182409, -0.806243, -47.5311, 0.0638309, -68.4148)
 
-[node name="small_rock35" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock35" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.310073, 0.0977445, 1.02764, 0.0145434, 1.0733, -0.0976999, -1.03217, -0.0142403, -0.310087, 19.0231, 0.000230974, -90.1836)
 
-[node name="small_rock36" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock36" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(1.03655, 0.0702819, -0.187111, -0.0923208, 1.04485, -0.118974, 0.177276, 0.133185, 1.0321, 28.3519, -0.00224374, -67.2827)
 
-[node name="small_rock37" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock37" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.319838, 0.0389845, 0.999668, 0.0665588, 1.04636, -0.0621004, -0.998211, 0.0822602, 0.316164, 38.8134, -0.146288, -93.9368)
 
-[node name="small_rock38" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock38" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.804577, -0.211138, -0.598053, -0.276019, 0.986342, 0.0231154, 0.571016, 0.179281, -0.831498, -44.0375, 0.141913, -26.7152)
 
-[node name="small_rock39" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock39" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.847889, -0.0225677, -0.58172, 0.066191, 1.0248, 0.0567201, 0.578383, -0.0841969, 0.846291, -28.8626, 0.00345005, 26.8069)
 
-[node name="small_rock40" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock40" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.673978, -0.253856, -0.710166, 0.128442, 0.977148, -0.227395, 0.743156, 0.0613419, 0.68336, 49.668, -0.040544, -53.2447)
 
-[node name="small_rock41" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock41" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.80305, -0.417286, 0.601487, 0.168929, 0.974361, 0.450431, -0.712304, -0.239369, 0.784939, -25.5402, 0.00697648, -4.15813)
 
-[node name="small_rock42" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock42" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.796791, 0.400284, -0.532356, 0.18563, 0.930616, 0.421903, 0.639665, 0.228546, -0.785558, 28.2841, -0.0889615, -81.3014)
 
-[node name="small_rock43" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock43" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.377089, -0.503428, -0.851382, 0.0698678, 0.92244, -0.5145, 0.986615, 0.127089, 0.361837, 16.7993, -0.144367, -42.7524)
 
-[node name="small_rock44" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock44" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(-0.494386, -0.307704, 0.880271, -0.117134, 1.00893, 0.286893, -0.925115, 0.0366919, -0.506746, 29.0498, -0.0975878, -0.464873)
 
-[node name="small_rock45" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock45" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.808444, -0.0551669, -0.589192, 0.00678684, 0.99832, -0.0841618, 0.59173, 0.0639209, 0.805941, 21.4141, 0.106211, 34.7374)
 
-[node name="small_rock46" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock46" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.787325, 0.137932, -0.617361, 0.00248901, 0.984986, 0.223241, 0.632577, -0.17555, 0.767509, 21.6529, 0.00155607, -91.905)
 
-[node name="small_rock47" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
+[node name="small_rock47" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/SmallRock" instance=ExtResource("10_bganx")]
 transform = Transform3D(0.87079, -0.00265163, 0.520894, -0.0384822, 1.01159, 0.0694811, -0.519478, -0.0793818, 0.868018, 33.1477, 0.144359, 98.2757)
 
 [node name="LargeRock" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput"]
 
-[node name="large_rock" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
+[node name="large_rock" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
 transform = Transform3D(0.897468, -0.0860623, 0.525235, 0.0355908, 1.03709, 0.109118, -0.531048, -0.075939, 0.894957, -39.4871, -0.092947, -79.3332)
 
-[node name="large_rock2" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
+[node name="large_rock2" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
 transform = Transform3D(-1.06257, 0.20365, 0.0331797, 0.203612, 1.06309, -0.00435894, -0.0334072, 0.00196238, -1.0819, 7.22122, -0.0847797, 1.59298)
 
-[node name="large_rock3" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
+[node name="large_rock3" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
 transform = Transform3D(0.829099, -0.173089, -0.588406, 0.234951, 1.00354, 0.0358515, 0.56655, -0.162872, 0.846215, -33.3334, -0.0126838, 13.1417)
 
-[node name="large_rock4" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
+[node name="large_rock4" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
 transform = Transform3D(-0.976075, -0.137696, -0.460455, -0.00197818, 1.04351, -0.307862, 0.480599, -0.27536, -0.936431, -9.65821, -0.127803, -9.10489)
 
-[node name="large_rock5" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
+[node name="large_rock5" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
 transform = Transform3D(-0.906613, -0.307962, -0.363154, -0.202999, 0.956476, -0.304325, 0.430712, -0.197438, -0.907841, -29.6622, -0.0974319, -34.6118)
 
-[node name="large_rock6" type="Node3D" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
+[node name="large_rock6" parent="NavigationRegion3D/StartingAreaScatter/ScatterOutput/LargeRock" instance=ExtResource("11_ttnis")]
 transform = Transform3D(-0.960693, -0.202209, -0.328273, -0.243487, 1.00158, 0.0956192, 0.298941, 0.165954, -0.977075, -32.7679, 0.133252, 31.7246)
 
 [node name="ResourceScatter" type="Node3D" parent="NavigationRegion3D"]
@@ -527,23 +527,23 @@ metadata/_custom_type_script = "uid://d2sf262l5kym1"
 [node name="Barrels" type="Node3D" parent="NavigationRegion3D/ResourceScatter/ScatterOutput"]
 
 [node name="OilDrumStatic" type="StaticBody3D" parent="NavigationRegion3D/ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("13_yllmb")]
-transform = Transform3D(0.426135, -0.0653392, -0.925119, -0.0613661, 1.01389, -0.0998755, 0.925391, 0.0973227, 0.419386, -3.98875, 2, -26.9914)
+transform = Transform3D(0.426135, -0.0653392, -0.925119, -0.0613661, 1.01389, -0.0998755, 0.925391, 0.0973227, 0.419386, -3.98875, 0.5, -26.9914)
 script = ExtResource("14_ns1h0")
 
 [node name="OilDrumStatic2" type="StaticBody3D" parent="NavigationRegion3D/ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("13_yllmb")]
-transform = Transform3D(-1.20174, -0.0987795, -0.50877, -0.0384605, 1.2982, -0.161204, 0.516842, -0.133073, -1.19497, -17.0317, 2, 29.2507)
+transform = Transform3D(-1.20174, -0.0987795, -0.50877, -0.0384605, 1.2982, -0.161204, 0.516842, -0.133073, -1.19497, -17.0317, 0.5, 29.2507)
 script = ExtResource("14_ns1h0")
 
 [node name="OilDrumStatic3" type="StaticBody3D" parent="NavigationRegion3D/ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("13_yllmb")]
-transform = Transform3D(-0.708717, 0.143938, 0.890873, -0.013032, 1.13101, -0.193105, -0.902332, -0.129388, -0.696928, 16.9995, 2, 44.3478)
+transform = Transform3D(-0.708717, 0.143938, 0.890873, -0.013032, 1.13101, -0.193105, -0.902332, -0.129388, -0.696928, 16.9995, 0.5, 44.3478)
 script = ExtResource("14_ns1h0")
 
 [node name="OilDrumStatic4" type="StaticBody3D" parent="NavigationRegion3D/ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("13_yllmb")]
-transform = Transform3D(-1.13854, -0.508928, 0.419387, -0.385514, 1.19252, 0.400547, -0.535044, 0.223722, -1.18104, -5.52965, 2, -41.5308)
+transform = Transform3D(-1.13854, -0.508928, 0.419387, -0.385514, 1.19252, 0.400547, -0.535044, 0.223722, -1.18104, -5.52965, 0.5, -41.5308)
 script = ExtResource("14_ns1h0")
 
 [node name="OilDrumStatic5" type="StaticBody3D" parent="NavigationRegion3D/ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("13_yllmb")]
-transform = Transform3D(-0.687343, -0.431701, 0.890204, -0.125599, 1.11326, 0.442892, -0.981353, 0.159884, -0.680185, 14.3504, 2, -11.9358)
+transform = Transform3D(-0.687343, -0.431701, 0.890204, -0.125599, 1.11326, 0.442892, -0.981353, 0.159884, -0.680185, 14.3504, 0.5, -11.9358)
 script = ExtResource("14_ns1h0")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]

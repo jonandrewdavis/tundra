@@ -1,47 +1,20 @@
-[gd_scene load_steps=15 format=3 uid="uid://jqyjx5vv1fpy"]
+[gd_scene load_steps=9 format=3 uid="uid://jqyjx5vv1fpy"]
 
 [ext_resource type="Script" uid="uid://b1ejhdshlsua3" path="res://scenes/castle/heat_dome/heat_dome.gd" id="1_l7s2y"]
-[ext_resource type="Material" uid="uid://liy0127m0psj" path="res://scenes/castle/heat_dome/heat_shader_mat.tres" id="2_l7s2y"]
-[ext_resource type="Shader" uid="uid://2igv1d2ymwf" path="res://scenes/castle/heat_dome/heat.gdshader" id="2_w4mjc"]
-[ext_resource type="Texture2D" uid="uid://en057mecswqa" path="res://scenes/castle/heat_dome/clear+sea+water-2048x2048.png" id="3_qfupc"]
-[ext_resource type="Texture2D" uid="uid://ddwcquq3qs1ad" path="res://assets/ambient/Ice003_1K-JPG/Ice003_1K-JPG_Color.jpg" id="4_xujgp"]
+[ext_resource type="Material" uid="uid://boymajqjt407s" path="res://scenes/castle/heat_dome/heat_shader_hex.tres" id="2_qfupc"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_xujgp"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_qfupc"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_l7s2y"]
-material = ExtResource("2_l7s2y")
+material = ExtResource("2_qfupc")
 radius = 20.0
 height = 20.0
 is_hemisphere = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_opwrb"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3cq82"]
-noise = SubResource("FastNoiseLite_opwrb")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qfupc"]
-render_priority = 0
-shader = ExtResource("2_w4mjc")
-shader_parameter/albedo = Color(1, 0.646, 0.41, 1)
-shader_parameter/water_texture1 = ExtResource("3_qfupc")
-shader_parameter/water_texture2 = ExtResource("4_xujgp")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_3cq82")
-shader_parameter/scroll_speed1 = Vector2(0.05, 0)
-shader_parameter/scroll_speed2 = Vector2(-0.03, 0)
-shader_parameter/blend_factor = 0.5
-shader_parameter/scale1 = Vector2(10, 10)
-shader_parameter/scale2 = Vector2(10, 10)
-shader_parameter/wave_strength = 0.2
-shader_parameter/wave_scale = 0.02
-shader_parameter/pixelation_level = 512
-shader_parameter/FoamSize = 0.5
-shader_parameter/WaterOpacity = 0.4
-shader_parameter/FoamGlowIntensity = 0.5
-
 [sub_resource type="SphereMesh" id="SphereMesh_px6c0"]
-material = SubResource("ShaderMaterial_qfupc")
+material = ExtResource("2_qfupc")
 flip_faces = true
 radius = 20.0
 height = 20.0
@@ -60,8 +33,10 @@ script = ExtResource("1_l7s2y")
 
 [node name="FogVolumes" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+visible = false
 
 [node name="FogVolume1" type="FogVolume" parent="FogVolumes"]
+visible = false
 size = Vector3(40, 40, 40)
 shape = 2
 material = SubResource("FogMaterial_xujgp")
@@ -81,6 +56,7 @@ mesh = SubResource("SphereMesh_l7s2y")
 
 [node name="HeatDomeInterior" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
+visible = false
 visibility_range_end = 20.0
 visibility_range_end_margin = 125.0
 visibility_range_fade_mode = 1

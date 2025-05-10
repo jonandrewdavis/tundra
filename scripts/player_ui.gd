@@ -5,6 +5,9 @@ class_name PlayerUI
 @export var health_bar: ProgressBar
 @export var health_label: Label
 
+@export var temp_bar: ProgressBar
+@export var temp_label: Label
+
 # TODO: When UI items move around, they're often reparented...
 # Use the export & select method above. It keeps them current.
 # Alternatively, use "access as unique name", which is kinda the same effect.

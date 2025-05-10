@@ -126,7 +126,7 @@ reference_frame = 2
 [sub_resource type="Resource" id="Resource_aydtm"]
 script = ExtResource("16_pl4mc")
 operation = 0
-position = Vector3(0, 2, 0)
+position = Vector3(0, 1, 0)
 enabled = true
 override_global_seed = false
 custom_seed = 0
@@ -1025,21 +1025,21 @@ metadata/_custom_type_script = "uid://d2sf262l5kym1"
 [node name="Barrels" type="Node3D" parent="ResourceScatter/ScatterOutput"]
 
 [node name="OilDrumStatic" type="StaticBody3D" parent="ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("16_go0qp")]
-transform = Transform3D(0.426135, -0.0653392, -0.925119, -0.0613661, 1.01389, -0.0998755, 0.925391, 0.0973227, 0.419386, 39.8345, 2, -99.8491)
+transform = Transform3D(0.426135, -0.0653392, -0.925119, -0.0613661, 1.01389, -0.0998755, 0.925391, 0.0973227, 0.419386, 39.8345, 1, -99.8491)
 script = ExtResource("17_w87r5")
 
 [node name="OilDrumStatic2" type="StaticBody3D" parent="ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("16_go0qp")]
-transform = Transform3D(-1.20174, -0.0987795, -0.50877, -0.0384605, 1.2982, -0.161204, 0.516842, -0.133073, -1.19497, -23.5052, 2, -77.9316)
+transform = Transform3D(-1.20174, -0.0987795, -0.50877, -0.0384605, 1.2982, -0.161204, 0.516842, -0.133073, -1.19497, -23.5052, 1, -77.9316)
 script = ExtResource("17_w87r5")
 
 [node name="OilDrumStatic3" type="StaticBody3D" parent="ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("16_go0qp")]
-transform = Transform3D(-0.708717, 0.143938, 0.890873, -0.013032, 1.13101, -0.193105, -0.902332, -0.129388, -0.696928, -45.4792, 2, -96.4543)
+transform = Transform3D(-0.708717, 0.143938, 0.890873, -0.013032, 1.13101, -0.193105, -0.902332, -0.129388, -0.696928, -45.4792, 1, -96.4543)
 script = ExtResource("17_w87r5")
 
 [node name="OilDrumStatic4" type="StaticBody3D" parent="ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("16_go0qp")]
-transform = Transform3D(-1.13854, -0.508928, 0.419387, -0.385514, 1.19252, 0.400547, -0.535044, 0.223722, -1.18104, -35.4057, 2, -11.1)
+transform = Transform3D(-1.13854, -0.508928, 0.419387, -0.385514, 1.19252, 0.400547, -0.535044, 0.223722, -1.18104, -35.4057, 1, -11.1)
 script = ExtResource("17_w87r5")
 
 [node name="OilDrumStatic5" type="StaticBody3D" parent="ResourceScatter/ScatterOutput/Barrels" instance=ExtResource("16_go0qp")]
-transform = Transform3D(-0.687343, -0.431701, 0.890204, -0.125599, 1.11326, 0.442892, -0.981353, 0.159884, -0.680185, 23.6013, 2, -33.8761)
+transform = Transform3D(-0.687343, -0.431701, 0.890204, -0.125599, 1.11326, 0.442892, -0.981353, 0.159884, -0.680185, 23.6013, 1, -33.8761)
 script = ExtResource("17_w87r5")
