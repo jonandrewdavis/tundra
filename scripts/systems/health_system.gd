@@ -17,14 +17,24 @@ class_name HealthSystem
 @export var regen_speed: float = 0.15
 @export var regen_increment: int = 2
 
+@export var max_temp : float = 74.0
+@export var min_temp : float = -40.0
+@onready var temp = max_temp
+
+@export var temp_enabled: bool = false
+@export var temp_regen_speed: float = 1.0
+@export var temp_regen_increment: float = 5.0
+
 @onready var regen_timer: Timer = Timer.new()
 @onready var regen_tick_timer: Timer = Timer.new()
+@onready var temp_timer: Timer = Timer.new()
 
 var last_damage_source := 0
 
 @warning_ignore("unused_signal")
 signal hurt
 signal health_updated
+signal temp_updated
 signal max_health_updated
 signal death
 
@@ -50,6 +60,12 @@ func _ready() -> void:
 		if regen_enabled:
 			# CRITICAL: This requires `call_deferred` for some reason...
 			call_deferred('prepare_regen_timer')
+	
+		if temp_enabled:
+			add_child(temp_timer)
+			temp_timer.wait_time = temp_regen_speed
+			temp_timer.timeout.connect(on_temp_timer)
+			temp_timer.start()
 
 
 #func _exit_tree() -> void:
@@ -57,8 +73,6 @@ func _ready() -> void:
 		#Nodash.sync_remove_all(sync)
 		
 # TODO: could do teams here
-
-
 func damage(value: int, source: int = 0) -> bool:
 	# Don't allow negative values when damaging
 	var next_health = health - abs(value)
@@ -147,10 +161,17 @@ func start_regen_health():
 	if regen_timer.is_stopped() && health < max_health:
 		last_damage_source = 0
 		regen_tick_timer.start()
-		
+
 func regen_health_tick():
 	if regen_timer.is_stopped() && health < max_health:
 		heal(regen_increment)
 		regen_tick_timer.start()
 	else:
 		regen_tick_timer.stop()
+
+func on_temp_timer():
+	var new_temp = temp + temp_regen_increment
+	if new_temp >= max_temp or new_temp <= min_temp:
+		return
+	temp = new_temp
+	temp_updated.emit(new_temp)

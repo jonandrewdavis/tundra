@@ -164,9 +164,6 @@ script = ExtResource("1_2hve7")
 heat_dome = NodePath("HeatDome")
 castle_maw = NodePath("CastleMaw")
 
-[node name="LightHouse" parent="." instance=ExtResource("7_2rh0a")]
-transform = Transform3D(-0.523986, -0.386676, 0.758895, 0, 0.891007, 0.453991, -0.851727, 0.237885, -0.466875, 0, 14.5882, -3.50466)
-
 [node name="HeatDome" parent="." instance=ExtResource("4_8nt25")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 
@@ -235,6 +232,9 @@ light_energy = 4.0
 light_indirect_energy = 2.0
 light_volumetric_fog_energy = 3.0
 shadow_enabled = true
+
+[node name="LightHouse" parent="." instance=ExtResource("7_2rh0a")]
+transform = Transform3D(-0.523986, -0.386676, 0.758895, 0, 0.891007, 0.453991, -0.851727, 0.237885, -0.466875, 0, 14.5882, -3.50466)
 
 [node name="CastleTower" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.12969, -2.45728)

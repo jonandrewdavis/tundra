@@ -20,7 +20,7 @@ var _available_networks: Dictionary = {
 var selected_network: AvailableNetworks = AvailableNetworks.ENET
 var selected_network_configuration: Dictionary = _available_networks[0]
 
-var _loading_scene = preload("res://scenes/menu/loading.tscn")
+var _loading_scene = preload("res://scenes/menus/loading.tscn")
 
 var _active_loading_scene
 var active_network_node
@@ -54,19 +54,22 @@ func join_game(network_connection_configs: NetworkConnectionConfigs):
 	print("Join game, host_ip: %s:%s, game_id: %s" % [network_connection_configs.host_ip, network_connection_configs.host_port, network_connection_configs.game_id])
 	show_loading()
 	
-	# Client peers should load the game scene immediately, so that once the connection is made,
-	# we don't have to wait for it to load. 
-	_load_game_scene()
-	
 	var network_scene = load(selected_network_configuration.scene)
 	active_network_node = network_scene.instantiate()
 	add_child(active_network_node)
-	
+
+	# CRITICAL: This SEEMS to be causing an issue with spawning new nodes.
+		
+	# Client peers should load the game scene immediately, so that once the connection is made,
+	# we don't have to wait for it to load. 
+	#_load_game_scene()
+
 	# Connect client-side lifecycle signals
 	active_network_node.network_server_disconnected.connect(disconnect_from_game)
 	
-	active_network_node.create_client_peer(network_connection_configs)
-	
+	await active_network_node.create_client_peer(network_connection_configs)
+	_load_game_scene()
+		
 func set_selected_network(network_selected: AvailableNetworks):
 	print("Network selection updated: %s" % network_selected)
 	selected_network = network_selected
@@ -121,5 +124,6 @@ func show_loading():
 func hide_loading():
 	print("Hide loading")
 	if _active_loading_scene != null:
-		get_tree().root.remove_child(_active_loading_scene)
+		get_tree().root.call_deferred('remove_child', _active_loading_scene)
 		_active_loading_scene.queue_free()
+		

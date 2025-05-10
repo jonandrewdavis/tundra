@@ -5,10 +5,10 @@
 [ext_resource type="Environment" uid="uid://c5g0wrqetp50h" path="res://assets/environment/saved_world_environments/tundra_world_environment_v2/TundraWorldEnv_V2.tres" id="2_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://ccj6ll20fnwya" path="res://scripts/systems/enemy_system.tscn" id="5_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://dy85183h2d31p" path="res://scenes/castle/castle_simple.tscn" id="5_71j4m"]
-[ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="5_qfnet"]
 [ext_resource type="PackedScene" uid="uid://7u0288w3c63v" path="res://scripts/systems/resource_system.tscn" id="6_7r4gi"]
 [ext_resource type="Material" uid="uid://teb2w3f6ts0s" path="res://scenes/walking_terrain/snow_infinite_mat.tres" id="6_i7141"]
 [ext_resource type="PackedScene" uid="uid://crep3klgx68p5" path="res://scripts/systems/projectile_system.tscn" id="8_4mrxx"]
+[ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="9_7r4gi"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_71j4m"]
 
@@ -34,10 +34,7 @@ script = ExtResource("1_71j4m")
 environment = ExtResource("2_4mrxx")
 
 [node name="SunV2" type="DirectionalLight3D" parent="Environment_V2"]
-transform = Transform3D(0.838671, -0.385118, 0.385118, 0, 0.707107, 0.707107, -0.544639, -0.59303, 0.59303, 0, 0, 0)
-light_energy = 0.3
-light_indirect_energy = 0.4
-light_volumetric_fog_energy = 2.0
+transform = Transform3D(0.838671, -0.523541, 0.150123, 0, 0.275637, 0.961262, -0.544639, -0.806182, 0.231169, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_mode = 0
 
@@ -58,8 +55,6 @@ _player_spawn_point = NodePath("../PlayerContainer")
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dup2jh8uleo3l")
 spawn_path = NodePath("../PlayerContainer")
-
-[node name="WalkingTerrainManager" parent="." instance=ExtResource("5_qfnet")]
 
 [node name="CastleSimple" parent="." instance=ExtResource("5_71j4m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -97,3 +92,5 @@ mesh = SubResource("PlaneMesh_i7141")
 [node name="DEATHFOG" type="FogVolume" parent="WorldBoundary"]
 shape = 4
 material = SubResource("FogMaterial_4mrxx")
+
+[node name="WalkingTerrainManager" parent="." instance=ExtResource("9_7r4gi")]

@@ -18,7 +18,10 @@ var _is_hosting: bool = false
 
 func _ready():
 	host_gameid_input.placeholder_text = NORAY_CLIENT_PLACEHOLDER_TEXT
-	host_gameid_input.text = ""
+
+	# CRITICAL: Updated to default to tomfol.io
+	host_ip_input.text = "tomfol.io"
+	
 
 	if menu_config_options.has("is_hosting") && menu_config_options.get("is_hosting") == true:
 		_is_hosting = true

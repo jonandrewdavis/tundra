@@ -11,15 +11,15 @@ config_version=5
 [application]
 
 config/name="tundra-prototype"
-run/main_scene="res://scenes/menu/main_menu.tscn"
+run/main_scene="uid://ffncciksi1tw"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://sv16ctski5qf"
 
 [autoload]
 
+Hub="*res://scripts/hub.gd"
 NetworkManager="*res://scripts/network/network_manager.gd"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
-Hub="*res://scripts/hub.gd"
 WindowTiler="*res://addons/netfox.extras/window-tiler.gd"
 Noray="*res://addons/netfox.noray/noray.gd"
 PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
@@ -29,6 +29,7 @@ NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
 NetworkEvents="*res://addons/netfox/network-events.gd"
 NetworkPerformance="*res://addons/netfox/network-performance.gd"
 Nodash="*res://scripts/nodash.gd"
+Async="*res://scripts/shared/scripts/async.gd"
 
 [display]
 
@@ -170,9 +171,6 @@ in-game-menu={
 [netfox]
 
 logging/clear_settings=true
-logging/netfox_extras_log_level=5
-logging/log_level=5
-logging/netfox_noray_log_level=5
 
 [physics]
 

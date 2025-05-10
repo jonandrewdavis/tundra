@@ -1,11 +1,12 @@
 # TODO: Tool? Or does it cause issues? It's not necessary.
 # TODO: Occlude?
+# TODO: spawner ain't gonna work with tool.
 @tool 
-extends Node3D
+extends Node
 
 # Required nodes
-@export var multiplayer_spawner: MultiplayerSpawner 
-@export var platforms_container: Node3D 
+@export var spawner: MultiplayerSpawner 
+@export var container: Node3D
 var walking_scene_tracker
 var walking_scene_timer = Timer.new()
 
@@ -33,6 +34,7 @@ var walking_scene_center = 0.0
 # 1 = "center"
 # 2 = "coming soon!"
 var starting_platforms: Array[PackedScene] = [forest_1, start, forest_1]
+
 var current_platforms: Array[Node3D] = []
 
 enum DIR { 
@@ -42,33 +44,41 @@ enum DIR {
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
-		walking_scene_tracker = $Marker3D
-		
-	if not Engine.is_editor_hint():
-		for scene_to_add in SCENE_LIST:
-			multiplayer_spawner.add_spawnable_scene(scene_to_add.resource_path)	
+		prepare_proxy_nodes()
+		return
 
-	# To be server authoratative, return early if not server
+	spawner.set_spawn_function(handle_platform_spawn)		
 	if not multiplayer.is_server():
 		return
-	
-	if !platforms_container or starting_platforms.size() == 0:
-		push_warning('No platform container or starters')
-		return
 
-	for starting_scene in starting_platforms:
-		var new_platform = starting_scene.instantiate()
-		platforms_container.add_child(new_platform, true)
-		current_platforms.append(new_platform)
+	await get_tree().process_frame
+	var back = spawner.spawn([1, 0 + walking_scene_length])
+	var center = spawner.spawn([0, 0])
+	var front = spawner.spawn([1, 0 - walking_scene_length])
 
-	current_platforms[0].global_position.z = -walking_scene_length
-	current_platforms[2].global_position.z = walking_scene_length
+	current_platforms.append(back)
+	current_platforms.append(center)
+	current_platforms.append(front)
 	
 	add_child(walking_scene_timer)
 	walking_scene_timer.wait_time = 1.0
 	walking_scene_timer.timeout.connect(on_check_walking_timer)
 	walking_scene_timer.start()
 
+func prepare_proxy_nodes(): 
+	walking_scene_tracker = $Marker3D
+	for starting_scene in starting_platforms:
+		var new_platform = starting_scene.instantiate()
+		container.add_child(new_platform, true)
+		current_platforms.append(new_platform)
+
+	current_platforms[0].global_position.z = -walking_scene_length
+	current_platforms[2].global_position.z = walking_scene_length
+
+	add_child(walking_scene_timer)
+	walking_scene_timer.wait_time = 1.0
+	walking_scene_timer.timeout.connect(on_check_walking_timer)
+	walking_scene_timer.start()
 
 func on_check_walking_timer():
 	if !walking_scene_tracker:
@@ -77,8 +87,7 @@ func on_check_walking_timer():
 			walking_scene_tracker = Hub.castle
 		return
 	
-	if current_platforms.size() != 3 || platforms_container.get_child_count() != 3:
-		push_warning('Incorrect number of platforms')
+	if current_platforms.size() != 3 || container.get_child_count() != 3:
 		return
 		
 	#print('DEBUG: walking_scene_tracker Z: ', walking_scene_tracker.global_position.z)
@@ -100,16 +109,41 @@ func remove_platform(dir: DIR):
 		current_platforms[2].queue_free()
 		current_platforms.pop_at(2)
 
-func add_platform(dir: DIR, scene_index = 0):
+# TODO: Abstract this better.
+func add_platform(dir: DIR, _scene_index = 0):
+	if Engine.is_editor_hint():
+		add_platform_proxy(dir, _scene_index)
+		return
+	
+	if dir == DIR.INFRONT:
+		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
+		var new_platform = 	spawner.spawn([0, walking_scene_center + new_offset])
+		current_platforms.push_back(new_platform)
+	else:
+		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
+		var new_platform = spawner.spawn([0, walking_scene_center - new_offset])
+		current_platforms.push_front(new_platform)
+
+# [index, pos]
+func handle_platform_spawn(data: Variant): 
+	var scene_index = data[0]
+	var platform_pos = data[1]
+	var new_platform = SCENE_LIST[scene_index].instantiate()
+	new_platform.position.z = platform_pos
+
+	return new_platform
+	
+	
+func add_platform_proxy(dir: DIR, scene_index = 0):
 	if dir == DIR.INFRONT:
 		var new_platform = SCENE_LIST[scene_index].instantiate()
 		current_platforms.push_back(new_platform)
-		platforms_container.add_child(new_platform, true)
+		container.add_child(new_platform, true)
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
 		new_platform.global_position.z = walking_scene_center + new_offset
 	else:
 		var new_platform = SCENE_LIST[scene_index].instantiate()
 		current_platforms.push_front(new_platform)
-		platforms_container.add_child(new_platform, true)
+		container.add_child(new_platform, true)
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
 		new_platform.global_position.z = walking_scene_center - new_offset	

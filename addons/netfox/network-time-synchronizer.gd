@@ -38,8 +38,8 @@ var sync_samples: int:
 ## Number of iterations to nudge towards the host's remote clock.
 ##
 ## Lower values result in more aggressive changes in clock and may be more 
-## sensitive to jitter. Larger values may end up approaching the remote clock
-## too slowly.
+	## sensitive to jitter. Larger values may end up approaching the remote clock
+	## too slowly.
 ## [br][br]
 ## [i]read-only[/i], you can change this in the Netfox project settings
 var adjust_steps: int:

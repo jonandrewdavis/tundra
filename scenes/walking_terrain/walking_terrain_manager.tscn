@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://byaelq3yxr4j1" path="res://scenes/walking_terrain/walking_terrain_manager.gd" id="1_11p0o"]
 
-[node name="WalkingTerrainManager" type="Node3D" node_paths=PackedStringArray("multiplayer_spawner", "platforms_container")]
+[node name="WalkingTerrainManager" type="Node" node_paths=PackedStringArray("spawner", "container")]
 script = ExtResource("1_11p0o")
-multiplayer_spawner = NodePath("MultiplayerSpawner")
-platforms_container = NodePath("PlatformsContainer")
+spawner = NodePath("MultiplayerSpawner")
+container = NodePath("PlatformsContainer")
 
 [node name="PlatformsContainer" type="Node3D" parent="."]
 
-[node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.98735)
-
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://c3ty4fjp8dgxt", "uid://b6uhi67r6kf4r")
 spawn_path = NodePath("../PlatformsContainer")
+
+[node name="Marker3D" type="Marker3D" parent="."]
