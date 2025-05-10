@@ -17,13 +17,13 @@ class_name HealthSystem
 @export var regen_speed: float = 0.15
 @export var regen_increment: int = 2
 
-@export var max_temp : int = 11
-@export var min_temp : int = -40
+@export var max_temp : float = 74.0
+@export var min_temp : float = -40.0
 @onready var temp = max_temp
 
 @export var temp_enabled: bool = false
-@export var temp_regen_speed: float = 0.15
-@export var temp_regen_increment: float = 0.5
+@export var temp_regen_speed: float = 1.0
+@export var temp_regen_increment: float = 5.0
 
 @onready var regen_timer: Timer = Timer.new()
 @onready var regen_tick_timer: Timer = Timer.new()
@@ -66,6 +66,8 @@ func _ready() -> void:
 			temp_timer.wait_time = temp_regen_speed
 			temp_timer.timeout.connect(on_temp_timer)
 			temp_timer.start()
+
+
 #func _exit_tree() -> void:
 	#if not multiplayer.is_server():
 		#Nodash.sync_remove_all(sync)
@@ -168,5 +170,8 @@ func regen_health_tick():
 		regen_tick_timer.stop()
 
 func on_temp_timer():
-	temp = temp + temp_regen_increment	
-	temp_updated.emit(temp)
+	var new_temp = temp + temp_regen_increment
+	if new_temp >= max_temp or new_temp <= min_temp:
+		return
+	temp = new_temp
+	temp_updated.emit(new_temp)

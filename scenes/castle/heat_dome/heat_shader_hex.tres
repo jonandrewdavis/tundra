@@ -5,9 +5,9 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_fowcg")
-shader_parameter/scale = 200.0
-shader_parameter/radius = 1.0
-shader_parameter/alpha = 1.0
+shader_parameter/scale = 300.0
+shader_parameter/radius = 5.0
+shader_parameter/alpha = 0.1
 shader_parameter/offset = 0.2
 shader_parameter/power = 10.0
 shader_parameter/hide_incomplete = false

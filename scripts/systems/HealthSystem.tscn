@@ -9,5 +9,3 @@ script = ExtResource("1_ocatx")
 visible = false
 offset_right = 4.0
 offset_bottom = 27.0
-
-[node name="Node" type="Node" parent="."]

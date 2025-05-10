@@ -33,7 +33,6 @@ Async="*res://scripts/shared/scripts/async.gd"
 
 [display]
 
-window/size/mode=2
 window/size/resizable=false
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"

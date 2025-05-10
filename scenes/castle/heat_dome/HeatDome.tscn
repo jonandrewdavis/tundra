@@ -56,7 +56,6 @@ mesh = SubResource("SphereMesh_l7s2y")
 
 [node name="HeatDomeInterior" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
-visible = false
 visibility_range_end = 20.0
 visibility_range_end_margin = 125.0
 visibility_range_fade_mode = 1

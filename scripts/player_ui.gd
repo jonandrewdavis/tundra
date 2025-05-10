@@ -15,6 +15,8 @@ class_name PlayerUI
 @onready var snow_shader_light = $Shaders/SnowShaderLight
 @onready var snow_shader_heavy = $Shaders/SnowShaderHeavy
 
+var player_health_system: HealthSystem
+
 var local_health: int = 100
 var local_max_health: int = 100
 
@@ -32,7 +34,6 @@ func _ready():
 		return
 
 	if multiplayer.is_server():
-		pass
 		Hub.projectile_system.hit_signal.connect(handle_hit_signal)
 
 		weapons_manager.update_ammo_signal.connect(func(curr, res): update_ammo.rpc_id(peer_id, curr, res))
@@ -40,10 +41,14 @@ func _ready():
 		weapons_manager.update_ammo_prev_signal.connect(func(curr, res): update_ammo_prev.rpc_id(peer_id, curr, res))
 		weapons_manager.update_weapon_prev_signal.connect(func(text): update_weapon_prev.rpc_id(peer_id, text))
 
-		var player_health_system: HealthSystem = get_parent().health_system
+		player_health_system = get_parent().health_system
+		# Health
 		player_health_system.health_updated.connect(func(new_health): update_health.rpc_id(peer_id, new_health))
 		player_health_system.max_health_updated.connect(func (new_max): update_max_health.rpc_id(peer_id, new_max))
 
+		# Temp
+		player_health_system.temp_updated.connect(func (new_temp): update_temp.rpc_id(peer_id, new_temp))
+		
 		# TODO: Listen for death and fade out UI? 
 	else:
 		# Client code
@@ -53,16 +58,10 @@ func _ready():
 		add_child(hit_sight_timer)
 		hit_sight_timer.wait_time = 0.05
 		hit_sight_timer.one_shot = true
-		hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)	
-
+		hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 		
-	# CRITICAL: This pattern sucks
-	# TESTING: Here we have our exact client listen for signals (emitted in rpc_id)
-	# This is client side. Could get messy. Or could work for UI.
-	#if str(peer_uid) == get_parent().name:
-		#player_health_system.health_updated.connect(update_health)
-		#player_health_system.max_health_updated.connect(func (new_max): local_max_health = new_max)
-
+		%TempBar.max_value = 76.0
+		%TempBar.min_value = -40.0
 
 func _process(_delta: float) -> void:
 	_show_snow_shader()
@@ -140,3 +139,8 @@ func _show_snow_shader():
 @rpc
 func update_interaction_label(interactable_name: String):
 	%InteractLabel.text = interactable_name
+
+@rpc
+func update_temp(new_temp: float):
+	var tween = create_tween()
+	tween.tween_property(%TempBar, "value", new_temp, 1.0)
