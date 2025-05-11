@@ -329,6 +329,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_styles/background = ExtResource("5_d61dg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_g18nd")
+value = 70.0
 show_percentage = false
 
 [node name="BottomRight" type="PanelContainer" parent="."]

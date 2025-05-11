@@ -48,6 +48,7 @@ func _ready():
 
 		# Temp
 		player_health_system.temp_updated.connect(func (new_temp): update_temp.rpc_id(peer_id, new_temp))
+		player_health_system.update_fog.connect(func (new_fog_value): on_update_fog.rpc_id(peer_id, new_fog_value))
 		
 		# TODO: Listen for death and fade out UI? 
 	else:
@@ -144,3 +145,9 @@ func update_interaction_label(interactable_name: String):
 func update_temp(new_temp: float):
 	var tween = create_tween()
 	tween.tween_property(%TempBar, "value", new_temp, 1.0)
+
+@rpc
+func on_update_fog(new_fog: float):
+	var fog_resource = Hub.world.world_env
+	var tween = create_tween()
+	tween.tween_property(fog_resource, "environment:volumetric_fog_density", new_fog, 1.0)

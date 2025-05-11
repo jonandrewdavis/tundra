@@ -1,7 +1,8 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://bolhms1ibpn5c"]
 
 [resource]
+disable_fog = true
 albedo_color = Color(1, 0.914, 0.57, 1)
 emission_enabled = true
 emission = Color(0.88, 0, 0, 1)
-emission_energy_multiplier = 16.0
+emission_energy_multiplier = 5.0

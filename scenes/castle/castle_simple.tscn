@@ -234,7 +234,7 @@ light_volumetric_fog_energy = 3.0
 shadow_enabled = true
 
 [node name="LightHouse" parent="." instance=ExtResource("7_2rh0a")]
-transform = Transform3D(-0.523986, -0.386676, 0.758895, 0, 0.891007, 0.453991, -0.851727, 0.237885, -0.466875, 0, 14.5882, -3.50466)
+transform = Transform3D(-0.523986, 0, 0.851727, 0, 1, 0, -0.851727, 0, -0.523986, 0, 14.5882, -3.50466)
 
 [node name="CastleTower" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.12969, -2.45728)
@@ -242,7 +242,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.12969, -2.45728)
 [node name="TopLight" type="OmniLight3D" parent="CastleTower"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.96292, -0.290831)
 light_color = Color(1, 0.591667, 0.3, 1)
-light_energy = 1.4
+light_energy = 0.8
 light_indirect_energy = 3.0
 omni_range = 20.0
 omni_attenuation = -0.2

@@ -41,6 +41,7 @@ var _animation_player: AnimationPlayer
 var peer_id: int
 var respawn: bool
 
+
 # TODO: Heat should be a stat like health, and signals can change it
 # TODO: Heat should be a component, like in Forest Bath
 

@@ -17,7 +17,7 @@ func _ready():
 	if not Engine.is_editor_hint():
 		Hub.world = self
 		if multiplayer.is_server():
-			NetworkManager.hide_loading()			
+			NetworkManager.hide_loading()
 
 	if not multiplayer.is_server():
 		return

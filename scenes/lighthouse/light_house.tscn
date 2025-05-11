@@ -14,12 +14,11 @@ script = ExtResource("1_b4if5")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 light_color = Color(1, 0.6, 0.380392, 1)
-light_energy = 2.0
-light_indirect_energy = 2.0
-light_volumetric_fog_energy = 3.0
-light_size = 5.0
-spot_range = 60.0
-spot_attenuation = -0.1
+light_energy = 18.0
+light_indirect_energy = 15.0
+light_volumetric_fog_energy = 17.0
+spot_range = 200.0
+spot_attenuation = 0.0
 spot_angle = 5.5
 spot_angle_attenuation = 0.574349
 
