@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwphcc8ns8ypb"]
+
+[ext_resource type="Script" uid="uid://beyxb2iub2t1t" path="res://scripts/systems/heat_system.gd" id="1_dk5ha"]
+
+[node name="HeatSystem" type="Node"]
+script = ExtResource("1_dk5ha")

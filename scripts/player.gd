@@ -31,6 +31,7 @@ var _animation_player: AnimationPlayer
 
 @export_category("Systems")
 @export var health_system: HealthSystem
+@export var heat_system: HeatSystem
 
 @export_category("FPS Multiplayer Nodes")
 @export var weapons_manager: WeaponsManager
@@ -339,7 +340,7 @@ func interact_check():
 	else:
 		if interactable:
 			player_ui.update_interaction_label.rpc_id(name.to_int(), '')	
-		interactable = null
+			interactable = null
 
 
 # TODO: play "nope" sound if not able to do it
@@ -370,3 +371,7 @@ func interact():
 func interact_holding(item_to_hold):
 	holding = item_to_hold
 	item_to_hold.interact(self)
+
+@rpc("any_peer")
+func update_pvp(new_pvp_value):
+	pvp = new_pvp_value

@@ -14,8 +14,10 @@ class_name PlayerUI
 @onready var hit_sight = $HitSight
 @onready var snow_shader_light = $Shaders/SnowShaderLight
 @onready var snow_shader_heavy = $Shaders/SnowShaderHeavy
+@onready var vignette = $Shaders/VignetteShader
 
 var player_health_system: HealthSystem
+var player_heat_system: HeatSystem
 
 var local_health: int = 100
 var local_max_health: int = 100
@@ -23,6 +25,7 @@ var local_max_health: int = 100
 # TODO: Is this the best place for these?
 # TODO: Weapon stack, current weapon, current weapon image
 var hit_sight_timer = Timer.new()
+var temp_bar_flashing_timer = Timer.new()
 
 func _ready():
 	var peer_id = get_parent().name.to_int()
@@ -47,10 +50,11 @@ func _ready():
 		player_health_system.max_health_updated.connect(func (new_max): update_max_health.rpc_id(peer_id, new_max))
 
 		# Temp
-		player_health_system.temp_updated.connect(func (new_temp): update_temp.rpc_id(peer_id, new_temp))
-		player_health_system.update_fog.connect(func (new_fog_value): on_update_fog.rpc_id(peer_id, new_fog_value))
-		
-		# TODO: Listen for death and fade out UI? 
+		player_heat_system = get_parent().heat_system
+		player_heat_system.temp_updated.connect(func (new_temp): update_temp.rpc_id(peer_id, new_temp))
+		player_heat_system.update_fog.connect(func (new_fog_value): on_update_fog.rpc_id(peer_id, new_fog_value))
+		player_heat_system.low_temperature_warning.connect(func (is_showing): on_show_temp_warning.rpc_id(peer_id, is_showing))
+		# TODO: Listen for death and fade out UI?
 	else:
 		# Client code
 		DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
@@ -63,6 +67,13 @@ func _ready():
 		
 		%TempBar.max_value = 76.0
 		%TempBar.min_value = -40.0
+		%TempBar.modulate.a = 1.0
+		
+		add_child(temp_bar_flashing_timer)
+		temp_bar_flashing_timer.wait_time = 0.3
+		temp_bar_flashing_timer.one_shot = false
+		temp_bar_flashing_timer.timeout.connect(on_temp_flash_timeout)
+		temp_bar_flashing_timer.start()
 
 func _process(_delta: float) -> void:
 	_show_snow_shader()
@@ -151,3 +162,23 @@ func on_update_fog(new_fog: float):
 	var fog_resource = Hub.world.world_env
 	var tween = create_tween()
 	tween.tween_property(fog_resource, "environment:volumetric_fog_density", new_fog, 1.0)
+
+@rpc
+func on_show_temp_warning(is_flashing):
+	if is_flashing:
+		temp_bar_flashing_timer.start()
+		$Shaders/VignetteShader.visible = true
+	else:
+		temp_bar_flashing_timer.stop()
+		$Shaders/VignetteShader.visible = false
+		%TempBar.modulate.a = 1.0
+
+var flash = true
+
+func on_temp_flash_timeout():
+	#tween module
+	var tween = create_tween()
+	if (flash):
+		tween.tween_property(%TempBar, "modulate:a", 0.0, 0.2).from(1.0)
+	else:
+		tween.tween_property(%TempBar, "modulate:a", 1.0, 0.2).from(0.0)

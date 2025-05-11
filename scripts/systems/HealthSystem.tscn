@@ -4,8 +4,3 @@
 
 [node name="HealthSystem" type="Node"]
 script = ExtResource("1_ocatx")
-
-[node name="HealthBar" type="ProgressBar" parent="."]
-visible = false
-offset_right = 4.0
-offset_bottom = 27.0

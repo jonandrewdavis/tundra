@@ -1,6 +1,7 @@
-[gd_scene load_steps=29 format=4 uid="uid://dy85183h2d31p"]
+[gd_scene load_steps=30 format=4 uid="uid://dy85183h2d31p"]
 
 [ext_resource type="Script" uid="uid://dqoup8e05txs1" path="res://scenes/castle/castle.gd" id="1_2hve7"]
+[ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="2_776o2"]
 [ext_resource type="PackedScene" uid="uid://jqyjx5vv1fpy" path="res://scenes/castle/heat_dome/HeatDome.tscn" id="4_8nt25"]
 [ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="4_g8b6n"]
 [ext_resource type="PackedScene" uid="uid://cabgrr2bvykhs" path="res://scenes/castle/spider_bot/spider_bot.tscn" id="6_cyhqv"]
@@ -163,6 +164,13 @@ material = ExtResource("13_0jeyk")
 script = ExtResource("1_2hve7")
 heat_dome = NodePath("HeatDome")
 castle_maw = NodePath("CastleMaw")
+
+[node name="HealthSystem" parent="." instance=ExtResource("2_776o2")]
+max_health = 2000
+regen_enabled = true
+regen_delay = 10.0
+regen_speed = 1.0
+regen_increment = 1
 
 [node name="HeatDome" parent="." instance=ExtResource("4_8nt25")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)

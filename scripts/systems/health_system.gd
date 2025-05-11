@@ -1,13 +1,10 @@
 extends Node
 class_name HealthSystem
 
-@warning_ignore("unused_signal")
 signal hurt
 signal health_updated
-signal temp_updated
 signal max_health_updated
 signal death
-signal update_fog
 
 # TODO: HealthBars, do we want them to show on enemies? 
 # Helldivers 2 does not, but there are other indicators (bleeding, fatigue)
@@ -25,20 +22,10 @@ signal update_fog
 @export var regen_speed: float = 0.15
 @export var regen_increment: int = 2
 
-@export var max_temp : float = 74.0
-@export var min_temp : float = -40.0
-@onready var temp = max_temp
-
-@export var temp_enabled: bool = false
-@export var temp_regen_speed: float = 1.0
-@export var temp_regen_increment: float = 5.0
-
 @onready var regen_timer: Timer = Timer.new()
 @onready var regen_tick_timer: Timer = Timer.new()
-@onready var temp_timer: Timer = Timer.new()
 
 var last_damage_source := 0
-
 
 # NOTE: If used, could be overriden to be the parent's sync, reducing # of syncronizers
 #@onready var sync = $MultiplayerSynchronizer
@@ -54,12 +41,6 @@ func _ready() -> void:
 
 		if regen_enabled:
 			prepare_regen_timer()
-	
-		if temp_enabled:
-			add_child(temp_timer)
-			temp_timer.wait_time = temp_regen_speed
-			temp_timer.timeout.connect(on_temp_timer)
-			temp_timer.start()
 
 		await get_tree().process_frame
 		max_health_updated.emit(max_health)
@@ -109,7 +90,9 @@ func allow_damage_from_source(source):
 		
 	# Player rules
 	if parent.is_in_group("players"):
-		# PVP is off	
+		# print('parent.pvp', parent.pvp)
+
+		# PVP is off
 		if source != 0 and parent.pvp == false:
 			return false
 
@@ -140,22 +123,20 @@ func on_report_death():
 # OR FATIGUE
 func prepare_regen_timer():
 	if regen_enabled:
+		add_child(regen_timer)
 		regen_timer.wait_time = regen_delay
 		regen_timer.one_shot = true
-		add_child(regen_timer)
 		regen_timer.timeout.connect(start_regen_health)
-		
-		regen_tick_timer.wait_time = regen_speed # regen_speed?
+
 		add_child(regen_tick_timer)
+		regen_tick_timer.wait_time = regen_speed # regen_speed?
 		regen_tick_timer.timeout.connect(regen_health_tick)
 
 func start_regen_health():
 	if regen_timer.is_stopped() && health < max_health:
 		# "Clears" damage from players
 		last_damage_source = 0
-		if temp > min_temp:
-			regen_tick_timer.start()
-		
+		regen_tick_timer.start()
 
 func regen_health_tick():
 	if regen_timer.is_stopped() && health < max_health:
@@ -163,36 +144,3 @@ func regen_health_tick():
 		regen_tick_timer.start()
 	else:
 		regen_tick_timer.stop()
-
-func on_temp_timer():
-	var temp_base = 2.0
-	var player_pos = get_parent().position
-	var distance_factor = player_pos.distance_to(Hub.castle.position)  / 8.0
-	# Outside of the dome!
-	if player_pos.distance_to(Hub.castle.position) > Hub.castle.heat_dome.heat_dome_radius: 
-		temp_regen_increment = temp_base + distance_factor / 2 * -1.0
-	# FAR. You're gonna get cold quick
-	elif player_pos.distance_to(Hub.castle.position) > Hub.castle.heat_dome.heat_dome_radius + 40:
-		temp_regen_increment = temp_base + distance_factor * -1.0
-	else:
-	# Inside the dome:
-		if player_pos.distance_to(Hub.castle.position) < 8.0:
-			temp_regen_increment = 12.0
-		else:
-			temp_regen_increment = 8.0
-
-	var new_temp = temp + temp_regen_increment
-	# Prevent overheating.
-	if new_temp >= max_temp:
-		new_temp = max_temp
-	elif new_temp <= min_temp:
-		new_temp = min_temp
-
-	temp = new_temp
-	temp_updated.emit(new_temp)
-
-	# TODO: Allow greater distance on Z axis. 
-	if player_pos.distance_to(Hub.castle.position) > 80.0:
-		update_fog.emit(0.1 + distance_factor / 50.0)
-	else:
-		update_fog.emit(0.08)

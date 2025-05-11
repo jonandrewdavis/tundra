@@ -11,6 +11,7 @@ class_name MovingCastle
 signal change_heat_dome_value #value: int
 signal change_castle_speed
 
+
 # TODO: Allow picking new targets on a map or something
 # TODO: Rotation, stop at crossroads
 #@onready var castle_target: Vector3 = Vector3(0.0, 1.0, 10000.0)

@@ -72,34 +72,32 @@ func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
 		
 		Hub.projectile_system.create_debug_decal(Point, Collision[2])
 		
-		if Collision[0].is_in_group("targets"):
+		if Collision[0].is_in_group("targets") or Collision[0].is_in_group("players"):
 			var Bullet = get_world_3d().direct_space_state
 
 			var Bullet_Direction = (Point - origin_point).normalized()
 			var New_Intersection = PhysicsRayQueryParameters3D.create(origin_point,Point+Bullet_Direction*2)
 			New_Intersection.set_collision_mask(0b11101111) 
 			New_Intersection.set_hit_from_inside(false)
-			#New_Intersection.set_exclude(hit_objects)
+			New_Intersection.set_exclude(hit_objects)
 			var Bullet_Collision = Bullet.intersect_ray(New_Intersection)
 			if Bullet_Collision:
 				Hit_Scan_damage(Bullet_Collision.collider, Bullet_Direction,Bullet_Collision.position,_damage)
 				if pass_through and check_pass_through(Bullet_Collision.collider, Bullet_Collision.rid):
 					var pass_through_collision : Array = [Bullet_Collision.collider, Bullet_Collision.position, Bullet_Collision.normal]
 					@warning_ignore("integer_division")
-					var pass_through_damage: float = damage/2
-					Hit_Scan_Collision(pass_through_collision,pass_through_damage,Bullet_Collision.position)
+					var pass_through_damage: float = damage / 2
+					Hit_Scan_Collision(pass_through_collision ,pass_through_damage, Bullet_Collision.position)
 					return
 
 			queue_free()
 
-func check_pass_through(_collider: Node3D, _rid: RID)-> bool:
-	#var valid_pass_though: bool = false
-	#if collider.is_in_group("targets"):
-		#hit_objects.append(rid)
-		#valid_pass_though = true
-	#return valid_pass_though
-	return true
-
+func check_pass_through(collider: Node3D, rid: RID)-> bool:
+	var valid_pass_though: bool = false
+	if collider.is_in_group("targets") or collider.is_in_group("players"):
+		hit_objects.append(rid)
+		valid_pass_though = true
+	return valid_pass_though
 
 # TODO: PackedBytes or Array to save data over the wire.
 func Launch_Rigid_Body_Projectile(collision_data, projectile: PackedScene, origin_point):

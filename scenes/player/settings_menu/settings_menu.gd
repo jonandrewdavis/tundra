@@ -17,7 +17,7 @@ var volume_master_value
 var volume_sfx_value
 var volume_background_value
 
-@onready var player: CharacterBody3D = get_parent().get_parent()
+@onready var player: Player = get_parent().get_parent()
 
 func _input(_event:InputEvent):
 	if _event.is_action_pressed("open_menu"):
@@ -28,6 +28,7 @@ func _ready():
 
 	%Respawn.pressed.connect(_on_respawn_pressed)
 	%Quit.pressed.connect(_on_quit_pressed)
+	%PVPCheck.toggled.connect(_on_pvp_check_toggled)
 
 	# TODO: DO THIS PROGRAMMATICALLY, USING AN ARRAY or ENUM THIS IS MADDENING the 2nd time aroudn
 	# TODO: DO THIS PROGRAMMATICALLY, USING AN ARRAY or ENUM THIS IS MADDENING the 2nd time aroudn
@@ -97,8 +98,7 @@ func _on_master_value_changed(value):
 #
 #func _on_background_value_changed(value):
 	#AudioServer.set_bus_volume_db(bus_background, linear_to_db(value))
-
-#func _on_pvp_check_toggled(toggled_on):
-	#if player:
-		#player.pvp_on = toggled_on
-	#pass # Replace with function body.
+	
+func _on_pvp_check_toggled(toggled_on):
+	if player:
+		player.update_pvp.rpc_id(1, toggled_on)
