@@ -70,8 +70,6 @@ func _ready():
 	nav_agent.avoidance_enabled = true
 
 	# Connect & create
-	search_box.body_entered.connect(on_search_box_body_entered)
-	search_box.body_exited.connect(on_search_box_body_exited)
 	attack_box.body_entered.connect(on_attack_box_entered)
 	
 	
@@ -240,30 +238,12 @@ func on_animation_finished(animation_name):
 		if health_system.health == 0:
 			set_state(States.DYING)
 
-# TODO: Allow castle hits.
-# WARNING: Do not type this as "CharacterBody3D". It must be more generic or it'll error.
-func on_search_box_body_entered(body: Node3D):
-	if target:
-		return
-	
-	if body && body.is_in_group('players'):
-		target = body
-		set_state(States.CHASING)
-
-
-# TODO: Refactor. Giving up, if we can't  see them
-func on_search_box_body_exited(body: Node3D):
-	if target == body:
-		nav.timer_give_up.start(10)
-
-
 func on_hurt():
 	set_state(States.HURTING)
 	
 	
 func on_death():
 	set_state(States.DYING)
-
 
 func can_attack() -> bool:
 	if not target:
@@ -301,7 +281,6 @@ func give_up():
 func on_navigation_finished():
 	animation_player.play('dog_animations_1/idle')
 
-
 func on_path_changed():
 	if state == States.ATTACKING: 
 		return
@@ -311,7 +290,6 @@ func on_path_changed():
 		
 	if animation_player.current_animation == 'dog_animations_1/hurt':
 		animation_player.play('dog_animations_1/walk')
-
 
 func on_attack_box_entered(body):
 	if body.is_in_group('players'):

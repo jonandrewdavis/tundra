@@ -2,6 +2,7 @@
 
 [resource]
 resource_name = "yellow"
+disable_fog = true
 vertex_color_use_as_albedo = true
 albedo_color = Color(1, 0.93, 0.960333, 0.643137)
 metallic = 1.0

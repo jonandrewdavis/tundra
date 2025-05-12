@@ -465,9 +465,10 @@ libraries = {
 [node name="HealthSystem" parent="." instance=ExtResource("1_v2iur")]
 max_health = 80
 
-[node name="NavigationSystem" type="Node" parent="." node_paths=PackedStringArray("nav_agent")]
+[node name="NavigationSystem" type="Node" parent="." node_paths=PackedStringArray("nav_agent", "search_box")]
 script = ExtResource("2_fk3wx")
 nav_agent = NodePath("../NavigationAgent3D")
+search_box = NodePath("../SearchBox")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_nd7sd")

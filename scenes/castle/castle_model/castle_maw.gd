@@ -1,4 +1,3 @@
-@tool
 extends Node3D
 
 @onready var castle_maw_pivot = $CastleMawPivot
@@ -10,6 +9,7 @@ var target_basis_down = Basis.IDENTITY.rotated(Vector3.LEFT * 1.0, PI / 6)
 
 signal open_maw
 var open = false
+@onready var castle: MovingCastle = get_parent()
 
 func _ready() -> void:
 	castle_maw_pivot.basis = target_basis_up
@@ -37,5 +37,6 @@ func _on_open_maw():
 # TODO: Fuel regen
 func _on_detect_food(body):
 	if body:
+		castle.gain_fuel(30)
 		body.set_process(false)
 		body.queue_free()

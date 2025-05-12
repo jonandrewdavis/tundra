@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=30 format=3 uid="uid://btdemgg0e0b4o"]
 
 [ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/player_ui.gd" id="1_fatww"]
 [ext_resource type="Texture2D" uid="uid://clx8vvaklih15" path="res://scenes/player/player_assets/crosshair046.png" id="2_by614"]
@@ -7,7 +7,6 @@
 [ext_resource type="Theme" uid="uid://b3kq74llqlv3x" path="res://assets/themes/MinimalUI4/MinimalUI.tres" id="4_nlx67"]
 [ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="5_by614"]
 [ext_resource type="StyleBox" uid="uid://hwskn1lu87b" path="res://scenes/player/settings_menu/temperature_style_box.tres" id="5_d61dg"]
-[ext_resource type="Shader" uid="uid://cwtodhje057a1" path="res://scripts/shaders/hex.gdshader" id="5_en3kk"]
 [ext_resource type="PackedScene" uid="uid://s5lur3jc6w4b" path="res://scenes/player/settings_menu/settings_menu.tscn" id="6_en3kk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyawr"]
@@ -123,28 +122,75 @@ shader_parameter/vignette_strength = 0.5
 shader_parameter/dither_strength = 0.03
 shader_parameter/vignette_color = Color(0.321569, 0.584314, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mo8vb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tpfsx"]
 content_margin_left = 0.0
 content_margin_top = 0.0
 content_margin_right = 0.0
 content_margin_bottom = 0.0
-bg_color = Color(0.1, 0.1, 0.1, 0.0627451)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
+bg_color = Color(0.101961, 0.101961, 0.101961, 0)
 corner_detail = 5
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4qoov"]
-render_priority = 0
-shader = ExtResource("5_en3kk")
-shader_parameter/scale = 8.0
-shader_parameter/radius = 1.0
-shader_parameter/alpha = 0.5
-shader_parameter/offset = 0.268
-shader_parameter/power = 1.0
-shader_parameter/hide_incomplete = false
-shader_parameter/color = Vector4(0, 0.6, 1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvhh2"]
+bg_color = Color(0.122631, 0.122631, 0.122631, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ypad"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.196078, 0.282353, 0.282353, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.392975, 0.527855, 0.527692, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2sjp"]
+bg_color = Color(0.122631, 0.122631, 0.122631, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_55cys"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+bg_color = Color(0.447059, 0.282353, 0.282353, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.69774, 0.483876, 0.482368, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4qoov"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101961, 0.101961, 0.101961, 0)
+corner_detail = 5
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d61dg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nlx67"]
 bg_color = Color(0.04, 0.0028, 0.01644, 0.278431)
@@ -158,9 +204,19 @@ bg_color = Color(0.949949, 0.883835, 0.931763, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g18nd"]
 bg_color = Color(1, 0.552941, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.872349, 0.308474, 5.77569e-07, 1)
+border_blend = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_en3kk"]
-bg_color = Color(0.1, 0.1, 0.1, 0.164706)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_at7sd"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101961, 0.101961, 0.101961, 0)
+corner_detail = 5
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_mo8vb"]
 color = Color(1, 1, 1, 1)
@@ -291,6 +347,61 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Topleft" type="PanelContainer" parent="."]
+offset_right = 200.0
+offset_bottom = 150.0
+theme = ExtResource("4_nlx67")
+theme_override_styles/panel = SubResource("StyleBoxFlat_tpfsx")
+
+[node name="MarginContainer" type="MarginContainer" parent="Topleft"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Topleft/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="CastleStatus" type="HBoxContainer" parent="Topleft/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CastleHealthBar" type="ProgressBar" parent="Topleft/MarginContainer/VBoxContainer/CastleStatus"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_fvhh2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5ypad")
+max_value = 2000.0
+value = 1750.0
+fill_mode = 3
+show_percentage = false
+
+[node name="CastleFuelBar" type="ProgressBar" parent="Topleft/MarginContainer/VBoxContainer/CastleStatus"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_u2sjp")
+theme_override_styles/fill = SubResource("StyleBoxFlat_55cys")
+max_value = 1000.0
+value = 500.0
+fill_mode = 3
+show_percentage = false
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Topleft/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="H" type="Label" parent="Topleft/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "H"
+
+[node name="F" type="Label" parent="Topleft/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "F"
+
 [node name="BottomLeft" type="PanelContainer" parent="."]
 clip_contents = true
 custom_minimum_size = Vector2(280, 0)
@@ -301,7 +412,7 @@ offset_top = -200.0
 offset_right = 280.0
 grow_vertical = 0
 theme = ExtResource("4_nlx67")
-theme_override_styles/panel = SubResource("StyleBoxFlat_mo8vb")
+theme_override_styles/panel = SubResource("StyleBoxFlat_4qoov")
 
 [node name="MarginContainer" type="MarginContainer" parent="BottomLeft"]
 layout_mode = 2
@@ -312,7 +423,7 @@ theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BottomLeft/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 3
+theme_override_constants/separation = 8
 alignment = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="BottomLeft/MarginContainer/VBoxContainer"]
@@ -322,17 +433,17 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 text = "100 / 100"
+horizontal_alignment = 1
 
 [node name="TempLabel" type="Label" parent="BottomLeft/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "30"
 horizontal_alignment = 2
 
 [node name="HealthBar" type="ProgressBar" parent="BottomLeft/MarginContainer/VBoxContainer"]
-material = SubResource("ShaderMaterial_4qoov")
+material = SubResource("CanvasItemMaterial_d61dg")
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_nlx67")
@@ -343,7 +454,7 @@ show_percentage = false
 
 [node name="TempBar" type="ProgressBar" parent="BottomLeft/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 5)
+custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_styles/background = ExtResource("5_d61dg")
@@ -353,7 +464,6 @@ show_percentage = false
 
 [node name="BottomRight" type="PanelContainer" parent="."]
 clip_contents = true
-custom_minimum_size = Vector2(180, 180)
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -361,10 +471,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -180.0
 offset_top = -180.0
+offset_bottom = -1.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("4_nlx67")
-theme_override_styles/panel = SubResource("StyleBoxFlat_en3kk")
+theme_override_styles/panel = SubResource("StyleBoxFlat_at7sd")
 
 [node name="MarginContainer" type="MarginContainer" parent="BottomRight"]
 layout_mode = 2
@@ -429,9 +540,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -20.0
-offset_top = -20.0
+offset_top = -101.0
 offset_right = 20.0
-offset_bottom = 20.0
+offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_nlx67")

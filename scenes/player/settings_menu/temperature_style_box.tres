@@ -2,3 +2,9 @@
 
 [resource]
 bg_color = Color(0.569804, 0.72165, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.133333, 0.431373, 0.764706, 1)
+border_blend = true

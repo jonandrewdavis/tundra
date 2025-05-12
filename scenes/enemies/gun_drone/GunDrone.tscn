@@ -112,10 +112,9 @@ _data = {
 &"hurt": SubResource("Animation_u268q")
 }
 
-[node name="GunDrone" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "search_box", "animation_player", "gun_origin", "health_system", "nav")]
+[node name="GunDrone" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "animation_player", "gun_origin", "health_system", "nav")]
 script = ExtResource("1_p3ixi")
 nav_agent = NodePath("NavigationAgent3D")
-search_box = NodePath("SearchBox")
 animation_player = NodePath("AnimationPlayer")
 gun_origin = NodePath("GunOrigin")
 health_system = NodePath("HealthSystem")
@@ -125,9 +124,10 @@ rigid_body_projectile = ExtResource("2_2nx2y")
 [node name="HealthSystem" parent="." instance=ExtResource("3_u268q")]
 max_health = 80
 
-[node name="NavigationSystem" type="Node" parent="." node_paths=PackedStringArray("nav_agent")]
+[node name="NavigationSystem" type="Node" parent="." node_paths=PackedStringArray("nav_agent", "search_box")]
 script = ExtResource("4_1w0da")
 nav_agent = NodePath("../NavigationAgent3D")
+search_box = NodePath("../SearchBox")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gsfr6")

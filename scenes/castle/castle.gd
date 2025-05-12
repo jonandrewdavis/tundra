@@ -5,12 +5,15 @@ class_name MovingCastle
 @export var castle_maw: Node3D
 @export var castle_speed: float = 1.2
 @export var castle_on: bool = false
+@export var health_system: HealthSystem
 
-@export var fuel = 1000
+@export var fuel: float = 1000
 
 signal change_heat_dome_value #value: int
 signal change_castle_speed
+signal fuel_updated
 
+var fuel_timer = Timer.new()
 
 # TODO: Allow picking new targets on a map or something
 # TODO: Rotation, stop at crossroads
@@ -23,6 +26,9 @@ var _velocity: Vector3 = Vector3.ZERO
 
 func _ready():
 	Hub.castle = self
+	
+	add_to_group('targets')
+	add_to_group('player_owned')
 
 	sync_to_physics = false
 	set_process(false)
@@ -41,6 +47,11 @@ func _ready():
 		# Castle Control Signals (called from Hub.castle)
 		change_castle_speed.connect(_on_change_castle_speed)
 		change_heat_dome_value.connect(func(new_value): heat_dome.on_change_heat_dome_value(new_value))
+		
+		add_child(fuel_timer)
+		fuel_timer.wait_time = 2.0
+		fuel_timer.start()
+		fuel_timer.timeout.connect(consume_fuel)
 
 @export var speed: float = 0.0
 
@@ -65,3 +76,21 @@ func _on_change_castle_speed():
 	else:
 		castle_on = true
 		speed = -1.2
+
+func consume_fuel():
+	var next_fuel
+	if castle_on:
+		next_fuel = fuel - 2
+	else:
+		next_fuel = fuel - 0.5
+	
+	next_fuel = clamp(next_fuel, 0, 1000)
+	fuel = next_fuel
+	
+	fuel_updated.emit(fuel)
+
+func gain_fuel(fuel_amount: int):
+	var next_fuel = fuel + fuel_amount
+	next_fuel = clamp(next_fuel, 0, 1000)
+	fuel = next_fuel
+	fuel_updated.emit(fuel)

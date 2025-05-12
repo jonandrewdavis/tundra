@@ -2,6 +2,7 @@ extends Node
 class_name NavigationSystem
 
 @export var nav_agent: NavigationAgent3D
+@export var search_box: Area3D
 
 var next_path_pos
 var parent: CharacterBody3D
@@ -23,6 +24,10 @@ func _ready() -> void:
 		return
 
 	Nodash.error_missing(nav_agent, 'nav_agent')
+	Nodash.error_missing(search_box, 'search_box')
+
+	search_box.body_entered.connect(on_search_box_body_entered)
+	search_box.body_exited.connect(on_search_box_body_exited)
 
 	# Navigation
 	add_child(timer_navigate)
@@ -41,8 +46,6 @@ func _ready() -> void:
 	timer_give_up.timeout.connect(give_up)
 	timer_give_up.wait_time = 10.0
 	timer_give_up.one_shot = true # Do not repeatedly give up
-
-
 
 
 func chase_target():
@@ -66,3 +69,17 @@ func update_navigation_path():
 
 func give_up():
 	give_up_signal.emit()
+
+# TODO: Setting & forgetting target might need to be signal emits?
+func on_search_box_body_entered(body: Node3D):
+	if parent.target:
+		return
+	
+	if body && body.is_in_group('players'):
+		timer_give_up.stop()
+		parent.target = body
+		parent.set_state(parent.States.CHASING)
+
+func on_search_box_body_exited(body: Node3D):
+	if parent.target == body: 
+		timer_give_up.start()

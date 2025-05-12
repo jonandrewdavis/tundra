@@ -15,7 +15,7 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="OilDrum" type="RigidBody3D"]
+[node name="OilDrum" type="RigidBody3D" groups=["environment_owned"]]
 collision_layer = 7
 script = ExtResource("1_jwr7d")
 enable_pickup = true

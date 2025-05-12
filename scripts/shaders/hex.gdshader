@@ -7,7 +7,7 @@ uniform float alpha = 0.5;
 uniform float offset = 0.268;
 uniform float power = 1.0;
 uniform bool hide_incomplete = false;
-uniform vec4 color = vec4(0.0, 0.6, 1.0, 1.0);
+uniform vec4 color: source_color = vec4(0.0, 0.6, 1.0, 1.0);
 
 float is_in_hex(float hex_radius, vec2 local_point) {
 	const vec2 AXIS[3] = {

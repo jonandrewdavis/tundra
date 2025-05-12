@@ -14,6 +14,12 @@ func _ready():
 		print("Calling host game for dedicated server setup...")
 		NetworkManager.host_game(NetworkConnectionConfigs.new(NetworkManager.LOCALHOST))
 
+	if OS.has_feature('join'):
+		print('AUTO JOINING')
+		await get_tree().create_timer(0.2).timeout
+		NetworkManager.join_game(NetworkConnectionConfigs.new(NetworkManager.LOCALHOST))
+
+
 func host_game():
 	print("Host game pressed")
 	_is_hosting = true

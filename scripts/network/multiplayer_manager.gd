@@ -32,7 +32,6 @@ func _ready():
 			#_add_player_to_game(1)
 
 func _add_player_to_game(network_id: int):
-	print('ADDING!')
 	if is_multiplayer_authority():		
 		await get_tree().create_timer(4.0).timeout
 

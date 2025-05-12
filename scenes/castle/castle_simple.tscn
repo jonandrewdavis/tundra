@@ -160,10 +160,11 @@ radius = 1.5
 [sub_resource type="CylinderMesh" id="CylinderMesh_naar7"]
 material = ExtResource("13_0jeyk")
 
-[node name="CastleSimple" type="AnimatableBody3D" node_paths=PackedStringArray("heat_dome", "castle_maw")]
+[node name="CastleSimple" type="AnimatableBody3D" node_paths=PackedStringArray("heat_dome", "castle_maw", "health_system")]
 script = ExtResource("1_2hve7")
 heat_dome = NodePath("HeatDome")
 castle_maw = NodePath("CastleMaw")
+health_system = NodePath("HealthSystem")
 
 [node name="HealthSystem" parent="." instance=ExtResource("2_776o2")]
 max_health = 2000

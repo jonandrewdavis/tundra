@@ -12,7 +12,6 @@ const PROJECTILE_VELOCITY = 40.0
 
 @export_category("Enemy Required Nodes")
 @export var nav_agent: NavigationAgent3D
-@export var search_box: Area3D
 @export var animation_player: AnimationPlayer
 @export var gun_origin: Marker3D
 @export var health_system: HealthSystem
@@ -65,8 +64,7 @@ func _ready():
 
 	# Connect & create
 	animation_player.animation_finished.connect(on_animation_finished)
-	search_box.body_entered.connect(on_search_box_body_entered)
-	search_box.body_exited.connect(on_search_box_body_exited)
+
 	nav_agent.navigation_finished.connect(on_navigation_finished)
 	
 	# Health
@@ -183,17 +181,6 @@ func on_animation_finished(animation_name):
 
 # TODO: Allow castle hits.
 # WARNING: Do not type this as "CharacterBody3D". It must be more generic or it'll error.
-func on_search_box_body_entered(body: Node3D):
-	if target:
-		return
-	
-	if body && body.is_in_group('players'):
-		target = body
-		set_state(States.CHASING)
-
-func on_search_box_body_exited(body: Node3D):
-	if target == body: 
-		nav.timer_give_up.start()
 
 
 # TODO: Use health system? 
@@ -245,12 +232,11 @@ func _on_player_hit(body, _projectile):
 
 	_projectile.queue_free()
 
-
 func give_up():
 	set_state(States.SEARCHING)
 	
 func on_navigation_finished():
 	if state == States.CHASING:
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.4).timeout
 		if nav_agent.is_navigation_finished():
 			attack()

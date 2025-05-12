@@ -55,6 +55,11 @@ func _ready():
 		player_heat_system.update_fog.connect(func (new_fog_value): on_update_fog.rpc_id(peer_id, new_fog_value))
 		player_heat_system.low_temperature_warning.connect(func (is_showing): on_show_temp_warning.rpc_id(peer_id, is_showing))
 		# TODO: Listen for death and fade out UI?
+		
+		# CASTLE
+		Hub.castle.fuel_updated.connect(func (new_fuel): on_update_fuel.rpc(new_fuel))
+		Hub.castle.health_system.health_updated.connect(func (new_health): on_update_castle_health.rpc(new_health))
+		
 	else:
 		# Client code
 		DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
@@ -65,15 +70,14 @@ func _ready():
 		hit_sight_timer.one_shot = true
 		hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 		
-		%TempBar.max_value = 76.0
-		%TempBar.min_value = -40.0
+		%TempBar.max_value = 76.0 + 15.0
+		%TempBar.min_value = -40.0 - 15.0
 		%TempBar.modulate.a = 1.0
 		
 		add_child(temp_bar_flashing_timer)
 		temp_bar_flashing_timer.wait_time = 0.3
 		temp_bar_flashing_timer.one_shot = false
 		temp_bar_flashing_timer.timeout.connect(on_temp_flash_timeout)
-		temp_bar_flashing_timer.start()
 
 func _process(_delta: float) -> void:
 	_show_snow_shader()
@@ -168,6 +172,7 @@ func on_show_temp_warning(is_flashing):
 	if is_flashing:
 		temp_bar_flashing_timer.start()
 		$Shaders/VignetteShader.visible = true
+		%TempBar.modulate.a = 1.0
 	else:
 		temp_bar_flashing_timer.stop()
 		$Shaders/VignetteShader.visible = false
@@ -182,3 +187,11 @@ func on_temp_flash_timeout():
 		tween.tween_property(%TempBar, "modulate:a", 0.0, 0.2).from(1.0)
 	else:
 		tween.tween_property(%TempBar, "modulate:a", 1.0, 0.2).from(0.0)
+
+@rpc
+func on_update_fuel(new_fuel):
+	%CastleFuelBar.value = new_fuel
+	
+@rpc
+func on_update_castle_health(new_health):
+	%CastleHealthBar.value = new_health

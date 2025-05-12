@@ -176,6 +176,7 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 		_state_machine.transition(&"Dead")
 
 	if respawn == true:
+		heat_system.temp = heat_system.max_temp
 		health_system.heal(health_system.max_health)
 		_state_machine.transition(&"Idle")
 		respawn = false
@@ -195,7 +196,6 @@ func _on_display_state_changed(_old_state: RewindableState, new_state: Rewindabl
 	if _animation_player && animation_name != "":
 		#_animation_player.speed_scale = 1.0
 		_animation_player.play(ANIMATION_PREFIX + animation_name)
-
 
 # TODO: Document that Ragdoll bones are on Layer 3 collision. Adjust weights & poses.
 
@@ -349,7 +349,10 @@ func interact():
 	#if holding.is_inside_tree() == false:
 		#holding = null
 		#return
-	
+	if holding and global_position.distance_to(holding.global_position) > 5.0:
+		if holding.interact(self):
+			holding = null
+				
 	if holding && interactable == null:
 		if holding.interact(self):
 			holding = null

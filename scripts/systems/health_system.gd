@@ -46,6 +46,7 @@ func _ready() -> void:
 		max_health_updated.emit(max_health)
 		heal(max_health)
 
+
 func damage(value: int, source: int = 0) -> bool:
 	# Don't allow negative values when damaging
 	var next_health = health - abs(value)
@@ -58,6 +59,7 @@ func damage(value: int, source: int = 0) -> bool:
 		return false
 
 	# Do not allow overkill. Just die.
+	# TODO: Clamp is easier right? Might work here
 	if next_health <= 0:
 		regen_timer.stop()
 		health = 0
@@ -85,12 +87,15 @@ func allow_damage_from_source(source):
 	var parent = get_parent()
 
 	# Enemies can not hurt each other.
-	if not parent.is_in_group("players") and source == 0:
+	if parent.is_in_group("targets") and source == 0:
+		# Enemies can hit player owned targets
+		if parent.is_in_group("player_owned"):
+			return true
+			
 		return false
 		
 	# Player rules
 	if parent.is_in_group("players"):
-		# print('parent.pvp', parent.pvp)
 
 		# PVP is off
 		if source != 0 and parent.pvp == false:
