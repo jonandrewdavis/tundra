@@ -96,6 +96,9 @@ func allow_damage_from_source(source):
 		
 	# Player rules
 	if parent.is_in_group("players"):
+		# Players can't hit castle
+		if parent.is_in_group("player_owned"):
+			return false
 
 		# PVP is off
 		if source != 0 and parent.pvp == false:

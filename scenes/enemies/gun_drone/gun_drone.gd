@@ -187,7 +187,8 @@ func on_animation_finished(animation_name):
 # TODO: could call this "take_hit" or "get_hit" in a refactor
 func on_hurt():
 	set_state(States.HURTING)
-	if !target:
+	# If there's no target, or it's attacking a castle
+	if !target or target.is_in_group('player_owned'):
 		var get_player = Hub.get_player(health_system.last_damage_source) 
 		if get_player:
 			target = get_player

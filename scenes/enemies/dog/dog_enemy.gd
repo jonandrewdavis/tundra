@@ -198,7 +198,7 @@ func set_state(new_state: States) -> void:
 			return
 		animation_player.play('dog_animations_1/hurt')
 		# TODO: interrupt whever we are doing to get hurt. Maybe a 33% chance to? 
-		if !target:
+		if !target or target.is_in_group('player_owned'):
 			var get_player = Hub.get_player(health_system.last_damage_source) 
 			if get_player:
 				target = get_player

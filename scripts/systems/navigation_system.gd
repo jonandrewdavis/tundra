@@ -75,7 +75,7 @@ func on_search_box_body_entered(body: Node3D):
 	if parent.target:
 		return
 	
-	if body && body.is_in_group('players'):
+	if body && body.is_in_group('players') or body.is_in_group('player_owned'):
 		timer_give_up.stop()
 		parent.target = body
 		parent.set_state(parent.States.CHASING)
