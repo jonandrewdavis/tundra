@@ -99,10 +99,11 @@ func _ready():
 	# TODO: Document cases where this helps prevent jitter.
 	# TODO: Disabling physics on the client might help the server & client not fight over positioning
 	if not multiplayer.is_server():
-		set_process(false)
 		set_physics_process(false)
+		set_process(false)
 		if multiplayer.get_unique_id() == str(name).to_int():
 			NetworkManager.hide_loading()
+
 
 	#### SERVER ONLY ####
 	# TODO: To be fully server authoratitve, this line should be uncommented
@@ -134,6 +135,7 @@ func _exit_tree() -> void:
 func _process(_delta: float) -> void:
 	weapon_vertical_tilt()
 	on_animation_check()
+	
 
 # NOTE: The way this works is:
 # - Process runs in `player_input.gd` 
@@ -166,7 +168,7 @@ func process_player_input(input_string: StringName):
 		"special": # F
 			Hub.enemy_system.spawn_dog.emit()
 		"DEBUG_B":
-			toggle_ragdoll()
+			Hub.castle.change_castle_speed.emit()
 		"DEBUG_0":
 			Hub.enemy_system.spawn_drone.emit()
 

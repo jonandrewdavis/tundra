@@ -4,5 +4,4 @@
 
 [node name="HitScanProjectile" type="Node3D"]
 script = ExtResource("1_epqi3")
-Projectile_Velocity = 50
 pass_through = true

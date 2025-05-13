@@ -67,16 +67,16 @@ func Camera_Ray_Cast(_spread: Vector2 = Vector2.ZERO, _range: float = 1000):
 
 
 func Hit_Scan_Collision(Collision: Array,_damage: float, origin_point: Vector3):
-	var Point = Collision[1]
+	var bullet_point = Collision[1]
 	if Collision[0]:
 		
-		Hub.projectile_system.create_debug_decal(Point, Collision[2])
+		Hub.projectile_system.create_debug_decal(bullet_point, Collision[2])
 		
 		if Collision[0].is_in_group("targets") or Collision[0].is_in_group("players"):
 			var Bullet = get_world_3d().direct_space_state
 
-			var Bullet_Direction = (Point - origin_point).normalized()
-			var New_Intersection = PhysicsRayQueryParameters3D.create(origin_point,Point+Bullet_Direction*2)
+			var Bullet_Direction = (bullet_point - origin_point).normalized()
+			var New_Intersection = PhysicsRayQueryParameters3D.create(origin_point,bullet_point+Bullet_Direction*2)
 			New_Intersection.set_collision_mask(0b11101111) 
 			New_Intersection.set_hit_from_inside(false)
 			New_Intersection.set_exclude(hit_objects)

@@ -41,8 +41,7 @@ func move_player(delta: float):
 	if position_target:
 		parent.velocity = parent.velocity.move_toward(Vector3(position_target.x, parent.velocity.y, position_target.z), parent.ACCELERATION * delta)
 
-	var platform_velocity := Vector3.ZERO
-	platform_velocity = get_moving_platform_velocity(delta)
+	var platform_velocity = get_moving_platform_velocity(delta)
 
 	# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-velocity
 	parent.velocity += platform_velocity
@@ -60,8 +59,7 @@ func stop_player(delta: float):
 
 	parent.velocity = parent.velocity.move_toward(Vector3(0.0, parent.velocity.y, 0.0), parent.FRICTION * delta)
 
-	var platform_velocity := Vector3.ZERO
-	platform_velocity = get_moving_platform_velocity(delta)
+	var platform_velocity = get_moving_platform_velocity(delta)
 
 	# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-velocity
 	parent.velocity += platform_velocity
@@ -93,14 +91,13 @@ func force_update_is_on_floor():
 # TODO: Raycast down, only hitting castle instead of KinematicCollision3D
 # This would let us stand on a barrel on the castle as well.
 func get_moving_platform_velocity(delta: float) -> Vector3:
-	var _platform_velocity := Vector3.ZERO
+	var _platform_velocity := Vector3(0.0, 0.0, 0.0)
 	var collision_result := KinematicCollision3D.new()
 	if parent.test_move(parent.global_transform, Vector3.DOWN * delta, collision_result):
 		var collider := collision_result.get_collider()
 		if collider is MovingCastle:
 			var platform := collider as MovingCastle
 			_platform_velocity = platform.get_velocity()
-			
 	return _platform_velocity
 
 func check_for_ragdoll():

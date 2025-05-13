@@ -270,15 +270,23 @@ func melee() -> void:
 		
 	if current_animation != current_weapon.melee_animation:
 		animation_player.play(current_weapon.melee_animation)
+		await get_tree().create_timer(0.1).timeout
 		if melee_hitbox.is_colliding():
-			var colliders = melee_hitbox.get_collisioncount()
+			var colliders = melee_hitbox.get_collision_count()
 			for col in colliders:
-				var target = melee_hitbox.get_collider(col)
-				if target.is_in_group("targets") and target.has_method("hit"):
-					player_hud.hit_signal.emit()
-					var dir = (target.global_transform.origin - owner.global_transform.origin).normalized()
-					var pos =  melee_hitbox.get_collision_point(col)
-					target.hit(current_weapon.melee_damage, dir, pos)
+				var body: Node3D = melee_hitbox.get_collider(col)
+				if body.is_in_group('targets'):
+					var heath_system: HealthSystem = body.health_system
+					var damage_successful = heath_system.damage(current_weapon.melee_damage, int(player.name))
+					if damage_successful:
+						Hub.projectile_system.hit_signal.emit(int(player.name))
+	
+				# WARNING: DEPRECATED MELEE CODE. REMOVE.
+				#if target.is_in_group("targets") and target.has_method("hit"):
+					#player_hud.hit_signal.emit()
+					#var dir = (target.global_transform.origin - owner.global_transform.origin).normalized()
+					#var pos =  melee_hitbox.get_collision_point(col)
+					#target.hit(current_weapon.melee_damage, dir, pos)
 
 ######## HUD Helpers ########
 ######## HUD Helpers ########

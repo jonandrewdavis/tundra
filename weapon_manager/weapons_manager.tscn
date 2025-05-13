@@ -372,6 +372,18 @@ tracks/17/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("../Melee_Hitbox:enabled")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_gqwbi"]
 resource_name = "blasterM_Deactive"
@@ -790,7 +802,7 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tw7a2"]
-size = Vector3(0.645, 0.315, 0.405)
+size = Vector3(0.645, 0.715, 0.805)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1dvfb"]
 properties/0/path = NodePath("Weapons_Models/WeaponsPlayer:current_animation")
@@ -894,8 +906,8 @@ gizmo_extents = 0.21
 [node name="Melee_Hitbox" type="ShapeCast3D" parent="."]
 enabled = false
 shape = SubResource("BoxShape3D_tw7a2")
-target_position = Vector3(0, 0, -0.7)
-collision_mask = 36
+target_position = Vector3(0, -0.4, -1)
+collision_mask = 7
 debug_shape_custom_color = Color(0, 1, 0, 1)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

@@ -176,6 +176,7 @@ logging/clear_settings=true
 
 [physics]
 
+common/physics_jitter_fix=0.0
 3d/physics_engine="Jolt Physics"
 
 [rendering]

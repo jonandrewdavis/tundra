@@ -9,8 +9,8 @@ var holder: Marker3D
 func _ready() -> void:
 	set_collision_layer_value(8, true)
 	#if not multiplayer.is_server():
-		#set_physics_process(false)
-		#set_process(false)
+	#set_physics_process(false)
+	#set_process(false)
 	
 	NetworkTime.on_tick.connect(_apply_tick)
 

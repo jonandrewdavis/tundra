@@ -22,7 +22,7 @@ var fuel_timer = Timer.new()
 # Internal 
 #@onready var _origin: Vector3 = global_position
 #@onready var _distance: float = _origin.distance_to(castle_target)
-var _velocity: Vector3 = Vector3.ZERO
+@export var _velocity: Vector3 = Vector3.ZERO
 
 func _ready():
 	Hub.castle = self
@@ -67,10 +67,17 @@ func _apply_tick(_delta: float, _tick: int):
 	translate(Vector3(0.0, 0.0, speed  * _delta))
 
 func _calc_velocity(_tick: int):
-	_velocity = (global_position - prev) / NetworkTime.ticktime
+	# CRITICAL: Figure out how keep a cache of velocities. It should remain the same
+	# if 0. And not double.
+	
+	
+	
+	# Sometimes velocity is doubled.
+	# Sometimes velocity is 0.0
+	_velocity = ((global_position - prev) / NetworkTime.ticktime)
 	
 func _on_change_castle_speed():
-	if castle_on:
+	if castle_on:	
 		castle_on = false
 		speed = 0.0
 	else:
