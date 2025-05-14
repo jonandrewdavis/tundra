@@ -27,8 +27,11 @@ const CAMERA_X_ROT_MIN := deg_to_rad(-50.9)
 const CAMERA_X_ROT_MAX := deg_to_rad(70)
 const CAMERA_UP_DOWN_MOVEMENT = -1
 
+@onready var player: Player = get_parent()
+
 func _ready():
 	NetworkTime.before_tick_loop.connect(_gather)
+	NetworkTime.on_tick.connect(tick)
 	_set_camera(CAMERA_SETTINGS_DEFAULT)
 	
 	if multiplayer.get_unique_id() == str(get_parent().name).to_int():
@@ -42,6 +45,8 @@ func _gather():
 		camera_basis = get_camera_rotation_basis()
 		camera_look = get_camera_vertical_look()
 
+
+
 func _input(event):
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		return 
@@ -49,10 +54,14 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_camera(event.relative * CAMERA_MOUSE_ROTATION_SPEED)
 	
-	if event.is_action_pressed("aim"):
-		_set_camera(CAMERA_SETTINGS_AIM)
+	#if event.is_action_pressed("aim"):
+		#_set_camera(CAMERA_SETTINGS_AIM)
 
-	if event.is_action_released("aim"):
+# TODO: Lerp this so it's smooth.
+func tick(_delta, _tick):
+	if player._player_input.aim_input:
+		_set_camera(CAMERA_SETTINGS_AIM)
+	else: 
 		_set_camera(CAMERA_SETTINGS_DEFAULT)
 
 func _set_camera(_new_settings):

@@ -888,7 +888,7 @@ libraries = {
 }
 
 [node name="BulletPoint" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.119992, -0.362828, -1.29826)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.289, -0.342, -0.746)
 gizmo_extents = 0.21
 
 [node name="Melee_Hitbox" type="ShapeCast3D" parent="."]

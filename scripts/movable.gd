@@ -2,7 +2,7 @@ extends RigidBody3D
 class_name Movable
 
 @export var label: String
-@export var enable_pickup: bool
+@export var enable_pickup: bool = true
 
 var holder: Marker3D
 

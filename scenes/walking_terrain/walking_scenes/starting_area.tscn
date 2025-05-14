@@ -152,7 +152,7 @@ custom_seed = 0
 restrict_height = true
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_h71qs"]
+[sub_resource type="Resource" id="Resource_bj2bj"]
 script = ExtResource("2_bkuat")
 stack = Array[ExtResource("3_xky8s")]([SubResource("Resource_qe055")])
 
@@ -717,7 +717,11 @@ transform = Transform3D(2.32149, -0.0653517, -5.31101, 0.0660929, 5.79606, -0.04
 
 [node name="BORDERSCATTER" type="Node3D" parent="."]
 script = ExtResource("1_uj068")
-modifier_stack = SubResource("Resource_h71qs")
+show_output_in_tree = true
+render_mode = 1
+keep_static_colliders = true
+force_rebuild_on_load = false
+modifier_stack = SubResource("Resource_bj2bj")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 metadata/_custom_type_script = "uid://df5q34hpu36sq"
@@ -737,3 +741,82 @@ script = ExtResource("7_bganx")
 negative = true
 shape = SubResource("Resource_ebwc0")
 metadata/_custom_type_script = "uid://bt8yts1qfg1br"
+
+[node name="ScatterOutput" type="Marker3D" parent="BORDERSCATTER"]
+
+[node name="ScatterItem" type="Node3D" parent="BORDERSCATTER/ScatterOutput"]
+
+[node name="pine_tree" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -119.091, 0, -28.2838)
+
+[node name="pine_tree2" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -132.454, 0, -5.58954)
+
+[node name="pine_tree3" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 83.4906, 0, -84.0506)
+
+[node name="pine_tree4" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -107.251, 0, 98.0991)
+
+[node name="pine_tree5" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 54.8445, 0, 16.7584)
+
+[node name="pine_tree6" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 61.4437, 0, -69.6631)
+
+[node name="pine_tree7" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -169.852, 0, -52.264)
+
+[node name="pine_tree8" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 174.514, 0, 96.6026)
+
+[node name="pine_tree9" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 76.3417, 0, -37.8738)
+
+[node name="pine_tree10" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -161.839, 0, 72.6425)
+
+[node name="pine_tree11" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 174.606, 0, -52.3854)
+
+[node name="pine_tree12" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -58.9558, 0, -58.2202)
+
+[node name="pine_tree13" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -177.235, 0, -19.1386)
+
+[node name="pine_tree14" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 115.2, 0, 35.5747)
+
+[node name="pine_tree15" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 193.521, 0, 37.8615)
+
+[node name="pine_tree16" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -70.9017, 0, 28.3471)
+
+[node name="pine_tree17" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -72.9074, 0, -68.5878)
+
+[node name="pine_tree18" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -182.361, 0, -3.58361)
+
+[node name="pine_tree19" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 111.361, 0, -3.58174)
+
+[node name="pine_tree20" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 88.5643, 0, -51.9803)
+
+[node name="pine_tree21" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -143.204, 0, 78.486)
+
+[node name="pine_tree22" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 96.3143, 0, 74.0599)
+
+[node name="pine_tree23" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -167.551, 0, 7.61731)
+
+[node name="pine_tree24" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 170.409, 0, -8.61105)
+
+[node name="pine_tree25" type="Node3D" parent="BORDERSCATTER/ScatterOutput/ScatterItem" instance=ExtResource("10_xky8s")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -159.463, 0, -4.38274)

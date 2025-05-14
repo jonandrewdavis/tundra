@@ -7,9 +7,11 @@ class_name NavigationSystem
 var next_path_pos
 var parent: CharacterBody3D
 
+var timer_patrol = Timer.new()
 var timer_chase_target = Timer.new()
 var timer_navigate = Timer.new()
 var timer_give_up = Timer.new()
+
 
 signal give_up_signal
 @warning_ignore("unused_signal")
@@ -47,6 +49,10 @@ func _ready() -> void:
 	timer_give_up.wait_time = 10.0
 	timer_give_up.one_shot = true # Do not repeatedly give up
 
+	add_child(timer_patrol)
+	timer_patrol.timeout.connect(pick_patrol_destination)
+	timer_patrol.wait_time = 60.0
+	timer_patrol.start()
 
 func chase_target():
 	if timer_chase_target.is_stopped():
@@ -60,15 +66,17 @@ func chase_target():
 func pick_patrol_destination():
 	var map = NavigationServer3D.get_maps()[0]
 	var random_point = NavigationServer3D.map_get_random_point(map, 1, false)
-	nav_agent.set_target_position(random_point)
-	next_path_pos = nav_agent.get_next_path_position()
 	
+	# The random point should be near-ish to the castle.
+	if random_point.distance_to(Hub.castle.global_position) < 150.0:
+		nav_agent.set_target_position(random_point)
+		next_path_pos = nav_agent.get_next_path_position()
+	else:
+		pick_patrol_destination()
+		
 func update_navigation_path():
 	if nav_agent.is_navigation_finished() == false:
 		next_path_pos = nav_agent.get_next_path_position()
-
-func give_up():
-	give_up_signal.emit()
 
 # TODO: Setting & forgetting target might need to be signal emits?
 func on_search_box_body_entered(body: Node3D):
@@ -83,3 +91,7 @@ func on_search_box_body_entered(body: Node3D):
 func on_search_box_body_exited(body: Node3D):
 	if parent.target == body: 
 		timer_give_up.start()
+
+func give_up():
+	parent.set_state(parent.States.SEARCHING)
+	give_up_signal.emit()

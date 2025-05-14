@@ -7,6 +7,7 @@ var input_dir : Vector2 = Vector2.ZERO
 var run_input = false
 var shoot_input = false
 var jump_input = false
+var aim_input = false
 var static_states: Array[StringName] = [&"Dead", &"Static", &"Ragdoll"]
 
 func _ready():
@@ -55,6 +56,7 @@ func _gather():
 	run_input = Input.is_action_pressed("run")
 	shoot_input = Input.is_action_pressed("shoot")
 	jump_input = Input.is_action_pressed("jump")
+	aim_input = Input.is_action_pressed("aim")
 
 func _exit_tree():
 	NetworkTime.before_tick_loop.disconnect(_gather)

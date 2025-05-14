@@ -12,7 +12,7 @@ class_name WeaponsManager
 @export var melee_hitbox: ShapeCast3D
 @export var max_weapons: int # not used
 @export var player_hud: PlayerUI
-@export var player: CharacterBody3D
+@export var player: Player
 
 @onready var bullet_point = $BulletPoint
 
@@ -196,7 +196,7 @@ func shoot():
 		
 		var Spread = Vector2.ZERO
 		
-		if current_weapon.weapon_spray:
+		if current_weapon.weapon_spray and not player._player_input.aim_input:
 			count = count + 1
 			# if player_input.aim == false:
 			Spread = spray_profiles[current_weapon.weapon_name].Get_Spray(count, current_weapon.magazine)

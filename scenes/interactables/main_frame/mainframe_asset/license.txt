@@ -1,0 +1,11 @@
+Model Information:
+* title:	DEC PDP-11
+* source:	https://sketchfab.com/3d-models/dec-pdp-11-e695ca5586014c0cbe6878492259a210
+* author:	maxdragonn (https://sketchfab.com/maxdragon)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "DEC PDP-11" (https://sketchfab.com/3d-models/dec-pdp-11-e695ca5586014c0cbe6878492259a210) by maxdragonn (https://sketchfab.com/maxdragon) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

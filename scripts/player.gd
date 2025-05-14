@@ -277,8 +277,7 @@ const MOVES = {
 func on_animation_check():
 	if _state_machine.state == (&'Move'):
 		var _dir = _player_input.input_dir
-		var _slowed = false
-		#var _slowed = _player_input.shoot_input or weapons_manager.animation_player.is_playing()
+		var _slowed = _player_input.aim_input
 
 		if _slowed:
 			CURRENT_SPEED = SLOW_SPEED

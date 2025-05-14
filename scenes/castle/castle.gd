@@ -70,8 +70,6 @@ func _calc_velocity(_tick: int):
 	# CRITICAL: Figure out how keep a cache of velocities. It should remain the same
 	# if 0. And not double.
 	
-	
-	
 	# Sometimes velocity is doubled.
 	# Sometimes velocity is 0.0
 	_velocity = ((global_position - prev) / NetworkTime.ticktime)
@@ -82,7 +80,7 @@ func _on_change_castle_speed():
 		speed = 0.0
 	else:
 		castle_on = true
-		speed = -10.2
+		speed = -1.2
 
 func consume_fuel():
 	var next_fuel

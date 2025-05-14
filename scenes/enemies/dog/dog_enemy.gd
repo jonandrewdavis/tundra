@@ -81,7 +81,6 @@ func _ready():
 	health_system.death.connect(on_death)
 	
 	# Nav
-	nav.give_up_signal.connect(give_up)
 	nav.attack_signal.connect(attack)
 	nav_agent.navigation_finished.connect(on_navigation_finished)
 	nav_agent.path_changed.connect(on_path_changed)
@@ -274,8 +273,6 @@ func attack():
 				attack_position = attack_position + Vector3(0.0, 0.5, 0.0)
 				animation_player.play('dog_animations_1/jump')
 
-func give_up():
-	set_state(States.SEARCHING)
 
 # TODO: These are bad. ...
 func on_navigation_finished():

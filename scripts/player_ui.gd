@@ -33,7 +33,10 @@ func _ready():
 	# CRITICAL: If we're not server, and NOT the player that owns the UI. 
 	# Delete the UI and return early.
 	if not multiplayer.is_server() and multiplayer.get_unique_id() != peer_id:
+		#print('Player: ', peer_id,  'saw: ',  multiplayer.get_unique_id())
+		set_process(false)
 		queue_free()
+		#hide()
 		return
 
 	if multiplayer.is_server():
@@ -57,8 +60,8 @@ func _ready():
 		# TODO: Listen for death and fade out UI?
 		
 		# CASTLE
-		Hub.castle.fuel_updated.connect(func (new_fuel): on_update_fuel.rpc(new_fuel))
-		Hub.castle.health_system.health_updated.connect(func (new_health): on_update_castle_health.rpc(new_health))
+		Hub.castle.fuel_updated.connect(func (new_fuel): on_update_fuel.rpc_id(peer_id, new_fuel))
+		Hub.castle.health_system.health_updated.connect(func (new_health): on_update_castle_health.rpc_id(peer_id, new_health))
 		
 	else:
 		# Client code

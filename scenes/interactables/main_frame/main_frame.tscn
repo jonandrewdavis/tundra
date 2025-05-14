@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bt6dq04w5x88m"]
+
+[ext_resource type="Script" uid="uid://bl2vh4dwoieav" path="res://scenes/interactables/main_frame/main_frame.gd" id="1_g3vsj"]
+[ext_resource type="PackedScene" uid="uid://wi1ncdq2o47o" path="res://scenes/interactables/main_frame/mainframe_asset/scene.gltf" id="1_wi8x2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wi8x2"]
+size = Vector3(0.98, 2.88, 0.98)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_g3vsj"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("..:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="MainFrame" type="RigidBody3D"]
+script = ExtResource("1_g3vsj")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_wi8x2")]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+shape = SubResource("BoxShape3D_wi8x2")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../CollisionShape3D2")
+replication_config = SubResource("SceneReplicationConfig_g3vsj")

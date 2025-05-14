@@ -14,4 +14,4 @@ _spawnable_scenes = PackedStringArray("uid://c3ty4fjp8dgxt", "uid://b6uhi67r6kf4
 spawn_path = NodePath("../PlatformsContainer")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.651062)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.495651)

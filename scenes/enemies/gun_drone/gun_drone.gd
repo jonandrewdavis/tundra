@@ -72,7 +72,6 @@ func _ready():
 	health_system.death.connect(on_death)
 	
 	# Nav
-	nav.give_up_signal.connect(give_up)
 	nav.attack_signal.connect(attack)
 
 	await get_tree().create_timer(0.2).timeout
@@ -232,9 +231,6 @@ func _on_player_hit(body, _projectile):
 		body.health_system.damage(attack_value)
 
 	_projectile.queue_free()
-
-func give_up():
-	set_state(States.SEARCHING)
 	
 func on_navigation_finished():
 	if state == States.CHASING:

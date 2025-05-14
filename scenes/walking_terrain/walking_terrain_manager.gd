@@ -24,8 +24,9 @@ var walking_scene_timer = Timer.new()
 # TODO: Use a custom spawn function to set it!!
 var start = preload("res://scenes/walking_terrain/walking_scenes/starting_area.tscn")
 var forest_1 = preload("res://scenes/walking_terrain/walking_scenes/forest_1.tscn")
+var bunker_1 = preload("res://scenes/walking_terrain/walking_scenes/bunker_1.tscn")
 
-var SCENE_LIST = [start, forest_1]
+var SCENE_LIST = [start, forest_1, bunker_1]
 
 var walking_scene_length = 200.0
 var walking_scene_center = 0.0
@@ -33,7 +34,7 @@ var walking_scene_center = 0.0
 # 0 = "most behind"
 # 1 = "center"
 # 2 = "coming soon!"
-var starting_platforms: Array[PackedScene] = [forest_1, start, forest_1]
+var starting_platforms: Array[PackedScene] = [forest_1, bunker_1, forest_1]
 
 var current_platforms: Array[Node3D] = []
 
@@ -53,7 +54,7 @@ func _ready() -> void:
 
 	await get_tree().process_frame 
 	var back = spawner.spawn([1, 0 - walking_scene_length])
-	var center = spawner.spawn([0, 0])
+	var center = spawner.spawn([2, 0])
 	var front = spawner.spawn([1, 0 + walking_scene_length])
 
 	current_platforms.append(back)
