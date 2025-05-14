@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bixuqg8pyoxun"]
+
+[node name="SunV2" type="DirectionalLight3D"]
+transform = Transform3D(0.838671, -0.523541, 0.150123, 0, 0.275637, 0.961262, -0.544639, -0.806182, 0.231169, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0

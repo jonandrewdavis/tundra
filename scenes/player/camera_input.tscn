@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://l1d8hwvn7hbq"]
+[gd_scene load_steps=5 format=3 uid="uid://l1d8hwvn7hbq"]
 
 [ext_resource type="Script" uid="uid://n3m5d30amhug" path="res://scripts/camera_input.gd" id="1_3wtcb"]
 [ext_resource type="Script" uid="uid://3lbngqcexe0l" path="res://addons/netfox/state-synchronizer.gd" id="2_exfpx"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_o6gvm"]
 margin = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_exfpx"]
+radius = 0.1
+height = 0.2
 
 [node name="CameraInput" type="Node3D" node_paths=PackedStringArray("camera_mount", "camera_rot", "camera_3D", "holder")]
 script = ExtResource("1_3wtcb")
@@ -26,7 +30,10 @@ margin = 1.0
 [node name="Camera3D" type="Camera3D" parent="CameraMount/CameraRot/SpringArm3D"]
 
 [node name="Holder" type="Marker3D" parent="CameraMount/CameraRot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.60102, 0, -1.9851)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraMount/CameraRot/Holder"]
+mesh = SubResource("SphereMesh_exfpx")
 
 [node name="StateSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("2_exfpx")

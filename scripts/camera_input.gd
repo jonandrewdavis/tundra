@@ -23,7 +23,7 @@ const CAMERA_SETTINGS_AIM = {
 }
 
 const CAMERA_MOUSE_ROTATION_SPEED := 0.001
-const CAMERA_X_ROT_MIN := deg_to_rad(-89.9)
+const CAMERA_X_ROT_MIN := deg_to_rad(-50.9)
 const CAMERA_X_ROT_MAX := deg_to_rad(70)
 const CAMERA_UP_DOWN_MOVEMENT = -1
 

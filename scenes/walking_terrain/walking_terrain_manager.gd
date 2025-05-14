@@ -51,10 +51,10 @@ func _ready() -> void:
 	if not multiplayer.is_server():
 		return
 
-	await get_tree().process_frame
-	var back = spawner.spawn([1, 0 + walking_scene_length])
+	await get_tree().process_frame 
+	var back = spawner.spawn([1, 0 - walking_scene_length])
 	var center = spawner.spawn([0, 0])
-	var front = spawner.spawn([1, 0 - walking_scene_length])
+	var front = spawner.spawn([1, 0 + walking_scene_length])
 
 	current_platforms.append(back)
 	current_platforms.append(center)
@@ -118,10 +118,12 @@ func add_platform(dir: DIR, _scene_index = 0):
 	if dir == DIR.INFRONT:
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
 		var new_platform = 	spawner.spawn([0, walking_scene_center + new_offset])
+		print('ADD IN FRONT: ', walking_scene_center + new_offset)
 		current_platforms.push_back(new_platform)
 	else:
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
 		var new_platform = spawner.spawn([0, walking_scene_center - new_offset])
+		print('ADD IN BACK: ', walking_scene_center - new_offset)
 		current_platforms.push_front(new_platform)
 
 # [index, pos]
@@ -140,10 +142,12 @@ func add_platform_proxy(dir: DIR, scene_index = 0):
 		current_platforms.push_back(new_platform)
 		container.add_child(new_platform, true)
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
+		print('ADD IN FRONT: ', walking_scene_center + new_offset)
 		new_platform.global_position.z = walking_scene_center + new_offset
 	else:
 		var new_platform = SCENE_LIST[scene_index].instantiate()
 		current_platforms.push_front(new_platform)
 		container.add_child(new_platform, true)
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
+		print('ADD IN BACK: ', walking_scene_center - new_offset)
 		new_platform.global_position.z = walking_scene_center - new_offset	

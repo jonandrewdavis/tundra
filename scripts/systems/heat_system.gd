@@ -87,9 +87,9 @@ func on_temp_timer():
 
 func on_fog_update_timer():
 	if player.position.distance_to(Hub.castle.position) > MAX_DISTANCE:
-		update_fog.emit(0.08 + player.position.distance_to(Hub.castle.position) / 300.0)
+		update_fog.emit(0.02 + player.position.distance_to(Hub.castle.position) / 800.0)
 	else:
-		update_fog.emit(0.08)
+		update_fog.emit(0.02)
 
 func start_freezing():
 	freeze_damage_timer.start()

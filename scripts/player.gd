@@ -28,6 +28,10 @@ var _animation_player: AnimationPlayer
 @export var skeleton: Skeleton3D
 @export var bones: PhysicalBoneSimulator3D
 @export var chest: PhysicalBone3D
+@export var look_at_right: LookAtModifier3D
+@export var look_at_left: LookAtModifier3D
+@export var look_at_left_lower: LookAtModifier3D
+@export var look_at_target: Node3D
 
 @export_category("Systems")
 @export var health_system: HealthSystem
@@ -71,6 +75,11 @@ func _ready():
 	add_to_group('players')
 	#peer_id = str(name).to_int()
 	
+	# TODO: Hands.
+	look_at_right.target_node = look_at_target.get_path()
+	look_at_left.target_node = look_at_target.get_path()
+	look_at_left_lower.target_node = look_at_target.get_path()
+
 	Nodash.error_missing(weapons_manager, 'weapons_manager')
 	Nodash.warn_missing(player_ui, 'player_ui')
 	
@@ -133,7 +142,7 @@ func _exit_tree() -> void:
 
 # CRITICAL: Process is turned off for clients.
 func _process(_delta: float) -> void:
-	weapon_vertical_tilt()
+	#weapon_vertical_tilt()
 	on_animation_check()
 	
 
@@ -301,7 +310,8 @@ func on_animation_check():
 
 # NOTE: -1.0 makes it move the right way and 0.5 dampens it slightly
 func weapon_vertical_tilt():
-	weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.5, 0.5)
+	pass
+	#weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.1, 0.1)
 
 func debug_increase_heat_dome_radius():
 	Hub.castle.change_heat_dome_value.emit(1)

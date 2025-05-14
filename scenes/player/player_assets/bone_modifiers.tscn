@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://q5i2g5oaxepa"]
+
+[node name="BoneModifiers" type="Node3D"]
+
+[node name="RightLow" type="LookAtModifier3D" parent="."]
+active = false
+target_node = NodePath("../../../../Marker3D")
+forward_axis = 2
+primary_rotation_axis = 0
+duration = 0.2
+ease_type = 2
+
+[node name="RightHand" type="LookAtModifier3D" parent="."]
+active = false
+target_node = NodePath("../../../../Marker3D")
+forward_axis = 1
+use_secondary_rotation = false
+origin_offset = Vector3(1, 0, 0)
+duration = 0.2
+ease_type = 2
+use_angle_limitation = true
+symmetry_limitation = false
+primary_positive_limit_angle = 0.610865
+primary_positive_damp_threshold = 0.5
+primary_negative_limit_angle = 0.0
+primary_negative_damp_threshold = 0.0
+
+[node name="LeftUp" type="LookAtModifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.131552, 0)
+active = false
+target_node = NodePath("../../../../Marker3D")
+forward_axis = 2
+primary_rotation_axis = 2
+origin_offset = Vector3(0, 0.5, 0.5)
+duration = 0.05
+ease_type = 2
+
+[node name="LeftLow" type="LookAtModifier3D" parent="."]
+active = false
+target_node = NodePath("../../../../Marker3D")
+forward_axis = 5
+primary_rotation_axis = 0
+origin_offset = Vector3(-1, 1, 0)
+duration = 0.05
+ease_type = 2

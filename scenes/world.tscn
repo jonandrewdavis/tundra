@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=16 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
-[ext_resource type="Environment" uid="uid://c5g0wrqetp50h" path="res://assets/environment/saved_world_environments/tundra_world_environment_v2/TundraWorldEnv_V2.tres" id="2_4mrxx"]
+[ext_resource type="Environment" uid="uid://ntabpc2ieenf" path="res://assets/environment/saved_world_environments/tundra_world_environment_v3/TundraWorldEnv_V3.tres" id="2_w7kh3"]
+[ext_resource type="PackedScene" uid="uid://bixuqg8pyoxun" path="res://assets/environment/saved_world_environments/tundra_world_environment_v2/sun_v_2.tscn" id="3_e3hyu"]
 [ext_resource type="PackedScene" uid="uid://ccj6ll20fnwya" path="res://scripts/systems/enemy_system.tscn" id="5_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://dy85183h2d31p" path="res://scenes/castle/castle_simple.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://7u0288w3c63v" path="res://scripts/systems/resource_system.tscn" id="6_7r4gi"]
@@ -31,15 +32,14 @@ script = ExtResource("1_71j4m")
 [node name="Environment_V2" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment_V2"]
-environment = ExtResource("2_4mrxx")
+environment = ExtResource("2_w7kh3")
 
-[node name="SunV2" type="DirectionalLight3D" parent="Environment_V2"]
-transform = Transform3D(0.838671, -0.523541, 0.150123, 0, 0.275637, 0.961262, -0.544639, -0.806182, 0.231169, 0, 0, 0)
-shadow_enabled = true
-directional_shadow_mode = 0
+[node name="SunV2" parent="Environment_V2" instance=ExtResource("3_e3hyu")]
+transform = Transform3D(0.705181, -0.291008, 0.646556, -0.45397, 0.515155, 0.726998, -0.544639, -0.806182, 0.231168, 0, 0, 0)
+light_volumetric_fog_energy = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="Environment_V2"]
-transform = Transform3D(0.901289, 0, 0.433219, 0, 1, 0, -0.433219, 0, 0.901289, 0, 6.23504, 30.9048)
+transform = Transform3D(0.998944, 0, -0.0459555, 0, 1, 0, 0.0459555, 0, 0.998944, 30.4096, 6.23504, 3.45082)
 
 [node name="MultiplayerManager" parent="." node_paths=PackedStringArray("_player_spawn_point") instance=ExtResource("1_dos3o")]
 _player_spawn_point = NodePath("../PlayerContainer")

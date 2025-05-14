@@ -82,7 +82,7 @@ func _on_change_castle_speed():
 		speed = 0.0
 	else:
 		castle_on = true
-		speed = -1.2
+		speed = -10.2
 
 func consume_fuel():
 	var next_fuel
