@@ -279,14 +279,14 @@ var attack_position
 func attack():
 	if can_attack() == false:
 		return
-
+	# TODO: Pick a position on the left or the right of the player.
 	if state == States.CHASING or state == States.HURTING:
-		await get_tree().create_timer(0.4).timeout
+		await get_tree().create_timer(0.2).timeout
 		if nav_agent.is_navigation_finished():
 			if target and global_position.distance_to(target.transform.origin) < 7.0:
 				attack_position = target.transform.origin
 				set_state(States.ATTACKING)
-				attack_position = target.transform.origin + Vector3(0.0, 0.4, 0.0)
+				attack_position = target.transform.origin + Vector3(0.0, 0.1, 0.0)
 
 # TODO: These are bad. ...
 func on_navigation_finished():

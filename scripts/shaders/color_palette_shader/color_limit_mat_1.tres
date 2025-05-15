@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dku1yvibriqm2"]
+
+[ext_resource type="Shader" uid="uid://dwvdbyijvpe07" path="res://scripts/shaders/color_palette_shader/color_palette_limit.gdshader" id="1_4axnu"]
+[ext_resource type="Texture2D" uid="uid://bcsbp60mrs8it" path="res://scripts/shaders/color_palette_shader/apollo-8x.png" id="2_7v7ge"]
+
+[resource]
+shader = ExtResource("1_4axnu")
+shader_parameter/num_colors = 46
+shader_parameter/PALETTE_TEXTURE = ExtResource("2_7v7ge")

@@ -1,10 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://l1d8hwvn7hbq"]
+[gd_scene load_steps=8 format=3 uid="uid://l1d8hwvn7hbq"]
 
 [ext_resource type="Script" uid="uid://n3m5d30amhug" path="res://scripts/camera_input.gd" id="1_3wtcb"]
+[ext_resource type="Shader" uid="uid://4cu270w76vgi" path="res://scripts/shaders/psx_style_camera.gdshader" id="2_cfs2c"]
 [ext_resource type="Script" uid="uid://3lbngqcexe0l" path="res://addons/netfox/state-synchronizer.gd" id="2_exfpx"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_o6gvm"]
 margin = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_exfpx"]
+render_priority = 0
+shader = ExtResource("2_cfs2c")
+shader_parameter/enable_fog = false
+shader_parameter/fog_color = Color(0, 0, 0, 1)
+shader_parameter/noise_color = Color(0, 0, 0, 1)
+shader_parameter/fog_distance = 100.0
+shader_parameter/fog_fade_range = 50.0
+shader_parameter/enable_noise = false
+shader_parameter/noise_time_fac = 4.0
+shader_parameter/enable_color_limitation = true
+shader_parameter/color_levels = 32
+shader_parameter/enable_dithering = true
+shader_parameter/dither_strength = 0.1
+
+[sub_resource type="QuadMesh" id="QuadMesh_yj6in"]
+material = SubResource("ShaderMaterial_exfpx")
+size = Vector2(2, 2)
+center_offset = Vector3(0, 0, -0.1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_exfpx"]
 radius = 0.1
@@ -28,6 +49,9 @@ spring_length = 1.8
 margin = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraMount/CameraRot/SpringArm3D"]
+
+[node name="PSX SHADER" type="MeshInstance3D" parent="CameraMount/CameraRot/SpringArm3D"]
+mesh = SubResource("QuadMesh_yj6in")
 
 [node name="Holder" type="Marker3D" parent="CameraMount/CameraRot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2.5)

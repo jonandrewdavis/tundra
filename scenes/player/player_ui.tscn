@@ -1,8 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=31 format=3 uid="uid://btdemgg0e0b4o"]
 
 [ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/player_ui.gd" id="1_fatww"]
 [ext_resource type="Texture2D" uid="uid://clx8vvaklih15" path="res://scenes/player/player_assets/crosshair046.png" id="2_by614"]
 [ext_resource type="Material" uid="uid://34b3q43337o3" path="res://scripts/shaders/snow_ui_shader_material.tres" id="3_by614"]
+[ext_resource type="Material" uid="uid://dku1yvibriqm2" path="res://scripts/shaders/color_palette_shader/color_limit_mat_1.tres" id="3_g18nd"]
 [ext_resource type="Shader" uid="uid://brkgkmjgi5u64" path="res://scripts/shaders/vignette.gdshader" id="4_g18nd"]
 [ext_resource type="Theme" uid="uid://b3kq74llqlv3x" path="res://assets/themes/MinimalUI4/MinimalUI.tres" id="4_nlx67"]
 [ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="5_by614"]
@@ -290,23 +291,6 @@ value = 100.0
 editable = false
 scrollable = false
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(1152, 648)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5451, 0)
-cull_mask = 524288
-
 [node name="Shaders" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -340,6 +324,16 @@ grow_vertical = 2
 [node name="VignetteShader" type="ColorRect" parent="Shaders"]
 visible = false
 material = SubResource("ShaderMaterial_tpfsx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Limiter" type="ColorRect" parent="Shaders"]
+visible = false
+material = ExtResource("3_g18nd")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
