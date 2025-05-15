@@ -165,6 +165,7 @@ script = ExtResource("1_2hve7")
 heat_dome = NodePath("HeatDome")
 castle_maw = NodePath("CastleMaw")
 health_system = NodePath("HealthSystem")
+fuel = 700.0
 
 [node name="HealthSystem" parent="." instance=ExtResource("2_776o2")]
 max_health = 2000

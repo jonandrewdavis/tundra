@@ -281,7 +281,7 @@ func on_animation_check():
 
 		if _slowed:
 			CURRENT_SPEED = SLOW_SPEED
-			_animation_player.speed_scale = 2.0
+			_animation_player.speed_scale = 1.8
 		else:
 			CURRENT_SPEED = DEFAULT_SPEED
 			_animation_player.speed_scale = 1.0
@@ -289,7 +289,9 @@ func on_animation_check():
 		# Strafing (no input forward or backwards)
 		if _dir.y == 0:
 			if _slowed:
-				if _dir.x < 0: _animation_player.play(MOVES.STRAFE.SLOW[1])
+				if _dir.x < 0: 
+					_animation_player.play(MOVES.STRAFE.SLOW[1]) 
+					_animation_player.speed_scale = 1.2 # Slow strafe left is too fast.
 				if _dir.x > 0:_animation_player.play(MOVES.STRAFE.SLOW[0])
 			else:
 				if _dir.x < 0: _animation_player.play(MOVES.STRAFE.FAST[1])
@@ -301,6 +303,7 @@ func on_animation_check():
 			else:
 				if _dir.y < 0: _animation_player.play(MOVES.WALK.FAST[1])
 				 # No running backwards
+				# TODO: Slow factor even more if backwards + aiming?
 				if _dir.y > 0: 
 					_animation_player.speed_scale = 1.7
 					await get_tree().process_frame

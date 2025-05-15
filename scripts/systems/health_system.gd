@@ -42,8 +42,8 @@ func _ready() -> void:
 		if regen_enabled:
 			prepare_regen_timer()
 
-		await get_tree().process_frame
 		max_health_updated.emit(max_health)
+		await get_tree().process_frame
 		heal(max_health)
 
 
