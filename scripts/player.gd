@@ -179,7 +179,7 @@ func process_player_input(input_string: StringName):
 		"DEBUG_B":
 			Hub.castle.change_castle_speed.emit()
 		"DEBUG_0":
-			Hub.enemy_system.spawn_drone.emit()
+			Hub.enemy_system.spawn_bug_1.emit()
 
 
 func _rollback_tick(_delta, _tick, _is_fresh):
