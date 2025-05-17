@@ -138,9 +138,7 @@ func _ready():
 	weapons_manager.player_input = _player_input
 
 func _exit_tree() -> void:
-	set_process(false)
-	if not multiplayer.is_server():
-		Nodash.sync_remove_all(sync)
+	Nodash.sync_remove_all(sync)
 
 # CRITICAL: Process is turned off for clients.
 func _process(_delta: float) -> void:

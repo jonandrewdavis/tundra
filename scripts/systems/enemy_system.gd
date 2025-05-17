@@ -131,7 +131,10 @@ func spawn_new_patrol():
 		wave_number = 0
 
 func cleanup_out_of_bounds() -> void:
-	for enemy in container:
+	if container.get_child_count() == 0:
+		return
+		
+	for enemy in container.get_children():
 		if enemy.global_position.distance_to(Hub.castle.global_position) > 300.0:
 			enemy.set_process(false)
 			queue_free()

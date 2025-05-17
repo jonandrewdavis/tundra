@@ -38,8 +38,8 @@ func _ready():
 	if not multiplayer.is_server() and multiplayer.get_unique_id() != peer_id:
 		#print('Player: ', peer_id,  'saw: ',  multiplayer.get_unique_id())
 		set_process(false)
-		queue_free()
-		#hide()
+		#queue_free()
+		hide()
 		return
 
 	if multiplayer.is_server():
