@@ -175,6 +175,9 @@ transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, 0.117,
 [node name="blasterN" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/Weapons_Models" index="1"]
 transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0.193, 1.255, -0.643)
 
+[node name="blasterI" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/HIDDEN_WEAPONS_MODELS" index="0"]
+transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, -0.148, 1.379, -0.398)
+
 [node name="blasterP2" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/HIDDEN_WEAPONS_MODELS" index="2"]
 transform = Transform3D(-0.97237, -0.233408, -0.00407487, 0, 0.0174555, -0.999848, 0.233443, -0.972222, -0.0169732, 0.32, 1.014, -0.35)
 
