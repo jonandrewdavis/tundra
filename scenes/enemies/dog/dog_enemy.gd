@@ -295,7 +295,7 @@ func on_path_changed():
 		animation_player.play('dog_animations_1/walk')
 
 func on_attack_box_entered(body):
-	if body.is_in_group('players'):
+	if body.is_in_group('players') or body.is_in_group('player_owned'):
 		var damage_successful = body.health_system.damage(attack_value, 0)
 		if damage_successful && attack_box:
 			attack_box.set_deferred('monitoring', false)

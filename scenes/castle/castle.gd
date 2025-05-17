@@ -43,15 +43,17 @@ func _ready():
 	set_collision_layer_value(4, true)
 	set_collision_mask_value(4, true)
 
-	# Server only?
-	NetworkTime.before_tick.connect(_save_previous_position)
-	NetworkTime.on_tick.connect(_apply_tick)
-	NetworkTime.on_tick.connect(_calc_velocity)
 
 	if multiplayer.is_server():
 		# Castle Control Signals (called from Hub.castle)
 		change_castle_speed.connect(_on_change_castle_speed)
 		change_heat_dome_value.connect(func(new_value): heat_dome.on_change_heat_dome_value(new_value))
+	
+		# Server only?
+		NetworkTime.before_tick.connect(_save_previous_position)
+		NetworkTime.on_tick.connect(_apply_tick)
+		NetworkTime.on_tick.connect(_calc_velocity)
+	
 		
 		add_child(fuel_timer)
 		fuel_timer.wait_time = 2.0
