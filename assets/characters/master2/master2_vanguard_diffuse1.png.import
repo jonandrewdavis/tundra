@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cooml4ona3l2p"
 path.s3tc="res://.godot/imported/master2_vanguard_diffuse1.png-342fedac67606a71f5c6a47e4ba132bf.s3tc.ctex"
+path.etc2="res://.godot/imported/master2_vanguard_diffuse1.png-342fedac67606a71f5c6a47e4ba132bf.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/characters/master2/master2_vanguard_diffuse1.png"
-dest_files=["res://.godot/imported/master2_vanguard_diffuse1.png-342fedac67606a71f5c6a47e4ba132bf.s3tc.ctex"]
+dest_files=["res://.godot/imported/master2_vanguard_diffuse1.png-342fedac67606a71f5c6a47e4ba132bf.s3tc.ctex", "res://.godot/imported/master2_vanguard_diffuse1.png-342fedac67606a71f5c6a47e4ba132bf.etc2.ctex"]
 
 [params]
 

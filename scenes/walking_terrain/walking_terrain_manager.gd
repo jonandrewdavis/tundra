@@ -54,7 +54,7 @@ func _ready() -> void:
 
 	await get_tree().process_frame 
 	var back = spawner.spawn([1, 0 - walking_scene_length])
-	var center = spawner.spawn([2, 0])
+	var center = spawner.spawn([0, 0])
 	var front = spawner.spawn([1, 0 + walking_scene_length])
 
 	current_platforms.append(back)

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://wm3yycblbbub"
 path.s3tc="res://.godot/imported/checker_normal.png-6643cc6f627f273970b48ec71c09abe6.s3tc.ctex"
+path.etc2="res://.godot/imported/checker_normal.png-6643cc6f627f273970b48ec71c09abe6.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/castle_objects/console/textures/checker_normal.png"
-dest_files=["res://.godot/imported/checker_normal.png-6643cc6f627f273970b48ec71c09abe6.s3tc.ctex"]
+dest_files=["res://.godot/imported/checker_normal.png-6643cc6f627f273970b48ec71c09abe6.s3tc.ctex", "res://.godot/imported/checker_normal.png-6643cc6f627f273970b48ec71c09abe6.etc2.ctex"]
 
 [params]
 

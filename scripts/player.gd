@@ -69,6 +69,9 @@ func _enter_tree():
 # TODO: Programatically add rollback sync properties: 
 # https://foxssake.github.io/netfox/latest/netfox/tutorials/configuring-properties-from-code/
 
+
+
+
 # TODO: Warn if any of our required nodes are missing.
 # TODO: abstract this so we can just like, give some nodes
 func _ready():
@@ -110,6 +113,7 @@ func _ready():
 	if not multiplayer.is_server():
 		set_physics_process(false)
 		set_process(false)
+				
 		if multiplayer.get_unique_id() == str(name).to_int():
 			NetworkManager.hide_loading()
 
@@ -142,7 +146,7 @@ func _exit_tree() -> void:
 
 # CRITICAL: Process is turned off for clients.
 func _process(_delta: float) -> void:
-	#weapon_vertical_tilt()
+	weapon_vertical_tilt()
 	on_animation_check()
 	
 
@@ -175,11 +179,13 @@ func process_player_input(input_string: StringName):
 		"interact":
 			interact()
 		"special": # F
-			Hub.enemy_system.spawn_dog.emit()
-		"DEBUG_B":
 			Hub.castle.change_castle_speed.emit()
+		"DEBUG_B":
+			Hub.enemy_system.spawn_bot_1.emit()
 		"DEBUG_0":
 			Hub.enemy_system.spawn_bug_1.emit()
+		"DEBUG_K":
+			Hub.enemy_system.debug_kill_all.emit()
 
 
 func _rollback_tick(_delta, _tick, _is_fresh):
@@ -312,8 +318,7 @@ func on_animation_check():
 
 # NOTE: -1.0 makes it move the right way and 0.5 dampens it slightly
 func weapon_vertical_tilt():
-	pass
-	#weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.1, 0.1)
+	weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.05, 0.05) + 0.1
 
 func debug_increase_heat_dome_radius():
 	Hub.castle.change_heat_dome_value.emit(1)

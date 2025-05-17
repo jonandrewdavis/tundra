@@ -36,8 +36,9 @@ const ANI = [
 	&"bug_1/run",
 	&"bug_1/wait_2",
 	&"bug_1/attack",
-	&"bug_1/eat",
-	&"bug_1/dying"
+	&"bug_1/eat", #hurt
+	&"bug_1/dying",
+	&"bug_1/decay"
 ]
 
 enum LIST { 
@@ -45,7 +46,8 @@ enum LIST {
 	IDLE,
 	ATTACK,
 	HURT,
-	DYING
+	DYING,
+	DECAY
 }
 
 
@@ -65,7 +67,7 @@ func _ready():
 	set_collision_mask_value(1, false) 
 	set_collision_mask_value(2, true)
 
-	animation_player.playback_default_blend_time = 0.7
+	animation_player.playback_default_blend_time = 0.4
 	#animation_player.speed_scale = 1.5
 
 	# This enemy only runs on the server.
@@ -175,6 +177,10 @@ func set_state(new_state: States) -> void:
 	# You can check both the previous and the new state to determine what to do when the state changes. 
 	# This checks the previous state.
 
+	# Never leave Dying unless it's to decay. TODO: No decay state.
+	if previous_state == States.DYING and new_state != States.DECAYING: 
+		return
+
 	# Never leave Decaying.
 	if previous_state == States.DECAYING: 
 		return
@@ -227,19 +233,17 @@ func set_state(new_state: States) -> void:
 		nav.timer_chase_target.stop()
 		nav.timer_navigate.stop()
 		nav.timer_give_up.stop()
-		animation_player.speed_scale = 0.5
 		animation_player.play(ANI[LIST.DYING])
 		# Decay triggered by animation
 
 	if state == States.DECAYING:
+		animation_player.play(ANI[LIST.DECAY])
 		decay()
 		pass
 
 func decay():
-	position = position + Vector3(0.0, -1.0, 0.0)
 	await get_tree().create_timer(10.0).timeout
-	animation_player.stop()
-	set_process(false)
+	set_process(false) # could queue free on animation finishedf
 	await get_tree().process_frame
 	queue_free()
 

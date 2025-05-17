@@ -855,38 +855,6 @@ libraries = {
 &"Global": ExtResource("8_jok0v")
 }
 
-[node name="Weapons_Models2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54919, 0)
-
-[node name="blasterL" type="Node3D" parent="Weapons_Models2"]
-transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, 0.117, 1.16, -0.512)
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models2/blasterL"]
-visible = false
-mesh = ExtResource("9_ygyma")
-
-[node name="smg" type="MeshInstance3D" parent="Weapons_Models2/blasterL"]
-transform = Transform3D(-1.79217e-06, 41, 1.79217e-06, 0, -1.79217e-06, 41, 41, 1.79217e-06, 7.83381e-14, 1.04308e-07, -0.0828908, -0.0425421)
-mesh = ExtResource("5_hpq73")
-
-[node name="blasterN" type="Node3D" parent="Weapons_Models2"]
-transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0.193, 1.255, -0.643)
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Weapons_Models2/blasterN"]
-visible = false
-mesh = SubResource("ArrayMesh_2ccy7")
-
-[node name="awp2" parent="Weapons_Models2/blasterN" instance=ExtResource("5_e4dbp")]
-transform = Transform3D(-7.43094e-08, 0, -1.7, 0, 1.7, 0, 1.7, 0, -7.43094e-08, 0.0747704, -0.123464, -0.120616)
-
-[node name="WeaponsPlayer" type="AnimationPlayer" parent="Weapons_Models2"]
-libraries = {
-&"": SubResource("AnimationLibrary_ys4uk"),
-&"Global": ExtResource("8_jok0v")
-}
-
 [node name="BulletPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.289, -0.342, -0.746)
 gizmo_extents = 0.21

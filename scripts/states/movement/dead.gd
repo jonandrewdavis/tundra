@@ -15,7 +15,7 @@ func enter(_previous: RewindableState, _tick: int):
 		parent.ragdoll_on_client.rpc()
 
 func exit(_previous: RewindableState, _tick: int):
-	parent.global_position = Hub.castle.global_position + Vector3(randi_range(-2, 2), 0.8, randi_range(-2, 2)) * 10
+	parent.global_position = Hub.castle.global_position + Vector3(randi_range(-2, 2), 0.8, randi_range(-2, 2)) * 10 + Vector3(0.0, 0.0, -20.0)
 	parent._tick_interpolator.teleport()
 
 	parent.bones.active = false

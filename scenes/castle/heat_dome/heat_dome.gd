@@ -17,6 +17,7 @@ const spread: int = 100
 @onready var exterior_mesh: SphereMesh = $HeatDomeExterior.mesh
 
 @onready var sync:SceneReplicationConfig = $MultiplayerSynchronizer.replication_config
+@onready var castle: MovingCastle = get_parent()
 
 # TODO: New areas. If hte player is in it, out of it/ hurt. etc. cold
 # TODO: Set visiblity range fade mode & fix the shader to be compatbile.
@@ -36,7 +37,6 @@ func _ready() -> void:
 	# The heat dome is server authoratitive
 	# Use MultiplayerSync to broadcast value changes to clients
 	if not multiplayer.is_server():
-		set_process(false)
 		return
 
 	heat_dome_radius = 20
@@ -49,10 +49,10 @@ func _ready() -> void:
 # 3: FogVolume2: "death fog" on the edges
 
 # TODO: Gradual decay without fuel
-func _process(_delta: float) -> void:
-	
-
-	pass
+func _process(delta: float) -> void:
+	if castle.castle_on:
+		interior.rotate_y(0.08 * delta)
+		exterior.rotate_y(0.08 * delta)
 
 func sync_path(node: Node3D, properties: Array[String]):
 	sync.add_property(str(node.get_path()) + ':' + ":".join(properties)

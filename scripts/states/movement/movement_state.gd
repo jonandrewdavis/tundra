@@ -60,7 +60,7 @@ func stop_player(delta: float):
 	parent.velocity = parent.velocity.move_toward(Vector3(0.0, parent.velocity.y, 0.0), parent.FRICTION * delta)
 
 	var platform_velocity = get_moving_platform_velocity(delta)
-
+ 
 	# https://foxssake.github.io/netfox/netfox/tutorials/rollback-caveats/#characterbody-velocity
 	parent.velocity += platform_velocity
 	parent.velocity *= NetworkTime.physics_factor

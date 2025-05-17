@@ -72,6 +72,7 @@ func pick_patrol_destination():
 		nav_agent.set_target_position(random_point)
 		next_path_pos = nav_agent.get_next_path_position()
 	else:
+		print('PICKED A POINT TOO FAR AWAY! trying again ... ', random_point)
 		pick_patrol_destination()
 		
 func update_navigation_path():

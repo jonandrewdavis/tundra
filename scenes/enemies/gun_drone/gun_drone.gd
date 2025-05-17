@@ -1,14 +1,14 @@
+extends CharacterBody3D
+
 # TODO: Beehave or some other behavioral tree when this state machine gets to be too much
 # TODO: Random pauses between choosing another action? "Global cool down" like
 # TODO: Assure this is completely server authoratative
 # TODO: Perf test navigation agent to assure it doesn't consume to much CPU or cause FPS loss
 
-extends CharacterBody3D
-
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 const FRICTION = 2
-const ROTATION_SPEED = 2.0
-const PROJECTILE_VELOCITY = 40.0
+const ROTATION_SPEED: = 2.0
+const PROJECTILE_VELOCITY: = 40.0
 
 @export_category("Enemy Required Nodes")
 @export var nav_agent: NavigationAgent3D
@@ -16,13 +16,7 @@ const PROJECTILE_VELOCITY = 40.0
 @export var gun_origin: Marker3D
 @export var health_system: HealthSystem
 @export var nav: NavigationSystem
-@export var rigid_body_projectile: PackedScene
-
-# TODO: Weak points and eyeline
-# TODO: Give up chase 
-
-#@export var hit_box: Area3D
-#@export var eyeline: Area3D 
+@export var search_box: Area3D
 
 @export_category("Enemy Stats")
 @export var max_speed = 5.0
@@ -30,7 +24,6 @@ const PROJECTILE_VELOCITY = 40.0
 @export var attack_value: int = 10
 
 var timer_attack = Timer.new()
-
 var target = null
 
 # This enum lists all the possible states the character can be in.
@@ -42,30 +35,26 @@ var state: States = States.IDLE
 func _ready(): 
 	# TODO: enemies group as well.
 	add_to_group("targets")
-	set_collision_layer_value(1, false) 
-	set_collision_layer_value(2, true)
+
+	animation_player.playback_default_blend_time = 0.5
+	animation_player.speed_scale = 1.5
 
 	# This enemy only runs on the server.
 	# Only visuals and some rpcs are sync'd out.
 	if not multiplayer.is_server():
+		# CAUTION: Trying to disable process on clients can cause MultiplayerSyncronizer issues.
+
 		set_physics_process(false)
 		set_process(false)
+
 		# CRITICAL: Having this big search area enabled causes
 		# HUGE frame rate issues for some reason
-		$SearchBox/CollisionShape3D.disabled = true
-		# CAUTION: Trying to disable process on clients can cause MultiplayerSyncronizer issues.
-		#set_process(false)
+		search_box.get_node("CollisionShape3D").disabled = true
 
 		return # Early return, no other code runs
 
-	nav_agent.path_height_offset = randf_range(-4.5, -10.5)
-	nav_agent.target_desired_distance = randf_range(22.0, 25.0)
-	nav_agent.avoidance_enabled = true
-
-	# Connect & create
+	# TODO: Probably best to just use set_state enter/exit rather than this?
 	animation_player.animation_finished.connect(on_animation_finished)
-
-	nav_agent.navigation_finished.connect(on_navigation_finished)
 	
 	# Health
 	health_system.hurt.connect(on_hurt)
@@ -73,9 +62,18 @@ func _ready():
 	
 	# Nav
 	nav.attack_signal.connect(attack)
+	nav_agent.navigation_finished.connect(on_navigation_finished)
+	#nav_agent.path_changed.connect(on_path_changed)
+
+	#add_child(timer_attack_cooldown)
+	#timer_attack_cooldown.timeout.connect(attack)
+	#timer_attack_cooldown.wait_time = randf_range(4.0, 7.0)
+	#timer_attack_cooldown.one_shot = false
+	#timer_attack_cooldown.start()
 
 	await get_tree().create_timer(0.2).timeout
 	set_state(States.SEARCHING)
+
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -105,6 +103,7 @@ func move_and_look(delta):
 	else:
 		new_look_at = nav.next_path_pos
 
+
 	# Finally fix "Target and up vectors are colinear" by
 	# doing the same checks as the source code (used C++ source!)
 	# https://github.com/godotengine/godot/issues/79146
@@ -118,6 +117,7 @@ func move_and_look(delta):
 	look_at(new_look_at)
 	var new = transform.basis.orthonormalized()
 	transform.basis = lerp(old, new, ROTATION_SPEED * delta).orthonormalized()
+
 
 func set_state(new_state: States) -> void:
 	var previous_state := state
@@ -178,12 +178,6 @@ func on_animation_finished(animation_name):
 		set_state(States.CHASING)
 
 
-# TODO: Allow castle hits.
-# WARNING: Do not type this as "CharacterBody3D". It must be more generic or it'll error.
-
-
-# TODO: Use health system? 
-# TODO: could call this "take_hit" or "get_hit" in a refactor
 func on_hurt():
 	set_state(States.HURTING)
 	# If there's no target, or it's attacking a castle
@@ -209,7 +203,6 @@ func attack():
 	if can_attack() == false:
 		return
 	
-	#var _proj = rigid_body_projectile.instantiate()
 	var _origin_point = gun_origin.global_position
 	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
 
@@ -225,12 +218,6 @@ func attack():
 	
 	Hub.projectile_system.spawner.spawn(projectile_data)
 
-# TODO: Hit more than just players, damage to buildings, etc.
-func _on_player_hit(body, _projectile):
-	if body.is_in_group('players'):
-		body.health_system.damage(attack_value)
-
-	_projectile.queue_free()
 	
 func on_navigation_finished():
 	if state == States.CHASING:

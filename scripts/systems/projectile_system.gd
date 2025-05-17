@@ -32,6 +32,7 @@ var display_debug_decal = true
 
 signal hit_signal
 
+
 func _ready():
 	Hub.projectile_system = self
 
@@ -49,11 +50,11 @@ func _ready():
 	#'damage': damage,
 	#'source': source
 #}
+
 func handle_projectile_spawn(data: Variant):
 	# TODO: Accept a different projectile type
 	var _new_bullet: RigidBody3D 
-
-	
+	print(data.projectile_name)
 	match data.projectile_name:
 		'PinkBullet':
 			_new_bullet = pink_bullet.instantiate()
@@ -65,8 +66,8 @@ func handle_projectile_spawn(data: Variant):
 			_new_bullet = rifle_round.instantiate()
 
 	_new_bullet.position = data.origin_point
-	_new_bullet.look_at_from_position(data.origin_point, data.target_point, Vector3.UP)
-	
+
+	_new_bullet.look_at_from_position(data.origin_point, data.target_point, Vector3.UP)	
 	var _direction = (data.target_point - data.origin_point).normalized()
 	_new_bullet.set_linear_velocity(_direction * data.projectile_velocity)
 

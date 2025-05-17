@@ -652,6 +652,7 @@ Button/constants/align_to_largest_stylebox = 0
 Button/constants/h_separation = 4
 Button/constants/icon_max_width = 0
 Button/constants/outline_size = 1
+Button/fonts/font = ExtResource("1_o4n8r")
 Button/styles/disabled = SubResource("StyleBoxFlat_to4s0")
 Button/styles/focus = SubResource("StyleBoxFlat_loh2n")
 Button/styles/hover = SubResource("StyleBoxFlat_2kpdk")

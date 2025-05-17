@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ngb8j315v4yc"
 path.s3tc="res://.godot/imported/arbol6_Rama2.png-bfa03c25210988d7d7aac887cec7602e.s3tc.ctex"
+path.etc2="res://.godot/imported/arbol6_Rama2.png-bfa03c25210988d7d7aac887cec7602e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/nature/trees/arbol6_Rama2.png"
-dest_files=["res://.godot/imported/arbol6_Rama2.png-bfa03c25210988d7d7aac887cec7602e.s3tc.ctex"]
+dest_files=["res://.godot/imported/arbol6_Rama2.png-bfa03c25210988d7d7aac887cec7602e.s3tc.ctex", "res://.godot/imported/arbol6_Rama2.png-bfa03c25210988d7d7aac887cec7602e.etc2.ctex"]
 
 [params]
 

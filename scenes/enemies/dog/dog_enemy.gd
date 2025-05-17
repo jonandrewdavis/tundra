@@ -72,7 +72,6 @@ func _ready():
 	# Connect & create
 	attack_box.body_entered.connect(on_attack_box_entered)
 	
-	
 	# TODO: Probably best to just use set_state enter/exit rather than this?
 	animation_player.animation_finished.connect(on_animation_finished)
 	
@@ -84,7 +83,6 @@ func _ready():
 	nav.attack_signal.connect(attack)
 	nav_agent.navigation_finished.connect(on_navigation_finished)
 	nav_agent.path_changed.connect(on_path_changed)
-
 
 	add_child(timer_attack_cooldown)
 	timer_attack_cooldown.timeout.connect(attack)
@@ -164,6 +162,14 @@ func set_state(new_state: States) -> void:
 	# Never leave Decaying.
 	if previous_state == States.DECAYING: 
 		return
+		
+	# Never leave dying unless it's to decay.
+	if previous_state == States.DYING and new_state != States.DECAYING:
+		return
+		
+	if health_system.health <= 0 and new_state != States.DYING: 
+		set_state(States.DYING)
+		return 
 
 	if previous_state == States.ATTACKING && new_state == States.HURTING:
 		animation_player.play('dog_animations_1/hurt')

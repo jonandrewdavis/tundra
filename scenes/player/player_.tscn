@@ -59,13 +59,10 @@ player_ui = NodePath("PlayerUi")
 script = ExtResource("2_ktqdq")
 root = NodePath("..")
 enable_prediction = true
-state_properties = Array[String]([":transform", "master:transform", "RewindableStateMachine:state", ":velocity"])
+state_properties = Array[String]([":velocity", ":transform", "master:transform", "RewindableStateMachine:state"])
 input_properties = Array[String](["PlayerInput:input_dir", "PlayerInput:jump_input", "PlayerInput:run_input", "CameraInput:camera_basis", "CameraInput:camera_look", "PlayerInput:shoot_input", "PlayerInput:aim_input"])
 enable_input_broadcast = false
 metadata/_custom_type_script = "uid://d350u8evihs1u"
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_nrabn")
 
 [node name="RewindableStateMachine" type="Node" parent="."]
 script = ExtResource("3_lo6j0")
@@ -107,7 +104,6 @@ parent = NodePath("../..")
 
 [node name="Ragdoll" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("10_gjnd3")
-animation_name = "rifle aiming idle"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
@@ -115,7 +111,6 @@ metadata/_custom_type_script = "uid://c1xw0v7hky5kl"
 
 [node name="Dead" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("13_2hvjq")
-animation_name = "rifle aiming idle"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
@@ -133,6 +128,9 @@ script = ExtResource("4_a47yd")
 root = NodePath("..")
 properties = Array[String]([":velocity", ":transform", "master:transform"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_nrabn")
 
 [node name="HealthSystem" parent="." instance=ExtResource("11_2hvjq")]
 regen_enabled = true
@@ -172,5 +170,22 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.4108
 player_hud = NodePath("../../../../PlayerUi")
 player = NodePath("../../../..")
 
+[node name="blasterL" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/Weapons_Models" index="0"]
+transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, 0.117, 1.16, -0.512)
+
+[node name="blasterN" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/Weapons_Models" index="1"]
+transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0.193, 1.255, -0.643)
+
+[node name="blasterI" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/HIDDEN_WEAPONS_MODELS" index="0"]
+transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, -0.148, 1.379, -0.398)
+
+[node name="blasterP2" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/HIDDEN_WEAPONS_MODELS" index="2"]
+transform = Transform3D(-0.97237, -0.233408, -0.00407487, 0, 0.0174555, -0.999848, 0.233443, -0.972222, -0.0169732, 0.32, 1.014, -0.35)
+
+[node name="blasterQ2" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/HIDDEN_WEAPONS_MODELS" index="3"]
+transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0, 0, 0)
+
 [node name="RootMotionView" type="RootMotionView" parent="."]
 animation_path = NodePath("../master/AnimationPlayer")
+
+[editable path="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager"]

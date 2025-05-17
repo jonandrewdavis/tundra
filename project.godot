@@ -32,7 +32,6 @@ Nodash="*res://scripts/nodash.gd"
 
 [display]
 
-window/size/mode=2
 window/size/resizable=false
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
@@ -181,4 +180,5 @@ common/physics_jitter_fix=0.0
 
 [rendering]
 
+textures/vram_compression/import_etc2_astc=true
 occlusion_culling/use_occlusion_culling=true

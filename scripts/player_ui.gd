@@ -91,6 +91,7 @@ func handle_hit_signal(source):
 
 @rpc
 func show_hit_signal():
+	%HitSound.play()
 	hit_sight.set_visible(true)
 	hit_sight_timer.start()	
 

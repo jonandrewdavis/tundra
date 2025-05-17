@@ -3,6 +3,8 @@ extends Node
 
 # The bulk of this script is for the authority (host/server).
 
+# 44.211.220.121
+
 @export var _player_spawn_point: Node3D
 
 var _multiplayer_scene = preload("res://scenes/player/player_.tscn")
@@ -59,7 +61,7 @@ func _remove_player_from_game(network_id: int):
 # Setup initial or reload saved player properties
 func _ready_player(player: Player):
 	if is_multiplayer_authority():
-		player.position = Vector3(randi_range(-2, 2), 1, randi_range(-2, 2))
+		player.position = Hub.castle.global_position + Vector3(randi_range(-2, 2), 0.8, randi_range(-2, 2)) * 10 + Vector3(0.0, 0.0, -30.0)
 
 func _peer_connected(network_id: int):
 	print("Peer connected: %s" % network_id)

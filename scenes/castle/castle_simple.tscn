@@ -194,7 +194,7 @@ mesh = SubResource("ArrayMesh_naar7")
 [node name="StateSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("8_1abs5")
 root = NodePath("..")
-properties = Array[String]([":transform"])
+properties = Array[String]([":castle_on", ":castle_speed"])
 metadata/_custom_type_script = "uid://3lbngqcexe0l"
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]

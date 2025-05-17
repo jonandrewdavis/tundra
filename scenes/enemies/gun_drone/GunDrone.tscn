@@ -1,10 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://bgpb1jrk0htrx"]
+[gd_scene load_steps=9 format=3 uid="uid://bgpb1jrk0htrx"]
 
 [ext_resource type="Script" uid="uid://qn3fulhfygss" path="res://scenes/enemies/gun_drone/gun_drone.gd" id="1_p3ixi"]
-[ext_resource type="PackedScene" uid="uid://gk0m2leyfs75" path="res://weapon_manager/Spawnable_Objects/bullet_scenes/pink_bullet.tscn" id="2_2nx2y"]
 [ext_resource type="PackedScene" uid="uid://pemaubyxeipn" path="res://scenes/enemies/gun_drone/bot_drone_winter.glb" id="2_gsfr6"]
 [ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="3_u268q"]
 [ext_resource type="Script" uid="uid://dgmmwgxl0beil" path="res://scripts/systems/navigation_system.gd" id="4_1w0da"]
+[ext_resource type="AnimationLibrary" uid="uid://djoscm07sb54o" path="res://scenes/enemies/gun_drone/gun_drone_custom.res" id="5_1w0da"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gsfr6"]
 properties/0/path = NodePath(".:position")
@@ -13,113 +13,25 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:speed")
+properties/2/path = NodePath("AnimationPlayer:current_animation")
 properties/2/spawn = true
-properties/2/replication_mode = 2
-properties/3/path = NodePath("AnimationPlayer:current_animation")
-properties/3/spawn = true
-properties/3/replication_mode = 1
+properties/2/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3ixi"]
 radius = 0.6
 height = 3.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_gsfr6"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_1w0da"]
 size = Vector3(30, 10, 30)
 
-[sub_resource type="Animation" id="Animation_2nx2y"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Mesh:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Mesh:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_1dbxs"]
-resource_name = "dying"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Mesh:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.566667, 1.06667, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 1.5708, 1.5708), Vector3(0, 3.14159, 3.14159), Vector3(0, 6.28319, 6.28319)]
-}
-
-[sub_resource type="Animation" id="Animation_gsfr6"]
-resource_name = "fly"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Mesh:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.966667, 2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.3, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_u268q"]
-resource_name = "hurt"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Mesh:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0001, 0.0002, 0.0003, 0.101509, 0.217394, 0.3364, 0.39961),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0.191986), Vector3(0, 0, -0.270526), Vector3(0, 0, 0.0680678), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_2nx2y"]
-_data = {
-&"RESET": SubResource("Animation_2nx2y"),
-&"dying": SubResource("Animation_1dbxs"),
-&"fly": SubResource("Animation_gsfr6"),
-&"hurt": SubResource("Animation_u268q")
-}
-
-[node name="GunDrone" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "animation_player", "gun_origin", "health_system", "nav")]
+[node name="GunDrone" type="CharacterBody3D" node_paths=PackedStringArray("nav_agent", "animation_player", "gun_origin", "health_system", "nav", "search_box")]
 script = ExtResource("1_p3ixi")
 nav_agent = NodePath("NavigationAgent3D")
 animation_player = NodePath("AnimationPlayer")
 gun_origin = NodePath("GunOrigin")
 health_system = NodePath("HealthSystem")
 nav = NodePath("NavigationSystem")
-rigid_body_projectile = ExtResource("2_2nx2y")
+search_box = NodePath("SearchBox")
 
 [node name="HealthSystem" parent="." instance=ExtResource("3_u268q")]
 max_health = 80
@@ -156,11 +68,11 @@ transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SearchBox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42, -3, 4.42)
-shape = SubResource("BoxShape3D_gsfr6")
+shape = SubResource("BoxShape3D_1w0da")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_2nx2y")
+&"": ExtResource("5_1w0da")
 }
 
 [node name="GunOrigin" type="Marker3D" parent="."]

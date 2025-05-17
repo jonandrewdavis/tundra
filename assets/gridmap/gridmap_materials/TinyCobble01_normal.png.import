@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://drmi05od00ibi"
 path.s3tc="res://.godot/imported/TinyCobble01_normal.png-a875c09f9ad036b9037cc74ffb5930bc.s3tc.ctex"
+path.etc2="res://.godot/imported/TinyCobble01_normal.png-a875c09f9ad036b9037cc74ffb5930bc.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/gridmap/gridmap_materials/TinyCobble01_normal.png"
-dest_files=["res://.godot/imported/TinyCobble01_normal.png-a875c09f9ad036b9037cc74ffb5930bc.s3tc.ctex"]
+dest_files=["res://.godot/imported/TinyCobble01_normal.png-a875c09f9ad036b9037cc74ffb5930bc.s3tc.ctex", "res://.godot/imported/TinyCobble01_normal.png-a875c09f9ad036b9037cc74ffb5930bc.etc2.ctex"]
 
 [params]
 

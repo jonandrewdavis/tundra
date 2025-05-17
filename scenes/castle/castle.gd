@@ -1,4 +1,7 @@
 extends AnimatableBody3D
+
+
+
 class_name MovingCastle
 
 @export var heat_dome: HeatDome
@@ -41,7 +44,7 @@ func _ready():
 	# Server only?
 	NetworkTime.before_tick.connect(_save_previous_position)
 	NetworkTime.on_tick.connect(_apply_tick)
-	NetworkRollback.on_record_tick.connect(_calc_velocity)
+	NetworkTime.on_tick.connect(_calc_velocity)
 
 	if multiplayer.is_server():
 		# Castle Control Signals (called from Hub.castle)
@@ -66,7 +69,7 @@ func _save_previous_position(_delta: float, _tick: int):
 func _apply_tick(_delta: float, _tick: int):
 	translate(Vector3(0.0, 0.0, speed  * _delta))
 
-func _calc_velocity(_tick: int):
+func _calc_velocity(_delta, _tick: int):
 	# CRITICAL: Figure out how keep a cache of velocities. It should remain the same
 	# if 0. And not double.
 	
@@ -81,8 +84,23 @@ func _on_change_castle_speed():
 	else:
 		castle_on = true
 		speed = -1.2
+	
+	rpc_down.rpc(!castle_on)
 
+@rpc("authority")
+func rpc_down(on_off):
+	if on_off:	
+		castle_on = false
+		speed = 0.0
+	else:
+		on_off = true
+		speed = -1.2
+		
 func consume_fuel():
+	if Hub.player_container.get_child_count() == 0:
+		castle_on = false
+		speed = 0.0
+	
 	var next_fuel
 	if castle_on:
 		next_fuel = fuel - 2

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c27t400jfimnq"
 path.s3tc="res://.godot/imported/Snow008A_1K-JPG_AmbientOcclusion.jpg-5d35550090b673717dc4c61b72f2f0a9.s3tc.ctex"
+path.etc2="res://.godot/imported/Snow008A_1K-JPG_AmbientOcclusion.jpg-5d35550090b673717dc4c61b72f2f0a9.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/ambient/Snow008A_1K-JPG/Snow008A_1K-JPG_AmbientOcclusion.jpg"
-dest_files=["res://.godot/imported/Snow008A_1K-JPG_AmbientOcclusion.jpg-5d35550090b673717dc4c61b72f2f0a9.s3tc.ctex"]
+dest_files=["res://.godot/imported/Snow008A_1K-JPG_AmbientOcclusion.jpg-5d35550090b673717dc4c61b72f2f0a9.s3tc.ctex", "res://.godot/imported/Snow008A_1K-JPG_AmbientOcclusion.jpg-5d35550090b673717dc4c61b72f2f0a9.etc2.ctex"]
 
 [params]
 

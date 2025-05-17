@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c254rkltyglfb"
 path.s3tc="res://.godot/imported/text_1_baseColor.png-b8e5440e12caef7115c69770e686e1e6.s3tc.ctex"
+path.etc2="res://.godot/imported/text_1_baseColor.png-b8e5440e12caef7115c69770e686e1e6.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/enemies/bug_1/bug_character_1/textures/text_1_baseColor.png"
-dest_files=["res://.godot/imported/text_1_baseColor.png-b8e5440e12caef7115c69770e686e1e6.s3tc.ctex"]
+dest_files=["res://.godot/imported/text_1_baseColor.png-b8e5440e12caef7115c69770e686e1e6.s3tc.ctex", "res://.godot/imported/text_1_baseColor.png-b8e5440e12caef7115c69770e686e1e6.etc2.ctex"]
 
 [params]
 

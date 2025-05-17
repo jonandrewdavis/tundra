@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://171wcdkikidu"
 path.s3tc="res://.godot/imported/bot_drone_winter_0.png-9aaa4e931c4c0a184ebaa0bf752f5a13.s3tc.ctex"
+path.etc2="res://.godot/imported/bot_drone_winter_0.png-9aaa4e931c4c0a184ebaa0bf752f5a13.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://scenes/enemies/gun_drone/bot_drone_winter_0.png"
-dest_files=["res://.godot/imported/bot_drone_winter_0.png-9aaa4e931c4c0a184ebaa0bf752f5a13.s3tc.ctex"]
+dest_files=["res://.godot/imported/bot_drone_winter_0.png-9aaa4e931c4c0a184ebaa0bf752f5a13.s3tc.ctex", "res://.godot/imported/bot_drone_winter_0.png-9aaa4e931c4c0a184ebaa0bf752f5a13.etc2.ctex"]
 
 [params]
 
