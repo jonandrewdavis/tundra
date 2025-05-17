@@ -53,6 +53,11 @@ func _ready():
 
 		return # Early return, no other code runs
 
+	# Bots should fly.
+	nav_agent.path_height_offset = randf_range(-4.5, -10.5)
+	nav_agent.target_desired_distance = randf_range(20.0, 25.0)
+	nav_agent.avoidance_enabled = true
+
 	# TODO: Probably best to just use set_state enter/exit rather than this?
 	animation_player.animation_finished.connect(on_animation_finished)
 	

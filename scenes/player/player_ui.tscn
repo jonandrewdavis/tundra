@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=37 format=3 uid="uid://btdemgg0e0b4o"]
 
 [ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/player_ui.gd" id="1_fatww"]
 [ext_resource type="Texture2D" uid="uid://clx8vvaklih15" path="res://scenes/player/player_assets/crosshair046.png" id="2_by614"]
@@ -9,6 +9,11 @@
 [ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="5_by614"]
 [ext_resource type="StyleBox" uid="uid://hwskn1lu87b" path="res://scenes/player/settings_menu/temperature_style_box.tres" id="5_d61dg"]
 [ext_resource type="PackedScene" uid="uid://s5lur3jc6w4b" path="res://scenes/player/settings_menu/settings_menu.tscn" id="6_en3kk"]
+[ext_resource type="AudioStream" uid="uid://1q0448323ui4" path="res://assets/sound/ambience-wind-blowing-through-trees-01-186986.mp3" id="8_5ypad"]
+[ext_resource type="AudioStream" uid="uid://cgdh3ouygw0n5" path="res://assets/sound/fist-punch-or-kick.mp3" id="8_fvhh2"]
+[ext_resource type="AudioStream" uid="uid://b6e8xn30garj8" path="res://assets/sound/sniper_shot_and_reload.mp3" id="10_4qoov"]
+[ext_resource type="AudioStream" uid="uid://bduucs8w8a61i" path="res://assets/sound/dance_kick_shot_short.mp3" id="11_tpfsx"]
+[ext_resource type="AudioStream" uid="uid://bv62q0plyyt2" path="res://assets/sound/reload.mp3" id="12_at7sd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyawr"]
 bg_color = Color(1, 1, 1, 1)
@@ -234,6 +239,18 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l1guf"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101961, 0.101961, 0.101961, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [node name="PlayerUi" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "health_label", "temp_bar", "temp_label")]
 script = ExtResource("1_fatww")
 health_bar = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthBar")
@@ -342,8 +359,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Topleft" type="PanelContainer" parent="."]
-offset_right = 200.0
-offset_bottom = 150.0
+offset_right = 225.0
+offset_bottom = 200.0
 theme = ExtResource("4_nlx67")
 theme_override_styles/panel = SubResource("StyleBoxFlat_tpfsx")
 
@@ -354,27 +371,29 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Topleft/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Topleft/MarginContainer"]
+layout_mode = 2
+
+[node name="VerticalMeters" type="VBoxContainer" parent="Topleft/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 2
 
-[node name="CastleStatus" type="HBoxContainer" parent="Topleft/MarginContainer/VBoxContainer"]
+[node name="CastleStatus" type="HBoxContainer" parent="Topleft/MarginContainer/HBoxContainer/VerticalMeters"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CastleHealthBar" type="ProgressBar" parent="Topleft/MarginContainer/VBoxContainer/CastleStatus"]
+[node name="CastleHealthBar" type="ProgressBar" parent="Topleft/MarginContainer/HBoxContainer/VerticalMeters/CastleStatus"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_fvhh2")
 theme_override_styles/fill = SubResource("StyleBoxFlat_5ypad")
 max_value = 2000.0
-value = 1750.0
 fill_mode = 3
 show_percentage = false
 
-[node name="CastleFuelBar" type="ProgressBar" parent="Topleft/MarginContainer/VBoxContainer/CastleStatus"]
+[node name="CastleFuelBar" type="ProgressBar" parent="Topleft/MarginContainer/HBoxContainer/VerticalMeters/CastleStatus"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -385,16 +404,64 @@ value = 500.0
 fill_mode = 3
 show_percentage = false
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Topleft/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Topleft/MarginContainer/HBoxContainer/VerticalMeters"]
 layout_mode = 2
 
-[node name="H" type="Label" parent="Topleft/MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="H" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VerticalMeters/HBoxContainer3"]
 layout_mode = 2
 text = "H"
 
-[node name="F" type="Label" parent="Topleft/MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="F" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VerticalMeters/HBoxContainer3"]
 layout_mode = 2
 text = "F"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Topleft/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="PlayerCountLabels" type="HBoxContainer" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer/PlayerCountLabels"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Reserves:   "
+
+[node name="PlayerCount" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer/PlayerCountLabels"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "0"
+
+[node name="PlayerCount2" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer/PlayerCountLabels"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "/"
+
+[node name="PlayerCountTotal" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer/PlayerCountLabels"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "10"
+
+[node name="StatusLabels" type="HBoxContainer" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Label" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer/StatusLabels"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Data Frames:  "
+
+[node name="DataFrameCount" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer/StatusLabels"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "0"
+
+[node name="DataFrameTotal" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer/StatusLabels"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "/ 5"
 
 [node name="BottomLeft" type="PanelContainer" parent="."]
 clip_contents = true
@@ -556,12 +623,57 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.505882)
 theme_override_constants/outline_size = 10
 horizontal_alignment = 1
 
-[node name="HitSound" type="AudioStreamPlayer3D" parent="."]
+[node name="CenterWide" type="PanelContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 200.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l1guf")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterWide"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="AnnounceLabel" type="Label" parent="CenterWide/MarginContainer"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50861, 0)
+visible = false
+layout_mode = 2
+theme = ExtResource("4_nlx67")
+theme_override_font_sizes/font_size = 48
+text = "CASTLE REPLENISHED"
+horizontal_alignment = 1
+
+[node name="WindSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_5ypad")
+autoplay = true
+
+[node name="MeleeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_fvhh2")
+pitch_scale = 0.8
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 stream = ExtResource("5_by614")
 volume_db = -10.0
 pitch_scale = 1.2
+max_polyphony = 5
 
 [node name="SettingsMenu" parent="." instance=ExtResource("6_en3kk")]
 visible = false
+
+[node name="FireSniper" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_4qoov")
+volume_db = -1.0
+max_polyphony = 5
+
+[node name="FireRifle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_tpfsx")
+volume_db = -2.0
+pitch_scale = 1.3
+max_polyphony = 5
+
+[node name="ReloadSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_at7sd")

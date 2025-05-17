@@ -19,8 +19,11 @@ class_name PlayerUI
 var player_health_system: HealthSystem
 var player_heat_system: HeatSystem
 
+var objectives_collected: int = 0
+
 var local_health: int = 100
 var local_max_health: int = 100
+var local_weapon_name = ''
 
 # TODO: Is this the best place for these?
 # TODO: Weapon stack, current weapon, current weapon image
@@ -42,10 +45,13 @@ func _ready():
 	if multiplayer.is_server():
 		Hub.projectile_system.hit_signal.connect(handle_hit_signal)
 
-		weapons_manager.update_ammo_signal.connect(func(curr, res): update_ammo.rpc_id(peer_id, curr, res))
+		weapons_manager.update_ammo_signal.connect(func(curr, res, is_shooting): update_ammo.rpc_id(peer_id, curr, res, is_shooting))
 		weapons_manager.update_weapon_signal.connect(func(text): update_weapon.rpc_id(peer_id, text))
 		weapons_manager.update_ammo_prev_signal.connect(func(curr, res): update_ammo_prev.rpc_id(peer_id, curr, res))
 		weapons_manager.update_weapon_prev_signal.connect(func(text): update_weapon_prev.rpc_id(peer_id, text))
+		weapons_manager.reload_signal.connect(func(): on_reload_signal.rpc_id(peer_id))
+		weapons_manager.melee_signal.connect(func(): on_melee_signal.rpc_id(peer_id))
+
 
 		player_health_system = get_parent().health_system
 		# Health
@@ -62,7 +68,9 @@ func _ready():
 		# CASTLE
 		Hub.castle.fuel_updated.connect(func (new_fuel): on_update_fuel.rpc_id(peer_id, new_fuel))
 		Hub.castle.health_system.health_updated.connect(func (new_health): on_update_castle_health.rpc_id(peer_id, new_health))
-		
+
+		Hub.castle.castle_deposit_box.collect_objective.connect(func(): on_objective_collected.rpc())
+
 	else:
 		# Client code
 		DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
@@ -73,14 +81,16 @@ func _ready():
 		hit_sight_timer.one_shot = true
 		hit_sight_timer.timeout.connect(_on_hit_sight_timer_timeout)
 		
-		%TempBar.max_value = 76.0 + 15.0
-		%TempBar.min_value = -40.0 - 15.0
+		%TempBar.max_value = 76.0 + 8.0
+		%TempBar.min_value = -40.0 - 8.0
 		%TempBar.modulate.a = 1.0
 		
 		add_child(temp_bar_flashing_timer)
 		temp_bar_flashing_timer.wait_time = 0.3
 		temp_bar_flashing_timer.one_shot = false
 		temp_bar_flashing_timer.timeout.connect(on_temp_flash_timeout)
+
+
 
 func _process(_delta: float) -> void:
 	_show_snow_shader()
@@ -110,13 +120,20 @@ func update_max_health(new_max_health):
 	local_max_health = new_max_health
 	health_bar.max_value = new_max_health
 
+# TODO: Enums, hook this up differently... in werapons manager
 @rpc
-func update_ammo(current_ammo: int, reserve_ammo: int):
+func update_ammo(current_ammo: int, reserve_ammo: int, is_shooting: bool):
 	%CurrentAmmo.set_text(str(current_ammo)+" / "+str(reserve_ammo))
+	if is_shooting: 
+		if local_weapon_name == 'Snipe-R': 
+			$FireSniper.play()
+		else:
+			$FireRifle.play()
 
 @rpc
 func update_weapon(weapon_name: String):
 	%CurrentWeaponLabel.set_text(weapon_name)
+	local_weapon_name = weapon_name
 
 @rpc
 func update_weapon_prev(weapon_name: String):
@@ -199,3 +216,26 @@ func on_update_fuel(new_fuel):
 @rpc
 func on_update_castle_health(new_health):
 	%CastleHealthBar.value = new_health
+
+@rpc
+func on_reload_signal():
+	$ReloadSound.play()
+
+@rpc
+func on_melee_signal():
+	$MeleeSound.play()
+
+
+
+@rpc('call_local')
+func on_objective_collected():
+	objectives_collected = objectives_collected + 1
+	%DataFrameCount.text = str(objectives_collected)
+	if objectives_collected == 5:
+		Hub.castle.gain_fuel(1000)
+		Hub.castle.health_system.heal(2000)
+		%AnnounceLabel.visible = true
+		await get_tree().create_timer(5).timeout
+		%AnnounceLabel.visible = false
+		objectives_collected = 0
+		%DataFrameCount.text = str(objectives_collected)

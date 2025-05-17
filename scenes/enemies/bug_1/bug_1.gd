@@ -214,8 +214,8 @@ func set_state(new_state: States) -> void:
 	if state == States.ATTACKING:
 		animation_player.play(ANI[LIST.ATTACK])
 		attack_box.set_deferred('monitoring', true)
-	else:
-		attack_box.set_deferred('monitoring', false)
+	#else:
+		#attack_box.set_deferred('monitoring', false)
 	
 	if state == States.HURTING:
 		if health_system.health == 0:
@@ -310,7 +310,7 @@ func on_path_changed():
 		animation_player.play(ANI[LIST.WALK])
 
 func on_attack_box_entered(body):
-	if body.is_in_group('players'):
+	if body.is_in_group('players') or body.is_in_group('player_owned'):
 		var damage_successful = body.health_system.damage(attack_value, 0)
 		if damage_successful && attack_box:
 			attack_box.set_deferred('monitoring', false)

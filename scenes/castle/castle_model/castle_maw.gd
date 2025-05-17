@@ -25,11 +25,13 @@ func interpolate_up(weight):
 
 func _on_open_maw():
 	if open == false:
+		play_open_sound.rpc()
 		open = true
 		open_maw_button.label = ''
-		create_tween().tween_method(interpolate_down, 0.0, 1.0, 3.5).set_trans(Tween.TRANS_EXPO)
+		create_tween().tween_method(interpolate_down, 0.0, 1.0, 4.0).set_trans(Tween.TRANS_EXPO)
 		await get_tree().create_timer(7.0).timeout
-		create_tween().tween_method(interpolate_up, 0.0, 1.0, 3.5).set_trans(Tween.TRANS_EXPO)
+		create_tween().tween_method(interpolate_up, 0.0, 1.0, 4.0).set_trans(Tween.TRANS_EXPO)
+		play_open_sound.rpc()
 		await get_tree().create_timer(3.0).timeout
 		open = false
 		open_maw_button.label = 'Open Gate'
@@ -40,3 +42,7 @@ func _on_detect_food(body):
 		castle.gain_fuel(30)
 		body.set_process(false)
 		body.queue_free()
+		
+@rpc
+func play_open_sound():
+	$MetalDoorOpen.play()

@@ -48,16 +48,17 @@ func _ready() -> void:
 
 
 func damage(value: int, source: int = 0) -> bool:
+
 	# Don't allow negative values when damaging
 	var next_health = health - abs(value)
-	
+
 	if allow_damage_from_source(source) == false:
 		return false
 	
 	# Do not allow damage when dead.
 	if health == 0:
 		return false
-
+	
 	# Do not allow overkill. Just die.
 	# TODO: Clamp is easier right? Might work here
 	if next_health <= 0:
@@ -99,13 +100,17 @@ func allow_damage_from_source(source):
 		
 	# Player rules
 	if parent.is_in_group("players"):
+		var player_parent: Player = parent
 		# PVP is off
-		if source != 0 and parent.pvp == false:
+		if source != 0 and player_parent.pvp == false:
 			return false
 
 		# PVP is on
-		elif source != 0 and parent.pvp == true:
-			return true
+		elif source != 0 and player_parent.pvp == true:
+			# Do not allow self-damage
+			if source == player_parent.peer_id:
+				return false
+			# else, falls down to true, does damage.
 		
 	return true
 

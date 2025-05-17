@@ -74,7 +74,7 @@ func _enter_tree():
 # TODO: abstract this so we can just like, give some nodes
 func _ready():
 	add_to_group('players')
-	#peer_id = str(name).to_int()
+	peer_id = str(name).to_int()
 	
 	# TODO: Hands.
 	look_at_chest.target_node = look_at_target.get_path()
@@ -94,13 +94,14 @@ func _ready():
 	rollback_synchronizer.process_settings()
 
 	# MultiplayerSyncronizer properties
-	Nodash.sync_property(sync, weapon_pivot, ['rotation'], false)
+
 	Nodash.warn_missing(_animation_player, '_animation_player')
 	Nodash.sync_property(sync, _animation_player, ['active'])
 	Nodash.sync_property(sync, _animation_player, ['current_animation'])
 	Nodash.sync_property(sync, _animation_player, ['speed_scale'], false)
 	Nodash.sync_property(sync, bones, ['active'])
 	Nodash.sync_property(sync, self, ['pvp'])
+	#Nodash.sync_property(sync, weapon_pivot, ['rotation'], false)
 	
 	_animation_player.playback_default_blend_time = 0.3
 	# NOTE: Might not be necessary if fully server authoratitve.
@@ -137,14 +138,14 @@ func _ready():
 	weapons_manager.player_input = _player_input
 
 func _exit_tree() -> void:
+	set_process(false)
 	if not multiplayer.is_server():
 		Nodash.sync_remove_all(sync)
 
 # CRITICAL: Process is turned off for clients.
 func _process(_delta: float) -> void:
-	weapon_vertical_tilt()
+	#weapon_vertical_tilt()
 	on_animation_check()
-	
 
 # NOTE: The way this works is:
 # - Process runs in `player_input.gd` 
@@ -179,10 +180,9 @@ func process_player_input(input_string: StringName):
 		"DEBUG_B":
 			Hub.enemy_system.spawn_bot_1.emit()
 		"DEBUG_0":
-			Hub.enemy_system.spawn_bug_1.emit()
+			Hub.enemy_system.spawn_drone.emit()
 		"DEBUG_K":
 			Hub.enemy_system.debug_kill_all.emit()
-
 
 func _rollback_tick(_delta, _tick, _is_fresh):
 	if health_system.health == 0:
@@ -210,8 +210,8 @@ func _on_display_state_changed(_old_state: RewindableState, new_state: Rewindabl
 		#_animation_player.speed_scale = 1.0
 		_animation_player.play(ANIMATION_PREFIX + animation_name)
 
-# TODO: Document that Ragdoll bones are on Layer 3 collision. Adjust weights & poses.
 
+# TODO: Document that Ragdoll bones are on Layer 3 collision. Adjust weights & poses.
 func toggle_ragdoll():
 	# CRITICAL: Solve the forced state issue.
 	#if _state_machine.state == (&"Ragdoll"):
@@ -284,10 +284,10 @@ func on_animation_check():
 
 		if _slowed:
 			CURRENT_SPEED = SLOW_SPEED
-			_animation_player.speed_scale = 1.8
+			_animation_player.speed_scale = 1.4
 		else:
 			CURRENT_SPEED = DEFAULT_SPEED
-			_animation_player.speed_scale = 1.0
+			_animation_player.speed_scale = 0.8
 
 		# Strafing (no input forward or backwards)
 		if _dir.y == 0:
@@ -308,14 +308,14 @@ func on_animation_check():
 				 # No running backwards
 				# TODO: Slow factor even more if backwards + aiming?
 				if _dir.y > 0: 
-					_animation_player.speed_scale = 1.7
+					_animation_player.speed_scale = 1.2
 					await get_tree().process_frame
 					_animation_player.play(MOVES.WALK.SLOW[0])
 					CURRENT_SPEED = SLOW_SPEED
 
 # NOTE: -1.0 makes it move the right way and 0.5 dampens it slightly
-func weapon_vertical_tilt():
-	weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.05, 0.05) + 0.1
+#func weapon_vertical_tilt():
+	#weapon_pivot.rotation.z = clamp(_camera_input.camera_look * -1.0, -0.5, 0.5)
 
 func debug_increase_heat_dome_radius():
 	Hub.castle.change_heat_dome_value.emit(1)

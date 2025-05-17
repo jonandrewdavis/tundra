@@ -51,3 +51,11 @@ func _apply_tick(_delta, _tick):
 		var a = global_transform.origin # here,
 		var b = holder.global_transform.origin # there
 		set_linear_velocity(lerp(linear_velocity, (b - a) * 10, 0.5))
+
+# TODO: potentialy flakey if the holder isn't where we think it is in the node tree.
+func _exit_tree() -> void:
+	if enable_pickup && holder:
+		var _player: Player = holder.get_parent().get_parent().get_parent().player
+		_player.interactable = null
+		_player.holding = null
+		_player.player_ui.update_interaction_label.rpc_id(_player.name.to_int(), '')	

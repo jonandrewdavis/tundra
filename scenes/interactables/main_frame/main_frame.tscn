@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://wi1ncdq2o47o" path="res://scenes/interactables/main_frame/mainframe_asset/scene.gltf" id="1_wi8x2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wi8x2"]
-size = Vector3(0.98, 2.88, 0.98)
+size = Vector3(0.98, 1.15, 0.98)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_g3vsj"]
 properties/0/path = NodePath("..:position")
@@ -18,9 +18,10 @@ properties/1/replication_mode = 1
 script = ExtResource("1_g3vsj")
 
 [node name="Sketchfab_Scene" parent="." instance=ExtResource("1_wi8x2")]
+transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.580219, 0)
 shape = SubResource("BoxShape3D_wi8x2")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

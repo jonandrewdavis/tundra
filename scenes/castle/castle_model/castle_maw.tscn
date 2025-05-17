@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bb3ena3ml40f"]
+[gd_scene load_steps=9 format=3 uid="uid://bb3ena3ml40f"]
 
 [ext_resource type="Material" uid="uid://cfahq750phpw0" path="res://scenes/castle/castle_concrete_mat.tres" id="1_oqkrc"]
 [ext_resource type="Script" uid="uid://bxheekboo1l1k" path="res://scenes/castle/castle_model/castle_maw.gd" id="1_us1oy"]
 [ext_resource type="Script" uid="uid://84pwod0y2ajt" path="res://scenes/castle/castle_model/castle_maw_interact.gd" id="3_pwmnt"]
 [ext_resource type="PackedScene" uid="uid://cvltw4muk7hv2" path="res://scenes/castle/castle_model/Big Red Button.glb" id="4_dtweg"]
+[ext_resource type="AudioStream" uid="uid://bognmewo2wlfn" path="res://assets/sound/large-metal-lift-door-openingwav-14459.mp3" id="5_yk0nr"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pwmnt"]
 properties/0/path = NodePath("CastleMawPivot:rotation")
@@ -125,3 +126,7 @@ collision_mask = 128
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Gullet"]
 transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 0.420302, -0.220296)
 shape = SubResource("CylinderShape3D_dtweg")
+
+[node name="MetalDoorOpen" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_yk0nr")
+volume_db = -2.0

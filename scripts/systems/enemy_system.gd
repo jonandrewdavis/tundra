@@ -122,7 +122,8 @@ func spawn_new_patrol():
 		return
 	
 	for n in range(get_player_factor()):
-		for enemy_in_wave in patrol_list[wave_number]:
+		# Bugs
+		for enemy_in_wave in patrol_list[2]:
 			spawner.spawn(enemy_in_wave)
 
 	if wave_number > patrol_list.size():
@@ -138,8 +139,7 @@ func cleanup_out_of_bounds() -> void:
 		on_debug_kill_all()
 
 func on_debug_kill_all():
-	for enemy in container:
+	for enemy in container.get_children():
 		enemy.set_process(false)
-		queue_free()
-		
+		enemy.queue_free()
 	

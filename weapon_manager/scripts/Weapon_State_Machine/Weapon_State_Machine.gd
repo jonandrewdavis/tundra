@@ -29,6 +29,9 @@ signal update_weapon_prev_signal
 signal update_ammo_signal
 signal update_ammo_prev_signal
 
+signal reload_signal
+signal melee_signal
+
 # NOTE: weapons_list: All the posible weapon resources & starting ammo, as WeaponSlot
 # NOTE: weapons_owned: (MultiplayerSync) A list of enums, 0 - 5
 # NOTE: weapon_index: (MultiplayerSync) indexes into -> weapons_list -> weapons_owned to retrieve the WeaponResource
@@ -203,7 +206,8 @@ func shoot():
 
 		load_projectile(Spread)
 		await get_tree().process_frame
-		update_ammo()
+		# play sound
+		update_ammo(weapon_index, true)
 
 
 func _on_animation_finished(animation_finished_name):
@@ -234,6 +238,7 @@ func reload() -> void:
 	if current_weapon_slot.current_ammo == current_weapon_slot.weapon.magazine:
 		return
 	elif not animation_player.is_playing():
+		reload_signal.emit()
 		if current_weapon_slot.reserve_ammo != 0:
 			animation_player.queue(current_weapon_slot.weapon.reload_animation)
 		else:
@@ -265,17 +270,18 @@ func melee() -> void:
 	var current_weapon = get_weapon(weapon_index)
 	var current_animation = animation_player.get_current_animation()
 	
-	if current_animation == current_weapon.shoot_animation:
+	if current_animation == current_weapon.shoot_animation or current_animation == current_weapon.melee_animation:
 		return
 		
 	if current_animation != current_weapon.melee_animation:
 		animation_player.play(current_weapon.melee_animation)
+		melee_signal.emit()
 		await get_tree().create_timer(0.1).timeout
 		if melee_hitbox.is_colliding():
 			var colliders = melee_hitbox.get_collision_count()
 			for col in colliders:
 				var body: Node3D = melee_hitbox.get_collider(col)
-				if body.is_in_group('targets'):
+				if body.is_in_group('targets') or body.is_in_group('players'):
 					var heath_system: HealthSystem = body.health_system
 					var damage_successful = heath_system.damage(current_weapon.melee_damage, int(player.name))
 					if damage_successful:
@@ -297,9 +303,9 @@ func melee() -> void:
 func update_weapon(given_index: int = weapon_index):
 	update_weapon_signal.emit(get_slot(given_index).weapon.weapon_name)
 
-func update_ammo(given_index: int = weapon_index):
+func update_ammo(given_index: int = weapon_index, is_shooting: bool = false):
 	var weapon = get_slot(given_index)
-	update_ammo_signal.emit(weapon.current_ammo, weapon.reserve_ammo)
+	update_ammo_signal.emit(weapon.current_ammo, weapon.reserve_ammo, is_shooting)
 
 func update_previous_weapon(given_index: int):
 	update_weapon_prev_signal.emit(get_slot(given_index).weapon.weapon_name)

@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2wg3bpnf03q7"]
+
+[ext_resource type="Material" uid="uid://cfahq750phpw0" path="res://scenes/castle/castle_concrete_mat.tres" id="1_ghf0f"]
+[ext_resource type="Script" uid="uid://c0k3t465ukw3q" path="res://scenes/castle/castle_model/castle_deposit_box.gd" id="1_jc6e5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ghf0f"]
+size = Vector3(1.5, 0.2, 1)
+
+[node name="CastleDepositBox" type="Node3D"]
+script = ExtResource("1_jc6e5")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="MeshInstance3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0194875, 0)
+size = Vector3(2.5, 3, 2)
+material = ExtResource("1_ghf0f")
+
+[node name="sub" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0305188, 0.57191, 0.187313)
+operation = 2
+size = Vector3(1.8, 1.5, 2)
+material = ExtResource("1_ghf0f")
+
+[node name="sub2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0305188, -0.260639, -0.0626752)
+operation = 2
+size = Vector3(1.8, 2, 1.5)
+material = ExtResource("1_ghf0f")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.76203, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.506166, 0)
+shape = SubResource("BoxShape3D_ghf0f")

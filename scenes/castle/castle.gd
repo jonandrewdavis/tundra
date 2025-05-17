@@ -16,6 +16,8 @@ signal change_heat_dome_value #value: int
 signal change_castle_speed
 signal fuel_updated
 
+@onready var castle_deposit_box = $CastleDepositBox
+
 var fuel_timer = Timer.new()
 
 # TODO: Allow picking new targets on a map or something
@@ -55,6 +57,9 @@ func _ready():
 		fuel_timer.wait_time = 2.0
 		fuel_timer.start()
 		fuel_timer.timeout.connect(consume_fuel)
+		
+		health_system.hurt.connect(func(): on_castle_hurt.rpc())
+
 
 @export var speed: float = 0.0
 
@@ -117,3 +122,7 @@ func gain_fuel(fuel_amount: int):
 	next_fuel = clamp(next_fuel, 0, 1000)
 	fuel = next_fuel
 	fuel_updated.emit(fuel)
+
+@rpc
+func on_castle_hurt():
+	$CastleHurtSound.play()

@@ -8,9 +8,9 @@
 [resource]
 script = ExtResource("1_oxrhl")
 weapon_name = "Snipe-R"
-pick_up_animation = "Global/blasterN Active"
-shoot_animation = "Global/blasterN Shoot"
-reload_animation = "Global/blasterN Reload"
+pick_up_animation = "Global/Sniper Active"
+shoot_animation = "Global/Sniper Shoot"
+reload_animation = "Global/Sniper Reload"
 change_animation = "Global/blasterN De-Activate"
 drop_animation = "Global/blasterN Drop"
 out_of_ammo_animation = "Global/blasterN OOA"
