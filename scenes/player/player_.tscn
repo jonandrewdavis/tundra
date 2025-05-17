@@ -30,7 +30,7 @@ height = 1.5
 radius = 0.15
 height = 0.4
 
-[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "_tick_interpolator", "sync", "skeleton", "bones", "chest", "look_at_right", "look_at_left", "look_at_left_lower", "look_at_target", "health_system", "heat_system", "weapons_manager", "weapon_pivot", "player_ui")]
+[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "_tick_interpolator", "sync", "skeleton", "bones", "chest", "look_at_target", "look_at_chest", "health_system", "heat_system", "weapons_manager", "weapon_pivot", "player_ui")]
 platform_on_leave = 2
 platform_floor_layers = 0
 script = ExtResource("1_u2qrv")
@@ -43,10 +43,8 @@ sync = NodePath("MultiplayerSynchronizer")
 skeleton = NodePath("master/Armature/GeneralSkeleton")
 bones = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D")
 chest = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone Chest")
-look_at_right = NodePath("master/Armature/GeneralSkeleton/RightLow")
-look_at_left = NodePath("master/Armature/GeneralSkeleton/LeftUp")
-look_at_left_lower = NodePath("master/Armature/GeneralSkeleton/LeftLow")
 look_at_target = NodePath("CameraInput/CameraMount/CameraRot/Holder")
+look_at_chest = NodePath("master/Armature/GeneralSkeleton/ChestModifier")
 health_system = NodePath("HealthSystem")
 heat_system = NodePath("HeatSystem")
 weapons_manager = NodePath("RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager")
@@ -70,21 +68,21 @@ metadata/_custom_type_script = "uid://byrgwv2o7hstx"
 
 [node name="Idle" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("5_4l86x")
-animation_name = "rifle aiming idle"
+animation_name = "idle"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
 
 [node name="Interact" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("10_h5dd4")
-animation_name = "rifle aiming idle"
+animation_name = "idle"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
 
 [node name="Jump" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("6_a47yd")
-animation_name = "walking"
+animation_name = "jump up"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
@@ -97,7 +95,7 @@ parent = NodePath("../..")
 
 [node name="Fall" type="Node" parent="RewindableStateMachine" node_paths=PackedStringArray("camera_input", "player_input", "parent")]
 script = ExtResource("8_4l86x")
-animation_name = "walking"
+animation_name = "jump loop"
 camera_input = NodePath("../../CameraInput")
 player_input = NodePath("../../PlayerInput")
 parent = NodePath("../..")
@@ -154,7 +152,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65716, 0)
 shape = SubResource("CapsuleShape3D_2hvjq")
 
 [node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="."]
-transform = Transform3D(0.176582, 0.15716, 0.971658, 0.959025, 0.194741, -0.205784, -0.221563, 0.968182, -0.116332, -0.207561, 1.37041, 0.202671)
+transform = Transform3D(-0.352687, 0.68715, 0.635166, 0.922404, 0.369497, 0.112442, -0.157427, 0.625537, -0.764147, -0.118812, 1.1616, 0.195862)
 bone_name = "RightHand"
 bone_idx = 35
 use_external_skeleton = true

@@ -28,10 +28,8 @@ var _animation_player: AnimationPlayer
 @export var skeleton: Skeleton3D
 @export var bones: PhysicalBoneSimulator3D
 @export var chest: PhysicalBone3D
-@export var look_at_right: LookAtModifier3D
-@export var look_at_left: LookAtModifier3D
-@export var look_at_left_lower: LookAtModifier3D
 @export var look_at_target: Node3D
+@export var look_at_chest: LookAtModifier3D
 
 @export_category("Systems")
 @export var health_system: HealthSystem
@@ -79,9 +77,7 @@ func _ready():
 	#peer_id = str(name).to_int()
 	
 	# TODO: Hands.
-	look_at_right.target_node = look_at_target.get_path()
-	look_at_left.target_node = look_at_target.get_path()
-	look_at_left_lower.target_node = look_at_target.get_path()
+	look_at_chest.target_node = look_at_target.get_path()
 
 	Nodash.error_missing(weapons_manager, 'weapons_manager')
 	Nodash.warn_missing(player_ui, 'player_ui')
@@ -206,7 +202,7 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 # using a server driven AnimationStateTree (how will that work with rollback, if at all)
 # or using sync'd interpolation values (top half / bottom half ).
 # For now, try not to over-do it in the prototype phase. Ignore unncessary polish.
-const ANIMATION_PREFIX = 'master2/'
+const ANIMATION_PREFIX = 'master_3/'
 
 func _on_display_state_changed(_old_state: RewindableState, new_state: RewindableState):	
 	var animation_name = new_state.animation_name
@@ -266,14 +262,15 @@ func death():
 	
 #const animations_to_check = [ANIMATION_PREFIX + "rifle run", ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"]	
 
+# TODO: Could use combos of "run" and "right", etc, simplifying.
 const MOVES = { 
 	'STRAFE': {
-		'FAST': [ANIMATION_PREFIX + "strafe", ANIMATION_PREFIX + "strafe (2)"],
-		'SLOW': [ANIMATION_PREFIX + "strafe right", ANIMATION_PREFIX + "strafe left"]
+		'FAST': [ANIMATION_PREFIX + "run right", ANIMATION_PREFIX + "run left"],
+		'SLOW': [ANIMATION_PREFIX + "walk right", ANIMATION_PREFIX + "walk left"]
 	},
 	'WALK': {
-		'FAST': [ANIMATION_PREFIX + "run backwards", ANIMATION_PREFIX + "rifle run"],
-		'SLOW': [ANIMATION_PREFIX + "walking backwards", ANIMATION_PREFIX + "walking"]
+		'FAST': [ANIMATION_PREFIX + "run backward", ANIMATION_PREFIX + "run forward"],
+		'SLOW': [ANIMATION_PREFIX + "walk backward", ANIMATION_PREFIX + "walk forward"]
 	}
 }
 

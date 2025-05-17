@@ -20,7 +20,7 @@ const JUMP_MOVE_SPEED := 3.0
 @export var player_input: PlayerInput
 @export var parent: Player
 
-const ANIMATION_PREFIX = 'master2/'
+const ANIMATION_PREFIX = 'master_3/'
 
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 

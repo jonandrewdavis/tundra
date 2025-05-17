@@ -2,6 +2,8 @@
 # Fall
 extends MovementState
 
+# TODO: on display exit: landing animation!
+ 
 func tick(delta, _tick, _is_fresh):
 	rotate_player_model(delta)
 	move_player(delta)

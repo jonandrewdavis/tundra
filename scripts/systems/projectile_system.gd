@@ -54,7 +54,6 @@ func _ready():
 func handle_projectile_spawn(data: Variant):
 	# TODO: Accept a different projectile type
 	var _new_bullet: RigidBody3D 
-	print(data.projectile_name)
 	match data.projectile_name:
 		'PinkBullet':
 			_new_bullet = pink_bullet.instantiate()
