@@ -152,7 +152,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65716, 0)
 shape = SubResource("CapsuleShape3D_2hvjq")
 
 [node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="."]
-transform = Transform3D(-0.172992, 0.0517357, 0.983563, 0.937296, 0.315427, 0.148263, -0.302573, 0.947538, -0.103058, -0.182024, 1.30105, -0.0117478)
+transform = Transform3D(-0.172991, 0.0517331, 0.983564, 0.937296, 0.315428, 0.148262, -0.302574, 0.947538, -0.103055, -0.182025, 1.30105, -0.011748)
 bone_name = "RightHand"
 bone_idx = 35
 use_external_skeleton = true
@@ -169,8 +169,17 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.4108
 player_hud = NodePath("../../../../PlayerUi")
 player = NodePath("../../../..")
 
+[node name="blasterL" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/Weapons_Models" index="0"]
+transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, 0.117, 1.16, -0.512)
+
+[node name="blasterN" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/Weapons_Models" index="1"]
+transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0.193, 1.255, -0.643)
+
 [node name="blasterP2" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/HIDDEN_WEAPONS_MODELS" index="2"]
 transform = Transform3D(-0.97237, -0.233408, -0.00407487, 0, 0.0174555, -0.999848, 0.233443, -0.972222, -0.0169732, 0.32, 1.014, -0.35)
+
+[node name="blasterQ2" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager/HIDDEN_WEAPONS_MODELS" index="3"]
+transform = Transform3D(-1, 0, 2.53518e-06, 0, 1, 0, -2.53518e-06, 0, -1, 0, 0, 0)
 
 [node name="RootMotionView" type="RootMotionView" parent="."]
 animation_path = NodePath("../master/AnimationPlayer")

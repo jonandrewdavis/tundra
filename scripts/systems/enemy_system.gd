@@ -19,7 +19,7 @@ enum EnemyType { DRONE, DOG, BUG_1, BOT_1 }
 
 var timer_adjust_heat: Timer = Timer.new()
 
-var timer_spawn_patrol_rate: float = 15.0
+var timer_spawn_patrol_rate: float = 60.0
 var timer_spawn_patrol: Timer = Timer.new()
 
 var enemy_max := 80
@@ -123,9 +123,10 @@ func spawn_new_patrol():
 	
 	for n in range(get_player_factor()):
 		# Bugs
-		for enemy_in_wave in patrol_list[2]:
+		for enemy_in_wave in patrol_list[wave_number]:
 			spawner.spawn(enemy_in_wave)
 
+	wave_number = wave_number + 1
 	if wave_number > patrol_list.size():
 		wave_number = 0
 
