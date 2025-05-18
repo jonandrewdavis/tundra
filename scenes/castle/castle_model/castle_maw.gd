@@ -5,7 +5,7 @@ extends Node3D
 @onready var open_maw_button: Interactable = $OpenMawButton
 
 var target_basis_up = Basis.IDENTITY.rotated(Vector3.LEFT * -1.0, PI / 16)
-var target_basis_down = Basis.IDENTITY.rotated(Vector3.LEFT * 1.0, PI / 6)
+var target_basis_down = Basis.IDENTITY.rotated(Vector3.LEFT * 1.0, PI / 5)
 
 signal open_maw
 var open = false
@@ -31,7 +31,7 @@ func _on_open_maw():
 		create_tween().tween_method(interpolate_down, 0.0, 1.0, 4.0).set_trans(Tween.TRANS_EXPO)
 		await get_tree().create_timer(7.0).timeout
 		create_tween().tween_method(interpolate_up, 0.0, 1.0, 4.0).set_trans(Tween.TRANS_EXPO)
-		play_open_sound.rpc()
+		#play_open_sound.rpc()
 		await get_tree().create_timer(3.0).timeout
 		open = false
 		open_maw_button.label = 'Open Gate'
@@ -39,7 +39,7 @@ func _on_open_maw():
 # TODO: Fuel regen
 func _on_detect_food(body):
 	if body:
-		castle.gain_fuel(30)
+		castle.gain_fuel(55)
 		body.set_process(false)
 		body.queue_free()
 		

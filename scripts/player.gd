@@ -29,7 +29,6 @@ var _animation_player: AnimationPlayer
 @export var bones: PhysicalBoneSimulator3D
 @export var chest: PhysicalBone3D
 @export var look_at_target: Node3D
-@export var look_at_chest: LookAtModifier3D
 
 @export_category("Systems")
 @export var health_system: HealthSystem
@@ -76,9 +75,6 @@ func _ready():
 	add_to_group('players')
 	peer_id = str(name).to_int()
 	
-	# TODO: Hands.
-	look_at_chest.target_node = look_at_target.get_path()
-
 	Nodash.error_missing(weapons_manager, 'weapons_manager')
 	Nodash.warn_missing(player_ui, 'player_ui')
 	

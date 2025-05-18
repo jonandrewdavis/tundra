@@ -30,7 +30,7 @@ height = 1.5
 radius = 0.15
 height = 0.4
 
-[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "_tick_interpolator", "sync", "skeleton", "bones", "chest", "look_at_target", "look_at_chest", "health_system", "heat_system", "weapons_manager", "weapon_pivot", "player_ui")]
+[node name="PlayerRootMotion" type="CharacterBody3D" node_paths=PackedStringArray("_player_input", "_camera_input", "_player_model", "_state_machine", "_tick_interpolator", "sync", "skeleton", "bones", "chest", "look_at_target", "health_system", "heat_system", "weapons_manager", "weapon_pivot", "player_ui")]
 platform_on_leave = 2
 platform_floor_layers = 0
 script = ExtResource("1_u2qrv")
@@ -44,7 +44,6 @@ skeleton = NodePath("master/Armature/GeneralSkeleton")
 bones = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D")
 chest = NodePath("master/Armature/GeneralSkeleton/PhysicalBoneSimulator3D/Physical Bone Chest")
 look_at_target = NodePath("CameraInput/CameraMount/CameraRot/Holder")
-look_at_chest = NodePath("master/Armature/GeneralSkeleton/ChestModifier")
 health_system = NodePath("HealthSystem")
 heat_system = NodePath("HeatSystem")
 weapons_manager = NodePath("RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal/WeaponsManager")
@@ -152,17 +151,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65716, 0)
 shape = SubResource("CapsuleShape3D_2hvjq")
 
 [node name="RightHandBoneAttachment" type="BoneAttachment3D" parent="."]
-transform = Transform3D(-0.172991, 0.0517331, 0.983564, 0.937296, 0.315428, 0.148262, -0.302574, 0.947538, -0.103055, -0.182025, 1.30105, -0.011748)
+transform = Transform3D(0.157146, 0.015652, 0.987451, 0.838481, 0.526165, -0.141779, -0.521781, 0.850239, 0.069561, -0.322159, 1.21932, 0.119781)
 bone_name = "RightHand"
 bone_idx = 35
 use_external_skeleton = true
 external_skeleton = NodePath("../master/Armature/GeneralSkeleton")
 
 [node name="WeaponPivot" type="Marker3D" parent="RightHandBoneAttachment"]
-transform = Transform3D(0.978148, -0.207912, 0, 0.207912, 0.978148, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="WeaponPivotFinal" type="Marker3D" parent="RightHandBoneAttachment/WeaponPivot"]
-transform = Transform3D(-2.84053e-08, 0, 1, 0, 0.999999, 1.11759e-07, -1, 2.23517e-08, -5.68107e-08, 0.285775, -0.13041, 0.574644)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 0.999999, 0, -1, 0, -4.37114e-08, 0.35, -0.13, 0.575)
 
 [node name="WeaponsManager" parent="RightHandBoneAttachment/WeaponPivot/WeaponPivotFinal" node_paths=PackedStringArray("player_hud", "player") instance=ExtResource("13_nrabn")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.410812, -0.213233, 0.115377)

@@ -19,7 +19,7 @@ enum EnemyType { DRONE, DOG, BUG_1, BOT_1 }
 
 var timer_adjust_heat: Timer = Timer.new()
 
-var timer_spawn_patrol_rate: float = 60.0
+var timer_spawn_patrol_rate: float = 90.0
 var timer_spawn_patrol: Timer = Timer.new()
 
 var enemy_max := 80
@@ -103,7 +103,7 @@ func create_enemy(data: Variant):
 		EnemyType.BOT_1:
 			enemy_to_spawn = bot_1_enemy_scene.instantiate()
 
-	enemy_to_spawn.position = Hub.castle.global_position + Vector3(0.0, 0.0, -130.0) + Vector3(randi_range(-3, 3), 0.2, randi_range(-3, 3)) * 10
+	enemy_to_spawn.position = Hub.castle.global_position + Vector3(0.0, 0.0, -130.0) + Vector3(randi_range(-6, 6), 0.2, randi_range(-3, 3)) * 10
 	#container.call_deferred("add_child", enemy_to_spawn, true)
 	return enemy_to_spawn
 
@@ -127,7 +127,7 @@ func spawn_new_patrol():
 			spawner.spawn(enemy_in_wave)
 
 	wave_number = wave_number + 1
-	if wave_number > patrol_list.size():
+	if wave_number >= patrol_list.size():
 		wave_number = 0
 
 func cleanup_out_of_bounds() -> void:

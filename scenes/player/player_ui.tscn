@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="5_by614"]
 [ext_resource type="StyleBox" uid="uid://hwskn1lu87b" path="res://scenes/player/settings_menu/temperature_style_box.tres" id="5_d61dg"]
 [ext_resource type="PackedScene" uid="uid://s5lur3jc6w4b" path="res://scenes/player/settings_menu/settings_menu.tscn" id="6_en3kk"]
-[ext_resource type="AudioStream" uid="uid://1q0448323ui4" path="res://assets/sound/ambience-wind-blowing-through-trees-01-186986.mp3" id="8_5ypad"]
+[ext_resource type="AudioStream" uid="uid://dg8grqw6ww0m3" path="res://assets/sound/soft-wind-outside-sound-ambient-141989.mp3" id="8_5ypad"]
 [ext_resource type="AudioStream" uid="uid://cgdh3ouygw0n5" path="res://assets/sound/fist-punch-or-kick.mp3" id="8_fvhh2"]
 [ext_resource type="AudioStream" uid="uid://b6e8xn30garj8" path="res://assets/sound/sniper_shot_and_reload.mp3" id="10_4qoov"]
 [ext_resource type="AudioStream" uid="uid://bduucs8w8a61i" path="res://assets/sound/dance_kick_shot_short.mp3" id="11_tpfsx"]
@@ -390,6 +390,7 @@ size_flags_vertical = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_fvhh2")
 theme_override_styles/fill = SubResource("StyleBoxFlat_5ypad")
 max_value = 2000.0
+value = 2000.0
 fill_mode = 3
 show_percentage = false
 
@@ -420,6 +421,7 @@ layout_mode = 2
 theme_override_constants/separation = 3
 
 [node name="PlayerCountLabels" type="HBoxContainer" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 5
 
@@ -648,6 +650,7 @@ horizontal_alignment = 1
 
 [node name="WindSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_5ypad")
+volume_db = -5.0
 autoplay = true
 
 [node name="MeleeSound" type="AudioStreamPlayer" parent="."]

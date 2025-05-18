@@ -36,8 +36,17 @@ func _ready():
 	# CRITICAL: If we're not server, and NOT the player that owns the UI. 
 	# Delete the UI and return early.
 	if not multiplayer.is_server() and multiplayer.get_unique_id() != peer_id:
+		
 		#print('Player: ', peer_id,  'saw: ',  multiplayer.get_unique_id())
 		set_process(false)
+		
+		# CRITICAL: Never delete the UI on just one client. That's disasterous. 
+		# When the player leaves, the Server tries to re-queue-free it. 
+		# I figured this error out just chillin on the couch. 
+		
+		# What we need to do, is actually _add the client only nodes post mount_.
+		# For now... just hide.
+		
 		#queue_free()
 		hide()
 		return

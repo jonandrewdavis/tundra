@@ -167,16 +167,19 @@ func set_state(new_state: States) -> void:
 	if previous_state == States.DYING and new_state != States.DECAYING:
 		return
 		
-	if health_system.health <= 0 and new_state != States.DYING: 
-		set_state(States.DYING)
-		return 
+	#if health_system.health <= 0 and new_state != States.DYING: 
+		#set_state(States.DYING)
+		#return 
 
 	if previous_state == States.ATTACKING && new_state == States.HURTING:
 		animation_player.play('dog_animations_1/hurt')
 		return
-		
+	
+	# Don't interrupt jumping.
 	if previous_state == States.ATTACKING && animation_player.current_animation == 'dog_animations_1/jump': 
-		return
+		# ... unless it's to die. Must have greater than 0 health.
+		if health_system.health > 0:
+			return
 
 	#############
 	# Here, I check the new state.
@@ -223,8 +226,7 @@ func set_state(new_state: States) -> void:
 		pass
 
 func decay():
-	await get_tree().create_timer(10.0).timeout
-	animation_player.stop()
+	await get_tree().create_timer(9.5).timeout
 	set_process(false)
 	await get_tree().process_frame
 	queue_free()
@@ -283,6 +285,8 @@ func attack():
 # TODO: These are bad. ...
 func on_navigation_finished():
 	animation_player.play('dog_animations_1/idle')
+	if health_system.health == 0:
+		set_state(States.DYING)
 
 func on_path_changed():
 	if state == States.ATTACKING: 

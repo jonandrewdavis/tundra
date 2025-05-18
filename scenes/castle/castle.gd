@@ -53,7 +53,6 @@ func _ready():
 		NetworkTime.before_tick.connect(_save_previous_position)
 		NetworkTime.on_tick.connect(_apply_tick)
 		NetworkTime.on_tick.connect(_calc_velocity)
-	
 		
 		add_child(fuel_timer)
 		fuel_timer.wait_time = 2.0
@@ -86,9 +85,11 @@ func _calc_velocity(_delta, _tick: int):
 	
 func _on_change_castle_speed():
 	if castle_on:	
+		play_industrial_sounds.rpc(false)
 		castle_on = false
 		speed = 0.0
 	else:
+		play_industrial_sounds.rpc(true)
 		castle_on = true
 		speed = -1.2
 	
@@ -128,3 +129,10 @@ func gain_fuel(fuel_amount: int):
 @rpc
 func on_castle_hurt():
 	$CastleHurtSound.play()
+
+@rpc
+func play_industrial_sounds(sound_is_on):
+	if sound_is_on:
+		$CastleIndustrialSounds.play()
+	else:
+		$CastleIndustrialSounds.stop()

@@ -859,7 +859,7 @@ visible = false
 mesh = SubResource("ArrayMesh_2ccy7")
 
 [node name="awp2" parent="Weapons_Models/blasterN" instance=ExtResource("5_e4dbp")]
-transform = Transform3D(-8.33306e-08, 2.78722e-07, -1.7, -0.109942, 1.69644, 2.83528e-07, 1.69644, 0.109942, -6.51307e-08, 0.115687, -0.219958, 0.151208)
+transform = Transform3D(-7.43094e-08, 0, -1.7, 0, 1.7, 0, 1.7, 0, -7.43094e-08, 0.115687, -0.256563, 0.159666)
 
 [node name="WeaponsPlayer" type="AnimationPlayer" parent="Weapons_Models"]
 libraries = {
