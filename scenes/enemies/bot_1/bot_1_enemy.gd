@@ -102,7 +102,6 @@ func _ready():
 	health_system.death.connect(on_death)
 	
 	# Nav
-	nav.attack_signal.connect(attack)
 	nav_agent.navigation_finished.connect(on_navigation_finished)
 	nav_agent.path_changed.connect(on_path_changed)
 
@@ -266,6 +265,7 @@ func on_animation_finished(animation_name):
 	if animation_name == ANI[LIST.DYING]:
 		set_state(States.DECAYING)
 
+# TODO: these are stub functions... should they just be direct connects?
 func on_hurt():
 	set_state(States.HURTING)
 	

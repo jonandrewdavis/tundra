@@ -287,7 +287,7 @@ max_distance = 25.0
 max_polyphony = 5
 
 [node name="CastleDepositBox" parent="." instance=ExtResource("15_naar7")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 6.50888, -2.60286)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.50888, 2.09575)
 
 [node name="CastleIndustrialSounds" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("17_a8bag")

@@ -19,12 +19,10 @@ var volume_background_value
 
 @onready var player: Player = get_parent().get_parent()
 
-func _input(_event:InputEvent):
-	if _event.is_action_pressed("open_menu"):
-		toggleMenu()
-
 func _ready():
 	visible = false
+
+	player.main_menu_signal.connect(settings_menu_open)
 
 	%Respawn.pressed.connect(_on_respawn_pressed)
 	%Quit.pressed.connect(_on_quit_pressed)
@@ -53,32 +51,16 @@ func _ready():
 		#sensitivity_slider.max_value = camera_sensitivity * 2
 		#sensitivity_slider.value = camera_sensitivity
 
-#func _process(_delta: float) -> void:
-	#if (Input.get_mouse_mode() != 2):
-		#self.visible = true
-
-# TODO: refactor & use the emit on the signal exclusively. 
-func toggleMenu():
-	if self.visible == false:
+func settings_menu_open(is_open):
+	if is_open == true:
 		self.visible = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		player._state_machine.transition(&"Static")
-		
-		#var text_with_p = []
-		#text_with_p.append("[p]" + "Cart Distance Travelled: " + str(Hub.distance_travelled) + "m. [p]")
-		#text_with_p.append("[p]" + " " +"[p]")
-		#text_with_p.append("[p]" + "-------- " + "Players" +  " --------" +"[p]")
-		#text_with_p.append("[p]" + " " +"[p]")
-		#for item in Hub.players_container.get_children():
-			#text_with_p.append("[p]" + item.nickname.text +  ' --- K: ' + str(item.kills) + ' D: ' + str(item.deaths) + "[p]")
-		#scoreboard.text =  "".join(text_with_p)
 	else:
 		self.visible = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		player._state_machine.transition(&"Idle")
 
 func _on_respawn_pressed():
-	toggleMenu()
+	#toggleMenu()
 	await get_tree().create_timer(0.2).timeout
 	player.health_system.died.emit()
 

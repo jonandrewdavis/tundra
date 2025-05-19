@@ -4,20 +4,26 @@ class_name PlayerInput
 @onready var parent: CharacterBody3D = get_parent()
 
 var input_dir : Vector2 = Vector2.ZERO
-var run_input = false
-var shoot_input = false
-var jump_input = false
-var aim_input = false
+var run_input: bool = false
+var shoot_input: bool = false
+var jump_input: bool = false
+var aim_input: bool = false
+var main_menu_input: bool = false
+var _main_menu_buffer: bool = false
+
 var static_states: Array[StringName] = [&"Dead", &"Static", &"Ragdoll"]
 
 func _ready():
-	if is_multiplayer_authority():
-		super()
-	else: 
-		set_process(false)
+	super()
+	# WARNING: don't forget to _reset if doing input "just once"
+	# See: https://foxssake.github.io/netfox/latest/netfox/tutorials/input-gathering-tips-and-tricks/
+	NetworkTime.after_tick.connect(func(_dt, _t): _reset())
 
 # TODO: Move all these inputs to _gather() I think. And use "is_fresh"
 func _process(_delta):	
+	if Input.is_action_just_pressed("main_menu"):
+		_main_menu_buffer = true
+
 	if Input.is_action_just_pressed("DEBUG_B"):
 		parent.process_player_input.rpc_id(1, "DEBUG_B")
 
@@ -51,16 +57,17 @@ func _process(_delta):
 	if Input.is_action_just_pressed("DEBUG_K"):
 		parent.process_player_input.rpc_id(1, "DEBUG_K")
 
-
-
-# NOTE: Do not forget to add new inputs to the RollbackSyncronizer!! (IF... you want them to rollback)
-# Use this for inputs that are constant or held
 func _gather():
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
 	run_input = Input.is_action_pressed("run")
 	shoot_input = Input.is_action_pressed("shoot")
 	jump_input = Input.is_action_pressed("jump")
 	aim_input = Input.is_action_pressed("aim")
+	main_menu_input = _main_menu_buffer
+	_main_menu_buffer = false
+
+func _reset():
+	_main_menu_buffer = false
 
 func _exit_tree():
 	NetworkTime.before_tick_loop.disconnect(_gather)

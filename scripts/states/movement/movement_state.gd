@@ -1,5 +1,6 @@
 @tool
 # A base movement state for common functions, extend when making new movement state.
+
 # NOTE: This class, MovementState, does not have tick, but contains common functions 
 # that each other state should call in tick.
 
@@ -100,23 +101,18 @@ func get_moving_platform_velocity(delta: float) -> Vector3:
 			_platform_velocity = platform.get_velocity()
 	return _platform_velocity
 
-func check_for_ragdoll():
-	if not parent.bones:
-		push_warning("No bones for ragdoll")
-	
-	if parent.bones.active == true:
-		state_machine.transition(&"Ragdoll")
+func get_main_menu_input() -> bool:
+	return player_input.main_menu_input
 
 func get_movement_input() -> Vector2:
 	return player_input.input_dir
 
 func get_run() -> bool:
 	# If we are moving forward (-1.0), allow sprinting
-	if player_input.input_dir.y < 0:
+	if player_input.input_dir.y == -1.0:
 		return player_input.run_input
 	else:
 		return false
 	
 func get_jump() -> float:
 	return player_input.jump_input
-	

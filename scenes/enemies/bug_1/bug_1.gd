@@ -62,10 +62,10 @@ func _ready():
 	add_to_group("targets")
 	
 	# TODO: FIGURE OUT CONDITIONAL set_collision_layer_value (mask?) PASS THROUGH FOR PLAYERS / OTHERS
-	set_collision_layer_value(1, false) 
-	set_collision_layer_value(2, true)
-	set_collision_mask_value(1, false) 
-	set_collision_mask_value(2, true)
+	#set_collision_layer_value(1, false) 
+	#set_collision_layer_value(2, true)
+	#set_collision_mask_value(1, false) 
+	#set_collision_mask_value(2, true)
 
 	animation_player.playback_default_blend_time = 0.4
 	#animation_player.speed_scale = 1.5
@@ -100,7 +100,6 @@ func _ready():
 	health_system.death.connect(on_death)
 	
 	# Nav
-	nav.attack_signal.connect(attack)
 	nav_agent.navigation_finished.connect(on_navigation_finished)
 	nav_agent.path_changed.connect(on_path_changed)
 
@@ -294,12 +293,20 @@ func attack():
 
 # TODO: These are bad. ...
 func on_navigation_finished():
+	if health_system.health == 0.0:
+		set_state(States.DYING)
+		return
+	
 	if state == States.ATTACKING:
 		return
 		
 	animation_player.play(ANI[LIST.IDLE])
 
 func on_path_changed():
+	if health_system.health == 0.0:
+		set_state(States.DYING)
+		return
+
 	if state == States.ATTACKING:
 		return
 

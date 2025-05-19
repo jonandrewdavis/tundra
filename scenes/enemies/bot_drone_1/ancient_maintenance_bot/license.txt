@@ -1,0 +1,11 @@
+Model Information:
+* title:	Ancient Maintenance Bot
+* source:	https://sketchfab.com/3d-models/ancient-maintenance-bot-5d36e6133d7444f385ac4ec1c257c207
+* author:	Lagst (https://sketchfab.com/Lagst)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Ancient Maintenance Bot" (https://sketchfab.com/3d-models/ancient-maintenance-bot-5d36e6133d7444f385ac4ec1c257c207) by Lagst (https://sketchfab.com/Lagst) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

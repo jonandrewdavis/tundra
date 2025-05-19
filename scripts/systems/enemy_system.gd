@@ -1,10 +1,11 @@
 extends Node
 class_name EnemySystem
 
-const gun_drone_scene = preload("res://scenes/enemies/gun_drone/GunDrone.tscn")
+# TODO: would be nice to programatically get all the scenes somehow & add them. "register" them. (on world prep?)
 const dog_enemy_scene = preload("res://scenes/enemies/dog/dog_enemy.tscn")
 const bug_1_enemy_scene = preload("res://scenes/enemies/bug_1/bug_1.tscn")
 const bot_1_enemy_scene = preload("res://scenes/enemies/bot_1/bot_1_enemy.tscn")
+const bot_drone_1_scene = preload("res://scenes/enemies/bot_drone_1/bot_drone_1.tscn")
 
 @onready var spawner: MultiplayerSpawner= $MultiplayerSpawner
 @onready var container: Node3D = $EnemyContainer
@@ -15,11 +16,11 @@ signal spawn_bug_1
 signal spawn_bot_1
 signal debug_kill_all
 
-enum EnemyType { DRONE, DOG, BUG_1, BOT_1 }
+enum EnemyType { DRONE, DOG, BUG_1, BOT_1, BOT_DRONE_1 }
 
 var timer_adjust_heat: Timer = Timer.new()
 
-var timer_spawn_patrol_rate: float = 90.0
+var timer_spawn_patrol_rate: float = 105.0
 var timer_spawn_patrol: Timer = Timer.new()
 
 var enemy_max := 80
@@ -48,18 +49,20 @@ func _ready() -> void:
 
 	spawner.set_spawn_function(create_enemy)
 
-	spawner.add_spawnable_scene(gun_drone_scene.resource_path)
 	spawner.add_spawnable_scene(dog_enemy_scene.resource_path)
 	spawner.add_spawnable_scene(bug_1_enemy_scene.resource_path)
 	spawner.add_spawnable_scene(bot_1_enemy_scene.resource_path)
+
+	spawner.add_spawnable_scene(bot_drone_1_scene.resource_path)
 	
 	if not multiplayer.is_server():
 		return
 	
-	spawn_drone.connect(debug_create_enemy.bind(EnemyType.DRONE))
+	#spawn_drone.connect(debug_create_enemy.bind(EnemyType.DRONE))
 	spawn_dog.connect(debug_create_enemy.bind(EnemyType.DOG))
 	spawn_bug_1.connect(debug_create_enemy.bind(EnemyType.BUG_1))
 	spawn_bot_1.connect(debug_create_enemy.bind(EnemyType.BOT_1))
+	spawn_drone.connect(debug_create_enemy.bind(EnemyType.BOT_DRONE_1))
 	
 	debug_kill_all.connect(on_debug_kill_all)
 
@@ -75,8 +78,8 @@ func debug_create_enemy(type: EnemyType):
 	var enemy_to_spawn
 	
 	match type:
-		EnemyType.DRONE:
-			enemy_to_spawn = gun_drone_scene.instantiate()
+		EnemyType.BOT_DRONE_1:
+			enemy_to_spawn = bot_drone_1_scene.instantiate()
 		EnemyType.DOG:
 			enemy_to_spawn = dog_enemy_scene.instantiate()
 		EnemyType.BUG_1:
@@ -94,8 +97,8 @@ func create_enemy(data: Variant):
 	var enemy_to_spawn
 	
 	match type:
-		EnemyType.DRONE:
-			enemy_to_spawn = gun_drone_scene.instantiate()
+		EnemyType.BOT_DRONE_1:
+			enemy_to_spawn = bot_drone_1_scene.instantiate()
 		EnemyType.DOG:
 			enemy_to_spawn = dog_enemy_scene.instantiate()
 		EnemyType.BUG_1:
@@ -104,15 +107,15 @@ func create_enemy(data: Variant):
 			enemy_to_spawn = bot_1_enemy_scene.instantiate()
 
 	enemy_to_spawn.position = Hub.castle.global_position + Vector3(0.0, 0.0, -130.0) + Vector3(randi_range(-6, 6), 0.2, randi_range(-3, 3)) * 10
-	#container.call_deferred("add_child", enemy_to_spawn, true)
+	#container.call_deferred("add_child", enemy_to_spawn, tarue)
 	return enemy_to_spawn
 
 func get_player_factor():
 	return Hub.player_container.get_child_count() * 2
 
 func prepare_possible_patrols():
-	const first_patrol = [EnemyType.DRONE, EnemyType.DRONE, EnemyType.DRONE]
-	const second_patrol = [EnemyType.DOG, EnemyType.DOG, EnemyType.DOG,EnemyType.DOG]
+	const first_patrol = [EnemyType.BOT_DRONE_1, EnemyType.BOT_DRONE_1, EnemyType.BOT_DRONE_1]
+	const second_patrol = [EnemyType.DOG, EnemyType.DOG, EnemyType.DOG, EnemyType.DOG]
 	const third_patrol = [EnemyType.BUG_1, EnemyType.BUG_1, EnemyType.BUG_1,EnemyType.BUG_1, EnemyType.BUG_1]
 
 	return [first_patrol, second_patrol, third_patrol]
@@ -146,4 +149,3 @@ func on_debug_kill_all():
 	for enemy in container.get_children():
 		enemy.set_process(false)
 		enemy.queue_free()
-	

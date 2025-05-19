@@ -14,8 +14,6 @@ var timer_give_up = Timer.new()
 
 
 signal give_up_signal
-@warning_ignore("unused_signal")
-signal attack_signal
 
 func _ready() -> void:
 	parent = get_parent()
@@ -46,7 +44,7 @@ func _ready() -> void:
 	
 	add_child(timer_give_up)
 	timer_give_up.timeout.connect(give_up)
-	timer_give_up.wait_time = 10.0
+	timer_give_up.wait_time = 12.0
 	timer_give_up.one_shot = true # Do not repeatedly give up
 
 	add_child(timer_patrol)

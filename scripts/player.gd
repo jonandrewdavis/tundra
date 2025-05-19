@@ -7,7 +7,6 @@ const FRICTION = 100
 const ACCELERATION = 22.0
 const DEFAULT_SPEED := 5.5
 const SLOW_SPEED := 3.5
-
 var CURRENT_SPEED = DEFAULT_SPEED
 
 @export_category("BAD Template Nodes")
@@ -40,9 +39,10 @@ var _animation_player: AnimationPlayer
 @export var player_ui: PlayerUI
 @export var pvp = false
 
+signal main_menu_signal
+
 var peer_id: int
 var respawn: bool
-
 
 # TODO: Heat should be a stat like health, and signals can change it
 # TODO: Heat should be a component, like in Forest Bath
@@ -53,9 +53,10 @@ var respawn: bool
 var interaction_check_timer = Timer.new()
 
 # TODO: remove once debug done
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed('ui_cancel'):
-		get_tree().quit()
+
+#func _input(event: InputEvent) -> void:
+	#if event.is_action_pressed('ui_cancel'):
+		#get_tree().quit()
 
 func _enter_tree():
 	_player_input.set_multiplayer_authority(str(name).to_int())

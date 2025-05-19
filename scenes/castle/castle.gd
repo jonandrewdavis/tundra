@@ -108,14 +108,19 @@ func consume_fuel():
 	if Hub.player_container.get_child_count() == 0:
 		castle_on = false
 		speed = 0.0
+		return
+	
 	
 	var next_fuel
 	if castle_on:
-		next_fuel = fuel - 2
+		next_fuel = fuel - 1.8
 	else:
 		next_fuel = fuel - 0.5
 	
 	next_fuel = clamp(next_fuel, 0, 1000)
+	if next_fuel == 0:
+		turn_castle_off()
+		
 	fuel = next_fuel
 	
 	fuel_updated.emit(fuel)
@@ -136,3 +141,10 @@ func play_industrial_sounds(sound_is_on):
 		$CastleIndustrialSounds.play()
 	else:
 		$CastleIndustrialSounds.stop()
+
+
+func turn_castle_off():
+	play_industrial_sounds.rpc(false)
+	castle_on = false
+	speed = 0.0
+	

@@ -10,7 +10,7 @@ metadata={
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b91590a0e19cd3f82adb0657235897f5"
+"md5": "847637991a6c3e9ac6d4e6f0fafc17d8"
 }
 
 [deps]
@@ -23,6 +23,8 @@ dest_files=["res://.godot/imported/arbol7_bark_brown_02_diff_2k.jpg-f77c6eeaae16
 compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0

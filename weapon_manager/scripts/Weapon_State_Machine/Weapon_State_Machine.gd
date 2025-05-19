@@ -199,6 +199,7 @@ func shoot():
 		
 		var Spread = Vector2.ZERO
 		
+		# TODO: Could change animation speed scale to reward non-zoom shots, or not.
 		if current_weapon.weapon_spray and not player._player_input.aim_input:
 			count = count + 1
 			# if player_input.aim == false:
@@ -281,6 +282,8 @@ func melee() -> void:
 			var colliders = melee_hitbox.get_collision_count()
 			for col in colliders:
 				var body: Node3D = melee_hitbox.get_collider(col)
+				if not body:
+					return
 				if body.is_in_group('targets') or body.is_in_group('players'):
 					var heath_system: HealthSystem = body.health_system
 					var damage_successful = heath_system.damage(current_weapon.melee_damage, int(player.name))

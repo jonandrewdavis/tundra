@@ -39,7 +39,7 @@ func _on_open_maw():
 # TODO: Fuel regen
 func _on_detect_food(body):
 	if body:
-		castle.gain_fuel(55)
+		castle.gain_fuel(120)
 		body.set_process(false)
 		body.queue_free()
 		

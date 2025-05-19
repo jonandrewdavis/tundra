@@ -25,8 +25,12 @@ var walking_scene_timer = Timer.new()
 var start = preload("res://scenes/walking_terrain/walking_scenes/starting_area.tscn")
 var forest_1 = preload("res://scenes/walking_terrain/walking_scenes/forest_1.tscn")
 var bunker_1 = preload("res://scenes/walking_terrain/walking_scenes/bunker_1.tscn")
+var rocky_area_1 = preload("res://scenes/walking_terrain/walking_scenes/rocky_area_1.tscn")
+var bunker_2 = preload("res://scenes/walking_terrain/walking_scenes/bunker_2.tscn")
 
-var SCENE_LIST = [start, forest_1, bunker_1]
+var LIST = [start, forest_1, bunker_1, rocky_area_1, bunker_2]
+
+enum SCENE { START, FOREST, BUNKER_1, ROCKY_1, BUNKER_2 }
 
 var walking_scene_length = 200.0
 var walking_scene_center = 0.0
@@ -34,7 +38,7 @@ var walking_scene_center = 0.0
 # 0 = "most behind"
 # 1 = "center"
 # 2 = "coming soon!"
-var starting_platforms: Array[PackedScene] = [forest_1, bunker_1, forest_1]
+var starting_platforms: Array[PackedScene] = [LIST[SCENE.FOREST], LIST[SCENE.BUNKER_2], LIST[SCENE.FOREST]]
 
 var current_platforms: Array[Node3D] = []
 
@@ -53,9 +57,10 @@ func _ready() -> void:
 		return
 
 	await get_tree().process_frame 
-	var back = spawner.spawn([1, 0 - walking_scene_length])
-	var center = spawner.spawn([0, 0])
-	var front = spawner.spawn([1, 0 + walking_scene_length])
+	# manually setting starting platforms
+	var back = spawner.spawn([SCENE.FOREST, 0 - walking_scene_length])
+	var center = spawner.spawn([SCENE.BUNKER_1, 0])
+	var front = spawner.spawn([SCENE.FOREST, 0 + walking_scene_length])
 
 	current_platforms.append(back)
 	current_platforms.append(center)
@@ -133,7 +138,7 @@ func add_platform(dir: DIR, _scene_index = 0):
 func handle_platform_spawn(data: Variant): 
 	var scene_index = data[0]
 	var platform_pos = data[1]
-	var new_platform = SCENE_LIST[scene_index].instantiate()
+	var new_platform = LIST[scene_index].instantiate()
 	new_platform.position.z = platform_pos
 
 	return new_platform
@@ -141,14 +146,14 @@ func handle_platform_spawn(data: Variant):
 	
 func add_platform_proxy(dir: DIR, scene_index = 0):
 	if dir == DIR.INFRONT:
-		var new_platform = SCENE_LIST[scene_index].instantiate()
+		var new_platform = LIST[scene_index].instantiate()
 		current_platforms.push_back(new_platform)
 		container.add_child(new_platform, true)
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
 		print('ADD IN FRONT: ', walking_scene_center + new_offset)
 		new_platform.global_position.z = walking_scene_center + new_offset
 	else:
-		var new_platform = SCENE_LIST[scene_index].instantiate()
+		var new_platform = LIST[scene_index].instantiate()
 		current_platforms.push_front(new_platform)
 		container.add_child(new_platform, true)
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
