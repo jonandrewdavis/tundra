@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c2wy5akn6qece"
-path="res://.godot/imported/sci-fi_bulding.glb-0f715476e96935059914aa0137900c54.scn"
+valid=false
 
 [deps]
 
 source_file="res://scenes/walking_terrain/walking_scenes/walking_scene_assets/sci-fi_bulding.glb"
-dest_files=["res://.godot/imported/sci-fi_bulding.glb-0f715476e96935059914aa0137900c54.scn"]
 
 [params]
 

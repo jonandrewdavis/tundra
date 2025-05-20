@@ -3,12 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5tb4aiqhm5y6"
-path.s3tc="res://.godot/imported/arbol1_bark_brown_02_diff_2k.jpg-37baa180a825b191c8c2dc20d58becbd.s3tc.ctex"
-path.etc2="res://.godot/imported/arbol1_bark_brown_02_diff_2k.jpg-37baa180a825b191c8c2dc20d58becbd.etc2.ctex"
-metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
-}
+valid=false
 generator_parameters={
 "md5": "847637991a6c3e9ac6d4e6f0fafc17d8"
 }
@@ -16,7 +11,6 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/nature/trees/arbol1_bark_brown_02_diff_2k.jpg"
-dest_files=["res://.godot/imported/arbol1_bark_brown_02_diff_2k.jpg-37baa180a825b191c8c2dc20d58becbd.s3tc.ctex", "res://.godot/imported/arbol1_bark_brown_02_diff_2k.jpg-37baa180a825b191c8c2dc20d58becbd.etc2.ctex"]
 
 [params]
 

@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://1ung3gyf7uok"
-path="res://.godot/imported/slso8-8x.png-43df550afc1a085e02c17c6fc119bda5.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://scripts/shaders/color_palette_shader/slso8-8x.png"
-dest_files=["res://.godot/imported/slso8-8x.png-43df550afc1a085e02c17c6fc119bda5.ctex"]
 
 [params]
 

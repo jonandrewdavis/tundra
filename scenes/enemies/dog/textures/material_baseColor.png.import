@@ -3,17 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0uiiqvqnbaom"
-path.s3tc="res://.godot/imported/material_baseColor.png-3554061226564dd88f6f7482cf1ab88e.s3tc.ctex"
-path.etc2="res://.godot/imported/material_baseColor.png-3554061226564dd88f6f7482cf1ab88e.etc2.ctex"
-metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
-}
+valid=false
 
 [deps]
 
 source_file="res://scenes/enemies/dog/textures/material_baseColor.png"
-dest_files=["res://.godot/imported/material_baseColor.png-3554061226564dd88f6f7482cf1ab88e.s3tc.ctex", "res://.godot/imported/material_baseColor.png-3554061226564dd88f6f7482cf1ab88e.etc2.ctex"]
 
 [params]
 

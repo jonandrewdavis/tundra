@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://50r4os1n6gv5"
-path="res://.godot/imported/tundra_view_1.png-f8f9ed43ad03959998a8dfef0423d8b1.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://tundra_view_1.png"
-dest_files=["res://.godot/imported/tundra_view_1.png-f8f9ed43ad03959998a8dfef0423d8b1.ctex"]
 
 [params]
 

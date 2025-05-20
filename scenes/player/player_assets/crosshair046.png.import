@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://clx8vvaklih15"
-path="res://.godot/imported/crosshair046.png-7c0c0eb3a605621ed3b4d86a4c8f9dee.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://scenes/player/player_assets/crosshair046.png"
-dest_files=["res://.godot/imported/crosshair046.png-7c0c0eb3a605621ed3b4d86a4c8f9dee.ctex"]
 
 [params]
 

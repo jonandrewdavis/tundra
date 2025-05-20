@@ -3,17 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://llvfwg36k0u3"
-path.s3tc="res://.godot/imported/text_1_metallicRoughness.png-0eb2a1502aabed8814febd4bc8e12b8f.s3tc.ctex"
-path.etc2="res://.godot/imported/text_1_metallicRoughness.png-0eb2a1502aabed8814febd4bc8e12b8f.etc2.ctex"
-metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
-}
+valid=false
 
 [deps]
 
 source_file="res://scenes/enemies/bug_1/bug_character_1/textures/text_1_metallicRoughness.png"
-dest_files=["res://.godot/imported/text_1_metallicRoughness.png-0eb2a1502aabed8814febd4bc8e12b8f.s3tc.ctex", "res://.godot/imported/text_1_metallicRoughness.png-0eb2a1502aabed8814febd4bc8e12b8f.etc2.ctex"]
 
 [params]
 

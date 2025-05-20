@@ -3,12 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxa5ioi7oho8d"
-path.s3tc="res://.godot/imported/military_buildings_single_CLEAN_Image_0.png-e49c5aa6b852d4c0018fe098791809fe.s3tc.ctex"
-path.etc2="res://.godot/imported/military_buildings_single_CLEAN_Image_0.png-e49c5aa6b852d4c0018fe098791809fe.etc2.ctex"
-metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
-}
+valid=false
 generator_parameters={
 "md5": "111a2105e1a3e27ab8f52f0e69734c61"
 }
@@ -16,7 +11,6 @@ generator_parameters={
 [deps]
 
 source_file="res://scenes/walking_terrain/walking_scenes/walking_scene_assets/military_buildings_single_CLEAN_Image_0.png"
-dest_files=["res://.godot/imported/military_buildings_single_CLEAN_Image_0.png-e49c5aa6b852d4c0018fe098791809fe.s3tc.ctex", "res://.godot/imported/military_buildings_single_CLEAN_Image_0.png-e49c5aa6b852d4c0018fe098791809fe.etc2.ctex"]
 
 [params]
 

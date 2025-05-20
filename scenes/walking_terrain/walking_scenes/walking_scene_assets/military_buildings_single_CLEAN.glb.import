@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bddphlogs4e37"
-path="res://.godot/imported/military_buildings_single_CLEAN.glb-c5cfa6bcf225e72041ce1258f2e7d502.scn"
+valid=false
 
 [deps]
 
 source_file="res://scenes/walking_terrain/walking_scenes/walking_scene_assets/military_buildings_single_CLEAN.glb"
-dest_files=["res://.godot/imported/military_buildings_single_CLEAN.glb-c5cfa6bcf225e72041ce1258f2e7d502.scn"]
 
 [params]
 

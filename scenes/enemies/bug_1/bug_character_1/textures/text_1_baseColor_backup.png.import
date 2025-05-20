@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8i6h16rruywb"
-path="res://.godot/imported/text_1_baseColor_backup.png-a3888b892064ece22914b920ee46f59c.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://scenes/enemies/bug_1/bug_character_1/textures/text_1_baseColor_backup.png"
-dest_files=["res://.godot/imported/text_1_baseColor_backup.png-a3888b892064ece22914b920ee46f59c.ctex"]
 
 [params]
 

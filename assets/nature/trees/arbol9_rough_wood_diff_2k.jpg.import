@@ -3,12 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmhid2bqy6rya"
-path.s3tc="res://.godot/imported/arbol9_rough_wood_diff_2k.jpg-31cf5e72d40b1de80e177f436ab457ea.s3tc.ctex"
-path.etc2="res://.godot/imported/arbol9_rough_wood_diff_2k.jpg-31cf5e72d40b1de80e177f436ab457ea.etc2.ctex"
-metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
-}
+valid=false
 generator_parameters={
 "md5": "0fcd32292ec23f3e1a067b8713fd4d91"
 }
@@ -16,7 +11,6 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/nature/trees/arbol9_rough_wood_diff_2k.jpg"
-dest_files=["res://.godot/imported/arbol9_rough_wood_diff_2k.jpg-31cf5e72d40b1de80e177f436ab457ea.s3tc.ctex", "res://.godot/imported/arbol9_rough_wood_diff_2k.jpg-31cf5e72d40b1de80e177f436ab457ea.etc2.ctex"]
 
 [params]
 
