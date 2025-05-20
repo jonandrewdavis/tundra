@@ -30,8 +30,8 @@ var active_game_id = ""
 
 func host_game(network_connection_configs: NetworkConnectionConfigs):
 	print("Host game")
-	if not OS.has_feature(DEDICATED_SERVER_FEATURE_NAME):
-		show_loading()
+	#if not OS.has_feature(DEDICATED_SERVER_FEATURE_NAME):
+		#show_loading()
 	
 	# print("Selected network scene: %s" % selected_network_configuration.scene)
 	

@@ -28,6 +28,7 @@ func host_game():
 	if NetworkManager.selected_network != NetworkManager.AvailableNetworks.ENET:
 		_show_secondary_network_options(true)
 	else:
+		print("Host IN ENET??")
 		NetworkManager.host_game(NetworkConnectionConfigs.new(NetworkManager.LOCALHOST))
 
 func join_game():
