@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://chieyce67wdv4"
 path.s3tc="res://.godot/imported/Material_baseColor.png-eeca5eb45fa713cc841942733cac52b9.s3tc.ctex"
-path.etc2="res://.godot/imported/Material_baseColor.png-eeca5eb45fa713cc841942733cac52b9.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/enemies/bot_1/bot_1_assets/textures/Material_baseColor.png"
-dest_files=["res://.godot/imported/Material_baseColor.png-eeca5eb45fa713cc841942733cac52b9.s3tc.ctex", "res://.godot/imported/Material_baseColor.png-eeca5eb45fa713cc841942733cac52b9.etc2.ctex"]
+dest_files=["res://.godot/imported/Material_baseColor.png-eeca5eb45fa713cc841942733cac52b9.s3tc.ctex"]
 
 [params]
 

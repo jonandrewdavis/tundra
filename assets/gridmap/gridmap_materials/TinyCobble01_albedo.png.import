@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhrtjubohcu6h"
 path.s3tc="res://.godot/imported/TinyCobble01_albedo.png-99dc76bad8147e95d4147129c337fe28.s3tc.ctex"
-path.etc2="res://.godot/imported/TinyCobble01_albedo.png-99dc76bad8147e95d4147129c337fe28.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/gridmap/gridmap_materials/TinyCobble01_albedo.png"
-dest_files=["res://.godot/imported/TinyCobble01_albedo.png-99dc76bad8147e95d4147129c337fe28.s3tc.ctex", "res://.godot/imported/TinyCobble01_albedo.png-99dc76bad8147e95d4147129c337fe28.etc2.ctex"]
+dest_files=["res://.godot/imported/TinyCobble01_albedo.png-99dc76bad8147e95d4147129c337fe28.s3tc.ctex"]
 
 [params]
 

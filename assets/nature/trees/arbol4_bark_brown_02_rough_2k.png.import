@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d22pn40vo2uni"
 path.s3tc="res://.godot/imported/arbol4_bark_brown_02_rough_2k.png-2d57a9be810663baa0e8976a1cc78bb2.s3tc.ctex"
-path.etc2="res://.godot/imported/arbol4_bark_brown_02_rough_2k.png-2d57a9be810663baa0e8976a1cc78bb2.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/nature/trees/arbol4_bark_brown_02_rough_2k.png"
-dest_files=["res://.godot/imported/arbol4_bark_brown_02_rough_2k.png-2d57a9be810663baa0e8976a1cc78bb2.s3tc.ctex", "res://.godot/imported/arbol4_bark_brown_02_rough_2k.png-2d57a9be810663baa0e8976a1cc78bb2.etc2.ctex"]
+dest_files=["res://.godot/imported/arbol4_bark_brown_02_rough_2k.png-2d57a9be810663baa0e8976a1cc78bb2.s3tc.ctex"]
 
 [params]
 

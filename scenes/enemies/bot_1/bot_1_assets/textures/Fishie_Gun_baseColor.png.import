@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bmnvkswej81du"
 path.s3tc="res://.godot/imported/Fishie_Gun_baseColor.png-d97e357a7a4c551d273a7720a22a6959.s3tc.ctex"
-path.etc2="res://.godot/imported/Fishie_Gun_baseColor.png-d97e357a7a4c551d273a7720a22a6959.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/enemies/bot_1/bot_1_assets/textures/Fishie_Gun_baseColor.png"
-dest_files=["res://.godot/imported/Fishie_Gun_baseColor.png-d97e357a7a4c551d273a7720a22a6959.s3tc.ctex", "res://.godot/imported/Fishie_Gun_baseColor.png-d97e357a7a4c551d273a7720a22a6959.etc2.ctex"]
+dest_files=["res://.godot/imported/Fishie_Gun_baseColor.png-d97e357a7a4c551d273a7720a22a6959.s3tc.ctex"]
 
 [params]
 
