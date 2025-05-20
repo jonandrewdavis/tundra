@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cg8u3n5o3xvqk"
 path.s3tc="res://.godot/imported/rock_7_R7_Roughness.jpg-a290ff385c3a81ef8688b1f7cb852233.s3tc.ctex"
+path.etc2="res://.godot/imported/rock_7_R7_Roughness.jpg-a290ff385c3a81ef8688b1f7cb852233.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environment/rocks/rock_7_R7_Roughness.jpg"
-dest_files=["res://.godot/imported/rock_7_R7_Roughness.jpg-a290ff385c3a81ef8688b1f7cb852233.s3tc.ctex"]
+dest_files=["res://.godot/imported/rock_7_R7_Roughness.jpg-a290ff385c3a81ef8688b1f7cb852233.s3tc.ctex", "res://.godot/imported/rock_7_R7_Roughness.jpg-a290ff385c3a81ef8688b1f7cb852233.etc2.ctex"]
 
 [params]
 

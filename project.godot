@@ -266,5 +266,6 @@ common/physics_jitter_fix=0.0
 
 [rendering]
 
+textures/vram_compression/import_etc2_astc=true
 environment/volumetric_fog/use_filter=0
 occlusion_culling/use_occlusion_culling=true

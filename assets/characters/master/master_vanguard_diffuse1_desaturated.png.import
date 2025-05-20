@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dayp6w1ratysj"
 path.s3tc="res://.godot/imported/master_vanguard_diffuse1_desaturated.png-0e463c2f6acf59dfd99c30950a16fbf1.s3tc.ctex"
+path.etc2="res://.godot/imported/master_vanguard_diffuse1_desaturated.png-0e463c2f6acf59dfd99c30950a16fbf1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/characters/master/master_vanguard_diffuse1_desaturated.png"
-dest_files=["res://.godot/imported/master_vanguard_diffuse1_desaturated.png-0e463c2f6acf59dfd99c30950a16fbf1.s3tc.ctex"]
+dest_files=["res://.godot/imported/master_vanguard_diffuse1_desaturated.png-0e463c2f6acf59dfd99c30950a16fbf1.s3tc.ctex", "res://.godot/imported/master_vanguard_diffuse1_desaturated.png-0e463c2f6acf59dfd99c30950a16fbf1.etc2.ctex"]
 
 [params]
 

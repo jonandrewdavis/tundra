@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://m8nbq5e5wwqp"
 path.s3tc="res://.godot/imported/Snow008A_1K-JPG_Roughness.jpg-1f8bc93d4cba4518b79baac971857c75.s3tc.ctex"
+path.etc2="res://.godot/imported/Snow008A_1K-JPG_Roughness.jpg-1f8bc93d4cba4518b79baac971857c75.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/ambient/Snow008A_1K-JPG/Snow008A_1K-JPG_Roughness.jpg"
-dest_files=["res://.godot/imported/Snow008A_1K-JPG_Roughness.jpg-1f8bc93d4cba4518b79baac971857c75.s3tc.ctex"]
+dest_files=["res://.godot/imported/Snow008A_1K-JPG_Roughness.jpg-1f8bc93d4cba4518b79baac971857c75.s3tc.ctex", "res://.godot/imported/Snow008A_1K-JPG_Roughness.jpg-1f8bc93d4cba4518b79baac971857c75.etc2.ctex"]
 
 [params]
 

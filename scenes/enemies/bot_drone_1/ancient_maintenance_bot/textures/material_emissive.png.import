@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0msydsqncyrw"
 path.s3tc="res://.godot/imported/material_emissive.png-a8c1186417ce30c1c8e7ac22d324c82f.s3tc.ctex"
+path.etc2="res://.godot/imported/material_emissive.png-a8c1186417ce30c1c8e7ac22d324c82f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/enemies/bot_drone_1/ancient_maintenance_bot/textures/material_emissive.png"
-dest_files=["res://.godot/imported/material_emissive.png-a8c1186417ce30c1c8e7ac22d324c82f.s3tc.ctex"]
+dest_files=["res://.godot/imported/material_emissive.png-a8c1186417ce30c1c8e7ac22d324c82f.s3tc.ctex", "res://.godot/imported/material_emissive.png-a8c1186417ce30c1c8e7ac22d324c82f.etc2.ctex"]
 
 [params]
 
