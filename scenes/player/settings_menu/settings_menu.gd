@@ -45,11 +45,15 @@ func _ready():
 	master_slider.value = volume_master_value
 	#sfx_slider.value = volume_sfx_value
 	#background_slider.value = volume_background_value
-	Nodash.error_missing(player, 'player')
-	#if player:
-		#camera_sensitivity = player._camera_input.CAMERA_MOUSE_ROTATION_SPEED
-		#sensitivity_slider.max_value = camera_sensitivity * 2
-		#sensitivity_slider.value = camera_sensitivity
+
+	master_slider.value_changed.connect(_on_master_value_changed)
+
+	camera_sensitivity = player._camera_input.CAMERA_MOUSE_ROTATION_SPEED
+	sensitivity_slider.step = 0.0001
+	sensitivity_slider.max_value = camera_sensitivity * 2
+	sensitivity_slider.min_value = 0.00001
+	sensitivity_slider.value = camera_sensitivity
+	sensitivity_slider.value_changed.connect(_on_sensitivity_slider_value_changed)
 
 func settings_menu_open(is_open):
 	if is_open == true:
@@ -60,7 +64,6 @@ func settings_menu_open(is_open):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _on_respawn_pressed():
-	#toggleMenu()
 	self.visible = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	await get_tree().create_timer(0.2).timeout
@@ -75,7 +78,8 @@ func _on_quit_pressed():
 	get_tree().quit(0)
 
 func _on_sensitivity_slider_value_changed(value):
-	player.sensitivity = value
+	player._camera_input.CAMERA_MOUSE_ROTATION_SPEED = value
+	#player.sensitivity = value
 	#player.joystick_sensitivity = value
 
 func _on_master_value_changed(value):

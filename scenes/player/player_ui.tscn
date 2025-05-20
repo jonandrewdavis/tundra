@@ -267,7 +267,7 @@ script = ExtResource("1_fatww")
 health_bar = NodePath("BottomLeft/MarginContainer/VBoxContainer/HealthBar")
 health_label = NodePath("BottomLeft/MarginContainer/VBoxContainer/HBoxContainer/HealthLabel")
 temp_bar = NodePath("BottomLeft/MarginContainer/VBoxContainer/TempBar")
-temp_label = NodePath("BottomLeft/MarginContainer/VBoxContainer/HBoxContainer/TempLabel")
+temp_label = NodePath("BottomLeft/MarginContainer/VBoxContainer/TempLabel")
 
 [node name="CustomSight" type="Control" parent="."]
 layout_mode = 3
@@ -506,15 +506,8 @@ layout_mode = 2
 [node name="HealthLabel" type="Label" parent="BottomLeft/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 23
 text = "100 / 100"
-horizontal_alignment = 1
-
-[node name="TempLabel" type="Label" parent="BottomLeft/MarginContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "30"
-horizontal_alignment = 2
 
 [node name="HealthBar" type="ProgressBar" parent="BottomLeft/MarginContainer/VBoxContainer"]
 material = SubResource("CanvasItemMaterial_d61dg")
@@ -535,6 +528,12 @@ theme_override_styles/background = ExtResource("5_d61dg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_g18nd")
 value = 70.0
 show_percentage = false
+
+[node name="TempLabel" type="Label" parent="BottomLeft/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "30"
 
 [node name="BottomRight" type="PanelContainer" parent="."]
 clip_contents = true

@@ -22,7 +22,7 @@ const CAMERA_SETTINGS_AIM = {
 	offset_x = 0.8,
 }
 
-const CAMERA_MOUSE_ROTATION_SPEED := 0.001
+var CAMERA_MOUSE_ROTATION_SPEED := 0.001
 const CAMERA_X_ROT_MIN := deg_to_rad(-50.9)
 const CAMERA_X_ROT_MAX := deg_to_rad(70)
 const CAMERA_UP_DOWN_MOVEMENT = -1
@@ -44,7 +44,6 @@ func _gather():
 	if camera_mount.is_inside_tree():
 		camera_basis = get_camera_rotation_basis()
 		camera_look = get_camera_vertical_look()
-
 
 
 func _input(event):

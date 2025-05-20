@@ -39,6 +39,7 @@ var _animation_player: AnimationPlayer
 @export var player_ui: PlayerUI
 @export var pvp = false
 
+@warning_ignore("unused_signal")
 signal main_menu_signal
 
 var peer_id: int
@@ -261,11 +262,13 @@ func death():
 const MOVES = { 
 	'STRAFE': {
 		'FAST': [ANIMATION_PREFIX + "run right", ANIMATION_PREFIX + "run left"],
-		'SLOW': [ANIMATION_PREFIX + "walk right", ANIMATION_PREFIX + "walk left"]
+		'SLOW': [ANIMATION_PREFIX + "walk right", ANIMATION_PREFIX + "walk left"],
+		'CROUCH': [ANIMATION_PREFIX + "walk crouching right", ANIMATION_PREFIX + "walk crouching left"],
 	},
 	'WALK': {
 		'FAST': [ANIMATION_PREFIX + "run backward", ANIMATION_PREFIX + "run forward"],
-		'SLOW': [ANIMATION_PREFIX + "walk backward", ANIMATION_PREFIX + "walk forward"]
+		'SLOW': [ANIMATION_PREFIX + "walk backward", ANIMATION_PREFIX + "walk forward"],
+		'CROUCH': [ANIMATION_PREFIX + "walk crouching backward", ANIMATION_PREFIX + "walk crouching forward"],
 	}
 }
 
@@ -273,9 +276,18 @@ const MOVES = {
 # TODO: Could be programmatic via a "AnimationSystem" 
 # NOTE: playback_default_blend_time = 0.4
 func on_animation_check():
+	var _crouching = _player_input.crouch_input
+
+	if _state_machine.state == (&'Idle'):
+		if _crouching:
+			_animation_player.play(ANIMATION_PREFIX + 'idle crouching aiming')
+		else: 
+			_animation_player.play(ANIMATION_PREFIX + 'idle aiming')
+		return 
+		
 	if _state_machine.state == (&'Move'):
 		var _dir = _player_input.input_dir
-		var _slowed = _player_input.aim_input
+		var _slowed = _player_input.aim_input or _crouching
 
 		if _slowed:
 			CURRENT_SPEED = SLOW_SPEED
@@ -284,20 +296,32 @@ func on_animation_check():
 			CURRENT_SPEED = DEFAULT_SPEED
 			_animation_player.speed_scale = 0.8
 
+		if _dir.y == 0.0 and _dir.x == 0.0 and _player_input.crouch_input:
+			#_animation_player.play(ANIMATION_PREFIX + 'idle aiming crouching')
+			return 
 		# Strafing (no input forward or backwards)
+		# TODO: Refactor due to adding crouching
 		if _dir.y == 0:
 			if _slowed:
-				if _dir.x < 0: 
-					_animation_player.play(MOVES.STRAFE.SLOW[1]) 
-					_animation_player.speed_scale = 1.2 # Slow strafe left is too fast.
-				if _dir.x > 0:_animation_player.play(MOVES.STRAFE.SLOW[0])
+				if _crouching:
+					if _dir.x < 0: _animation_player.play(MOVES.STRAFE.CROUCH[1])
+					if _dir.x > 0: _animation_player.play(MOVES.STRAFE.CROUCH[0])
+				else:
+					if _dir.x < 0: 
+						_animation_player.play(MOVES.STRAFE.SLOW[1])
+						_animation_player.speed_scale = 1.2 # Slow strafe left is too fast.
+					if _dir.x > 0:_animation_player.play(MOVES.STRAFE.SLOW[0])
 			else:
 				if _dir.x < 0: _animation_player.play(MOVES.STRAFE.FAST[1])
 				if _dir.x > 0:_animation_player.play(MOVES.STRAFE.FAST[0])				
 		else:
 			if _slowed:
-				if _dir.y < 0: _animation_player.play(MOVES.WALK.SLOW[1])
-				if _dir.y > 0:_animation_player.play(MOVES.WALK.SLOW[0])
+				if _crouching:
+					if _dir.y < 0: _animation_player.play(MOVES.WALK.CROUCH[1])
+					if _dir.y > 0:_animation_player.play(MOVES.WALK.CROUCH[0])	
+				else:
+					if _dir.y < 0: _animation_player.play(MOVES.WALK.SLOW[1])
+					if _dir.y > 0:_animation_player.play(MOVES.WALK.SLOW[0])
 			else:
 				if _dir.y < 0: _animation_player.play(MOVES.WALK.FAST[1])
 				 # No running backwards

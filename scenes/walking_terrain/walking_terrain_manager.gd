@@ -59,7 +59,7 @@ func _ready() -> void:
 	await get_tree().process_frame 
 	# manually setting starting platforms
 	var back = spawner.spawn([SCENE.FOREST, 0 - walking_scene_length])
-	var center = spawner.spawn([SCENE.BUNKER_1, 0])
+	var center = spawner.spawn([SCENE.START, 0])
 	var front = spawner.spawn([SCENE.FOREST, 0 + walking_scene_length])
 
 	current_platforms.append(back)
@@ -121,7 +121,7 @@ func add_platform(dir: DIR, _scene_index = 0):
 		add_platform_proxy(dir, _scene_index)
 		return
 		
-	var random = randi_range(1, 2)
+	var random = randi_range(0, LIST.size() - 1)
 	
 	if dir == DIR.INFRONT:
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.

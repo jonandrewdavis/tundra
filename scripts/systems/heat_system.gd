@@ -68,7 +68,7 @@ func on_temp_timer():
 	elif inside_dome:
 		temp_regen_increment = 8.0 * 1.0
 	elif outside_max:
-		temp_regen_increment = distance * -1.0
+		temp_regen_increment = distance / 8 * -1.0
 	elif outside_dome:
 		temp_regen_increment = distance / 16 * -1.0
 

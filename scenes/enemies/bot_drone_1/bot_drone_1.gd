@@ -228,9 +228,8 @@ func attack():
 func shoot():
 	var _target_point = target.global_position + Vector3(0.0, 0.7, 0.0)
 	await get_tree().create_timer(0.2).timeout
-
 	var _origin_point = %GunOrigin.global_position
-
+	shoot_sound_rpc.rpc()
 	var projectile_data = { 
 		'projectile_name': 'PinkBullet',
 		'origin_point': _origin_point,
@@ -242,3 +241,7 @@ func shoot():
 	}
 	
 	Hub.projectile_system.spawner.spawn(projectile_data)
+
+@rpc()
+func shoot_sound_rpc():
+	$ShootLaserSound.play()

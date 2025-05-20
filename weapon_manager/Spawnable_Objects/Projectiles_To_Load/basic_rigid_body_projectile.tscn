@@ -6,5 +6,5 @@
 [node name="RigidBodyProjectile" type="Node3D"]
 script = ExtResource("1_won33")
 Projectile_Type = "Rigidbody_Projectile"
-projectile_velocity = 35
+projectile_velocity = 40
 rigid_body_projectile = ExtResource("2_sowem")

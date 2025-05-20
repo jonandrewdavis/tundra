@@ -188,8 +188,12 @@ func update_interaction_label(interactable_name: String):
 
 @rpc
 func update_temp(new_temp: float):
-	var tween = create_tween()
+	var tween = create_tween().set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(%TempBar, "value", new_temp, 1.0)
+
+	var text_tween: Tween = create_tween().set_trans(Tween.TRANS_LINEAR)
+	text_tween.tween_method(func(_v): %TempLabel.text = "%.2f" % _v + " \u00B0F",%TempBar.value, new_temp, 1.0)
+
 
 @rpc
 func on_update_fog(new_fog: float):

@@ -8,6 +8,8 @@ var run_input: bool = false
 var shoot_input: bool = false
 var jump_input: bool = false
 var aim_input: bool = false
+var crouch_input: bool = false
+
 var main_menu_input: bool = false
 var _main_menu_buffer: bool = false
 
@@ -63,6 +65,8 @@ func _gather():
 	shoot_input = Input.is_action_pressed("shoot")
 	jump_input = Input.is_action_pressed("jump")
 	aim_input = Input.is_action_pressed("aim")
+	crouch_input = Input.is_action_pressed("crouch")
+
 	main_menu_input = _main_menu_buffer
 	_main_menu_buffer = false
 
