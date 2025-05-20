@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dxo3e2iikxkk5"]
 
 [ext_resource type="PackedScene" uid="uid://cjgj7u4x18y6g" path="res://assets/characters/master_3/master_3_animatons_constrained.glb" id="1_tx55n"]
-[ext_resource type="AnimationLibrary" uid="uid://b4m4s3nppr2mu" path="res://assets/characters/master_3/master_3.res" id="2_ghuxl"]
+[ext_resource type="AnimationLibrary" uid="uid://dioayttfjd456" path="res://assets/characters/master_3/master_3_animations_path/master_3.res" id="2_ghuxl"]
 
 [node name="master_3_animatons_constrained" instance=ExtResource("1_tx55n")]
 
@@ -64,7 +64,7 @@ bones/64/rotation = Quaternion(3.72525e-05, 0.999991, -0.00423932, 6.59914e-05)
 root_motion_track = NodePath("%GeneralSkeleton:Root")
 root_motion_local = false
 libraries = {
-&"": ExtResource("2_ghuxl")
+&"master_3": ExtResource("2_ghuxl")
 }
 
 [node name="RootMotionView" type="RootMotionView" parent="." index="2"]

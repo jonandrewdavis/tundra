@@ -26,38 +26,38 @@ func _process(_delta):
 	if Input.is_action_just_pressed("main_menu"):
 		_main_menu_buffer = true
 
-	if Input.is_action_just_pressed("DEBUG_B"):
-		parent.process_player_input.rpc_id(1, "DEBUG_B")
-
-	if Input.is_action_just_pressed("DEBUG_0"):
-		parent.process_player_input.rpc_id(1, "DEBUG_0")
-
 	if parent._state_machine.state in static_states:
 		return
 
 	if Input.is_action_just_pressed("interact"): 
-		parent.process_player_input.rpc_id(1, "interact")
+		parent.process_player_input.rpc("interact")
 
 	if Input.is_action_just_pressed("shoot"): 
-		parent.process_player_input.rpc_id(1, "shoot")
+		parent.process_player_input.rpc("shoot")
 
 	if Input.is_action_just_pressed("weapon_up"):
-		parent.process_player_input.rpc_id(1, "weapon_up")
+		parent.process_player_input.rpc("weapon_up")
 
 	if Input.is_action_just_pressed("weapon_down"):
-		parent.process_player_input.rpc_id(1, "weapon_down")
+		parent.process_player_input.rpc("weapon_down")
 
 	if  Input.is_action_just_pressed("reload"):
-		parent.process_player_input.rpc_id(1, "reload")
+		parent.process_player_input.rpc("reload")
 
 	if Input.is_action_just_pressed("melee"):
-		parent.process_player_input.rpc_id(1, "melee")
+		parent.process_player_input.rpc("melee")
 
 	if Input.is_action_just_pressed("special"):
-		parent.process_player_input.rpc_id(1, "special")
+		parent.process_player_input.rpc("special")
 
 	if Input.is_action_just_pressed("DEBUG_K"):
-		parent.process_player_input.rpc_id(1, "DEBUG_K")
+		parent.process_player_input.rpc("DEBUG_K")
+
+	if Input.is_action_just_pressed("DEBUG_B"):
+		parent.process_player_input.rpc("DEBUG_B")
+
+	if Input.is_action_just_pressed("DEBUG_0"):
+		parent.process_player_input.rpc("DEBUG_0")
 
 func _gather():
 	input_dir = Input.get_vector("left", "right", "forward", "backward")

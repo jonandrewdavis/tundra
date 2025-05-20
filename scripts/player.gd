@@ -156,8 +156,16 @@ func _process(_delta: float) -> void:
 
 # NOTICE: Updated to be an rpc_id(1) from any peer. This makes the player client call
 # directly to the server on it's matching player node. Avoids broadcasting local client inputs to other clients.
+
+# TODO: Delete. 
 @rpc('any_peer')
 func process_player_input(input_string: StringName):
+	if not multiplayer.is_server():
+		return
+		
+	if peer_id != multiplayer.get_remote_sender_id():
+		return
+	
 	match input_string:
 		"weapon_up":
 			weapons_manager.change_weapon(weapons_manager.CHANGE_DIR.UP)
@@ -304,35 +312,36 @@ func on_animation_check():
 		if _dir.y == 0:
 			if _slowed:
 				if _crouching:
-					if _dir.x < 0: _animation_player.play(MOVES.STRAFE.CROUCH[1])
-					if _dir.x > 0: _animation_player.play(MOVES.STRAFE.CROUCH[0])
+					if _dir.x < -0.4: _animation_player.play(MOVES.STRAFE.CROUCH[1])
+					if _dir.x > 0.4: _animation_player.play(MOVES.STRAFE.CROUCH[0])
 				else:
-					if _dir.x < 0: 
+					if _dir.x < -0.4: 
 						_animation_player.play(MOVES.STRAFE.SLOW[1])
 						_animation_player.speed_scale = 1.2 # Slow strafe left is too fast.
-					if _dir.x > 0:_animation_player.play(MOVES.STRAFE.SLOW[0])
+					if _dir.x > 0.4:_animation_player.play(MOVES.STRAFE.SLOW[0])
 			else:
-				if _dir.x < 0: _animation_player.play(MOVES.STRAFE.FAST[1])
-				if _dir.x > 0:_animation_player.play(MOVES.STRAFE.FAST[0])				
+				if _dir.x < -0.4: _animation_player.play(MOVES.STRAFE.FAST[1])
+				if _dir.x > 0.4:_animation_player.play(MOVES.STRAFE.FAST[0])				
 		else:
 			if _slowed:
 				if _crouching:
-					if _dir.y < 0: _animation_player.play(MOVES.WALK.CROUCH[1])
-					if _dir.y > 0:_animation_player.play(MOVES.WALK.CROUCH[0])	
+					if _dir.y < -0.4: _animation_player.play(MOVES.WALK.CROUCH[1])
+					if _dir.y > 0.4:_animation_player.play(MOVES.WALK.CROUCH[0])	
 				else:
-					if _dir.y < 0: _animation_player.play(MOVES.WALK.SLOW[1])
-					if _dir.y > 0:_animation_player.play(MOVES.WALK.SLOW[0])
+					if _dir.y < -0.4: _animation_player.play(MOVES.WALK.SLOW[1])
+					if _dir.y > 0.4:_animation_player.play(MOVES.WALK.SLOW[0])
 			else:
-				if _dir.y < 0: 
-					if _player_input.run_input and _dir.x == 0.0:
-						_animation_player.play(ANIMATION_PREFIX + 'sprint forward')
+				if _dir.y < 0.0: 
+					#if _player_input.run_input and _dir.x == 0.0:
+						#_animation_player.play(ANIMATION_PREFIX + 'sprint forward')
+					#else:
+					if _dir.x < -0.4:
+						_animation_player.play(ANIMATION_PREFIX + 'run forward left')
+					elif _dir.x > 0.4:
+						_animation_player.play(ANIMATION_PREFIX + 'run forward right')
 					else:
-						if _dir.x == 0.0:
-							_animation_player.play(MOVES.WALK.FAST[1])
-						elif _dir.x < 0:
-							_animation_player.play(ANIMATION_PREFIX + 'run forward left')
-						elif _dir.x > 0:
-							_animation_player.play(ANIMATION_PREFIX + 'run forward right')
+						_animation_player.play(MOVES.WALK.FAST[1])
+						
 				 # No running backwards
 				# TODO: Slow factor even more if backwards + aiming?
 				if _dir.y > 0: 
