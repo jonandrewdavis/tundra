@@ -78,11 +78,12 @@ func _ready():
 		Hub.castle.fuel_updated.connect(func (new_fuel): on_update_fuel.rpc_id(peer_id, new_fuel))
 		Hub.castle.health_system.health_updated.connect(func (new_health): on_update_castle_health.rpc_id(peer_id, new_health))
 
+		Hub.castle.distance_travelled_updated.connect(func (dist): update_distance_travelled.rpc(dist))
 		Hub.castle.castle_deposit_box.collect_objective.connect(func(): on_objective_collected.rpc())
 
 	else:
 		# Client code
-		DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
+		#DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
 	
 		# Only clients need hit sight timer. RPC just starts it.
 		add_child(hit_sight_timer)
@@ -194,6 +195,9 @@ func update_temp(new_temp: float):
 	var text_tween: Tween = create_tween().set_trans(Tween.TRANS_LINEAR)
 	text_tween.tween_method(func(_v): %TempLabel.text = "%.2f" % _v + " \u00B0F",%TempBar.value, new_temp, 1.0)
 
+@rpc
+func update_distance_travelled(distance):
+	%DistanceLabel.text = "%.2f" % distance
 
 @rpc
 func on_update_fog(new_fog: float):

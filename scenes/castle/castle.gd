@@ -15,9 +15,12 @@ class_name MovingCastle
 signal change_heat_dome_value #value: int
 signal change_castle_speed
 signal fuel_updated
+signal distance_travelled_updated
 
 @onready var castle_deposit_box = $CastleDepositBox
 
+var origin_at_death = 0.0
+var distance_travelled: float = 0.00
 var fuel_timer = Timer.new()
 
 # TODO: Allow picking new targets on a map or something
@@ -60,6 +63,7 @@ func _ready():
 		fuel_timer.timeout.connect(consume_fuel)
 		
 		health_system.hurt.connect(func(): on_castle_hurt.rpc())
+		health_system.death.connect(func(): origin_at_death = global_position.z)
 
 
 @export var speed: float = 0.0
@@ -110,7 +114,6 @@ func consume_fuel():
 		speed = 0.0
 		return
 	
-	
 	var next_fuel
 	if castle_on:
 		next_fuel = fuel - 1.4
@@ -122,8 +125,10 @@ func consume_fuel():
 		turn_castle_off()
 		
 	fuel = next_fuel
-	
 	fuel_updated.emit(fuel)
+
+	distance_travelled = abs(origin_at_death - global_position.z)
+	distance_travelled_updated.emit(distance_travelled / 1000)
 
 func gain_fuel(fuel_amount: int):
 	var next_fuel = fuel + fuel_amount

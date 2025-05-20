@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://ecbxwo8h2c1l"]
+[gd_scene load_steps=4 format=3 uid="uid://ecbxwo8h2c1l"]
 
+[ext_resource type="Theme" uid="uid://b3kq74llqlv3x" path="res://assets/themes/MinimalUI4/MinimalUI.tres" id="1_rp6kg"]
 [ext_resource type="Script" uid="uid://be6g0q8uwbpu7" path="res://scripts/menus/enet_menu.gd" id="1_sjfiw"]
+[ext_resource type="FontFile" uid="uid://bnudr3myap7vs" path="res://assets/themes/MinimalUI4/Strait-Regular.ttf" id="3_m8s1v"]
 
 [node name="EnetMenu" type="Control" node_paths=PackedStringArray("go_button", "back_button", "host_ip_input", "host_port_input", "option_label")]
 layout_mode = 3
 anchors_preset = 0
+theme = ExtResource("1_rp6kg")
 script = ExtResource("1_sjfiw")
 go_button = NodePath("VBoxContainer/BoxContainer/Go")
 back_button = NodePath("VBoxContainer/BoxContainer/Back")
@@ -18,6 +21,7 @@ offset_left = 20.0
 offset_top = 30.0
 offset_right = 504.0
 offset_bottom = 84.0
+theme_override_fonts/normal_font = ExtResource("3_m8s1v")
 theme_override_font_sizes/normal_font_size = 36
 text = "Connect to Host's Game"
 
@@ -53,14 +57,12 @@ custom_minimum_size = Vector2(119, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Back"
-flat = true
 
 [node name="Go" type="Button" parent="VBoxContainer/BoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_colors/font_color = Color(0, 0.819608, 0, 1)
-text = "Go!"
-flat = true
+text = "    Go!    "
 
 [connection signal="pressed" from="VBoxContainer/BoxContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="VBoxContainer/BoxContainer/Go" to="." method="_on_go_pressed"]

@@ -50,9 +50,10 @@ offset_right = 350.0
 offset_bottom = 243.5
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 
 [node name="Settings" type="PanelContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("1_wfram")
@@ -60,7 +61,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_wacxy")
 metadata/_tab_index = 0
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Settings"]
-visible = false
 self_modulate = Color(1, 1, 1, 0.145098)
 layout_mode = 2
 texture = SubResource("NoiseTexture2D_wcpwf")
@@ -214,7 +214,6 @@ visible = false
 layout_mode = 2
 
 [node name="Keybindings" type="PanelContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme = ExtResource("1_wfram")
@@ -222,7 +221,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_wacxy")
 metadata/_tab_index = 1
 
 [node name="TextureRect" type="TextureRect" parent="TabContainer/Keybindings"]
-visible = false
 self_modulate = Color(1, 1, 1, 0.145098)
 layout_mode = 2
 texture = SubResource("NoiseTexture2D_wcpwf")
@@ -252,35 +250,34 @@ Interact
 Fire - Primary
 Aim 
 -
--
+Melee
 Swap Weapon
 Drop Weapon
 Reload
 -
 -
 Jump
-Sprint
-Roll (Evade)"
+Sprint"
 
 [node name="Label" type="Label" parent="TabContainer/Keybindings/MarginContainer/VBoxContainer/Controls"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 21
-text = "[Tab]
+text = "[ESC] / [Tab]
 [WASD]
 [E]
 [Left Mouse]
 [Right Mouse]
 [Mouse Button 3]
 [Mouse Button 4]
-[1] - [2]
+[1] / [2] / [Mouse Wheel]
 [G]
 [R]
 [Q]
 [F]
-[Shift]
-[Space]"
+[Space]
+[Shift]"
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Keybindings/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -298,7 +295,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 21
-text = "Create enemy
+text = "Create enemy (drone)
+Create enemy (bug)
 Kill all enemies"
 
 [node name="Label" type="Label" parent="TabContainer/Keybindings/MarginContainer/VBoxContainer/DEBUG"]
@@ -307,4 +305,71 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 21
 text = "[0]
+[B]
 [K]"
+
+[node name="How to Play" type="PanelContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("1_wfram")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wacxy")
+metadata/_tab_index = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/How to Play"]
+self_modulate = Color(1, 1, 1, 0.145098)
+layout_mode = 2
+texture = SubResource("NoiseTexture2D_wcpwf")
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/How to Play"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/How to Play/MarginContainer"]
+layout_mode = 2
+
+[node name="Controls" type="HBoxContainer" parent="TabContainer/How to Play/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="Label" parent="TabContainer/How to Play/MarginContainer/VBoxContainer/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 21
+text = "1. Goal: Collect Data Frames
+
+2. Fuel your Castle
+
+3. Start the Castle engine
+
+4. Defend from enemies
+
+5. Stay close to stay warm!"
+
+[node name="Label" type="Label" parent="TabContainer/How to Play/MarginContainer/VBoxContainer/Controls"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 21
+text = "[ESC] / [Tab]
+[WASD]
+[E]
+[Left Mouse]
+[Right Mouse]
+[Mouse Button 3]
+[Mouse Button 4]
+[1] / [2] / [Mouse Wheel]
+- 
+[R]
+[Q]
+-
+[Shift]
+[Space]"
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/How to Play/MarginContainer/VBoxContainer"]
+layout_mode = 2

@@ -412,7 +412,7 @@ size_flags_vertical = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_u2sjp")
 theme_override_styles/fill = SubResource("StyleBoxFlat_55cys")
 max_value = 1000.0
-value = 500.0
+value = 700.0
 fill_mode = 3
 show_percentage = false
 
@@ -455,6 +455,17 @@ text = "/"
 layout_mode = 2
 size_flags_vertical = 0
 text = "10"
+
+[node name="Dist" type="HBoxContainer" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer/Dist"]
+layout_mode = 2
+text = "Distance: "
+
+[node name="DistanceLabel" type="Label" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer/Dist"]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="StatusLabels" type="HBoxContainer" parent="Topleft/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2

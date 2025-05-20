@@ -1,18 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bovdouhtnq13k"]
+[gd_scene load_steps=4 format=3 uid="uid://bovdouhtnq13k"]
 
+[ext_resource type="Theme" uid="uid://b3kq74llqlv3x" path="res://assets/themes/MinimalUI4/MinimalUI.tres" id="1_sdpsv"]
 [ext_resource type="Script" uid="uid://c378o7fgh54d6" path="res://scripts/menus/noray_menu.gd" id="1_v4v6j"]
-
-[sub_resource type="FontFile" id="FontFile_3e0mp"]
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/32/0/ascent = 0.0
-cache/0/32/0/descent = 0.0
-cache/0/32/0/underline_position = 0.0
-cache/0/32/0/underline_thickness = 0.0
-cache/0/32/0/scale = 1.0
+[ext_resource type="FontFile" uid="uid://bnudr3myap7vs" path="res://assets/themes/MinimalUI4/Strait-Regular.ttf" id="3_w6smr"]
 
 [node name="NorayMenu" type="Control" node_paths=PackedStringArray("go_button", "back_button", "host_ip_input", "host_gameid_input", "option_label")]
 layout_mode = 3
@@ -21,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_sdpsv")
 script = ExtResource("1_v4v6j")
 go_button = NodePath("VBoxContainer/BoxContainer/Go")
 back_button = NodePath("VBoxContainer/BoxContainer/Back")
@@ -34,6 +25,7 @@ offset_left = 18.0
 offset_top = 32.0
 offset_right = 502.0
 offset_bottom = 71.0
+theme_override_fonts/normal_font = ExtResource("3_w6smr")
 theme_override_font_sizes/normal_font_size = 36
 text = "Connect to game on Noray!"
 
@@ -56,7 +48,6 @@ placeholder_text = "Enter Noray IP"
 layout_mode = 2
 theme_override_colors/font_placeholder_color = Color(0.631373, 0.556863, 0, 1)
 theme_override_colors/font_color = Color(0.631373, 0.556863, 0, 1)
-theme_override_fonts/font = SubResource("FontFile_3e0mp")
 theme_override_font_sizes/font_size = 32
 placeholder_text = "Enter Host's Game ID"
 
@@ -68,7 +59,6 @@ custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Back"
-flat = true
 
 [node name="Go" type="Button" parent="VBoxContainer/BoxContainer"]
 custom_minimum_size = Vector2(120, 0)
@@ -76,7 +66,6 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_colors/font_color = Color(0, 0.819608, 0, 1)
 text = "Go!"
-flat = true
 
 [connection signal="pressed" from="VBoxContainer/BoxContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="VBoxContainer/BoxContainer/Go" to="." method="_on_go_pressed"]

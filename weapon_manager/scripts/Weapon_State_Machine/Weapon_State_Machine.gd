@@ -141,6 +141,10 @@ func change_weapon_leave(given_weapon_index: int):
 func can_fire():
 	if busy or get_slot(weapon_index) == null or get_weapon(weapon_index) == null:
 		return false
+		
+	if player._player_input.run_input:
+		return false
+		
 	return true
 
 ##############################################################

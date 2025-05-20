@@ -323,7 +323,16 @@ func on_animation_check():
 					if _dir.y < 0: _animation_player.play(MOVES.WALK.SLOW[1])
 					if _dir.y > 0:_animation_player.play(MOVES.WALK.SLOW[0])
 			else:
-				if _dir.y < 0: _animation_player.play(MOVES.WALK.FAST[1])
+				if _dir.y < 0: 
+					if _player_input.run_input and _dir.x == 0.0:
+						_animation_player.play(ANIMATION_PREFIX + 'sprint forward')
+					else:
+						if _dir.x == 0.0:
+							_animation_player.play(MOVES.WALK.FAST[1])
+						elif _dir.x < 0:
+							_animation_player.play(ANIMATION_PREFIX + 'run forward left')
+						elif _dir.x > 0:
+							_animation_player.play(ANIMATION_PREFIX + 'run forward right')
 				 # No running backwards
 				# TODO: Slow factor even more if backwards + aiming?
 				if _dir.y > 0: 
