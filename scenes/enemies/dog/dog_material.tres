@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b217kqn3hsf3b"]
+
+[ext_resource type="Texture2D" uid="uid://d0uiiqvqnbaom" path="res://scenes/enemies/dog/textures/material_baseColor.png" id="1_3cwu0"]
+
+[resource]
+resource_name = "material"
+cull_mode = 2
+shading_mode = 0
+albedo_texture = ExtResource("1_3cwu0")
+texture_filter = 0
