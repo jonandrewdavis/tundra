@@ -111,6 +111,9 @@ func _physics_process(delta: float) -> void:
 	
 # TODO: ADD LOOK
 func move_and_attack(_delta):
+	if health_system.health == 0:
+		set_state(States.DYING)
+
 	if position.distance_to(attack_position) > 1.0:
 		velocity = (attack_position - global_transform.origin).normalized() * speed * 2
 	elif position.distance_to(attack_position) > 12.0: 

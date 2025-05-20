@@ -216,7 +216,11 @@ func _on_animation_finished(animation_finished_name):
 
 	match animation_finished_name:
 		current_weapon.shoot_animation: 
-			_auto_fire_shoot()
+			if get_slot(weapon_index).current_ammo == 0: 
+				reload()
+			else:
+				_auto_fire_shoot()
+			
 		current_weapon.reload_animation:
 			if !current_weapon.incremental_reload:
 				calculate_reload()

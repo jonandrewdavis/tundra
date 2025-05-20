@@ -350,9 +350,9 @@ func interact_check():
 		player_ui.update_interaction_label.rpc_id(name.to_int(), intersect.label)
 	else:
 		if interactable:
-			player_ui.update_interaction_label.rpc_id(name.to_int(), '')	
 			interactable = null
-
+		
+		player_ui.update_interaction_label.rpc_id(name.to_int(), '')	
 
 # TODO: play "nope" sound if not able to do it
 # TODO: bind self or something here?

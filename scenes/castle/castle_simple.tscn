@@ -181,7 +181,7 @@ max_health = 2000
 regen_enabled = true
 regen_delay = 10.0
 regen_speed = 1.0
-regen_increment = 1
+regen_increment = 25
 
 [node name="HeatDome" parent="." instance=ExtResource("4_8nt25")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)

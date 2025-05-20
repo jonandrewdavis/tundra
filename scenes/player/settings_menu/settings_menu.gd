@@ -61,8 +61,15 @@ func settings_menu_open(is_open):
 
 func _on_respawn_pressed():
 	#toggleMenu()
+	self.visible = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	await get_tree().create_timer(0.2).timeout
-	player.health_system.died.emit()
+	_rpc_death.rpc(player.peer_id)
+
+@rpc('any_peer')
+func _rpc_death(peer_id):
+	if multiplayer.is_server():
+		Hub.get_player(peer_id).health_system.damage(100, 0)
 
 func _on_quit_pressed():
 	get_tree().quit(0)

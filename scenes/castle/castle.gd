@@ -113,9 +113,9 @@ func consume_fuel():
 	
 	var next_fuel
 	if castle_on:
-		next_fuel = fuel - 1.8
+		next_fuel = fuel - 1.4
 	else:
-		next_fuel = fuel - 0.5
+		next_fuel = fuel - 0.3
 	
 	next_fuel = clamp(next_fuel, 0, 1000)
 	if next_fuel == 0:
