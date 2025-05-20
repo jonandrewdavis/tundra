@@ -50,10 +50,9 @@ offset_right = 350.0
 offset_bottom = 243.5
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 2
+current_tab = 0
 
 [node name="Settings" type="PanelContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("1_wfram")
@@ -310,6 +309,7 @@ text = "[0]
 [K]"
 
 [node name="How to Play" type="PanelContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 theme = ExtResource("1_wfram")

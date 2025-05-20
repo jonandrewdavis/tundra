@@ -126,12 +126,12 @@ func add_platform(dir: DIR, _scene_index = 0):
 	if dir == DIR.INFRONT:
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
 		var new_platform = 	spawner.spawn([random, walking_scene_center + new_offset])
-		print('ADD IN FRONT: ', walking_scene_center + new_offset)
+		#print('ADD IN FRONT: ', walking_scene_center + new_offset)
 		current_platforms.push_back(new_platform)
 	else:
 		var new_offset = (walking_scene_length * 2) # TODO: Math out why this is correct.
 		var new_platform = spawner.spawn([random, walking_scene_center - new_offset])
-		print('ADD IN BACK: ', walking_scene_center - new_offset)
+		#print('ADD IN BACK: ', walking_scene_center - new_offset)
 		current_platforms.push_front(new_platform)
 
 # [index, pos]

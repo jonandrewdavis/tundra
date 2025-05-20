@@ -1,6 +1,7 @@
 [gd_resource type="ArrayMesh" load_steps=2 format=4 uid="uid://c4uxw6ab0ge37"]
 
-[ext_resource type="Material" uid="uid://dwmedoe14jqjo" path="res://weapon_manager/Spawnable_Objects/Projectiles_To_Load/bullet_yellow_material.tres" id="1_bylk1"]
+[ext_resource type="Material" uid="uid://b5442xcndl6ii" path="res://weapon_manager/Spawnable_Objects/bullet_scenes/bullet_yellow_material_v2.tres" id="1_bylk1"]
+
 
 [resource]
 resource_name = "foamBulletA_Mesh foamBulletA"

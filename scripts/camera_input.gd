@@ -23,6 +23,9 @@ const CAMERA_SETTINGS_AIM = {
 }
 
 var CAMERA_MOUSE_ROTATION_SPEED := 0.001
+
+var _effective_camera_rotation_speed = CAMERA_MOUSE_ROTATION_SPEED
+
 const CAMERA_X_ROT_MIN := deg_to_rad(-50.9)
 const CAMERA_X_ROT_MAX := deg_to_rad(70)
 const CAMERA_UP_DOWN_MOVEMENT = -1
@@ -51,10 +54,20 @@ func _input(event):
 		return 
 		
 	if event is InputEventMouseMotion:
-		rotate_camera(event.relative * CAMERA_MOUSE_ROTATION_SPEED)
-	
-	#if event.is_action_pressed("aim"):
-		#_set_camera(CAMERA_SETTINGS_AIM)
+		rotate_camera(event.relative * _effective_camera_rotation_speed)
+
+
+func _process(_delta):
+	var A1 = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
+	var A2 = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
+	if abs(A1) > 0.2 or abs(A2) > 0.2:
+		rotate_camera(Vector2(A1 * _effective_camera_rotation_speed * 15, A2 * _effective_camera_rotation_speed * 15))
+
+
+	if player._player_input.aim_input:
+		_effective_camera_rotation_speed = CAMERA_MOUSE_ROTATION_SPEED / 2
+	else:
+		_effective_camera_rotation_speed = CAMERA_MOUSE_ROTATION_SPEED
 
 # TODO: Lerp this so it's smooth.
 func tick(_delta, _tick):
@@ -68,7 +81,7 @@ func _set_camera(_new_settings):
 	camera_spring.spring_length = _new_settings.length
 	camera_spring.position.x = _new_settings.offset_x
 
-func rotate_camera(move):
+func rotate_camera(move: Vector2):
 	# Horizontal camera movement
 	# Currently, we only care to synch horizontal rotation, vertical camera changes are only for local client.
 	camera_mount.rotate_y(-move.x)

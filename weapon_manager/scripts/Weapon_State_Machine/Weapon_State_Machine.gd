@@ -21,7 +21,7 @@ var blasterL: WeaponResource = preload("res://weapon_manager/scripts/Weapon_Stat
 var blasterN: WeaponResource = preload("res://weapon_manager/scripts/Weapon_State_Machine/Weapon_Resources/blasterN.tres")
 
 enum WEAPONS {blasterL, blasterN}
-enum CHANGE_DIR { UP, DOWN}
+enum CHANGE_DIR { UP, DOWN, SWAP}
 
 signal update_weapon_signal
 signal update_weapon_prev_signal
@@ -110,6 +110,13 @@ func change_weapon(dir: CHANGE_DIR) -> void:
 		next_weapon_index = weapon_index - 1
 	elif dir == CHANGE_DIR.DOWN:
 		next_weapon_index = weapon_index + 1
+	elif dir == CHANGE_DIR.SWAP:
+		# TODO: this is wrong, wont work if we have lots of weapons?
+		if weapon_index == 0:
+			next_weapon_index = weapon_index + 1
+		else:
+			next_weapon_index = weapon_index - 1
+
 		
 	if next_weapon_index < 0 or next_weapon_index > weapons_owned.size() - 1:
 		return
@@ -142,8 +149,10 @@ func can_fire():
 	if busy or get_slot(weapon_index) == null or get_weapon(weapon_index) == null:
 		return false
 		
-	if player._player_input.run_input:
-		return false
+	# TODO: Sprint has to be a state.
+	
+	#if player._player_input.run_input:
+		#return false
 		
 	return true
 

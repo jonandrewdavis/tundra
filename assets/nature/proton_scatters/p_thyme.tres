@@ -1,28 +1,6 @@
-[gd_resource type="ArrayMesh" load_steps=8 format=4 uid="uid://be31c0mhtivn6"]
-
-[ext_resource type="Texture2D" uid="uid://catditkg1xt4j" path="res://assets/environment_objects/bushes/thyme_bush/textures/Material_Mat_baseColor.png" id="1_d8pd4"]
-[ext_resource type="Texture2D" uid="uid://dlhbgn76x0stp" path="res://assets/environment_objects/bushes/thyme_bush/textures/Material_Mat_metallicRoughness.png" id="2_53jqc"]
-[ext_resource type="Shader" uid="uid://20efvdim2ia3" path="res://utility scripts/SwayShaderExtended.gdshader" id="3_a5okb"]
-[ext_resource type="Texture2D" uid="uid://dmtydksrogiqp" path="res://assets/environment_objects/bushes/thyme_bush/textures/Material_Mat_normal.png" id="4_jly6a"]
+[gd_resource type="ArrayMesh" load_steps=4 format=4 uid="uid://bfg6m4x53b2ip"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ok0n"]
-render_priority = 0
-shader = ExtResource("3_a5okb")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/texture_albedo = ExtResource("1_d8pd4")
-shader_parameter/alpha_scissor_threshold = 0.8
-shader_parameter/point_size = 0.0
-shader_parameter/roughness = 0.0
-shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
-shader_parameter/specular = 0.0
-shader_parameter/metallic = 0.0
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(0, 0, 0)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/sway_speed = 5.0
-shader_parameter/sway_strength = 0.5
-shader_parameter/sway_phase_len = 8.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_05sad"]
 resource_name = "Material_Mat"
@@ -32,16 +10,11 @@ alpha_scissor_threshold = 0.848
 alpha_antialiasing_mode = 0
 cull_mode = 2
 albedo_color = Color(1, 1, 1, 0)
-albedo_texture = ExtResource("1_d8pd4")
 metallic_specular = 0.0
-metallic_texture = ExtResource("2_53jqc")
 metallic_texture_channel = 2
-roughness_texture = ExtResource("2_53jqc")
 roughness_texture_channel = 1
 normal_enabled = true
-normal_texture = ExtResource("4_jly6a")
 ao_enabled = true
-ao_texture = ExtResource("2_53jqc")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_bbngr"]
 _surfaces = [{

@@ -128,7 +128,6 @@ func heal(value):
 # TODO: killed, killer
 # TODO: Report the stats to Hub
 func on_report_death():
-	print('TODO: Reporting the death of an entity')
 	pass
 
 # TODO: Could abstract this system to handle regen of any property, like HEAT.
