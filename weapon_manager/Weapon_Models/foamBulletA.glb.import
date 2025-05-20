@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://ch7hy4de48c0p"
-path="res://.godot/imported/foamBulletA.glb-154777d20789884e056ed70c3a28a61f.scn"
+valid=false
 
 [deps]
 
 source_file="res://weapon_manager/Weapon_Models/foamBulletA.glb"
-dest_files=["res://.godot/imported/foamBulletA.glb-154777d20789884e056ed70c3a28a61f.scn"]
 
 [params]
 
