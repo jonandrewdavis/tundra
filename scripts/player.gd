@@ -92,14 +92,16 @@ func _ready():
 	rollback_synchronizer.process_settings()
 
 	# MultiplayerSyncronizer properties
+	# TODO: refactor this... or remove.
+	#if multiplayer.is_server() or multiplayer.get_unique_id() == peer_id:
+		#Nodash.warn_missing(_animation_player, '_animation_player')
+		#Nodash.sync_property(sync, _animation_player, ['active'])
+		#Nodash.sync_property(sync, _animation_player, ['current_animation'])
+		#Nodash.sync_property(sync, _animation_player, ['speed_scale'], false)
+		#Nodash.sync_property(sync, bones, ['active'])
+		#Nodash.sync_property(sync, self, ['pvp'])
 
-	Nodash.warn_missing(_animation_player, '_animation_player')
-	Nodash.sync_property(sync, _animation_player, ['active'])
-	Nodash.sync_property(sync, _animation_player, ['current_animation'])
-	Nodash.sync_property(sync, _animation_player, ['speed_scale'], false)
-	Nodash.sync_property(sync, bones, ['active'])
-	Nodash.sync_property(sync, self, ['pvp'])
-	#Nodash.sync_property(sync, weapon_pivot, ['rotation'], false)
+	##Nodash.sync_property(sync, weapon_pivot, ['rotation'], false)
 	
 	_animation_player.playback_default_blend_time = 0.3
 	# NOTE: Might not be necessary if fully server authoratitve.
@@ -123,7 +125,6 @@ func _ready():
 
 	health_system.death.connect(death)
 
-
 	# TIMERS
 	add_child(interaction_check_timer)
 	interaction_check_timer.wait_time = 0.2
@@ -134,9 +135,6 @@ func _ready():
 	# Allow raycast shooting from camera position
 	weapons_manager.player_camera_3D = _camera_input.camera_3D
 	weapons_manager.player_input = _player_input
-
-func _exit_tree() -> void:
-	Nodash.sync_remove_all(sync)
 
 # CRITICAL: Process is turned off for clients.
 func _process(_delta: float) -> void:
@@ -171,6 +169,8 @@ func process_player_input(input_string: StringName):
 			weapons_manager.change_weapon(weapons_manager.CHANGE_DIR.UP)
 		"weapon_down":
 			weapons_manager.change_weapon(weapons_manager.CHANGE_DIR.DOWN)
+		"weapon_swap":
+			weapons_manager.change_weapon(weapons_manager.CHANGE_DIR.SWAP)
 		"shoot":
 			weapons_manager.shoot()
 		"reload":
@@ -191,7 +191,7 @@ func process_player_input(input_string: StringName):
 func _rollback_tick(_delta, _tick, _is_fresh):
 	if health_system.health == 0:
 		_state_machine.transition(&"Dead")
-
+		
 	if respawn == true:
 		heat_system.temp = heat_system.max_temp
 		health_system.heal(health_system.max_health)
@@ -423,6 +423,9 @@ func interact():
 				holding = interactable
 			elif interactable.enable_pickup == true && holding:
 				holding = null
+	else:
+		weapons_manager.reload()
+
 
 func interact_holding(item_to_hold):
 	holding = item_to_hold

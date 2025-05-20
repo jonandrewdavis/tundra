@@ -1,6 +1,6 @@
 # Tundra
 
-<img src="tundra_view_1.png" width="328"/>
+<img src="tundra_view_w_logo.png" width="328"/>
 
 ## How to play
 

@@ -41,6 +41,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("weapon_down"):
 		parent.process_player_input.rpc("weapon_down")
 
+	if Input.is_action_just_pressed("weapon_swap"):
+		parent.process_player_input.rpc("weapon_swap")
+
 	if  Input.is_action_just_pressed("reload"):
 		parent.process_player_input.rpc("reload")
 
@@ -72,6 +75,3 @@ func _gather():
 
 func _reset():
 	_main_menu_buffer = false
-
-func _exit_tree():
-	NetworkTime.before_tick_loop.disconnect(_gather)
