@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dyso56pwqnqf"
 path.s3tc="res://.godot/imported/tape_baseColor.png-7a42af6f15917ec7c44b3a87313c1760.s3tc.ctex"
-path.etc2="res://.godot/imported/tape_baseColor.png-7a42af6f15917ec7c44b3a87313c1760.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/interactables/main_frame/mainframe_asset/textures/tape_baseColor.png"
-dest_files=["res://.godot/imported/tape_baseColor.png-7a42af6f15917ec7c44b3a87313c1760.s3tc.ctex", "res://.godot/imported/tape_baseColor.png-7a42af6f15917ec7c44b3a87313c1760.etc2.ctex"]
+dest_files=["res://.godot/imported/tape_baseColor.png-7a42af6f15917ec7c44b3a87313c1760.s3tc.ctex"]
 
 [params]
 

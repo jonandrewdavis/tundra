@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bniyoa87va0it"
 path.s3tc="res://.godot/imported/checker_metallicRoughness.png-3b18976b317e73a549958fd243d8f48c.s3tc.ctex"
-path.etc2="res://.godot/imported/checker_metallicRoughness.png-3b18976b317e73a549958fd243d8f48c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/castle_objects/console/textures/checker_metallicRoughness.png"
-dest_files=["res://.godot/imported/checker_metallicRoughness.png-3b18976b317e73a549958fd243d8f48c.s3tc.ctex", "res://.godot/imported/checker_metallicRoughness.png-3b18976b317e73a549958fd243d8f48c.etc2.ctex"]
+dest_files=["res://.godot/imported/checker_metallicRoughness.png-3b18976b317e73a549958fd243d8f48c.s3tc.ctex"]
 
 [params]
 

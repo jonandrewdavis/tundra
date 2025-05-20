@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cra630bsxt4dh"
 path.s3tc="res://.godot/imported/material_normal.png-8cbed6bddfbb237f65afec33c692f013.s3tc.ctex"
-path.etc2="res://.godot/imported/material_normal.png-8cbed6bddfbb237f65afec33c692f013.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/enemies/bot_drone_1/ancient_maintenance_bot/textures/material_normal.png"
-dest_files=["res://.godot/imported/material_normal.png-8cbed6bddfbb237f65afec33c692f013.s3tc.ctex", "res://.godot/imported/material_normal.png-8cbed6bddfbb237f65afec33c692f013.etc2.ctex"]
+dest_files=["res://.godot/imported/material_normal.png-8cbed6bddfbb237f65afec33c692f013.s3tc.ctex"]
 
 [params]
 

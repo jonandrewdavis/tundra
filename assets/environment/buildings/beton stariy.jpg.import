@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dntmijm5eo7b"
 path.s3tc="res://.godot/imported/beton stariy.jpg-f0f6992b9cac4f66ed19b791814fb63f.s3tc.ctex"
-path.etc2="res://.godot/imported/beton stariy.jpg-f0f6992b9cac4f66ed19b791814fb63f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/environment/buildings/beton stariy.jpg"
-dest_files=["res://.godot/imported/beton stariy.jpg-f0f6992b9cac4f66ed19b791814fb63f.s3tc.ctex", "res://.godot/imported/beton stariy.jpg-f0f6992b9cac4f66ed19b791814fb63f.etc2.ctex"]
+dest_files=["res://.godot/imported/beton stariy.jpg-f0f6992b9cac4f66ed19b791814fb63f.s3tc.ctex"]
 
 [params]
 

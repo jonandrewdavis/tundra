@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dgx1tkpc25kl0"
 path.s3tc="res://.godot/imported/Material_25_baseColor.png-f6fe93404745af00d31a36b7a2f04eaa.s3tc.ctex"
-path.etc2="res://.godot/imported/Material_25_baseColor.png-f6fe93404745af00d31a36b7a2f04eaa.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/nature/bush/3_pine_bushes/textures/Material_25_baseColor.png"
-dest_files=["res://.godot/imported/Material_25_baseColor.png-f6fe93404745af00d31a36b7a2f04eaa.s3tc.ctex", "res://.godot/imported/Material_25_baseColor.png-f6fe93404745af00d31a36b7a2f04eaa.etc2.ctex"]
+dest_files=["res://.godot/imported/Material_25_baseColor.png-f6fe93404745af00d31a36b7a2f04eaa.s3tc.ctex"]
 
 [params]
 

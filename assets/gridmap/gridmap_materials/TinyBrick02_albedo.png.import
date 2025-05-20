@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://r2xdv1gwiw3g"
 path.s3tc="res://.godot/imported/TinyBrick02_albedo.png-71e2f0080340fc4e9065b709804bad0b.s3tc.ctex"
-path.etc2="res://.godot/imported/TinyBrick02_albedo.png-71e2f0080340fc4e9065b709804bad0b.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/gridmap/gridmap_materials/TinyBrick02_albedo.png"
-dest_files=["res://.godot/imported/TinyBrick02_albedo.png-71e2f0080340fc4e9065b709804bad0b.s3tc.ctex", "res://.godot/imported/TinyBrick02_albedo.png-71e2f0080340fc4e9065b709804bad0b.etc2.ctex"]
+dest_files=["res://.godot/imported/TinyBrick02_albedo.png-71e2f0080340fc4e9065b709804bad0b.s3tc.ctex"]
 
 [params]
 

@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5ce8rgorgbd3"
 path.s3tc="res://.godot/imported/rock_7_R7_Normal.jpg-1009696eb3769eaa3c8d2a522c9116b1.s3tc.ctex"
-path.etc2="res://.godot/imported/rock_7_R7_Normal.jpg-1009696eb3769eaa3c8d2a522c9116b1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/environment/rocks/rock_7_R7_Normal.jpg"
-dest_files=["res://.godot/imported/rock_7_R7_Normal.jpg-1009696eb3769eaa3c8d2a522c9116b1.s3tc.ctex", "res://.godot/imported/rock_7_R7_Normal.jpg-1009696eb3769eaa3c8d2a522c9116b1.etc2.ctex"]
+dest_files=["res://.godot/imported/rock_7_R7_Normal.jpg-1009696eb3769eaa3c8d2a522c9116b1.s3tc.ctex"]
 
 [params]
 

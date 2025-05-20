@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ddwcquq3qs1ad"
 path.s3tc="res://.godot/imported/Ice003_1K-JPG_Color.jpg-6c4fa133a09ecb86b672dce7049a6c1b.s3tc.ctex"
-path.etc2="res://.godot/imported/Ice003_1K-JPG_Color.jpg-6c4fa133a09ecb86b672dce7049a6c1b.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/ambient/Ice003_1K-JPG/Ice003_1K-JPG_Color.jpg"
-dest_files=["res://.godot/imported/Ice003_1K-JPG_Color.jpg-6c4fa133a09ecb86b672dce7049a6c1b.s3tc.ctex", "res://.godot/imported/Ice003_1K-JPG_Color.jpg-6c4fa133a09ecb86b672dce7049a6c1b.etc2.ctex"]
+dest_files=["res://.godot/imported/Ice003_1K-JPG_Color.jpg-6c4fa133a09ecb86b672dce7049a6c1b.s3tc.ctex"]
 
 [params]
 

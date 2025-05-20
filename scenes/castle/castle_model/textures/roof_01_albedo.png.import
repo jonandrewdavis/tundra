@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://efe1w2ok4b05"
 path.s3tc="res://.godot/imported/roof_01_albedo.png-2a2fbc42ebc90e4d2078911f4f987e5a.s3tc.ctex"
-path.etc2="res://.godot/imported/roof_01_albedo.png-2a2fbc42ebc90e4d2078911f4f987e5a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/castle/castle_model/textures/roof_01_albedo.png"
-dest_files=["res://.godot/imported/roof_01_albedo.png-2a2fbc42ebc90e4d2078911f4f987e5a.s3tc.ctex", "res://.godot/imported/roof_01_albedo.png-2a2fbc42ebc90e4d2078911f4f987e5a.etc2.ctex"]
+dest_files=["res://.godot/imported/roof_01_albedo.png-2a2fbc42ebc90e4d2078911f4f987e5a.s3tc.ctex"]
 
 [params]
 

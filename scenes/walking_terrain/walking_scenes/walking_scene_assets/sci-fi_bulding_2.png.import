@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://pk04030c2fok"
 path.s3tc="res://.godot/imported/sci-fi_bulding_2.png-ce3d24ba947ffe25022d9f405a8a3da5.s3tc.ctex"
-path.etc2="res://.godot/imported/sci-fi_bulding_2.png-ce3d24ba947ffe25022d9f405a8a3da5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://scenes/walking_terrain/walking_scenes/walking_scene_assets/sci-fi_bulding_2.png"
-dest_files=["res://.godot/imported/sci-fi_bulding_2.png-ce3d24ba947ffe25022d9f405a8a3da5.s3tc.ctex", "res://.godot/imported/sci-fi_bulding_2.png-ce3d24ba947ffe25022d9f405a8a3da5.etc2.ctex"]
+dest_files=["res://.godot/imported/sci-fi_bulding_2.png-ce3d24ba947ffe25022d9f405a8a3da5.s3tc.ctex"]
 
 [params]
 
