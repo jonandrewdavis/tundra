@@ -1,5 +1,7 @@
 # Tundra
 
+<img src="tundra_view_1.png" width="328"/>
+
 ## Instructions:
 
 - Debug as 2 instances
