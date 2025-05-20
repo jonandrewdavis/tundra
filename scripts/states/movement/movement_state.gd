@@ -107,9 +107,12 @@ func get_main_menu_input() -> bool:
 func get_movement_input() -> Vector2:
 	return player_input.input_dir
 
+# TODO: Run really needs to be a state. this is nuts.
 func get_run() -> bool:
 	# If we are moving forward (-1.0), allow sprinting
 	if player_input.input_dir.y == -1.0:
+		if player_input.aim_input or player_input.crouch_input:
+			return false
 		return player_input.run_input
 	else:
 		return false

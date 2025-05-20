@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://vydo5ihqeu0v"]
+[gd_scene load_steps=16 format=4 uid="uid://cchfmde0hrvn"]
 
 [ext_resource type="Script" uid="uid://yg2m7lbiip0y" path="res://scenes/enemies/dog/dog_enemy.gd" id="1_nd7sd"]
 [ext_resource type="PackedScene" uid="uid://qsh5m8pulul5" path="res://scripts/systems/HealthSystem.tscn" id="1_v2iur"]
