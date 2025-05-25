@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://btdemgg0e0b4o"]
+[gd_scene load_steps=38 format=3 uid="uid://btdemgg0e0b4o"]
 
 [ext_resource type="Script" uid="uid://cxtavdwherl7j" path="res://scripts/player_ui.gd" id="1_fatww"]
 [ext_resource type="Texture2D" uid="uid://clx8vvaklih15" path="res://scenes/player/player_assets/crosshair046.png" id="2_by614"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://c3o2in8ur76wn" path="res://assets/sound/hitmarker.mp3" id="5_by614"]
 [ext_resource type="StyleBox" uid="uid://hwskn1lu87b" path="res://scenes/player/settings_menu/temperature_style_box.tres" id="5_d61dg"]
 [ext_resource type="PackedScene" uid="uid://s5lur3jc6w4b" path="res://scenes/player/settings_menu/settings_menu.tscn" id="6_en3kk"]
+[ext_resource type="Texture2D" uid="uid://be25ar7jv3ol8" path="res://assets/BloodOverlay.png" id="6_u2sjp"]
 [ext_resource type="AudioStream" uid="uid://dg8grqw6ww0m3" path="res://assets/sound/soft-wind-outside-sound-ambient-141989.mp3" id="8_5ypad"]
 [ext_resource type="AudioStream" uid="uid://cgdh3ouygw0n5" path="res://assets/sound/fist-punch-or-kick.mp3" id="8_fvhh2"]
 [ext_resource type="AudioStream" uid="uid://b6e8xn30garj8" path="res://assets/sound/sniper_shot_and_reload.mp3" id="10_4qoov"]
@@ -327,6 +328,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
+
+[node name="Blood" type="TextureRect" parent="Shaders"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_u2sjp")
 
 [node name="SnowShaderLight" type="ColorRect" parent="Shaders"]
 material = SubResource("ShaderMaterial_en3kk")

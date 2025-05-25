@@ -1,10 +1,23 @@
-[gd_scene load_steps=9 format=3 uid="uid://bb3ena3ml40f"]
+[gd_scene load_steps=12 format=3 uid="uid://bb3ena3ml40f"]
 
-[ext_resource type="Material" uid="uid://cfahq750phpw0" path="res://scenes/castle/castle_concrete_mat.tres" id="1_oqkrc"]
 [ext_resource type="Script" uid="uid://bxheekboo1l1k" path="res://scenes/castle/castle_model/castle_maw.gd" id="1_us1oy"]
+[ext_resource type="Texture2D" uid="uid://p2v0hr7g5gkk" path="res://assets/ambient/Concrete008_2K-JPG/Concrete008_2K-JPG_Color.jpg" id="2_n7feo"]
 [ext_resource type="Script" uid="uid://84pwod0y2ajt" path="res://scenes/castle/castle_model/castle_maw_interact.gd" id="3_pwmnt"]
+[ext_resource type="Texture2D" uid="uid://w8oaieen7hi3" path="res://assets/ambient/Concrete008_2K-JPG/Concrete008_2K-JPG_Roughness.jpg" id="3_r1b5t"]
 [ext_resource type="PackedScene" uid="uid://cvltw4muk7hv2" path="res://scenes/castle/castle_model/Big Red Button.glb" id="4_dtweg"]
+[ext_resource type="Texture2D" uid="uid://b1chtn81b1ts8" path="res://assets/ambient/Concrete008_2K-JPG/Concrete008_2K-JPG_NormalGL.jpg" id="4_g5av0"]
 [ext_resource type="AudioStream" uid="uid://bognmewo2wlfn" path="res://assets/sound/large-metal-lift-door-openingwav-14459.mp3" id="5_yk0nr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xy0m7"]
+albedo_texture = ExtResource("2_n7feo")
+metallic = 0.7
+metallic_texture = ExtResource("3_r1b5t")
+roughness_texture = ExtResource("3_r1b5t")
+normal_enabled = true
+normal_texture = ExtResource("4_g5av0")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 5.65685
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pwmnt"]
 properties/0/path = NodePath("CastleMawPivot:rotation")
@@ -24,7 +37,7 @@ script = ExtResource("1_us1oy")
 transform = Transform3D(1, 0, 0, 0, 0.980785, -0.19509, 0, 0.19509, 0.980785, 0, 0, 0)
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="CastleMawPivot"]
-material_override = ExtResource("1_oqkrc")
+material_override = SubResource("StandardMaterial3D_xy0m7")
 use_collision = true
 
 [node name="slope" type="CSGBox3D" parent="CastleMawPivot/CSGCombiner3D"]

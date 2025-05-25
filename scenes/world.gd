@@ -4,13 +4,7 @@ extends Node3D
 @onready var world_env: WorldEnvironment =  $Environment_V2/WorldEnvironment
 
 # Editor debug fog
-@export var fog: bool = true:
-	set(val):
-		if world_env:
-			world_env.environment.volumetric_fog_enabled = val
-			notify_property_list_changed()
-	get():
-		return world_env.environment.volumetric_fog_enabled
+@export var fog: bool = true
 
 func _ready():
 	if not Engine.is_editor_hint():

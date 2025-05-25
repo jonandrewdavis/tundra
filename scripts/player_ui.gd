@@ -120,10 +120,18 @@ func _on_hit_sight_timer_timeout():
 	
 @rpc
 func update_health(new_health):
+	if new_health < local_health:
+		show_hurt_border()
+		
 	health_label.text = str(new_health) + " / " + str(local_max_health)
 	local_health = new_health
 	health_bar.value = new_health
-	
+
+func show_hurt_border():
+	var tween = create_tween()
+	tween.tween_property(%Blood, "modulate:a", 0.2, 0.1).from(0.0)
+	tween.tween_property(%Blood, "modulate:a", 0.0, 0.1).from(0.2)
+
 @rpc
 func update_max_health(new_max_health):
 	health_label.text = str(local_health) + " / " + str(new_max_health)

@@ -6,8 +6,11 @@
 
 [resource]
 albedo_texture = ExtResource("1_c44t2")
-metallic_specular = 0.0
+metallic = 0.7
+metallic_texture = ExtResource("3_d2yxi")
 roughness_texture = ExtResource("3_d2yxi")
 normal_enabled = true
 normal_texture = ExtResource("2_v0bdg")
-uv1_scale = Vector3(1, 0.7, 1)
+uv1_scale = Vector3(0.4, 0.4, 0.4)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 5.65685

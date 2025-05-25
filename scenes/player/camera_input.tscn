@@ -51,7 +51,6 @@ margin = 1.0
 [node name="Camera3D" type="Camera3D" parent="CameraMount/CameraRot/SpringArm3D"]
 
 [node name="PSX SHADER" type="MeshInstance3D" parent="CameraMount/CameraRot/SpringArm3D"]
-visible = false
 mesh = SubResource("QuadMesh_yj6in")
 
 [node name="Holder" type="Marker3D" parent="CameraMount/CameraRot"]

@@ -38,7 +38,7 @@ layout_mode = 2
 theme_override_colors/font_placeholder_color = Color(0.631373, 0.556863, 0, 1)
 theme_override_colors/font_color = Color(0.631373, 0.556863, 0, 1)
 theme_override_font_sizes/font_size = 32
-text = "127.0.0.1"
+text = "54.161.194.112"
 placeholder_text = "Enter Host's IP"
 
 [node name="Port" type="LineEdit" parent="VBoxContainer"]

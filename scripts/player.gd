@@ -124,6 +124,7 @@ func _ready():
 	_state_machine.on_display_state_changed.connect(_on_display_state_changed)
 
 	health_system.death.connect(death)
+	#health_system.hurt.connect(on_player_hurt)
 
 	# TIMERS
 	add_child(interaction_check_timer)
@@ -209,6 +210,8 @@ func _rollback_tick(_delta, _tick, _is_fresh):
 const ANIMATION_PREFIX = 'master_3/'
 
 func _on_display_state_changed(_old_state: RewindableState, new_state: RewindableState):	
+	if _animation_player.current_animation == 'master2/hit reaction':
+		return
 	var animation_name = new_state.animation_name
 	if _animation_player && animation_name != "":
 		#_animation_player.speed_scale = 1.0
@@ -284,6 +287,9 @@ const MOVES = {
 # TODO: Could be programmatic via a "AnimationSystem" 
 # NOTE: playback_default_blend_time = 0.4
 func on_animation_check():
+	if _animation_player.current_animation == 'master2/hit reaction':
+		return
+
 	var _crouching = _player_input.crouch_input
 
 	if _state_machine.state == (&'Idle'):
@@ -434,3 +440,6 @@ func interact_holding(item_to_hold):
 @rpc("any_peer")
 func update_pvp(new_pvp_value):
 	pvp = new_pvp_value
+
+func on_player_hurt():
+	_animation_player.play('master2/hit reaction')
