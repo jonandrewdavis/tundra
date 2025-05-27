@@ -19,7 +19,6 @@ func _ready():
 		await get_tree().create_timer(0.2).timeout
 		NetworkManager.join_game(NetworkConnectionConfigs.new(NetworkManager.LOCALHOST))
 
-
 func host_game():
 	print("Host game pressed")
 	_is_hosting = true
@@ -32,9 +31,12 @@ func host_game():
 		NetworkManager.host_game(NetworkConnectionConfigs.new(NetworkManager.LOCALHOST))
 
 func join_game():
-	_show_secondary_network_options()
+	_show_secondary_network_options(false, false)
 
-func _show_secondary_network_options(is_hosting: bool = false):
+func join_game_dedicated_server():
+	_show_secondary_network_options(false, true)
+
+func _show_secondary_network_options(is_hosting: bool = false, is_remote: bool = false):
 	_hide_main_menu_options()
 	
 	var second_menu_to_load = load(NetworkManager.selected_network_configuration.menu)
@@ -46,6 +48,9 @@ func _show_secondary_network_options(is_hosting: bool = false):
 		
 	secondary_network_menu_parent.add_child(active_secondary_menu)
 	
+	if is_remote:
+		active_secondary_menu.host_ip_input.text = '3.224.209.1'
+
 	# Wire up completed and cancelled secondary menu signals
 	active_secondary_menu.secondary_menu_completed.connect(_secondary_menu_submitted)
 	active_secondary_menu.secondary_menu_cancelled.connect(_cancel_secondary_menu)
@@ -60,7 +65,8 @@ func _reset_main_menu_options():
 	_is_hosting = false
 	host_game_button.visible = true
 	join_game_button.visible = true
-	
+	$"Menu/VBoxContainer/Join Dedicated Server".visible = true
+
 	toggle_secondary_network_checkbox.visible = true
 	toggle_secondary_network_checkbox.set_pressed_no_signal(false) # reset secondary selection
 
@@ -69,6 +75,7 @@ func _reset_main_menu_options():
 func _hide_main_menu_options():
 	host_game_button.visible = false
 	join_game_button.visible = false
+	$"Menu/VBoxContainer/Join Dedicated Server".visible = false
 	
 	toggle_secondary_network_checkbox.visible = false
 

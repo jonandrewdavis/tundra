@@ -35,26 +35,19 @@
 - Run .exe
 - Allow when prompted for security warning
   - (Generally do not do this for untrusted sources!)
-- In Game:
-  - Join
-  - Enter the IP address to the Tundra Server (ask me on Discord)
-  - NOTE: For P2P, use Noray via Netfox _it may or may not work_)
+- Click Join Dedicated Server
+- Click Go
 
-## Test Locally:
+### Host locally & play single player (run 2 games)
 
-- Clone this repo
-- Open [Godot 4.5](https://godotengine.org/download/archive/)
-- Import the project
-- Open the menu -> Debug -> Choose Customize Run Instances
-- Click Enable Multiple Instances
-- Choose 2 (or more)
-- Set up a host
-  - Add an Override Main Arg as `--headless`
-  - Add a Feature Tag `server`
-- Set up a joiner
-  - Add a feature gat `join`
-- Hit Play
-- The game should start and drop you into a local host instance.
+- Unzip
+- Run .exe
+- Click Host - Local
+- Alt + Tab or minimize to go back to Windows
+- Run .exe again ( you should have 2 open now)
+- Click Join - Local
+- Click Go
+
 
 # Forked from Battery Acid Dev's:
 

@@ -296,7 +296,7 @@ func update_information_label() -> void:
 	)
 
 
-func _fps_graph_draw() -> void:
+func _fps_graph_draw(	) -> void:
 	var fps_polyline := PackedVector2Array()
 	fps_polyline.resize(HISTORY_NUM_FRAMES)
 	for fps_index in fps_history.size():

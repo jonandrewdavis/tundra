@@ -160,6 +160,7 @@ TUNDRA"
 horizontal_alignment = 1
 
 [node name="SecondaryToggle" type="CheckButton" parent="Menu/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Enable Noray P2P"
@@ -168,11 +169,15 @@ flat = true
 [node name="HostGame" type="Button" parent="Menu/VBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Host Game"
+text = "Host - Local"
 
 [node name="JoinGame" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
-text = "Join Game"
+text = "Join - Local"
+
+[node name="Join Dedicated Server" type="Button" parent="Menu/VBoxContainer"]
+layout_mode = 2
+text = "Join - Dedicated Server"
 
 [node name="Exit" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
@@ -196,4 +201,5 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_2o76q")
 [connection signal="toggled" from="Menu/VBoxContainer/SecondaryToggle" to="." method="_on_secondary_toggle_toggled"]
 [connection signal="pressed" from="Menu/VBoxContainer/HostGame" to="." method="host_game"]
 [connection signal="pressed" from="Menu/VBoxContainer/JoinGame" to="." method="join_game"]
+[connection signal="pressed" from="Menu/VBoxContainer/Join Dedicated Server" to="." method="join_game_dedicated_server"]
 [connection signal="pressed" from="Menu/VBoxContainer/Exit" to="." method="exit_game"]

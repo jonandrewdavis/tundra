@@ -6,6 +6,7 @@ extends Control
 @export var host_port_input: LineEdit # Defaults to "8080"
 @export var option_label: RichTextLabel
 
+
 signal secondary_menu_completed
 signal secondary_menu_cancelled
 
@@ -21,3 +22,4 @@ func _on_go_pressed():
 func _on_back_pressed():
 	print("On Back pressed")
 	secondary_menu_cancelled.emit()
+	
