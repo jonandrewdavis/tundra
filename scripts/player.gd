@@ -255,7 +255,7 @@ func apply_chest_force():
 	for bone in bones.get_children():
 		if bone.bone_name == 'Chest':
 			bone.apply_central_impulse(-_player_model.basis.z * -1.0 * 1200.0)
-	
+
 # TODO: Death should be a state
 # TESTING: How would ragdoll & death interact?
 # TESTING: How do we prevent input during these states

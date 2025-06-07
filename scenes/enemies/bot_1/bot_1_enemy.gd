@@ -52,6 +52,18 @@ enum LIST {
 	SHOOT
 }
 
+# State machine for the body/ pawn / movement/ state of bod
+# 
+
+# State machine for the Brain AI/Directory 
+# - my brain is thinking  about tactics my body can do...
+# - there are things that can block those intentions
+# - handcuffs. injured, sub states
+# - reasons why those sub states can't be injured
+# - $0-120, $350
+
+# State machine for the Meta "World" / Arbitration of group tactics
+
 
 # This enum lists all the possible states the character can be in.
 enum States { IDLE, SEARCHING, CHASING, ATTACKING, HURTING, DODGING, DYING, DECAYING, SHOOTING }
