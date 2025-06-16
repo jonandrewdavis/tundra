@@ -1,13 +1,17 @@
 @tool
 extends Node3D
 
-@onready var world_env: WorldEnvironment =  $Environment_V2/WorldEnvironment
+@export var world_env: WorldEnvironment
 
 # Editor debug fog
 @export var fog: bool = true
 
 func _ready():
 	if not Engine.is_editor_hint():
+		if not world_env:
+			Nodash.error_missing(world_env, 'World_Env')
+			return 
+			
 		Hub.world = self
 		Hub.player_container = $PlayerContainer
 		if multiplayer.is_server():

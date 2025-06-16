@@ -1,0 +1,33 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bdr07rujs7qy"]
+
+[ext_resource type="Shader" uid="uid://b3g7q47hvbj6s" path="res://scenes/castle/heat_dome/heat_shader_material_V3_SHADER.gdshader" id="1_asrua"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_asrua"]
+noise_type = 3
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_asrua"]
+noise = SubResource("FastNoiseLite_asrua")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sngjs"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_asrua")
+shader_parameter/time_speed = 0.2
+shader_parameter/surface_speed = 0.2
+shader_parameter/spin = 0.0
+shader_parameter/brightness = 0.6
+shader_parameter/color_intensity = 0.0
+shader_parameter/horizontal_frequency = 2.0
+shader_parameter/vertical_frequency = 2.0
+shader_parameter/size = 3.0
+shader_parameter/banding_bias = 0.6
+shader_parameter/wave_texture = SubResource("NoiseTexture2D_sngjs")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_asrua")
+shader_parameter/wave_height = 0.5
+shader_parameter/texture_height = 0.5
+shader_parameter/color1 = Color(1, 0.655964, 0.468267, 1)
+shader_parameter/color2 = Color(0.802156, 0.375859, 0, 1)
+shader_parameter/color3 = Color(0.737255, 0.203922, 0, 1)
+shader_parameter/color4 = Color(0.627233, 0.281609, 0, 1)

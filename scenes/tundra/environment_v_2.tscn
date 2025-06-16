@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg5mfdwl2w7md"]
+
+[ext_resource type="Environment" uid="uid://ntabpc2ieenf" path="res://assets/environment/saved_world_environments/tundra_world_environment_v3/TundraWorldEnv_V3.tres" id="1_4w0i6"]
+[ext_resource type="PackedScene" uid="uid://bixuqg8pyoxun" path="res://assets/environment/saved_world_environments/tundra_world_environment_v2/sun_v_2.tscn" id="2_r76hh"]
+
+[node name="Environment_V2" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_4w0i6")
+
+[node name="SunV2" parent="." instance=ExtResource("2_r76hh")]
+transform = Transform3D(0.705181, -0.291008, 0.646556, -0.45397, 0.515155, 0.726998, -0.544639, -0.806182, 0.231168, 0, 0, 0)
+light_volumetric_fog_energy = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.611196, 0, 0.791479, 0, 1, 0, -0.791479, 0, -0.611196, 6.54978, 3.24743, -30.2339)

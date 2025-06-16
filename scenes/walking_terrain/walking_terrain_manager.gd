@@ -38,7 +38,7 @@ var walking_scene_center = 0.0
 # 0 = "most behind"
 # 1 = "center"
 # 2 = "coming soon!"
-var starting_platforms: Array[PackedScene] = [LIST[SCENE.FOREST], LIST[SCENE.BUNKER_2], LIST[SCENE.FOREST]]
+var starting_platforms: Array[PackedScene] = [LIST[SCENE.FOREST], LIST[SCENE.START], LIST[SCENE.FOREST]]
 
 var current_platforms: Array[Node3D] = []
 

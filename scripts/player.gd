@@ -432,7 +432,6 @@ func interact():
 	else:
 		weapons_manager.reload()
 
-
 func interact_holding(item_to_hold):
 	holding = item_to_hold
 	item_to_hold.interact(self)

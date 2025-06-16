@@ -209,9 +209,10 @@ func update_distance_travelled(distance):
 
 @rpc
 func on_update_fog(new_fog: float):
-	var fog_resource = Hub.world.world_env
-	var tween = create_tween()
-	tween.tween_property(fog_resource, "environment:volumetric_fog_density", new_fog, 1.0)
+	var world_environment = Hub.world.world_env
+	if (world_environment):
+		var tween = create_tween()
+		tween.tween_property(world_environment, "environment:volumetric_fog_density", new_fog, 1.0)
 
 @rpc
 func on_show_temp_warning(is_flashing):

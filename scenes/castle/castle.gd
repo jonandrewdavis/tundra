@@ -1,7 +1,6 @@
 extends AnimatableBody3D
 
 
-
 class_name MovingCastle
 
 @export var heat_dome: HeatDome

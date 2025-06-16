@@ -1,15 +1,29 @@
-[gd_scene load_steps=16 format=3 uid="uid://c4p86fnus36rf"]
+[gd_scene load_steps=17 format=3 uid="uid://c4p86fnus36rf"]
 
 [ext_resource type="Script" uid="uid://bhr2a8mp4sa2k" path="res://scenes/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_dos3o"]
-[ext_resource type="Environment" uid="uid://ntabpc2ieenf" path="res://assets/environment/saved_world_environments/tundra_world_environment_v3/TundraWorldEnv_V3.tres" id="2_w7kh3"]
-[ext_resource type="PackedScene" uid="uid://bixuqg8pyoxun" path="res://assets/environment/saved_world_environments/tundra_world_environment_v2/sun_v_2.tscn" id="3_e3hyu"]
 [ext_resource type="PackedScene" uid="uid://ccj6ll20fnwya" path="res://scripts/systems/enemy_system.tscn" id="5_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://dy85183h2d31p" path="res://scenes/castle/castle_simple.tscn" id="5_71j4m"]
 [ext_resource type="PackedScene" uid="uid://7u0288w3c63v" path="res://scripts/systems/resource_system.tscn" id="6_7r4gi"]
 [ext_resource type="Material" uid="uid://teb2w3f6ts0s" path="res://scenes/walking_terrain/snow_infinite_mat.tres" id="6_i7141"]
 [ext_resource type="PackedScene" uid="uid://crep3klgx68p5" path="res://scripts/systems/projectile_system.tscn" id="8_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://b7ls3kmqoga4e" path="res://scenes/walking_terrain/walking_terrain_manager.tscn" id="9_7r4gi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4mrxx"]
+
+[sub_resource type="Sky" id="Sky_7r4gi"]
+sky_material = SubResource("ProceduralSkyMaterial_4mrxx")
+
+[sub_resource type="Environment" id="Environment_4mrxx"]
+background_mode = 2
+sky = SubResource("Sky_7r4gi")
+ambient_light_source = 2
+ambient_light_color = Color(0.369817, 0.369817, 0.369816, 1)
+tonemap_mode = 4
+tonemap_exposure = 0.8
+glow_enabled = true
+fog_enabled = true
+volumetric_fog_enabled = true
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_71j4m"]
 
@@ -26,20 +40,21 @@ size = Vector2(10000, 10000)
 [sub_resource type="FogMaterial" id="FogMaterial_4mrxx"]
 density = 0.0
 
-[node name="World" type="Node3D"]
+[node name="World" type="Node3D" node_paths=PackedStringArray("world_env")]
 script = ExtResource("1_71j4m")
+world_env = NodePath("TundraEnvironmentV3/WorldEnvV3")
 
-[node name="Environment_V2" type="Node3D" parent="."]
+[node name="TundraEnvironmentV3" type="Node3D" parent="."]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment_V2"]
-environment = ExtResource("2_w7kh3")
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="TundraEnvironmentV3"]
+transform = Transform3D(-0.060842, -0.459068, -0.886315, 0.190988, -0.876908, 0.441085, -0.979705, -0.14244, 0.141029, 0, 0, 0)
+shadow_enabled = true
 
-[node name="SunV2" parent="Environment_V2" instance=ExtResource("3_e3hyu")]
-transform = Transform3D(0.705181, -0.291008, 0.646556, -0.45397, 0.515155, 0.726998, -0.544639, -0.806182, 0.231168, 0, 0, 0)
-light_volumetric_fog_energy = 3.0
+[node name="WorldEnvV3" type="WorldEnvironment" parent="TundraEnvironmentV3"]
+environment = SubResource("Environment_4mrxx")
 
-[node name="Camera3D" type="Camera3D" parent="Environment_V2"]
-transform = Transform3D(-0.611196, 0, 0.791479, 0, 1, 0, -0.791479, 0, -0.611196, 6.54978, 3.24743, -30.2339)
+[node name="Camera3D" type="Camera3D" parent="TundraEnvironmentV3"]
+transform = Transform3D(0.94865, 0, 0.316328, 0, 1, 0, -0.316328, 0, 0.94865, 30.4476, 2.6192, -2.57028)
 
 [node name="MultiplayerManager" parent="." node_paths=PackedStringArray("_player_spawn_point") instance=ExtResource("1_dos3o")]
 _player_spawn_point = NodePath("../PlayerContainer")

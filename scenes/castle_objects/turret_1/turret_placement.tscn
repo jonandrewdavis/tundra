@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://2kl74054bwhn"]
+
+[ext_resource type="PackedScene" uid="uid://b2v3k8v01ycfv" path="res://scenes/castle_objects/turret_1/turret_1.tscn" id="1_togp2"]
+[ext_resource type="Script" uid="uid://l3aq6g4khf2c" path="res://scenes/castle_objects/turret_1/turret_interact.gd" id="2_togp2"]
+[ext_resource type="Material" uid="uid://cfahq750phpw0" path="res://scenes/castle/castle_concrete_mat.tres" id="3_lv68l"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_togp2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7i4xm"]
+size = Vector3(2, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fu645"]
+material = ExtResource("3_lv68l")
+size = Vector3(2, 1, 1)
+
+[node name="TurretPlacement" type="Marker3D"]
+
+[node name="Turret1" parent="." instance=ExtResource("1_togp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.517162, 0)
+
+[node name="Interactable" type="StaticBody3D" parent="."]
+script = ExtResource("2_togp2")
+metadata/_custom_type_script = "uid://bdcvqoop6k2ut"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02539, 0)
+shape = SubResource("BoxShape3D_togp2")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_7i4xm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_fu645")

@@ -1,23 +1,23 @@
 [gd_scene load_steps=9 format=3 uid="uid://jqyjx5vv1fpy"]
 
 [ext_resource type="Script" uid="uid://b1ejhdshlsua3" path="res://scenes/castle/heat_dome/heat_dome.gd" id="1_l7s2y"]
-[ext_resource type="Material" uid="uid://boymajqjt407s" path="res://scenes/castle/heat_dome/heat_shader_hex.tres" id="2_qfupc"]
+[ext_resource type="Material" uid="uid://bdr07rujs7qy" path="res://scenes/castle/heat_dome/heat_shader_material_V3.tres" id="2_l7s2y"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_xujgp"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_qfupc"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_l7s2y"]
-material = ExtResource("2_qfupc")
+material = ExtResource("2_l7s2y")
 radius = 20.0
 height = 20.0
 is_hemisphere = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_px6c0"]
-material = ExtResource("2_qfupc")
+material = ExtResource("2_l7s2y")
 flip_faces = true
-radius = 20.0
-height = 20.0
+radius = 21.0
+height = 21.0
 is_hemisphere = true
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qfupc"]
@@ -49,18 +49,16 @@ material = SubResource("FogMaterial_qfupc")
 
 [node name="HeatDomeExterior" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
-sorting_offset = 100.0
+visible = false
+sorting_offset = 200.0
 visibility_range_end = 20.0
 visibility_range_end_margin = 125.0
 visibility_range_fade_mode = 1
 mesh = SubResource("SphereMesh_l7s2y")
 
 [node name="HeatDomeInterior" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.56957, 0)
 sorting_offset = 100.0
-visibility_range_end = 20.0
-visibility_range_end_margin = 125.0
-visibility_range_fade_mode = 1
 mesh = SubResource("SphereMesh_px6c0")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
