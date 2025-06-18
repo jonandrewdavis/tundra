@@ -45,8 +45,8 @@ shader_parameter/alpha_scissor_threshold = 0.5
 shader_parameter/transmission = Color(0.252107, 0.32, 0.1056, 1)
 shader_parameter/total_height = 9.0
 shader_parameter/wind_direction = Vector2(1, -0.1)
-shader_parameter/wind_speed = 0.4
-shader_parameter/wind_strength = 0.3
+shader_parameter/wind_speed = 0.8
+shader_parameter/wind_strength = 0.8
 shader_parameter/noise_scale = 24.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_onm1d"]

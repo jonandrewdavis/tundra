@@ -131,7 +131,7 @@ func move_and_look(delta):
 		new_look_at = target.transform.origin
 	else:
 		new_look_at = nav.next_path_pos
-
+	
 	# Finally fix "Target and up vectors are colinear" by
 	# doing the same checks as the source code (used C++ source!)
 	# https://github.com/godotengine/godot/issues/79146

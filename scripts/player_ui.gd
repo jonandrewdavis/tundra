@@ -83,7 +83,7 @@ func _ready():
 
 	else:
 		# Client code
-		#DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
+		DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
 	
 		# Only clients need hit sight timer. RPC just starts it.
 		add_child(hit_sight_timer)

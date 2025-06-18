@@ -32,9 +32,9 @@ Nodash="*res://scripts/nodash.gd"
 
 [display]
 
+window/size/mode=2
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
-window/dpi/allow_hidpi=false
 window/vsync/vsync_mode=2
 
 [editor_plugins]

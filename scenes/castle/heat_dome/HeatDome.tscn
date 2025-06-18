@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://jqyjx5vv1fpy"]
+[gd_scene load_steps=8 format=3 uid="uid://jqyjx5vv1fpy"]
 
 [ext_resource type="Script" uid="uid://b1ejhdshlsua3" path="res://scenes/castle/heat_dome/heat_dome.gd" id="1_l7s2y"]
 [ext_resource type="Material" uid="uid://bdr07rujs7qy" path="res://scenes/castle/heat_dome/heat_shader_material_V3.tres" id="2_l7s2y"]
@@ -24,9 +24,6 @@ is_hemisphere = true
 properties/0/path = NodePath(".:heat_dome_radius")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-
-[sub_resource type="QuadOccluder3D" id="QuadOccluder3D_qfupc"]
-size = Vector2(100, 50)
 
 [node name="HeatDome" type="Node3D"]
 script = ExtResource("1_l7s2y")
@@ -63,13 +60,3 @@ mesh = SubResource("SphereMesh_px6c0")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qfupc")
-
-[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 80)
-visible = false
-occluder = SubResource("QuadOccluder3D_qfupc")
-
-[node name="OccluderInstance3D3" type="OccluderInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, -80)
-visible = false
-occluder = SubResource("QuadOccluder3D_qfupc")

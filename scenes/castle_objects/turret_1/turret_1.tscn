@@ -624,12 +624,14 @@ properties/5/path = NodePath("Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_
 properties/5/spawn = true
 properties/5/replication_mode = 1
 
-[node name="Turret1" type="CharacterBody3D" node_paths=PackedStringArray("animation_player", "health_system", "search_box", "gun_origin")]
+[node name="Turret1" type="CharacterBody3D" node_paths=PackedStringArray("animation_player", "health_system", "search_box", "gun_origin", "marker")]
 script = ExtResource("1_gux26")
 animation_player = NodePath("Sketchfab_Scene/AnimationPlayer")
 health_system = NodePath("HealthSystem")
 search_box = NodePath("SearchBox")
 gun_origin = NodePath("Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_2/RootNode/turret/connector/gun/GunOrigin")
+marker = NodePath("Marker3D")
+peer_owner = 2
 speed = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -665,7 +667,7 @@ transform = Transform3D(100, 0, 0, 0, -4.37114e-06, 100, 0, -100, -4.37114e-06, 
 
 [node name="connector" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_2/RootNode/turret"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.64698e-23, 0.94393)
+transform = Transform3D(1, 0, 0, 0, 1, -4.2039e-44, 0, 4.2039e-44, 1, 0, 2.64698e-23, 0.94393)
 
 [node name="connector_Material_001_0" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_2/RootNode/turret/connector"]
 mesh = SubResource("ArrayMesh_wevsg")
@@ -673,7 +675,7 @@ skeleton = NodePath("")
 
 [node name="gun" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_2/RootNode/turret/connector"]
 unique_name_in_owner = true
-transform = Transform3D(0.33806, 1.4013e-44, 0, -1.4013e-44, 0.33806, 0, 0, 0, 0.33806, 0, -1.30351e-07, 0.800089)
+transform = Transform3D(0.33806, -1.4013e-44, 0, 1.4013e-44, 0.33806, 0, 0, 0, 0.33806, 0, -1.30351e-07, 0.800089)
 
 [node name="gun_Material_001_0" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_2/RootNode/turret/connector/gun"]
 mesh = SubResource("ArrayMesh_dk74c")
@@ -801,3 +803,6 @@ autoplay = "Scene"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_h6vmh")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)

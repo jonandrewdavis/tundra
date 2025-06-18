@@ -1,3 +1,5 @@
+@tool
+
 extends CharacterBody3D
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -9,6 +11,7 @@ const ROTATION_SPEED = 3.0
 @export var health_system: HealthSystem
 @export var search_box: Area3D
 @export var gun_origin: Marker3D
+@export var marker: Marker3D
 
 @export var peer_owner: int
 
@@ -75,8 +78,11 @@ func search_for_new_target():
 			%gun.rotation.z = 0.0
 			%connector.rotation.x = 0.0 
 		
-		print(target)
-			
+	if Engine.is_editor_hint():
+		if active == false:
+			activate(2)
+			target = marker
+					
 func ready_health_system():
 	health_system.hurt.connect(on_hurt)
 	health_system.death.connect(on_death)
@@ -96,6 +102,9 @@ func activate(peer_id):
 		set_state(States.IDLE)
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		move_and_look(delta)
+
 	match state:
 		States.TRACKING:
 			move_and_look(delta)
@@ -109,12 +118,11 @@ const CAMERA_X_ROT_MAX := deg_to_rad(30)
 func move_and_look(delta):
 	if target:
 		var direction = Vector2(target.global_position.x, target.global_position.z).direction_to(Vector2(global_position.x, global_position.z))
-		var vert = Vector2(target.global_position.x, target.global_position.z).direction_to(Vector2(global_position.x, global_position.z))
 		%gun.rotation.z = lerp_angle(%gun.rotation.z, atan2(direction.x, direction.y), delta)
-		%connector.rotation.x = lerp_angle(%connector.rotation.x, clamp(%connector.global_position.y - target.global_position.y, CAMERA_X_ROT_MIN, CAMERA_X_ROT_MAX), delta)
+		%connector.rotation.x = lerp_angle(%connector.rotation.x, deg_to_rad((global_position.y - target.global_position.y) * 3.0), delta)
 
 func set_state(new_state: States) -> void:
-	var previous_state := state
+	var _previous_state := state
 	state = new_state
 
 	############
@@ -141,6 +149,9 @@ func _on_body_exited(body):
 		set_state(States.SEARCHING)
 
 func shoot():
+	if Engine.is_editor_hint():
+		return
+	
 	if not target:
 		return
 	
