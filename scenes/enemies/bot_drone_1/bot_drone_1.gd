@@ -142,7 +142,8 @@ func move_and_look(delta):
 		return
 	
 	var old = transform.basis.orthonormalized()
-	look_at(new_look_at)
+	if global_position.distance_to(new_look_at) != 0.0:
+		look_at(new_look_at)
 	var new = transform.basis.orthonormalized()
 	transform.basis = lerp(old, new, ROTATION_SPEED * delta).orthonormalized()
 

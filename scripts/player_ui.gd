@@ -14,7 +14,8 @@ class_name PlayerUI
 @onready var hit_sight = $HitSight
 @onready var snow_shader_light = $Shaders/SnowShaderLight
 @onready var snow_shader_heavy = $Shaders/SnowShaderHeavy
-@onready var vignette = $Shaders/VignetteShader
+@onready var freezing_panel: ColorRect = $Shaders/VignetteFreezingShader
+@onready var freezing_shader: ShaderMaterial = freezing_panel.material
 
 var player_health_system: HealthSystem
 var player_heat_system: HeatSystem
@@ -218,12 +219,16 @@ func on_update_fog(new_fog: float):
 func on_show_temp_warning(is_flashing):
 	if is_flashing:
 		temp_bar_flashing_timer.start()
-		$Shaders/VignetteShader.visible = true
 		%TempBar.modulate.a = 1.0
 	else:
 		temp_bar_flashing_timer.stop()
-		$Shaders/VignetteShader.visible = false
 		%TempBar.modulate.a = 1.0
+
+	var tween = create_tween()
+	if is_flashing:
+		tween.tween_property(freezing_shader, "shader_parameter/vignette_strength", 1.4, 3.0)
+	else:
+		tween.tween_property(freezing_shader, "shader_parameter/vignette_strength", 0.0, 1.2)
 
 var flash = true
 

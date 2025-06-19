@@ -30,6 +30,7 @@ fog_mode = 1
 fog_light_color = Color(0.689121, 0.874679, 1, 1)
 fog_density = 1.0
 volumetric_fog_enabled = true
+volumetric_fog_ambient_inject = 0.5
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_71j4m"]
 
@@ -51,18 +52,10 @@ world_env = NodePath("TundraEnvironmentV3/WorldEnvV3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="TundraEnvironmentV3"]
 transform = Transform3D(-0.060842, -0.459068, -0.886315, 0.190988, -0.876908, 0.441085, -0.979705, -0.142439, 0.141029, -15.5455, 24.3625, 0)
+light_energy = 1.2
 light_indirect_energy = 1.2
 light_volumetric_fog_energy = 1.5
 shadow_enabled = true
-shadow_opacity = 0.7
-directional_shadow_mode = 1
-
-[node name="KeyLight" type="DirectionalLight3D" parent="TundraEnvironmentV3"]
-transform = Transform3D(0.850502, -0.202995, -0.485222, 0.232155, 0.972679, 0, 0.471965, -0.112647, 0.874391, 19.0139, 24.4837, 0)
-light_color = Color(0.239216, 0.717647, 1, 1)
-light_energy = 0.6
-light_indirect_energy = 3.0
-light_volumetric_fog_energy = 4.0
 shadow_opacity = 0.7
 directional_shadow_mode = 1
 

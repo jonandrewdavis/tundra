@@ -4,6 +4,7 @@ render_mode cull_disabled, unshaded;
 uniform sampler2D depth_texture : source_color, hint_depth_texture;
 uniform sampler2D screen_texture : source_color, hint_screen_texture, repeat_disable, filter_nearest;
 
+
 uniform bool enable_fog = true;
 uniform vec3 fog_color : source_color;
 uniform vec3 noise_color : source_color;
@@ -15,6 +16,10 @@ uniform bool enable_color_limitation = true;
 uniform int color_levels : hint_range(2, 256) = 32;
 uniform bool enable_dithering = true;
 uniform float dither_strength : hint_range(0.0, 1.0) = 0.3;
+
+
+uniform float grain_amount : hint_range(0.0, 1.0) = 0.05; // Adjust the amount of grain
+uniform float grain_size : hint_range(0.1, 10.0) = 1.0; // Adjust the size of the grain
 
 float hashOld12(vec2 p){
 	return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453 + (sin((TIME)) / noise_time_fac)) ;
@@ -79,5 +84,14 @@ void fragment(){
 		brightness += dither_strength * (dither(FRAGCOORD.xy, brightness) - 0.5);
 		final_color *= (1.0 + dither_strength * (dither(FRAGCOORD.xy, brightness) - 0.5));
 	}
+	
+	    // Sample the original screen texture
+    //vec4 original_color = texture(screen_texture, SCREEN_UV);
+    // Generate random noise
+    float noise = (fract(sin(dot(UV, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * 2.0;
+
+    // Add noise to the original color
+    final_color.rgb += noise * grain_amount * grain_size;
+	
 	ALBEDO = final_color;
 }

@@ -19,8 +19,10 @@ shader_parameter/enable_noise = false
 shader_parameter/noise_time_fac = 4.0
 shader_parameter/enable_color_limitation = true
 shader_parameter/color_levels = 32
-shader_parameter/enable_dithering = true
+shader_parameter/enable_dithering = false
 shader_parameter/dither_strength = 0.1
+shader_parameter/grain_amount = 0.05
+shader_parameter/grain_size = 0.3
 
 [sub_resource type="QuadMesh" id="QuadMesh_yj6in"]
 material = SubResource("ShaderMaterial_exfpx")

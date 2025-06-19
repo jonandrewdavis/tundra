@@ -6,6 +6,9 @@ extends MovementState
 func tick(delta, _tick, _is_fresh):
 	stop_player(delta)
 
+
+
+
 func enter(_previous: RewindableState, _tick: int):
 	parent.bones.active = true
 	parent._animation_player.active = false

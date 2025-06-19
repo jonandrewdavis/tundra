@@ -114,7 +114,6 @@ func _ready():
 		if multiplayer.get_unique_id() == str(name).to_int():
 			NetworkManager.hide_loading()
 
-
 	#### SERVER ONLY ####
 	# TODO: To be fully server authoratitve, this line should be uncommented
 	if not multiplayer.is_server():

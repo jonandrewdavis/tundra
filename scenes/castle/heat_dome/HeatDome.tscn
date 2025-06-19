@@ -1,13 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://jqyjx5vv1fpy"]
+[gd_scene load_steps=9 format=3 uid="uid://jqyjx5vv1fpy"]
 
 [ext_resource type="Script" uid="uid://b1ejhdshlsua3" path="res://scenes/castle/heat_dome/heat_dome.gd" id="1_l7s2y"]
 [ext_resource type="Material" uid="uid://bdr07rujs7qy" path="res://scenes/castle/heat_dome/heat_shader_material_V3.tres" id="2_l7s2y"]
+[ext_resource type="Environment" uid="uid://ntabpc2ieenf" path="res://assets/environment/saved_world_environments/tundra_world_environment_v3/TundraWorldEnv_V3.tres" id="3_px6c0"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_xujgp"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_qfupc"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_l7s2y"]
+[sub_resource type="SphereMesh" id="SphereMesh_w4mjc"]
 material = ExtResource("2_l7s2y")
 radius = 20.0
 height = 20.0
@@ -46,17 +47,22 @@ material = SubResource("FogMaterial_qfupc")
 
 [node name="HeatDomeExterior" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
-visible = false
 sorting_offset = 200.0
-visibility_range_end = 20.0
-visibility_range_end_margin = 125.0
+transparency = 1.0
+cast_shadow = 0
 visibility_range_fade_mode = 1
-mesh = SubResource("SphereMesh_l7s2y")
+mesh = SubResource("SphereMesh_w4mjc")
 
 [node name="HeatDomeInterior" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.56957, 0)
 sorting_offset = 100.0
+transparency = 1.0
+cast_shadow = 0
+visibility_range_fade_mode = 1
 mesh = SubResource("SphereMesh_px6c0")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qfupc")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_px6c0")

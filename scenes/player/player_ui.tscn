@@ -125,7 +125,7 @@ shader_parameter/num_of_layers = 30
 shader = ExtResource("4_g18nd")
 shader_parameter/inner_radius = 0.1
 shader_parameter/outer_radius = 1.0
-shader_parameter/vignette_strength = 0.5
+shader_parameter/vignette_strength = 0.0
 shader_parameter/dither_strength = 0.03
 shader_parameter/vignette_color = Color(0.321569, 0.584314, 1, 1)
 
@@ -224,6 +224,7 @@ border_blend = true
 bg_color = Color(1, 0.552941, 0, 1)
 border_width_left = 1
 border_width_top = 1
+border_width_right = 8
 border_width_bottom = 1
 border_color = Color(0.872349, 0.308474, 5.77569e-07, 1)
 border_blend = true
@@ -361,8 +362,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VignetteShader" type="ColorRect" parent="Shaders"]
-visible = false
+[node name="VignetteFreezingShader" type="ColorRect" parent="Shaders"]
 material = SubResource("ShaderMaterial_tpfsx")
 layout_mode = 1
 anchors_preset = 15

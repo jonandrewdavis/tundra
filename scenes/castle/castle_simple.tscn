@@ -236,8 +236,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.12969, -0.276275)
 [node name="TopLight" type="OmniLight3D" parent="CastleTower"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.96292, -0.290831)
 light_color = Color(1, 0.591667, 0.3, 1)
-light_energy = 1.8
+light_energy = 0.5
 light_indirect_energy = 3.0
+light_volumetric_fog_energy = 5.0
 omni_range = 20.0
 omni_attenuation = -0.2
 

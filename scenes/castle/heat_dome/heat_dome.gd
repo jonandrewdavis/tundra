@@ -80,8 +80,8 @@ func sync_all_properties():
 func on_change_heat_dome_value(value: int = 0):
 	heat_dome_radius = heat_dome_radius + value
 	
-	interior_mesh.radius = heat_dome_radius
-	interior_mesh.height = heat_dome_radius
+	interior_mesh.radius = heat_dome_radius + 1
+	interior_mesh.height = heat_dome_radius + 1
 	exterior_mesh.radius = heat_dome_radius
 	exterior_mesh.height = heat_dome_radius
 	
@@ -89,9 +89,9 @@ func on_change_heat_dome_value(value: int = 0):
 	interior.visibility_range_end_margin = heat_dome_radius + spread - 35 # fade sooner higher number
 	exterior.visibility_range_end = heat_dome_radius
 	exterior.visibility_range_end_margin = heat_dome_radius + spread - 35 # fade sooner
-
-	fog_volume_1.size.x = heat_dome_radius * 2
-	fog_volume_1.size.z = heat_dome_radius * 2
-	
-	fog_volume_2.size.x = (heat_dome_radius * 2) + spread
-	fog_volume_2.size.z = (heat_dome_radius * 2) + spread
+#
+	#fog_volume_1.size.x = heat_dome_radius * 2
+	#fog_volume_1.size.z = heat_dome_radius * 2
+	#
+	#fog_volume_2.size.x = (heat_dome_radius * 2) + spread
+	#fog_volume_2.size.z = (heat_dome_radius * 2) + spread
