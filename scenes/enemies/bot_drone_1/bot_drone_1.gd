@@ -63,7 +63,14 @@ func _ready():
 
 	animation_player.playback_default_blend_time = 0.4
 	#animation_player.speed_scale = 1.5
-
+	
+	# TODO: FIGURE OUT CONDITIONAL set_collision_layer_value (mask?) PASS THROUGH FOR PLAYERS / OTHERS
+	set_collision_layer_value(1, false) 
+	set_collision_layer_value(2, true)
+	
+	set_collision_mask_value(1, true) 
+	set_collision_mask_value(2, false)
+	
 	# This enemy only runs on the server.
 	# Only visuals and some rpcs are sync'd out.
 	if not multiplayer.is_server():

@@ -55,7 +55,7 @@ var interaction_check_timer = Timer.new()
 
 # TODO: remove once debug done
 
-#func _input(event: InputEvent) -> void:
+#func _input(event: InputEvent) -> void:	
 	#if event.is_action_pressed('ui_cancel'):
 		#get_tree().quit()
 

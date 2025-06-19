@@ -195,6 +195,7 @@ radius = 0.25
 height = 0.8
 
 [node name="DogEnemy" type="CharacterBody3D" node_paths=PackedStringArray("animation_player", "health_system", "nav", "nav_agent", "search_box", "attack_box")]
+collision_layer = 2
 script = ExtResource("1_nd7sd")
 animation_player = NodePath("Sketchfab_Scene/AnimationPlayer")
 health_system = NodePath("HealthSystem")
