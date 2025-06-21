@@ -67,6 +67,9 @@ func _ready():
 	timer_search.start()
 	
 	search_box.body_entered.connect(_on_body_entered_search_area)
+	
+	#if Engine.is_editor_hint():
+		#activate(2)
 
 func search_for_new_target():
 	if target == null:
@@ -78,17 +81,13 @@ func search_for_new_target():
 			%gun.rotation.z = 0.0
 			%connector.rotation.x = 0.0 
 		
-	if Engine.is_editor_hint():
-		if active == false:
-			activate(2)
-			target = marker
-					
 func ready_health_system():
 	health_system.hurt.connect(on_hurt)
 	health_system.death.connect(on_death)
 
 func activate(peer_id):
 	if active == false:
+		# turn on
 		$CollisionShape3D.disabled = false
 		%connector.visible = true
 		peer_owner = peer_id
@@ -102,8 +101,8 @@ func activate(peer_id):
 		set_state(States.IDLE)
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		move_and_look(delta)
+	#if Engine.is_editor_hint():
+		#move_and_look(delta)
 
 	match state:
 		States.TRACKING:
@@ -149,9 +148,6 @@ func _on_body_exited(body):
 		set_state(States.SEARCHING)
 
 func shoot():
-	if Engine.is_editor_hint():
-		return
-	
 	if not target:
 		return
 	

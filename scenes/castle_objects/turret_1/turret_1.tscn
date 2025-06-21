@@ -644,6 +644,8 @@ metadata/_custom_type_script = "uid://d1527jxguybfr"
 
 [node name="SearchBox" type="Area3D" parent="."]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, -1.4778, -9.35374)
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SearchBox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3516, 0, -6.3516)
@@ -667,7 +669,7 @@ transform = Transform3D(100, 0, 0, 0, -4.37114e-06, 100, 0, -100, -4.37114e-06, 
 
 [node name="connector" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_2/RootNode/turret"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, -4.2039e-44, 0, 4.2039e-44, 1, 0, 2.64698e-23, 0.94393)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.64698e-23, 0.94393)
 
 [node name="connector_Material_001_0" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_2/RootNode/turret/connector"]
 mesh = SubResource("ArrayMesh_wevsg")
@@ -675,7 +677,7 @@ skeleton = NodePath("")
 
 [node name="gun" type="Node3D" parent="Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_2/RootNode/turret/connector"]
 unique_name_in_owner = true
-transform = Transform3D(0.33806, -1.4013e-44, 0, 1.4013e-44, 0.33806, 0, 0, 0, 0.33806, 0, -1.30351e-07, 0.800089)
+transform = Transform3D(0.33806, 0, 0, 0, 0.33806, 0, 0, 0, 0.33806, 0, -1.30351e-07, 0.800089)
 
 [node name="gun_Material_001_0" type="MeshInstance3D" parent="Sketchfab_Scene/Sketchfab_model/turret_fbx/Object_2/RootNode/turret/connector/gun"]
 mesh = SubResource("ArrayMesh_dk74c")

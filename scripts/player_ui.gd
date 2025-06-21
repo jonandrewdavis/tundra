@@ -20,8 +20,6 @@ class_name PlayerUI
 var player_health_system: HealthSystem
 var player_heat_system: HeatSystem
 
-var objectives_collected: int = 0
-
 var local_health: int = 100
 var local_max_health: int = 100
 var local_weapon_name = ''
@@ -62,7 +60,6 @@ func _ready():
 		weapons_manager.reload_signal.connect(func(): on_reload_signal.rpc_id(peer_id))
 		weapons_manager.melee_signal.connect(func(): on_melee_signal.rpc_id(peer_id))
 
-
 		player_health_system = get_parent().health_system
 		# Health
 		player_health_system.health_updated.connect(func(new_health): update_health.rpc_id(peer_id, new_health))
@@ -76,15 +73,16 @@ func _ready():
 		# TODO: Listen for death and fade out UI?
 		
 		# CASTLE
+		# TODO: These should be "public".
 		Hub.castle.fuel_updated.connect(func (new_fuel): on_update_fuel.rpc_id(peer_id, new_fuel))
 		Hub.castle.health_system.health_updated.connect(func (new_health): on_update_castle_health.rpc_id(peer_id, new_health))
 
 		Hub.castle.distance_travelled_updated.connect(func (dist): update_distance_travelled.rpc(dist))
-		Hub.castle.castle_deposit_box.collect_objective.connect(func(): on_objective_collected.rpc())
+		Hub.update_objective.connect(func(new_count): on_objective_collected.rpc(new_count))
 
 	else:
 		# Client code
-		DebugMenu.style = DebugMenu.Style.VISIBLE_DETAILED
+		DebugMenu.style = DebugMenu.Style.VISIBLE_COMPACT
 	
 		# Only clients need hit sight timer. RPC just starts it.
 		add_child(hit_sight_timer)
@@ -256,17 +254,11 @@ func on_reload_signal():
 func on_melee_signal():
 	$MeleeSound.play()
 
-
-
-@rpc('call_local')
-func on_objective_collected():
-	objectives_collected = objectives_collected + 1
-	%DataFrameCount.text = str(objectives_collected)
-	if objectives_collected == 5:
-		Hub.castle.gain_fuel(1000)
-		Hub.castle.health_system.heal(2000)
+@rpc
+func on_objective_collected(new_count):
+	%DataFrameCount.text = str(new_count)
+	if new_count == 5:
 		%AnnounceLabel.visible = true
 		await get_tree().create_timer(5).timeout
 		%AnnounceLabel.visible = false
-		objectives_collected = 0
-		%DataFrameCount.text = str(objectives_collected)
+		%DataFrameCount.text = str(0)

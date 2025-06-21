@@ -45,7 +45,6 @@ func _ready():
 	set_collision_layer_value(4, true)
 	set_collision_mask_value(4, true)
 
-
 	if multiplayer.is_server():
 		# Castle Control Signals (called from Hub.castle)
 		change_castle_speed.connect(_on_change_castle_speed)
