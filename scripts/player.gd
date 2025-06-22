@@ -180,7 +180,7 @@ func process_player_input(input_string: StringName):
 		"interact":
 			interact()
 		"special": # F
-			Hub.enemy_system.spawn_dog.emit()
+			Hub.castle.change_castle_speed.emit()
 		"DEBUG_B":
 			Hub.enemy_system.spawn_bug_1.emit()
 		"DEBUG_0":

@@ -98,7 +98,9 @@ func get_moving_platform_velocity(delta: float) -> Vector3:
 		var collider := collision_result.get_collider()
 		if collider is MovingCastle:
 			var platform := collider as MovingCastle
-			_platform_velocity = platform.get_velocity()
+			_platform_velocity = platform.get_velocity()	
+
+	#print(_platform_velocity)
 	return _platform_velocity
 
 func get_main_menu_input() -> bool:

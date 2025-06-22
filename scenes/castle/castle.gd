@@ -67,7 +67,10 @@ func _ready():
 @export var speed: float = 0.0
 
 func get_velocity() -> Vector3:
-	return _velocity
+	if _velocity == Vector3.ZERO:
+		return _velocity
+	else:
+		return Vector3(0.0, 0.0, -1.2) 
 
 var prev: Vector3
 
@@ -75,6 +78,7 @@ func _save_previous_position(_delta: float, _tick: int):
 	prev = global_position
 
 func _apply_tick(_delta: float, _tick: int):
+	print(speed  * _delta)
 	translate(Vector3(0.0, 0.0, speed  * _delta))
 
 func _calc_velocity(_delta, _tick: int):

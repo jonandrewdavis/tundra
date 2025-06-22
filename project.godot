@@ -20,19 +20,18 @@ config/icon="uid://sv16ctski5qf"
 Hub="*res://scripts/hub.gd"
 NetworkManager="*res://scripts/network/network_manager.gd"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
-WindowTiler="*res://addons/netfox.extras/window-tiler.gd"
-Noray="*res://addons/netfox.noray/noray.gd"
-PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
+Nodash="*res://scripts/nodash.gd"
 NetworkTime="*res://addons/netfox/network-time.gd"
 NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
 NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
 NetworkEvents="*res://addons/netfox/network-events.gd"
 NetworkPerformance="*res://addons/netfox/network-performance.gd"
-Nodash="*res://scripts/nodash.gd"
+Noray="*res://addons/netfox.noray/noray.gd"
+PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
+WindowTiler="*res://addons/netfox.extras/window-tiler.gd"
 
 [display]
 
-window/size/mode=2
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="viewport"
 window/vsync/vsync_mode=2
@@ -257,6 +256,8 @@ weapon_swap={
 [netfox]
 
 logging/clear_settings=true
+time/tickrate=60
+time/tickrate_mismatch_action=2
 
 [physics]
 
