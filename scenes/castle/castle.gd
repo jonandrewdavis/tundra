@@ -78,7 +78,6 @@ func _save_previous_position(_delta: float, _tick: int):
 	prev = global_position
 
 func _apply_tick(_delta: float, _tick: int):
-	print(speed  * _delta)
 	translate(Vector3(0.0, 0.0, speed  * _delta))
 
 func _calc_velocity(_delta, _tick: int):
